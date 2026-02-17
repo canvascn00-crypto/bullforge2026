@@ -1,13 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Bullforge | The Future isn't Just Bullish. It's Bullforge.</title>
 
-  <!-- ethers -->
+  <!-- ethers v5 -->
   <script src="https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.umd.min.js"></script>
-  <!-- 字体 -->
+
+  <!-- Web3Modal (classic modal like many presale sites) -->
+  <script src="https://unpkg.com/web3modal@1.9.12/dist/index.js"></script>
+
+  <!-- WalletConnect v1 provider (works with Web3Modal v1) -->
+  <script src="https://unpkg.com/@walletconnect/web3-provider@1.8.0/dist/umd/index.min.js"></script>
+
+  <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&display=swap" rel="stylesheet">
@@ -45,13 +52,8 @@
     .navbar-links a { color: var(--text-gray); text-decoration: none; font-weight: 500; transition: color 0.3s ease; }
     .navbar-links a:hover { color: var(--gold-primary); }
 
-    /* 钱包容器，用于定位选择器 */
-    .wallet-container {
-      position: relative;
-      display: flex;
-      gap: 8px;
-      align-items: center;
-    }
+    /* 钱包容器（改成 Web3Modal 标准弹窗） */
+    .wallet-container { display: flex; gap: 8px; align-items: center; }
 
     #walletConnectBtn {
       padding: 10px 24px;
@@ -76,45 +78,9 @@
       font-size: 14px;
       cursor: pointer;
       transition: all 0.3s ease;
+      display: none;
     }
     #disconnectBtn:hover { background: rgba(255, 215, 0, 0.1); }
-
-    /* 钱包选择器下拉菜单 */
-    .wallet-selector {
-      position: absolute;
-      top: 60px;
-      right: 0;
-      background: var(--dark-card);
-      border: 1px solid var(--gold-primary);
-      border-radius: 16px;
-      padding: 16px;
-      display: none;
-      flex-direction: column;
-      gap: 12px;
-      min-width: 260px;
-      z-index: 1000;
-      box-shadow: 0 16px 40px rgba(0,0,0,0.6);
-    }
-    .wallet-selector.show { display: flex; }
-    .wallet-option {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      padding: 14px 16px;
-      background: var(--dark-bg);
-      border: 1px solid var(--dark-border);
-      border-radius: 12px;
-      cursor: pointer;
-      transition: all 0.2s ease;
-      font-weight: 600;
-    }
-    .wallet-option:hover {
-      border-color: var(--gold-primary);
-      background: #1A1A1A;
-      transform: translateX(4px);
-    }
-    .wallet-option span:first-child { font-size: 24px; }
-    .wallet-option span:last-child { color: var(--text-white); }
 
     /* ========== 其余样式与原版完全相同 ========== */
     .hero { min-height: 100vh; padding-top: 120px; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; background: linear-gradient(180deg, #0A0500 0%, var(--dark-bg) 100%); position: relative; overflow: hidden; }
@@ -213,7 +179,7 @@
     .notification { position: fixed; top: 100px; right: 24px; max-width: 400px; padding: 20px 24px; background: var(--dark-card); border: 1px solid var(--gold-primary); border-radius: 12px; z-index: 9999; box-shadow: 0 16px 40px rgba(0,0,0,0.5); transform: translateX(120%); transition: transform 0.3s ease; }
     .notification.show { transform: translateX(0); }
     .notification-title { font-weight: 700; margin-bottom: 8px; }
-    .notification-desc { font-size: 14px; color: var(--text-gray); }
+    .notification-desc { font-size: 14px; color: var(--text-gray); word-break: break-word; }
     .loading-spinner { display: inline-block; width: 20px; height: 20px; border: 2px solid var(--text-muted); border-radius: 50%; border-top-color: var(--gold-primary); animation: spin 1s linear infinite; }
     @keyframes spin { to { transform: rotate(360deg); } }
     @media (max-width: 768px) {
@@ -231,6 +197,7 @@
     }
   </style>
 </head>
+
 <body>
   <!-- 通知弹窗 -->
   <div id="notification" class="notification">
@@ -249,21 +216,11 @@
         <a href="#dashboard">My Assets</a>
         <a href="#roadmap">Roadmap</a>
         <a href="#faq">FAQ</a>
-        <!-- 钱包容器: 包含连接/断开按钮 + 选择器下拉菜单 -->
+
+        <!-- 改成 Web3Modal 统一连接体验 -->
         <div class="wallet-container">
           <button id="walletConnectBtn">Connect Wallet</button>
-          <button id="disconnectBtn" style="display: none;">Disconnect</button>
-          <!-- 钱包选择下拉菜单 -->
-          <div class="wallet-selector" id="walletSelector">
-            <div class="wallet-option" id="optInjected">
-              <span>🦊</span>
-              <span>MetaMask / 浏览器钱包</span>
-            </div>
-            <div class="wallet-option" id="optWalletConnect">
-              <span>📱</span>
-              <span>WalletConnect</span>
-            </div>
-          </div>
+          <button id="disconnectBtn">Disconnect</button>
         </div>
       </div>
     </div>
@@ -408,7 +365,10 @@
       <div class="referral-box" id="referralBox" style="display: none;">
         <h3 style="margin-bottom: 16px; color: var(--gold-primary);">Your Forge-To-Earn Referral Link</h3>
         <p style="color: var(--text-gray); margin-bottom: 16px;">Share this link to earn 10% of every buy made through it, and your referral gets a 10% bonus!</p>
-        <div class="referral-link"><input type="text" id="referralLink" readonly><button class="btn btn-small btn-secondary" id="copyReferralBtn">Copy Link</button></div>
+        <div class="referral-link">
+          <input type="text" id="referralLink" readonly>
+          <button class="btn btn-small btn-secondary" id="copyReferralBtn">Copy Link</button>
+        </div>
       </div>
     </div>
   </section>
@@ -434,8 +394,12 @@
         <h3 class="audit-title">Fully Audited Smart Contract</h3>
         <p class="audit-desc">Bullforge's smart contract is fully audited, ensuring the forge's foundation is as secure as its roar is loud. All code is verified on BscScan, with no backdoors, no hidden fees, and full transparency for the community.</p>
         <div style="display: flex; gap: 16px; flex-wrap: wrap; justify-content: center;">
-          <a href="https://bscscan.com/address/0x16D6c1a692AaC51a3821bA2903115d4600649F07" target="_blank" rel="noreferrer"><button class="buy-button" style="max-width: 300px;">View Contract on BscScan</button></a>
-          <a href="#" target="_blank" rel="noreferrer"><button class="btn-secondary" style="max-width: 300px;">Read Whitepaper</button></a>
+          <a href="https://bscscan.com/address/0x16D6c1a692AaC51a3821bA2903115d4600649F07" target="_blank" rel="noreferrer">
+            <button class="buy-button" style="max-width: 300px;">View Contract on BscScan</button>
+          </a>
+          <a href="#" target="_blank" rel="noreferrer">
+            <button class="btn-secondary" style="max-width: 300px;">Read Whitepaper</button>
+          </a>
         </div>
       </div>
     </div>
@@ -471,23 +435,21 @@
     <div class="container footer-content">
       <div class="footer-logo">🐂 BULLFORGE</div>
       <div class="footer-links">
-        <a href="#about">About</a><a href="#mechanics">Mechanics</a><a href="#tokenomics">Tokenomics</a><a href="#dashboard">My Assets</a><a href="#roadmap">Roadmap</a><a href="#faq">FAQ</a><a href="https://bscscan.com/address/0x16D6c1a692AaC51a3821bA2903115d4600649F07" target="_blank" rel="noreferrer">Contract</a>
+        <a href="#about">About</a><a href="#mechanics">Mechanics</a><a href="#tokenomics">Tokenomics</a><a href="#dashboard">My Assets</a><a href="#roadmap">Roadmap</a><a href="#faq">FAQ</a>
+        <a href="https://bscscan.com/address/0x16D6c1a692AaC51a3821bA2903115d4600649F07" target="_blank" rel="noreferrer">Contract</a>
       </div>
       <div class="footer-contract">Contract Address: 0x16D6c1a692AaC51a3821bA2903115d4600649F07</div>
       <div class="footer-copyright">© 2026 Bullforge. All rights reserved.</div>
     </div>
   </footer>
 
-  <script type="module">
-    // ==================== 导入WalletConnect ====================
-    const EthereumProvider = (await import('https://esm.sh/@walletconnect/ethereum-provider@2.15.0')).default;
-
+  <script>
     // ==================== 核心配置 ====================
     const CONFIG = {
       CONTRACT_ADDRESS: "0x16D6c1a692AaC51a3821bA2903115d4600649F07",
-      WALLETCONNECT_PROJECT_ID: "fe819ed06d9e5489f764fc7b1dae1c4e",
       BSC_RPC: "https://bsc-dataseed.binance.org/",
       CHAIN_ID: 56,
+      CHAIN_HEX: "0x38",
       CHAIN_NAME: "BNB Smart Chain",
       CURRENCY: "BNB",
       EXPLORER: "https://bscscan.com"
@@ -521,53 +483,61 @@
     const notif = document.getElementById('notification');
     const notifTitle = document.getElementById('notificationTitle');
     const notifDesc = document.getElementById('notificationDesc');
+
     const connectBtn = document.getElementById('walletConnectBtn');
     const disconnectBtn = document.getElementById('disconnectBtn');
-    const walletSelector = document.getElementById('walletSelector');
-    const optInjected = document.getElementById('optInjected');
-    const optWalletConnect = document.getElementById('optWalletConnect');
 
     const bnbAmountInput = document.getElementById('bnbAmount');
     const slippageInput = document.getElementById('slippage');
     const referrerInput = document.getElementById('referrerAddress');
     const tokenEstimate = document.getElementById('tokenEstimate');
     const walletBalanceSpan = document.getElementById('walletBalance');
+
     const currentPriceSpan = document.getElementById('currentPrice');
     const totalRaisedSpan = document.getElementById('totalRaised');
     const currentStageSpan = document.getElementById('currentStage');
     const tokenRateSpan = document.getElementById('tokenRate');
     const totalSupplySpan = document.getElementById('totalSupplyDisplay');
+
     const progressPercent = document.getElementById('progressPercent');
     const progressBarFill = document.getElementById('progressBarFill');
+
     const dashboardGrid = document.getElementById('dashboardGrid');
     const dashboardNotice = document.getElementById('dashboardNotice');
+
     const referralBox = document.getElementById('referralBox');
     const referralLink = document.getElementById('referralLink');
     const copyBtn = document.getElementById('copyReferralBtn');
+
     const userPurchasedSpan = document.getElementById('userPurchased');
     const userReferralRewardsSpan = document.getElementById('userReferralRewards');
     const userStakedSpan = document.getElementById('userStaked');
     const userClaimStatusSpan = document.getElementById('userClaimStatus');
+
     const stakingCard = document.getElementById('stakingCard');
     const portfolioCard = document.getElementById('portfolioCard');
     const portfolioValue = document.getElementById('portfolioValue');
     const tokenBalanceDetail = document.getElementById('tokenBalanceDetail');
+
     const historyTable = document.getElementById('historyTable');
     const historyBody = document.getElementById('historyBody');
+
     const buyButton = document.getElementById('buyButton');
     const claimButton = document.getElementById('claimButton');
+
     const daysSpan = document.getElementById('countdownDays');
     const hoursSpan = document.getElementById('countdownHours');
     const minutesSpan = document.getElementById('countdownMinutes');
     const secondsSpan = document.getElementById('countdownSeconds');
-    const stakeButton = document.getElementById('stakeButton');
-    const unstakeButton = document.getElementById('unstakeButton');
-    const stakeAmount = document.getElementById('stakeAmount');
-    const lockDays = document.getElementById('lockDays');
 
     // ========== 全局变量 ==========
-    let provider, signer, contract, userAddress;
-    let wcProvider = null;
+    let web3Modal;
+    let extProvider; // raw provider returned by Web3Modal
+    let provider;    // ethers Web3Provider
+    let signer;
+    let contract;
+    let userAddress;
+
     let currentRate = 0;
     let totalRaisedBNB = 0;
     let hardcapBNB = 2000;
@@ -581,6 +551,83 @@
       notif.classList.add('show');
       notif.style.borderColor = isError ? 'var(--danger)' : 'var(--gold-primary)';
       setTimeout(() => notif.classList.remove('show'), 5000);
+    }
+
+    function setConnectedUI(connected) {
+      if (!connected) {
+        connectBtn.disabled = false;
+        connectBtn.innerText = 'Connect Wallet';
+        disconnectBtn.style.display = 'none';
+
+        dashboardNotice.style.display = 'block';
+        dashboardGrid.style.display = 'none';
+        referralBox.style.display = 'none';
+        stakingCard.style.display = 'none';
+        portfolioCard.style.display = 'none';
+        historyTable.style.display = 'none';
+
+        buyButton.disabled = true;
+        buyButton.innerText = 'Connect Wallet To Buy';
+        claimButton.style.display = 'none';
+
+        walletBalanceSpan.innerText = '0.00';
+        tokenBalanceDetail.innerText = '持有 $BULL: 0';
+        portfolioValue.innerText = '0 BNB';
+        return;
+      }
+
+      connectBtn.disabled = true;
+      disconnectBtn.style.display = 'inline-block';
+
+      dashboardNotice.style.display = 'none';
+      dashboardGrid.style.display = 'grid';
+      referralBox.style.display = 'block';
+      stakingCard.style.display = 'block';
+      portfolioCard.style.display = 'block';
+
+      buyButton.disabled = false;
+      buyButton.innerText = 'Buy $BULL';
+      claimButton.style.display = 'block';
+
+      referralLink.value = `${window.location.origin}?ref=${userAddress}`;
+    }
+
+    async function ensureBscNetwork() {
+      if (!provider) return;
+      try {
+        const net = await provider.getNetwork();
+        if (net && Number(net.chainId) === CONFIG.CHAIN_ID) return;
+
+        // Try switch (MetaMask etc.)
+        if (extProvider && extProvider.request) {
+          try {
+            await extProvider.request({
+              method: "wallet_switchEthereumChain",
+              params: [{ chainId: CONFIG.CHAIN_HEX }]
+            });
+            return;
+          } catch (switchErr) {
+            // If chain not added, add it
+            if (switchErr && (switchErr.code === 4902 || String(switchErr.message || '').toLowerCase().includes('unrecognized chain'))) {
+              await extProvider.request({
+                method: "wallet_addEthereumChain",
+                params: [{
+                  chainId: CONFIG.CHAIN_HEX,
+                  chainName: CONFIG.CHAIN_NAME,
+                  nativeCurrency: { name: CONFIG.CURRENCY, symbol: CONFIG.CURRENCY, decimals: 18 },
+                  rpcUrls: [CONFIG.BSC_RPC],
+                  blockExplorerUrls: [CONFIG.EXPLORER]
+                }]
+              });
+              return;
+            }
+            throw switchErr;
+          }
+        }
+      } catch (e) {
+        showNotification("Network Error", "Please switch to BNB Smart Chain (BSC) in your wallet.", true);
+        throw e;
+      }
     }
 
     function updateCountdown() {
@@ -611,6 +658,7 @@
         const events = await contract.queryFilter(filter, -10000);
         events.sort((a, b) => b.blockNumber - a.blockNumber);
         const history = events.slice(0, 5);
+
         if (history.length === 0) {
           historyBody.innerHTML = '<tr><td colspan="4" style="text-align:center;">暂无购买记录</td></tr>';
         } else {
@@ -634,6 +682,10 @@
 
     async function refreshContractData() {
       if (!contract) return;
+      try {
+        let raisedWei = await contract.refreshContractData?.().catch(() => null); // safe no-op if not exists
+      } catch (_) {}
+
       try {
         let raisedWei = await contract.totalRaised().catch(() => null);
         if (raisedWei) {
@@ -684,7 +736,7 @@
         progressPercent.innerText = progress.toFixed(1) + '%';
         progressBarFill.style.width = progress + '%';
 
-        if (userAddress) {
+        if (userAddress && provider) {
           let purchasedWei = await contract.contributed(userAddress).catch(() => null);
           if (purchasedWei) {
             let purchased = parseFloat(ethers.utils.formatEther(purchasedWei));
@@ -708,7 +760,7 @@
           let tokenBalance = parseFloat(ethers.utils.formatEther(tokenBalanceWei));
           tokenBalanceDetail.innerText = `持有 $BULL: ${tokenBalance.toFixed(2)}`;
 
-          let pricePerToken = 1 / currentRate;
+          let pricePerToken = (currentRate > 0) ? (1 / currentRate) : 0;
           let portfolioValueBNB = tokenBalance * pricePerToken;
           portfolioValue.innerText = `${portfolioValueBNB.toFixed(4)} BNB`;
           portfolioCard.style.display = 'block';
@@ -740,212 +792,115 @@
       tokenEstimate.innerText = `You will receive approx. ${estimated.toFixed(2)} $BULL`;
     }
 
-    // ========== 设置 provider 监听器 ==========
-    function setupProviderListeners(providerObj) {
-      if (!providerObj || !providerObj.on) return;
-      providerObj.on("accountsChanged", (accounts) => {
-        if (!accounts || accounts.length === 0) window.location.reload();
-        else {
-          userAddress = accounts[0];
-          connectBtn.innerText = userAddress.slice(0, 6) + '...' + userAddress.slice(-4);
-          connectBtn.disabled = true;
-          disconnectBtn.style.display = 'inline-block';
-          refreshContractData();
+    async function initWeb3Modal() {
+      // WalletConnect provider option (Web3Modal classic)
+      const providerOptions = {
+        walletconnect: {
+          package: window.WalletConnectProvider.default,
+          options: {
+            rpc: { [CONFIG.CHAIN_ID]: CONFIG.BSC_RPC },
+            chainId: CONFIG.CHAIN_ID
+          }
         }
-      });
-      providerObj.on("chainChanged", () => window.location.reload());
-      providerObj.on("disconnect", () => {
-        showNotification("Disconnected", "Wallet disconnected", false);
-        window.location.reload();
+      };
+
+      web3Modal = new window.Web3Modal.default({
+        cacheProvider: true, // like many presale sites: remembers your last wallet
+        providerOptions,
+        disableInjectedProvider: false
       });
     }
 
-    // ========== 断开连接 ==========
-    async function disconnectWallet() {
-      try {
-        if (wcProvider) await wcProvider.disconnect();
-      } catch (e) { console.warn(e); }
-      finally { window.location.reload(); }
-    }
+    function setupProviderListeners(rawProvider) {
+      if (!rawProvider || !rawProvider.on) return;
 
-    // ========== 连接 MetaMask / 浏览器钱包 ==========
-    async function connectInjected() {
-      try {
-        if (!window.ethereum) {
-          showNotification("Not Found", "No injected wallet detected. Please install MetaMask or use WalletConnect.", true);
+      rawProvider.on("accountsChanged", async (accounts) => {
+        if (!accounts || accounts.length === 0) {
+          await disconnectWallet();
           return;
         }
-        await window.ethereum.request({ method: "eth_requestAccounts" });
-        provider = new ethers.providers.Web3Provider(window.ethereum);
+        userAddress = accounts[0];
+        connectBtn.innerText = userAddress.slice(0, 6) + '...' + userAddress.slice(-4);
+        try {
+          await ensureBscNetwork();
+        } catch (_) {}
+        await refreshContractData();
+      });
+
+      rawProvider.on("chainChanged", async () => {
+        // refresh state when chain changes
+        try {
+          await ensureBscNetwork();
+        } catch (_) {}
+        await refreshContractData();
+      });
+
+      rawProvider.on("disconnect", async () => {
+        showNotification("Disconnected", "Wallet disconnected", false);
+        await disconnectWallet();
+      });
+    }
+
+    async function connectWallet() {
+      try {
+        connectBtn.disabled = true;
+        connectBtn.innerHTML = '<span class="loading-spinner"></span>';
+
+        extProvider = await web3Modal.connect(); // opens modal (MetaMask/WalletConnect/etc.)
+        provider = new ethers.providers.Web3Provider(extProvider);
         signer = provider.getSigner();
+
+        // Some wallets require ensuring network after provider init
+        await ensureBscNetwork();
+
         userAddress = await signer.getAddress();
         contract = new ethers.Contract(CONFIG.CONTRACT_ADDRESS, CONTRACT_ABI, signer);
-        
-        setupProviderListeners(window.ethereum);
-        
-        // 更新UI
+
+        setupProviderListeners(extProvider);
+
         connectBtn.innerText = userAddress.slice(0, 6) + '...' + userAddress.slice(-4);
-        connectBtn.disabled = true;
-        disconnectBtn.style.display = 'inline-block';
-        walletSelector.classList.remove('show');
-        
-        dashboardNotice.style.display = 'none';
-        dashboardGrid.style.display = 'grid';
-        referralBox.style.display = 'block';
-        stakingCard.style.display = 'block';
-        portfolioCard.style.display = 'block';
-        buyButton.disabled = false;
-        buyButton.innerText = 'Buy $BULL';
-        claimButton.style.display = 'block';
-        referralLink.value = `${window.location.origin}?ref=${userAddress}`;
-        
+        setConnectedUI(true);
+
         await refreshContractData();
         if (countdownInterval) clearInterval(countdownInterval);
         countdownInterval = setInterval(updateCountdown, 1000);
+
         showNotification("Connected", "Wallet connected successfully", false);
       } catch (e) {
         console.error(e);
-        showNotification("Connection Failed", e?.message || String(e), true);
         connectBtn.disabled = false;
+        connectBtn.innerText = 'Connect Wallet';
+        showNotification("Connection Failed", e?.message || String(e), true);
       }
     }
 
-    // ========== 连接 WalletConnect v2 (移动端直接跳转，桌面端显示二维码) ==========
-    async function connectWalletConnect() {
-      const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-      
+    async function disconnectWallet() {
       try {
-        if (isMobile) {
-          // 移动端：不显示二维码，直接获取uri后跳转，唤起系统选择器
-          wcProvider = await EthereumProvider.init({
-            projectId: CONFIG.WALLETCONNECT_PROJECT_ID,
-            chains: [CONFIG.CHAIN_ID],
-            optionalChains: [CONFIG.CHAIN_ID],
-            rpcMap: { [CONFIG.CHAIN_ID]: CONFIG.BSC_RPC },
-            showQrModal: false,
-            redirect: {
-              native: window.location.href, // 钱包授权后返回当前页面
-              universal: window.location.href
-            }
-          });
+        // Clear cached provider so next click shows modal again (like most sites)
+        if (web3Modal) await web3Modal.clearCachedProvider();
 
-          // 监听 display_uri 事件，一旦拿到uri就跳转
-          wcProvider.once('display_uri', (uri) => {
-            // 直接跳转，系统会弹出选择钱包的对话框
-            window.location.href = uri;
-          });
-
-          // 开始连接，此调用会在跳转前触发 display_uri，然后等待从钱包返回后 resolve
-          await wcProvider.connect();
-          
-          // 用户从钱包返回后，provider 已连接，继续执行
-          provider = new ethers.providers.Web3Provider(wcProvider);
-          signer = provider.getSigner();
-          userAddress = await signer.getAddress();
-          contract = new ethers.Contract(CONFIG.CONTRACT_ADDRESS, CONTRACT_ABI, signer);
-          
-          setupProviderListeners(wcProvider);
-          
-          // 更新UI
-          connectBtn.innerText = userAddress.slice(0, 6) + '...' + userAddress.slice(-4);
-          connectBtn.disabled = true;
-          disconnectBtn.style.display = 'inline-block';
-          walletSelector.classList.remove('show');
-          
-          dashboardNotice.style.display = 'none';
-          dashboardGrid.style.display = 'grid';
-          referralBox.style.display = 'block';
-          stakingCard.style.display = 'block';
-          portfolioCard.style.display = 'block';
-          buyButton.disabled = false;
-          buyButton.innerText = 'Buy $BULL';
-          claimButton.style.display = 'block';
-          referralLink.value = `${window.location.origin}?ref=${userAddress}`;
-          
-          await refreshContractData();
-          if (countdownInterval) clearInterval(countdownInterval);
-          countdownInterval = setInterval(updateCountdown, 1000);
-          showNotification("Connected", "Wallet connected successfully", false);
-        } else {
-          // 桌面端：显示二维码模态框
-          wcProvider = await EthereumProvider.init({
-            projectId: CONFIG.WALLETCONNECT_PROJECT_ID,
-            chains: [CONFIG.CHAIN_ID],
-            optionalChains: [CONFIG.CHAIN_ID],
-            rpcMap: { [CONFIG.CHAIN_ID]: CONFIG.BSC_RPC },
-            showQrModal: true,
-          });
-
-          await wcProvider.connect();
-          
-          provider = new ethers.providers.Web3Provider(wcProvider);
-          signer = provider.getSigner();
-          userAddress = await signer.getAddress();
-          contract = new ethers.Contract(CONFIG.CONTRACT_ADDRESS, CONTRACT_ABI, signer);
-          
-          setupProviderListeners(wcProvider);
-          
-          // 更新UI
-          connectBtn.innerText = userAddress.slice(0, 6) + '...' + userAddress.slice(-4);
-          connectBtn.disabled = true;
-          disconnectBtn.style.display = 'inline-block';
-          walletSelector.classList.remove('show');
-          
-          dashboardNotice.style.display = 'none';
-          dashboardGrid.style.display = 'grid';
-          referralBox.style.display = 'block';
-          stakingCard.style.display = 'block';
-          portfolioCard.style.display = 'block';
-          buyButton.disabled = false;
-          buyButton.innerText = 'Buy $BULL';
-          claimButton.style.display = 'block';
-          referralLink.value = `${window.location.origin}?ref=${userAddress}`;
-          
-          await refreshContractData();
-          if (countdownInterval) clearInterval(countdownInterval);
-          countdownInterval = setInterval(updateCountdown, 1000);
-          showNotification("Connected", "Wallet connected successfully", false);
+        // If WalletConnect v1, it usually has close()/disconnect()
+        if (extProvider && extProvider.close) {
+          await extProvider.close();
+        } else if (extProvider && extProvider.disconnect) {
+          await extProvider.disconnect();
         }
       } catch (e) {
-        console.error(e);
-        showNotification("Connection Failed", e?.message || String(e), true);
-        connectBtn.disabled = false;
+        console.warn("disconnect err", e);
+      } finally {
+        extProvider = null;
+        provider = null;
+        signer = null;
+        contract = null;
+        userAddress = null;
+
+        if (countdownInterval) clearInterval(countdownInterval);
+
+        setConnectedUI(false);
+        // keep presale stats visible (contract reads need provider; we keep your simulated fallback)
+        refreshContractData();
       }
     }
-
-    // ========== 点击连接按钮：只显示选择器，不自动连接 ==========
-    function handleConnectClick(e) {
-      e.stopPropagation();
-      if (connectBtn.disabled) return;
-      walletSelector.classList.toggle('show');
-    }
-
-    // 点击其他区域关闭选择器
-    document.addEventListener('click', (e) => {
-      if (!walletSelector.contains(e.target) && e.target !== connectBtn) {
-        walletSelector.classList.remove('show');
-      }
-    });
-
-    // ========== 绑定事件 ==========
-    connectBtn.addEventListener('click', handleConnectClick);
-    disconnectBtn.addEventListener('click', disconnectWallet);
-    optInjected.addEventListener('click', () => {
-      walletSelector.classList.remove('show');
-      connectInjected();
-    });
-    optWalletConnect.addEventListener('click', () => {
-      walletSelector.classList.remove('show');
-      connectWalletConnect();
-    });
-
-    bnbAmountInput.addEventListener('input', estimateTokens);
-
-    copyBtn.addEventListener('click', () => {
-      referralLink.select();
-      document.execCommand('copy');
-      showNotification('Copied!', 'Referral link copied to clipboard', false);
-    });
 
     async function buyTokens() {
       if (!signer || !contract) return;
@@ -959,6 +914,7 @@
       let referrer = referrerInput.value.trim() || '0x0000000000000000000000000000000000000000';
 
       try {
+        await ensureBscNetwork();
         let tx = await contract.buyTokens(referrer, minTokensOut, {
           value: ethers.utils.parseEther(amount.toString())
         });
@@ -974,6 +930,7 @@
     async function claimTokens() {
       if (!signer || !contract) return;
       try {
+        await ensureBscNetwork();
         let tx = await contract.claimTokens();
         showNotification('Claim Submitted', `Tx: ${tx.hash}`, false);
         await tx.wait();
@@ -984,11 +941,53 @@
       }
     }
 
+    // ========== 绑定事件 ==========
+    connectBtn.addEventListener('click', connectWallet);
+    disconnectBtn.addEventListener('click', disconnectWallet);
+    bnbAmountInput.addEventListener('input', estimateTokens);
     buyButton.addEventListener('click', buyTokens);
     claimButton.addEventListener('click', claimTokens);
 
-    // 初始化加载数据
-    refreshContractData();
+    copyBtn.addEventListener('click', async () => {
+      try {
+        await navigator.clipboard.writeText(referralLink.value);
+        showNotification('Copied!', 'Referral link copied to clipboard', false);
+      } catch (e) {
+        referralLink.select();
+        document.execCommand('copy');
+        showNotification('Copied!', 'Referral link copied to clipboard', false);
+      }
+    });
+
+    // FAQ toggle
+    document.querySelectorAll('.faq-question').forEach((q) => {
+      q.addEventListener('click', () => {
+        const ans = q.nextElementSibling;
+        const isOpen = ans.style.display === 'block';
+        ans.style.display = isOpen ? 'none' : 'block';
+      });
+    });
+
+    // ========== 初始化 ==========
+    (async () => {
+      await initWeb3Modal();
+
+      // Not connected state UI
+      setConnectedUI(false);
+
+      // Load presale data (will fallback to mock if can't read)
+      // If you want "always real" data without wallet, you can create a read-only JsonRpcProvider and contract too.
+      // We'll keep your existing behavior: it refreshes and falls back if needed.
+      // If you'd like read-only always-on, tell me and I'll add it.
+      refreshContractData();
+
+      // Auto-reconnect if cached provider exists (like bullzilla-style sites)
+      if (web3Modal && web3Modal.cachedProvider) {
+        try {
+          await connectWallet();
+        } catch (_) {}
+      }
+    })();
   </script>
 </body>
 </html>
