@@ -81,7 +81,7 @@
     }
     #disconnectBtn:hover { background: rgba(255, 215, 0, 0.1); }
 
-    /* 网络徽章 */
+    /* 网络徽章（连接后显示） */
     #networkBadge {
       display: none;
       padding: 6px 12px;
@@ -94,7 +94,11 @@
       letter-spacing: 0.2px;
       white-space: nowrap;
     }
-    #networkBadge.bad { border-color: var(--danger); color: var(--danger); background: rgba(255, 68, 68, 0.08); }
+    #networkBadge.bad {
+      border-color: var(--danger);
+      color: var(--danger);
+      background: rgba(255, 68, 68, 0.08);
+    }
 
     /* ========== 其余样式与原版完全相同 ========== */
     .hero { min-height: 100vh; padding-top: 120px; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; background: linear-gradient(180deg, #0A0500 0%, var(--dark-bg) 100%); position: relative; overflow: hidden; }
@@ -196,6 +200,7 @@
     .notification-desc { font-size: 14px; color: var(--text-gray); }
     .loading-spinner { display: inline-block; width: 20px; height: 20px; border: 2px solid var(--text-muted); border-radius: 50%; border-top-color: var(--gold-primary); animation: spin 1s linear infinite; vertical-align: middle; }
     @keyframes spin { to { transform: rotate(360deg); } }
+
     @media (max-width: 768px) {
       .navbar-links a:not(.wallet-container *) { display: none; }
       .hero-title { font-size: 40px; }
@@ -234,11 +239,10 @@
         <a href="#roadmap">Roadmap</a>
         <a href="#faq">FAQ</a>
 
-        <!-- 钱包容器 (升级版) -->
         <div class="wallet-container">
           <span id="networkBadge">BNB</span>
           <button id="walletConnectBtn">Connect Wallet</button>
-          <button id="disconnectBtn" style="display: none;">Disconnect</button>
+          <button id="disconnectBtn" style="display:none;">Disconnect</button>
         </div>
       </div>
     </div>
@@ -292,7 +296,7 @@
         </div>
         <div class="token-estimate" id="tokenEstimate">Enter BNB amount to see estimated $BULL tokens</div>
         <button class="buy-button" id="buyButton" disabled>Connect Wallet To Buy</button>
-        <button class="btn-secondary" id="claimButton" style="display: none;">Claim Your $BULL Tokens</button>
+        <button class="btn-secondary" id="claimButton" style="display:none;">Claim Your $BULL Tokens</button>
       </div>
     </div>
   </section>
@@ -303,7 +307,13 @@
       <div class="section-header">
         <div class="section-subtitle">About Bullforge</div>
         <h2 class="section-title">Forged for the Bull Run</h2>
-        <p class="section-desc">Bullforge is a BNB Chain-based meme coin born in the chaos of the blockchain; a beast built to thrive where others fall. Driven by a Progressive Price Engine that increases value every $100,000 raised or every 48 hours — whichever happens first — plus a Forge Burn at each milestone to make every $BULL scarcer. Holders can step into The HODL Forge, locking their tokens for monster-level rewards of 70% APY. Fueled by belief and driven by momentum, Bullforge moves forward without retreat, turning red candles into rocket fuel.</p>
+        <p class="section-desc">
+          Bullforge is a BNB Chain-based meme coin born in the chaos of the blockchain; a beast built to thrive where others fall.
+          Driven by a Progressive Price Engine that increases value every $100,000 raised or every 48 hours — whichever happens first —
+          plus a Forge Burn at each milestone to make every $BULL scarcer. Holders can step into The HODL Forge, locking their tokens
+          for monster-level rewards of 70% APY. Fueled by belief and driven by momentum, Bullforge moves forward without retreat,
+          turning red candles into rocket fuel.
+        </p>
       </div>
     </div>
   </section>
@@ -316,9 +326,35 @@
         <h2 class="section-title">The Forge System</h2>
       </div>
       <div class="feature-grid">
-        <div class="feature-card"><div class="feature-icon">🔥</div><h3 class="feature-title">The HODL Forge - 70% APY</h3><p class="feature-desc">In the Bullforge universe, loyalty isn't just respected, it's rewarded. Don't just hold your $BULL, put it to work! By locking your tokens in The HODL Forge, you secure a massive 70% APY, turning conviction into unstoppable growth. This isn't a trickle of adoption, it's a surge. Every lock strengthens the roar, every HODLer fuels the myth. While others hesitate, Diamond hands enjoy compounding rewards!</p></div>
-        <div class="feature-card"><div class="feature-icon">⚡</div><h3 class="feature-title">Forge Burn</h3><p class="feature-desc">Forge Burn is Bullforge's signature supply strike! A live, on-chain event that happens before every stage change in the presale. Powered by The Scorch Reserve — 5% of total supply set aside exclusively for burns — each event permanently removes tokens from circulation. Every burn tightens supply, amplifies scarcity, and marks the beast's evolution into its next chapter. When the forge hits, the market listens.</p></div>
-        <div class="feature-card"><div class="feature-icon">🤝</div><h3 class="feature-title">Forge-To-Earn</h3><p class="feature-desc">With Forge-To-Earn, you turn your network into rewards. Share your unique referral code and you'll earn 10% of every buy made through it, while the person you refer gets a 10% bonus in $BULL. All you have to do is spread the word, grow the community, and watch your rewards stack. Vesting kicks in after the presale, so your loyalty is locked, loaded, and ready to pay out.</p></div>
+        <div class="feature-card">
+          <div class="feature-icon">🔥</div>
+          <h3 class="feature-title">The HODL Forge - 70% APY</h3>
+          <p class="feature-desc">
+            In the Bullforge universe, loyalty isn't just respected, it's rewarded. Don't just hold your $BULL, put it to work!
+            By locking your tokens in The HODL Forge, you secure a massive 70% APY, turning conviction into unstoppable growth.
+            This isn't a trickle of adoption, it's a surge. Every lock strengthens the roar, every HODLer fuels the myth.
+            While others hesitate, Diamond hands enjoy compounding rewards!
+          </p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">⚡</div>
+          <h3 class="feature-title">Forge Burn</h3>
+          <p class="feature-desc">
+            Forge Burn is Bullforge's signature supply strike! A live, on-chain event that happens before every stage change in the presale.
+            Powered by The Scorch Reserve — 5% of total supply set aside exclusively for burns — each event permanently removes tokens
+            from circulation. Every burn tightens supply, amplifies scarcity, and marks the beast's evolution into its next chapter.
+            When the forge hits, the market listens.
+          </p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">🤝</div>
+          <h3 class="feature-title">Forge-To-Earn</h3>
+          <p class="feature-desc">
+            With Forge-To-Earn, you turn your network into rewards. Share your unique referral code and you'll earn 10% of every buy
+            made through it, while the person you refer gets a 10% bonus in $BULL. All you have to do is spread the word, grow the community,
+            and watch your rewards stack. Vesting kicks in after the presale, so your loyalty is locked, loaded, and ready to pay out.
+          </p>
+        </div>
       </div>
     </div>
   </section>
@@ -353,37 +389,51 @@
         <p class="section-desc" id="dashboardNotice">Connect your wallet to view your assets, referral rewards and staking position</p>
       </div>
 
-      <div class="dashboard-grid" id="dashboardGrid" style="display: none;">
+      <div class="dashboard-grid" id="dashboardGrid" style="display:none;">
         <div class="dashboard-card"><div class="dashboard-label">Purchased (BNB)</div><div class="dashboard-value" id="userPurchased">0</div></div>
         <div class="dashboard-card"><div class="dashboard-label">Referral Rewards ($BULL)</div><div class="dashboard-value" id="userReferralRewards">0</div></div>
         <div class="dashboard-card"><div class="dashboard-label">Staked $BULL</div><div class="dashboard-value" id="userStaked">0</div></div>
         <div class="dashboard-card"><div class="dashboard-label">Claim Status</div><div class="dashboard-value" id="userClaimStatus">--</div></div>
       </div>
 
-      <div class="dashboard-card" id="portfolioCard" style="display: none; margin-bottom: 24px;">
+      <div class="dashboard-card" id="portfolioCard" style="display:none; margin-bottom:24px;">
         <div class="dashboard-label">💰 持仓价值</div>
         <div class="dashboard-value" id="portfolioValue">0 BNB</div>
-        <div style="margin-top: 16px; font-size: 14px; color: var(--text-gray);" id="tokenBalanceDetail">持有 $BULL: 0</div>
+        <div style="margin-top:16px; font-size:14px; color:var(--text-gray);" id="tokenBalanceDetail">持有 $BULL: 0</div>
       </div>
 
-      <table class="history-table" id="historyTable" style="display: none;">
+      <table class="history-table" id="historyTable" style="display:none;">
         <thead><tr><th>时间</th><th>金额 (BNB)</th><th>获得 $BULL</th><th>价格 (BNB/$BULL)</th></tr></thead>
         <tbody id="historyBody"><tr><td colspan="4" style="text-align:center;">加载中...</td></tr></tbody>
       </table>
 
-      <div class="buy-form-card" id="stakingCard" style="display: none; margin: 0 auto; max-width: 800px;">
-        <h3 style="margin-bottom: 24px; color: var(--gold-primary);">Stake Your $BULL (70% APY)</h3>
-        <div class="form-input-group"><div class="form-label"><span>Amount to Stake ($BULL)</span></div><input type="number" class="form-input" id="stakeAmount" placeholder="0.0" step="1" min="0" disabled></div>
-        <div class="form-input-group"><div class="form-label"><span>Lock Period</span></div><select class="form-select" id="lockDays" disabled><option value="30">30 Days</option><option value="90">90 Days</option><option value="180">180 Days</option><option value="365">365 Days</option></select></div>
+      <div class="buy-form-card" id="stakingCard" style="display:none; margin:0 auto; max-width:800px;">
+        <h3 style="margin-bottom:24px; color:var(--gold-primary);">Stake Your $BULL (70% APY)</h3>
+        <div class="form-input-group">
+          <div class="form-label"><span>Amount to Stake ($BULL)</span></div>
+          <input type="number" class="form-input" id="stakeAmount" placeholder="0.0" step="1" min="0" disabled>
+        </div>
+        <div class="form-input-group">
+          <div class="form-label"><span>Lock Period</span></div>
+          <select class="form-select" id="lockDays" disabled>
+            <option value="30">30 Days</option>
+            <option value="90">90 Days</option>
+            <option value="180">180 Days</option>
+            <option value="365">365 Days</option>
+          </select>
+        </div>
         <div class="token-estimate" id="stakingEstimate">Staking will be available after presale</div>
         <button class="buy-button" id="stakeButton" disabled>Stake $BULL</button>
-        <button class="btn-secondary" id="unstakeButton" style="display: none;" disabled>Unstake My Tokens</button>
+        <button class="btn-secondary" id="unstakeButton" style="display:none;" disabled>Unstake My Tokens</button>
       </div>
 
-      <div class="referral-box" id="referralBox" style="display: none;">
-        <h3 style="margin-bottom: 16px; color: var(--gold-primary);">Your Forge-To-Earn Referral Link</h3>
-        <p style="color: var(--text-gray); margin-bottom: 16px;">Share this link to earn 10% of every buy made through it, and your referral gets a 10% bonus!</p>
-        <div class="referral-link"><input type="text" id="referralLink" readonly><button class="btn btn-small btn-secondary" id="copyReferralBtn">Copy Link</button></div>
+      <div class="referral-box" id="referralBox" style="display:none;">
+        <h3 style="margin-bottom:16px; color:var(--gold-primary);">Your Forge-To-Earn Referral Link</h3>
+        <p style="color:var(--text-gray); margin-bottom:16px;">Share this link to earn 10% of every buy made through it, and your referral gets a 10% bonus!</p>
+        <div class="referral-link">
+          <input type="text" id="referralLink" readonly>
+          <button class="btn btn-small btn-secondary" id="copyReferralBtn">Copy Link</button>
+        </div>
       </div>
     </div>
   </section>
@@ -391,7 +441,10 @@
   <!-- Roadmap 区域 -->
   <section class="section" id="roadmap">
     <div class="container">
-      <div class="section-header"><div class="section-subtitle">The Forge Launch Sequence</div><h2 class="section-title">Roadmap</h2></div>
+      <div class="section-header">
+        <div class="section-subtitle">The Forge Launch Sequence</div>
+        <h2 class="section-title">Roadmap</h2>
+      </div>
       <div class="roadmap-grid">
         <div class="roadmap-card"><div class="roadmap-phase">Phase I: The Awakening</div><h3 class="roadmap-title">Q1 2026</h3><ul class="roadmap-list"><li>Bullforge concept is born</li><li>Team assembles: devs, designers, meme strategists</li><li>Website and lore teaser launch</li><li>Smart contract development & audit</li><li>Core community activation</li><li>Presale goes live</li></ul></div>
         <div class="roadmap-card"><div class="roadmap-phase">Phase II: The Mutation Begins</div><h3 class="roadmap-title">Q2 2026</h3><ul class="roadmap-list"><li>Progressive price engine activates</li><li>Forge Burn events trigger at each milestone</li><li>Forge-To-Earn referral system goes live</li><li>Staking details revealed</li><li>Marketing campaign launch</li><li>Presale completion</li></ul></div>
@@ -408,9 +461,13 @@
         <div class="audit-icon">🛡️</div>
         <h3 class="audit-title">Fully Audited Smart Contract</h3>
         <p class="audit-desc">Bullforge's smart contract is fully audited, ensuring the forge's foundation is as secure as its roar is loud. All code is verified on BscScan, with no backdoors, no hidden fees, and full transparency for the community.</p>
-        <div style="display: flex; gap: 16px; flex-wrap: wrap; justify-content: center;">
-          <a href="https://bscscan.com/address/0x16D6c1a692AaC51a3821bA2903115d4600649F07" target="_blank" rel="noreferrer"><button class="buy-button" style="max-width: 300px;">View Contract on BscScan</button></a>
-          <a href="#" target="_blank" rel="noreferrer"><button class="btn-secondary" style="max-width: 300px;">Read Whitepaper</button></a>
+        <div style="display:flex; gap:16px; flex-wrap:wrap; justify-content:center;">
+          <a href="https://bscscan.com/address/0x16D6c1a692AaC51a3821bA2903115d4600649F07" target="_blank" rel="noreferrer">
+            <button class="buy-button" style="max-width:300px;">View Contract on BscScan</button>
+          </a>
+          <a href="#" target="_blank" rel="noreferrer">
+            <button class="btn-secondary" style="max-width:300px;">Read Whitepaper</button>
+          </a>
         </div>
       </div>
     </div>
@@ -446,30 +503,28 @@
     <div class="container footer-content">
       <div class="footer-logo">🐂 BULLFORGE</div>
       <div class="footer-links">
-        <a href="#about">About</a><a href="#mechanics">Mechanics</a><a href="#tokenomics">Tokenomics</a><a href="#dashboard">My Assets</a><a href="#roadmap">Roadmap</a><a href="#faq">FAQ</a><a href="https://bscscan.com/address/0x16D6c1a692AaC51a3821bA2903115d4600649F07" target="_blank" rel="noreferrer">Contract</a>
+        <a href="#about">About</a>
+        <a href="#mechanics">Mechanics</a>
+        <a href="#tokenomics">Tokenomics</a>
+        <a href="#dashboard">My Assets</a>
+        <a href="#roadmap">Roadmap</a>
+        <a href="#faq">FAQ</a>
+        <a href="https://bscscan.com/address/0x16D6c1a692AaC51a3821bA2903115d4600649F07" target="_blank" rel="noreferrer">Contract</a>
       </div>
       <div class="footer-contract">Contract Address: 0x16D6c1a692AaC51a3821bA2903115d4600649F07</div>
       <div class="footer-copyright">© 2026 Bullforge. All rights reserved.</div>
     </div>
   </footer>
 
+  <!-- ✅ 已整合：连接后立刻显示状态 + 实时检测 + 断开重连不丢UI -->
   <script type="module">
-    /**
-     * ✅ 修复点（已整合）
-     * 1) 移除全局 UMD ethers，改为 ESM import（避免类型冲突）
-     * 2) Web3Modal v4(ethers5) 不使用 subscribeState/getProvider/getSigner
-     *    改为：web3Modal.open() -> web3Modal.getWalletProvider() -> ethers.providers.Web3Provider
-     * 3) 连接后显示网络徽章 + 按钮显示地址，余额可正常读取
-     * 4) 监听 accountsChanged / chainChanged 自动刷新 UI & 数据
-     */
-
     import { ethers } from 'https://esm.sh/ethers@5.7.2';
     import { createWeb3Modal, defaultConfig } from 'https://esm.sh/@web3modal/ethers5@4.1.2';
 
     // ==================== 核心配置 ====================
     const CONFIG = {
       CONTRACT_ADDRESS: "0x16D6c1a692AaC51a3821bA2903115d4600649F07",
-      WALLETCONNECT_PROJECT_ID: "fe819ed06d9e5489f764fc7b1dae1c4e", // 请替换为你的 Project ID
+      WALLETCONNECT_PROJECT_ID: "fe819ed06d9e5489f764fc7b1dae1c4e",
       BSC_RPC: "https://bsc-dataseed.binance.org/",
       CHAIN_ID: 56,
       CHAIN_ID_HEX: "0x38",
@@ -478,7 +533,7 @@
       EXPLORER: "https://bscscan.com"
     };
 
-    // 完整ABI
+    // ABI（保留你原有功能）
     const CONTRACT_ABI = [
       "function name() view returns (string)",
       "function symbol() view returns (string)",
@@ -502,7 +557,7 @@
       "event Buy(address indexed buyer, uint256 bnbAmount, uint256 tokenAmount, uint256 price, address indexed referrer)"
     ];
 
-    // ========== UI 元素获取 ==========
+    // ========== UI 元素 ==========
     const notif = document.getElementById('notification');
     const notifTitle = document.getElementById('notificationTitle');
     const notifDesc = document.getElementById('notificationDesc');
@@ -554,12 +609,13 @@
     const minutesSpan = document.getElementById('countdownMinutes');
     const secondsSpan = document.getElementById('countdownSeconds');
 
+    // （保留你的元素，不实现 staking）
     const stakeButton = document.getElementById('stakeButton');
     const unstakeButton = document.getElementById('unstakeButton');
     const stakeAmount = document.getElementById('stakeAmount');
     const lockDays = document.getElementById('lockDays');
 
-    // ========== 全局变量 ==========
+    // ========== 全局状态 ==========
     let provider, signer, contract, userAddress;
     let web3Modal;
 
@@ -567,10 +623,12 @@
     let totalRaisedBNB = 0;
     let hardcapBNB = 2000;
     let stageEndTimestamp = 0;
-    let countdownInterval;
-    let connectionTimeout; // 用于超时重置
 
-    // ========== 工具函数 ==========
+    let countdownInterval;
+    let watcherInterval;
+    let isUIConnected = false;
+
+    // ========== 工具 ==========
     function showNotification(title, desc, isError = false) {
       notifTitle.innerText = title;
       notifDesc.innerText = desc;
@@ -579,17 +637,8 @@
       setTimeout(() => notif.classList.remove('show'), 5000);
     }
 
-    function resetConnectButton() {
-      connectBtn.disabled = false;
-      connectBtn.innerHTML = 'Connect Wallet';
-      disconnectBtn.style.display = 'none';
-      networkBadge.style.display = 'none';
-      networkBadge.classList.remove('bad');
-    }
-
     function setNetworkBadge(chainId) {
       networkBadge.style.display = 'inline-block';
-
       if (chainId === CONFIG.CHAIN_ID) {
         networkBadge.innerText = 'BNB (56)';
         networkBadge.classList.remove('bad');
@@ -599,30 +648,37 @@
       }
     }
 
-    async function switchToBSC(walletProvider) {
-      if (!walletProvider?.request) return;
-      try {
-        await walletProvider.request({
-          method: 'wallet_switchEthereumChain',
-          params: [{ chainId: CONFIG.CHAIN_ID_HEX }]
-        });
-      } catch (e) {
-        // 有些钱包未添加该链，需要 addEthereumChain
-        try {
-          await walletProvider.request({
-            method: 'wallet_addEthereumChain',
-            params: [{
-              chainId: CONFIG.CHAIN_ID_HEX,
-              chainName: CONFIG.CHAIN_NAME,
-              nativeCurrency: { name: 'BNB', symbol: 'BNB', decimals: 18 },
-              rpcUrls: [CONFIG.BSC_RPC],
-              blockExplorerUrls: [CONFIG.EXPLORER]
-            }]
-          });
-        } catch (err) {
-          console.warn('switch/add chain failed:', err);
-        }
-      }
+    function resetConnectButtonUI() {
+      connectBtn.disabled = false;
+      connectBtn.innerHTML = 'Connect Wallet';
+      disconnectBtn.style.display = 'none';
+      networkBadge.style.display = 'none';
+      networkBadge.classList.remove('bad');
+    }
+
+    function hardResetUI() {
+      isUIConnected = false;
+      userAddress = null;
+      provider = null;
+      signer = null;
+      contract = null;
+
+      resetConnectButtonUI();
+
+      dashboardNotice.style.display = 'block';
+      dashboardGrid.style.display = 'none';
+      referralBox.style.display = 'none';
+      stakingCard.style.display = 'none';
+      portfolioCard.style.display = 'none';
+      historyTable.style.display = 'none';
+
+      buyButton.disabled = true;
+      buyButton.innerText = 'Connect Wallet To Buy';
+      claimButton.style.display = 'none';
+
+      walletBalanceSpan.innerText = '0.00';
+      tokenBalanceDetail.innerText = '持有 $BULL: 0';
+      portfolioValue.innerText = '0 BNB';
     }
 
     function updateCountdown() {
@@ -646,11 +702,36 @@
       secondsSpan.innerText = s < 10 ? '0' + s : String(s);
     }
 
+    async function switchToBSC(walletProvider) {
+      if (!walletProvider?.request) return;
+      try {
+        await walletProvider.request({
+          method: 'wallet_switchEthereumChain',
+          params: [{ chainId: CONFIG.CHAIN_ID_HEX }]
+        });
+      } catch (e) {
+        try {
+          await walletProvider.request({
+            method: 'wallet_addEthereumChain',
+            params: [{
+              chainId: CONFIG.CHAIN_ID_HEX,
+              chainName: CONFIG.CHAIN_NAME,
+              nativeCurrency: { name: 'BNB', symbol: 'BNB', decimals: 18 },
+              rpcUrls: [CONFIG.BSC_RPC],
+              blockExplorerUrls: [CONFIG.EXPLORER]
+            }]
+          });
+        } catch (err) {
+          console.warn('switch/add chain failed:', err);
+        }
+      }
+    }
+
+    // ========== 用户购买历史 ==========
     async function loadUserHistory() {
-      if (!contract || !userAddress) return;
+      if (!contract || !userAddress || !provider) return;
       try {
         const filter = contract.filters.Buy(userAddress);
-        // 说明：某些 RPC 不支持负数 fromBlock，这里做兼容
         const latest = await provider.getBlockNumber().catch(() => null);
         const fromBlock = latest ? Math.max(0, latest - 12000) : 0;
 
@@ -679,8 +760,8 @@
       }
     }
 
+    // ========== 合约数据刷新（只读 + 已连接用户数据） ==========
     async function refreshContractData() {
-      // 只读模式尝试从公共RPC获取合约实例
       try {
         const readProvider = new ethers.providers.JsonRpcProvider(CONFIG.BSC_RPC);
         const readContract = new ethers.Contract(CONFIG.CONTRACT_ADDRESS, CONTRACT_ABI, readProvider);
@@ -695,37 +776,27 @@
         }
 
         const stage = await readContract.currentStage().catch(() => 1);
-        currentStageSpan.innerText = stage ? stage.toString() : '1';
+        currentStageSpan.innerText = String(stage || 1);
 
         const rate = await readContract.getRate().catch(() => null);
-        if (rate) {
-          currentRate = parseFloat(ethers.utils.formatEther(rate));
-          tokenRateSpan.innerText = currentRate.toFixed(0) + ' $BULL';
-        } else {
-          currentRate = 1000 * (stage || 1);
-          tokenRateSpan.innerText = currentRate.toFixed(0) + ' $BULL';
-        }
+        currentRate = rate ? parseFloat(ethers.utils.formatEther(rate)) : (1000 * (stage || 1));
+        tokenRateSpan.innerText = currentRate.toFixed(0) + ' $BULL';
 
         const priceWei = await readContract.getCurrentPrice().catch(() => null);
         if (priceWei) {
-          const priceBNB = parseFloat(ethers.utils.formatEther(priceWei));
-          currentPriceSpan.innerText = priceBNB.toFixed(6) + ' BNB';
+          currentPriceSpan.innerText = parseFloat(ethers.utils.formatEther(priceWei)).toFixed(6) + ' BNB';
         } else {
           currentPriceSpan.innerText = (1 / currentRate).toFixed(6) + ' BNB';
         }
 
         const endTime = await readContract.stageEndTime().catch(() => null);
-        if (endTime) stageEndTimestamp = endTime.toNumber();
-        else stageEndTimestamp = Math.floor(Date.now() / 1000) + 48 * 3600;
+        stageEndTimestamp = endTime ? endTime.toNumber() : (Math.floor(Date.now() / 1000) + 48 * 3600);
         updateCountdown();
 
         const totalSupplyWei = await readContract.totalSupply().catch(() => null);
-        if (totalSupplyWei) {
-          const totalSupply = ethers.utils.formatEther(totalSupplyWei);
-          totalSupplySpan.innerText = Number(totalSupply).toLocaleString() + ' $BULL';
-        } else {
-          totalSupplySpan.innerText = '1,000,000,000 $BULL';
-        }
+        totalSupplySpan.innerText = totalSupplyWei
+          ? (Number(ethers.utils.formatEther(totalSupplyWei)).toLocaleString() + ' $BULL')
+          : '1,000,000,000 $BULL';
 
         const capWei = await readContract.hardCap().catch(() => null);
         if (capWei) hardcapBNB = parseFloat(ethers.utils.formatEther(capWei));
@@ -736,23 +807,13 @@
         progressPercent.innerText = progress.toFixed(1) + '%';
         progressBarFill.style.width = progress + '%';
 
-        // 如果已连接钱包，加载个人数据
-        if (userAddress && contract && provider) {
+        // 已连接钱包 => 刷新个人数据
+        if (isUIConnected && userAddress && provider && contract) {
           const purchasedWei = await contract.contributed(userAddress).catch(() => null);
-          if (purchasedWei) {
-            const purchased = parseFloat(ethers.utils.formatEther(purchasedWei));
-            userPurchasedSpan.innerText = purchased.toFixed(4) + ' BNB';
-          } else {
-            userPurchasedSpan.innerText = '0 BNB';
-          }
+          userPurchasedSpan.innerText = purchasedWei ? (parseFloat(ethers.utils.formatEther(purchasedWei)).toFixed(4) + ' BNB') : '0 BNB';
 
           const rewardsWei = await contract.referralRewards(userAddress).catch(() => null);
-          if (rewardsWei) {
-            const rewards = ethers.utils.formatEther(rewardsWei);
-            userReferralRewardsSpan.innerText = Number(rewards).toFixed(2) + ' $BULL';
-          } else {
-            userReferralRewardsSpan.innerText = '0 $BULL';
-          }
+          userReferralRewardsSpan.innerText = rewardsWei ? (Number(ethers.utils.formatEther(rewardsWei)).toFixed(2) + ' $BULL') : '0 $BULL';
 
           const balWei = await provider.getBalance(userAddress);
           walletBalanceSpan.innerText = parseFloat(ethers.utils.formatEther(balWei)).toFixed(4);
@@ -762,27 +823,15 @@
           tokenBalanceDetail.innerText = `持有 $BULL: ${tokenBalance.toFixed(2)}`;
 
           const pricePerToken = currentRate > 0 ? (1 / currentRate) : 0;
-          const portfolioValueBNB = tokenBalance * pricePerToken;
-          portfolioValue.innerText = `${portfolioValueBNB.toFixed(4)} BNB`;
-          portfolioCard.style.display = 'block';
+          portfolioValue.innerText = `${(tokenBalance * pricePerToken).toFixed(4)} BNB`;
 
+          portfolioCard.style.display = 'block';
           loadUserHistory();
         }
 
-        estimateTokens(); // 刷新估算显示
-      } catch (e) {
-        console.warn('合约读取失败，使用模拟数据', e);
-        totalRaisedSpan.innerText = '125.45 BNB';
-        currentStageSpan.innerText = '2';
-        currentRate = 2500;
-        tokenRateSpan.innerText = currentRate + ' $BULL';
-        currentPriceSpan.innerText = (1 / currentRate).toFixed(6) + ' BNB';
-        stageEndTimestamp = Math.floor(Date.now() / 1000) + 3600 * 24;
-        updateCountdown();
-        totalSupplySpan.innerText = '1,000,000,000 $BULL';
-        progressPercent.innerText = '12.5%';
-        progressBarFill.style.width = '12.5%';
         estimateTokens();
+      } catch (e) {
+        console.warn('refreshContractData failed:', e);
       }
     }
 
@@ -792,8 +841,7 @@
         tokenEstimate.innerText = 'Enter BNB amount to see estimated $BULL tokens';
         return;
       }
-      const estimated = val * currentRate;
-      tokenEstimate.innerText = `You will receive approx. ${estimated.toFixed(2)} $BULL`;
+      tokenEstimate.innerText = `You will receive approx. ${(val * currentRate).toFixed(2)} $BULL`;
     }
 
     // ========== Web3Modal 初始化 ==========
@@ -830,39 +878,76 @@
       });
     }
 
-    // ========== 同步钱包状态（关键修复） ==========
-    async function syncWallet() {
+    // ========== 关键：实时检测连接状态 ==========
+    async function getConnectedAccounts(walletProvider) {
+      if (!walletProvider?.request) return [];
+      try {
+        const accounts = await walletProvider.request({ method: 'eth_accounts' });
+        return Array.isArray(accounts) ? accounts : [];
+      } catch {
+        return [];
+      }
+    }
+
+    function attachWalletListeners(walletProvider) {
+      if (!walletProvider?.on) return;
+
+      walletProvider.removeListener?.('accountsChanged', onAccountsChanged);
+      walletProvider.removeListener?.('chainChanged', onChainChanged);
+      walletProvider.removeListener?.('disconnect', onDisconnect);
+
+      walletProvider.on('accountsChanged', onAccountsChanged);
+      walletProvider.on('chainChanged', onChainChanged);
+      walletProvider.on('disconnect', onDisconnect);
+    }
+
+    async function onAccountsChanged(accounts) {
+      if (!accounts || accounts.length === 0) {
+        hardResetUI();
+        return;
+      }
+      await syncWallet({ silent: true });
+    }
+
+    async function onChainChanged() {
+      await syncWallet({ silent: true });
+    }
+
+    function onDisconnect() {
+      hardResetUI();
+    }
+
+    async function syncWallet({ silent = false } = {}) {
       const walletProvider = await web3Modal.getWalletProvider?.();
-      if (!walletProvider) return false;
+      if (!walletProvider) {
+        if (isUIConnected) hardResetUI();
+        return false;
+      }
+
+      const accounts = await getConnectedAccounts(walletProvider);
+      if (!accounts.length) {
+        if (isUIConnected) hardResetUI();
+        return false;
+      }
 
       provider = new ethers.providers.Web3Provider(walletProvider);
       signer = provider.getSigner();
-
-      // 读网络 + 地址（有些钱包需要先 request accounts）
-      try {
-        // 确保拿到账号授权
-        await walletProvider.request?.({ method: 'eth_requestAccounts' }).catch(() => {});
-      } catch (_) {}
-
-      try {
-        userAddress = await signer.getAddress();
-      } catch (e) {
-        console.warn('getAddress failed:', e);
-        return false;
-      }
+      userAddress = accounts[0];
 
       const net = await provider.getNetwork().catch(() => ({ chainId: null }));
       setNetworkBadge(net.chainId);
 
-      // 错误网络：提示并尝试切换
       if (net.chainId !== CONFIG.CHAIN_ID) {
-        showNotification("Wrong Network", "Please switch to BNB Smart Chain (Mainnet).", true);
+        if (!silent) showNotification("Wrong Network", "Please switch to BNB Smart Chain (Mainnet).", true);
         await switchToBSC(walletProvider);
+        setTimeout(() => syncWallet({ silent: true }), 800);
+        return true;
       }
 
       contract = new ethers.Contract(CONFIG.CONTRACT_ADDRESS, CONTRACT_ABI, signer);
 
-      // 更新UI
+      // 立刻更新 UI
+      isUIConnected = true;
       connectBtn.innerText = userAddress.slice(0, 6) + '...' + userAddress.slice(-4);
       connectBtn.disabled = true;
       disconnectBtn.style.display = 'inline-block';
@@ -879,119 +964,86 @@
 
       referralLink.value = `${window.location.origin}?ref=${userAddress}`;
 
-      // 监听账号/网络变化
-      if (walletProvider?.on) {
-        walletProvider.removeListener?.('accountsChanged', onAccountsChanged);
-        walletProvider.removeListener?.('chainChanged', onChainChanged);
-        walletProvider.on('accountsChanged', onAccountsChanged);
-        walletProvider.on('chainChanged', onChainChanged);
-      }
+      attachWalletListeners(walletProvider);
 
       await refreshContractData();
 
       if (countdownInterval) clearInterval(countdownInterval);
       countdownInterval = setInterval(updateCountdown, 1000);
 
-      showNotification("Connected", "Wallet connected successfully", false);
+      if (!silent) showNotification("Connected", "Wallet connected successfully", false);
       return true;
     }
 
-    function onAccountsChanged(accounts) {
-      if (!accounts || accounts.length === 0) {
-        // 用户断开或锁定
-        hardResetUI();
-        return;
-      }
-      // 重新同步
-      syncWallet().catch(console.warn);
+    function startRealtimeWatcher() {
+      if (watcherInterval) clearInterval(watcherInterval);
+
+      watcherInterval = setInterval(async () => {
+        try {
+          const walletProvider = await web3Modal.getWalletProvider?.();
+          if (!walletProvider) {
+            if (isUIConnected) hardResetUI();
+            return;
+          }
+
+          const accounts = await getConnectedAccounts(walletProvider);
+
+          // 实际已连接但 UI 还没更新
+          if (accounts.length && !isUIConnected) {
+            await syncWallet({ silent: true });
+            return;
+          }
+
+          // 实际已断开但 UI 还显示连接
+          if (!accounts.length && isUIConnected) {
+            hardResetUI();
+            return;
+          }
+        } catch {
+          // ignore
+        }
+      }, 800);
     }
 
-    function onChainChanged() {
-      // 切网后刷新（最稳）
-      syncWallet().catch(console.warn);
-    }
-
-    function hardResetUI() {
-      userAddress = null;
-      provider = null;
-      signer = null;
-      contract = null;
-
-      resetConnectButton();
-
-      dashboardNotice.style.display = 'block';
-      dashboardGrid.style.display = 'none';
-      referralBox.style.display = 'none';
-      stakingCard.style.display = 'none';
-      portfolioCard.style.display = 'none';
-      historyTable.style.display = 'none';
-
-      buyButton.disabled = true;
-      buyButton.innerText = 'Connect Wallet To Buy';
-      claimButton.style.display = 'none';
-
-      walletBalanceSpan.innerText = '0.00';
-      tokenBalanceDetail.innerText = '持有 $BULL: 0';
-      portfolioValue.innerText = '0 BNB';
-    }
-
-    // ========== 连接钱包 ==========
+    // ========== 连接/断开 ==========
     async function connectWallet() {
       try {
         connectBtn.disabled = true;
         connectBtn.innerHTML = `<span class="loading-spinner"></span>`;
 
-        connectionTimeout = setTimeout(() => {
-          resetConnectButton();
-          showNotification("Connection Timeout", "Wallet connection timed out. Please try again.", true);
-        }, 30000);
-
         await web3Modal.open();
 
+        // open 后立刻同步
         const ok = await syncWallet();
-        if (!ok) {
-          // 用户可能关闭了 modal 或没授权
-          resetConnectButton();
-        }
-
-        if (connectionTimeout) clearTimeout(connectionTimeout);
-      } catch (error) {
-        console.error('Connect wallet error:', error);
-        showNotification("Connection Failed", error?.message || String(error), true);
-        resetConnectButton();
-        if (connectionTimeout) clearTimeout(connectionTimeout);
+        if (!ok) resetConnectButtonUI();
+      } catch (e) {
+        console.warn('connectWallet error:', e);
+        showNotification("Connection Failed", e?.message || String(e), true);
+        resetConnectButtonUI();
       }
     }
 
-    // ========== 断开连接 ==========
     async function disconnectWallet() {
       try {
-        // web3modal v4 有些版本支持 disconnect()
-        if (web3Modal?.disconnect) {
-          await web3Modal.disconnect();
-        }
+        if (web3Modal?.disconnect) await web3Modal.disconnect();
       } catch (e) {
         console.warn('disconnect error:', e);
       } finally {
-        // 直接重置 UI（不强依赖钱包是否真的断开）
         hardResetUI();
-        // 某些钱包缓存连接状态，这里建议刷新一次确保干净
-        window.location.reload();
+        showNotification("Disconnected", "Wallet disconnected", false);
       }
     }
 
-    // ========== 购买和领取函数 ==========
+    // ========== 购买/领取 ==========
     async function buyTokens() {
-      if (!signer || !contract) {
+      if (!isUIConnected || !signer || !contract) {
         showNotification('Not Connected', 'Please connect wallet first', true);
         return;
       }
 
-      const walletProvider = await web3Modal.getWalletProvider?.();
       const net = await provider.getNetwork().catch(() => ({ chainId: null }));
       if (net.chainId !== CONFIG.CHAIN_ID) {
         showNotification("Wrong Network", "Switch to BNB Smart Chain (Mainnet) to buy.", true);
-        await switchToBSC(walletProvider);
         return;
       }
 
@@ -1019,7 +1071,7 @@
     }
 
     async function claimTokens() {
-      if (!signer || !contract) {
+      if (!isUIConnected || !signer || !contract) {
         showNotification('Not Connected', 'Please connect wallet first', true);
         return;
       }
@@ -1041,6 +1093,16 @@
       }
     }
 
+    // ========== FAQ 折叠（原来没写，这里补上不影响钱包逻辑） ==========
+    document.querySelectorAll('.faq-item').forEach(item => {
+      const q = item.querySelector('.faq-question');
+      const a = item.querySelector('.faq-answer');
+      q?.addEventListener('click', () => {
+        const isOpen = a.style.display === 'block';
+        a.style.display = isOpen ? 'none' : 'block';
+      });
+    });
+
     // ========== 事件绑定 ==========
     connectBtn.addEventListener('click', connectWallet);
     disconnectBtn.addEventListener('click', disconnectWallet);
@@ -1060,10 +1122,11 @@
     refreshContractData();
     setInterval(updateCountdown, 1000);
 
-    // 页面加载后：如果钱包已有连接缓存，自动同步一次（能解决“刷新后仍显示 Connect Wallet”）
-    setTimeout(() => {
-      syncWallet().catch(() => {});
-    }, 600);
+    // ✅ 实时检测：解决“断开/重连 UI 不跟随”
+    startRealtimeWatcher();
+
+    // ✅ 页面加载自动同步：如果 session 已缓存，会立刻显示地址
+    setTimeout(() => syncWallet({ silent: true }), 300);
   </script>
 </body>
 </html>
