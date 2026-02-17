@@ -858,16 +858,11 @@
       }
     }
 
-    // ========== 智能连接按钮：有注入式钱包则自动连接，否则显示选择器 ==========
-    async function handleConnectClick(e) {
+    // ========== 点击连接按钮：只显示选择器，不自动连接 ==========
+    function handleConnectClick(e) {
       e.stopPropagation();
       if (connectBtn.disabled) return;
-
-      if (window.ethereum) {
-        await connectInjected();
-      } else {
-        walletSelector.classList.toggle('show');
-      }
+      walletSelector.classList.toggle('show');
     }
 
     // 点击其他区域关闭选择器
