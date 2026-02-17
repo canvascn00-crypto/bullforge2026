@@ -261,7 +261,7 @@
             </div>
             <div class="wallet-option" id="optWalletConnect">
               <span>📱</span>
-              <span>WalletConnect (二维码/跳转)</span>
+              <span>WalletConnect</span>
             </div>
           </div>
         </div>
@@ -810,36 +810,19 @@
       }
     }
 
-    // ========== 连接 WalletConnect v2 (移动端自动跳转) ==========
+    // ========== 连接 WalletConnect v2 (使用内置模态框，自动处理移动端跳转) ==========
     async function connectWalletConnect() {
-      const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-      
       try {
-        let providerInitOptions = {
+        // 统一使用 showQrModal: true，让 WalletConnect 自行处理移动端跳转和二维码
+        wcProvider = await EthereumProvider.init({
           projectId: CONFIG.WALLETCONNECT_PROJECT_ID,
           chains: [CONFIG.CHAIN_ID],
           optionalChains: [CONFIG.CHAIN_ID],
           rpcMap: { [CONFIG.CHAIN_ID]: CONFIG.BSC_RPC },
-          showQrModal: !isMobile,  // 移动端不显示二维码，直接跳转
-        };
+          showQrModal: true,  // 启用内置模态框，移动端自动显示跳转按钮
+        });
 
-        if (isMobile) {
-          providerInitOptions.redirect = {
-            native: window.location.href, // 钱包授权后跳回当前页面
-            universal: window.location.href
-          };
-        }
-
-        wcProvider = await EthereumProvider.init(providerInitOptions);
-
-        if (isMobile) {
-          wcProvider.on('display_uri', (uri) => {
-            // 直接跳转，系统会弹出选择钱包
-            window.location.href = uri;
-          });
-        }
-
-        await wcProvider.connect();
+        await wcProvider.connect(); // 此方法会在移动端跳转后返回时正确解析
         
         provider = new ethers.providers.Web3Provider(wcProvider);
         signer = provider.getSigner();
