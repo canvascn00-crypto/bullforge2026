@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Bullforge | The Future isn't Just Bullish. It's Bullforge.</title>
 
-  <!-- ethers v5 (保持不变) -->
+  <!-- ethers v5 -->
   <script src="https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.umd.min.js"></script>
 
   <!-- 字体 -->
@@ -14,7 +14,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&display=swap" rel="stylesheet">
 
   <style>
-    /* ==================== 全局样式 ==================== (与原版完全相同) */
+    /* ==================== 全局样式 ==================== */
     :root {
       --gold-primary: #FFD700;
       --gold-secondary: #FFA500;
@@ -213,7 +213,6 @@
         <a href="#dashboard">My Assets</a>
         <a href="#roadmap">Roadmap</a>
         <a href="#faq">FAQ</a>
-
         <!-- 钱包容器 (升级版) -->
         <div class="wallet-container">
           <button id="walletConnectBtn">Connect Wallet</button>
@@ -223,7 +222,7 @@
     </div>
   </nav>
 
-  <!-- Hero 区域 (完整保留) -->
+  <!-- Hero 区域 -->
   <section class="hero">
     <div class="hero-bg-glow"></div>
     <div class="container hero-content">
@@ -433,13 +432,13 @@
   </footer>
 
   <script type="module">
-    // ✅ 升级: 使用 Web3Modal v3 (ethers5) 实现 bullzilla 风格的多钱包连接
+    // ✅ 升级: 使用 Web3Modal v3 (ethers5) 实现 bullzilla 风格的多钱包连接，并修复转圈问题
     import { createWeb3Modal, defaultConfig } from 'https://esm.sh/@web3modal/ethers5@4.1.2';
 
     // ==================== 核心配置 ====================
     const CONFIG = {
       CONTRACT_ADDRESS: "0x16D6c1a692AaC51a3821bA2903115d4600649F07",
-      WALLETCONNECT_PROJECT_ID: "fe819ed06d9e5489f764fc7b1dae1c4e",  // 请确保此ID有效，如无效可更换为你的
+      WALLETCONNECT_PROJECT_ID: "fe819ed06d9e5489f764fc7b1dae1c4e", // 请替换为你的Project ID (可免费申请)
       BSC_RPC: "https://bsc-dataseed.binance.org/",
       CHAIN_ID: 56,
       CHAIN_NAME: "BNB Smart Chain",
@@ -447,7 +446,7 @@
       EXPLORER: "https://bscscan.com"
     };
 
-    // 完整ABI (保持不变)
+    // 完整ABI
     const CONTRACT_ABI = [
       "function name() view returns (string)",
       "function symbol() view returns (string)",
@@ -518,12 +517,13 @@
 
     // ========== 全局变量 ==========
     let provider, signer, contract, userAddress;
-    let web3Modal;               // Web3Modal 实例
+    let web3Modal;
     let currentRate = 0;
     let totalRaisedBNB = 0;
     let hardcapBNB = 2000;
     let stageEndTimestamp = 0;
     let countdownInterval;
+    let connectionTimeout; // 用于超时重置
 
     // ========== 工具函数 ==========
     function showNotification(title, desc, isError = false) {
@@ -532,6 +532,11 @@
       notif.classList.add('show');
       notif.style.borderColor = isError ? 'var(--danger)' : 'var(--gold-primary)';
       setTimeout(() => notif.classList.remove('show'), 5000);
+    }
+
+    function resetConnectButton() {
+      connectBtn.disabled = false;
+      connectBtn.innerHTML = 'Connect Wallet';
     }
 
     function updateCountdown() {
@@ -584,72 +589,12 @@
     }
 
     async function refreshContractData() {
-      if (!contract) {
-        // 只读模式尝试从公共RPC获取合约实例
-        try {
-          const readProvider = new ethers.providers.JsonRpcProvider(CONFIG.BSC_RPC);
-          const readContract = new ethers.Contract(CONFIG.CONTRACT_ADDRESS, CONTRACT_ABI, readProvider);
-          // 仅读取公开数据，不依赖signer
-          let raisedWei = await readContract.totalRaised().catch(() => null);
-          if (raisedWei) {
-            totalRaisedBNB = parseFloat(ethers.utils.formatEther(raisedWei));
-            totalRaisedSpan.innerText = totalRaisedBNB.toFixed(2) + ' BNB';
-          } else {
-            totalRaisedSpan.innerText = '0.00 BNB';
-          }
-          let stage = await readContract.currentStage().catch(() => 1);
-          currentStageSpan.innerText = stage ? stage.toString() : '1';
-          let rate = await readContract.getRate().catch(() => null);
-          if (rate) {
-            currentRate = parseFloat(ethers.utils.formatEther(rate));
-            tokenRateSpan.innerText = currentRate.toFixed(0) + ' $BULL';
-          } else {
-            currentRate = 1000 * (stage || 1);
-            tokenRateSpan.innerText = currentRate.toFixed(0) + ' $BULL';
-          }
-          let priceWei = await readContract.getCurrentPrice().catch(() => null);
-          if (priceWei) {
-            let priceBNB = parseFloat(ethers.utils.formatEther(priceWei));
-            currentPriceSpan.innerText = priceBNB.toFixed(6) + ' BNB';
-          } else {
-            currentPriceSpan.innerText = (1 / currentRate).toFixed(6) + ' BNB';
-          }
-          let endTime = await readContract.stageEndTime().catch(() => null);
-          if (endTime) stageEndTimestamp = endTime.toNumber();
-          else stageEndTimestamp = Math.floor(Date.now() / 1000) + 48 * 3600;
-          updateCountdown();
-          let totalSupplyWei = await readContract.totalSupply().catch(() => null);
-          if (totalSupplyWei) {
-            let totalSupply = ethers.utils.formatEther(totalSupplyWei);
-            totalSupplySpan.innerText = Number(totalSupply).toLocaleString() + ' $BULL';
-          } else {
-            totalSupplySpan.innerText = '1,000,000,000 $BULL';
-          }
-          let capWei = await readContract.hardCap().catch(() => null);
-          if (capWei) hardcapBNB = parseFloat(ethers.utils.formatEther(capWei));
-          let progress = (totalRaisedBNB / hardcapBNB) * 100;
-          if (progress > 100) progress = 100;
-          progressPercent.innerText = progress.toFixed(1) + '%';
-          progressBarFill.style.width = progress + '%';
-        } catch (e) {
-          console.warn('只读合约读取失败，使用模拟数据', e);
-          totalRaisedSpan.innerText = '125.45 BNB';
-          currentStageSpan.innerText = '2';
-          currentRate = 2500;
-          tokenRateSpan.innerText = currentRate + ' $BULL';
-          currentPriceSpan.innerText = (1 / currentRate).toFixed(6) + ' BNB';
-          stageEndTimestamp = Math.floor(Date.now() / 1000) + 3600 * 24;
-          updateCountdown();
-          totalSupplySpan.innerText = '1,000,000,000 $BULL';
-          progressPercent.innerText = '12.5%';
-          progressBarFill.style.width = '12.5%';
-        }
-        return;
-      }
-
-      // 有signer的情况（已连接钱包）
+      // 只读模式尝试从公共RPC获取合约实例
       try {
-        let raisedWei = await contract.totalRaised().catch(() => null);
+        const readProvider = new ethers.providers.JsonRpcProvider(CONFIG.BSC_RPC);
+        const readContract = new ethers.Contract(CONFIG.CONTRACT_ADDRESS, CONTRACT_ABI, readProvider);
+        
+        let raisedWei = await readContract.totalRaised().catch(() => null);
         if (raisedWei) {
           totalRaisedBNB = parseFloat(ethers.utils.formatEther(raisedWei));
           totalRaisedSpan.innerText = totalRaisedBNB.toFixed(2) + ' BNB';
@@ -657,10 +602,10 @@
           totalRaisedSpan.innerText = '0.00 BNB';
         }
 
-        let stage = await contract.currentStage().catch(() => 1);
+        let stage = await readContract.currentStage().catch(() => 1);
         currentStageSpan.innerText = stage ? stage.toString() : '1';
 
-        let rate = await contract.getRate().catch(() => null);
+        let rate = await readContract.getRate().catch(() => null);
         if (rate) {
           currentRate = parseFloat(ethers.utils.formatEther(rate));
           tokenRateSpan.innerText = currentRate.toFixed(0) + ' $BULL';
@@ -669,7 +614,7 @@
           tokenRateSpan.innerText = currentRate.toFixed(0) + ' $BULL';
         }
 
-        let priceWei = await contract.getCurrentPrice().catch(() => null);
+        let priceWei = await readContract.getCurrentPrice().catch(() => null);
         if (priceWei) {
           let priceBNB = parseFloat(ethers.utils.formatEther(priceWei));
           currentPriceSpan.innerText = priceBNB.toFixed(6) + ' BNB';
@@ -677,12 +622,12 @@
           currentPriceSpan.innerText = (1 / currentRate).toFixed(6) + ' BNB';
         }
 
-        let endTime = await contract.stageEndTime().catch(() => null);
+        let endTime = await readContract.stageEndTime().catch(() => null);
         if (endTime) stageEndTimestamp = endTime.toNumber();
         else stageEndTimestamp = Math.floor(Date.now() / 1000) + 48 * 3600;
         updateCountdown();
 
-        let totalSupplyWei = await contract.totalSupply().catch(() => null);
+        let totalSupplyWei = await readContract.totalSupply().catch(() => null);
         if (totalSupplyWei) {
           let totalSupply = ethers.utils.formatEther(totalSupplyWei);
           totalSupplySpan.innerText = Number(totalSupply).toLocaleString() + ' $BULL';
@@ -690,7 +635,7 @@
           totalSupplySpan.innerText = '1,000,000,000 $BULL';
         }
 
-        let capWei = await contract.hardCap().catch(() => null);
+        let capWei = await readContract.hardCap().catch(() => null);
         if (capWei) hardcapBNB = parseFloat(ethers.utils.formatEther(capWei));
 
         let progress = (totalRaisedBNB / hardcapBNB) * 100;
@@ -698,7 +643,8 @@
         progressPercent.innerText = progress.toFixed(1) + '%';
         progressBarFill.style.width = progress + '%';
 
-        if (userAddress) {
+        // 如果有用户地址，加载个人数据
+        if (userAddress && contract) {
           let purchasedWei = await contract.contributed(userAddress).catch(() => null);
           if (purchasedWei) {
             let purchased = parseFloat(ethers.utils.formatEther(purchasedWei));
@@ -769,7 +715,7 @@
           name: 'Bullforge',
           description: 'Bullforge Presale',
           url: window.location.origin,
-          icons: ['https://walletconnect.com/walletconnect-logo.png'] // 可替换为实际图标
+          icons: ['https://walletconnect.com/walletconnect-logo.png']
         },
         defaultChainId: CONFIG.CHAIN_ID,
         rpcUrl: CONFIG.BSC_RPC,
@@ -790,8 +736,9 @@
       // 订阅状态变化
       web3Modal.subscribeState(async (state) => {
         if (state.status === 'connected') {
+          // 清除超时定时器
+          if (connectionTimeout) clearTimeout(connectionTimeout);
           try {
-            // 获取 provider 和 signer (异步)
             provider = await web3Modal.getProvider();
             signer = await web3Modal.getSigner();
             userAddress = await signer.getAddress();
@@ -816,9 +763,10 @@
             if (countdownInterval) clearInterval(countdownInterval);
             countdownInterval = setInterval(updateCountdown, 1000);
             showNotification("Connected", "Wallet connected successfully", false);
-          } catch (e) {
-            console.error(e);
-            showNotification("Connection Error", e.message, true);
+          } catch (error) {
+            console.error('Error in connected state:', error);
+            showNotification("Connection Error", error.message, true);
+            resetConnectButton();
           }
         } else if (state.status === 'disconnected') {
           // 断开连接时刷新页面（简单重置）
@@ -827,17 +775,34 @@
       });
     }
 
-    // ========== 连接钱包 (打开modal) ==========
+    // ========== 连接钱包 ==========
     async function connectWallet() {
       try {
+        // 显示加载状态
         connectBtn.disabled = true;
         connectBtn.innerHTML = `<span class="loading-spinner"></span>`;
+
+        // 设置超时：如果30秒内没有连接成功，重置按钮
+        connectionTimeout = setTimeout(() => {
+          resetConnectButton();
+          showNotification("Connection Timeout", "Wallet connection timed out. Please try again.", true);
+        }, 30000);
+
         await web3Modal.open();
-      } catch (e) {
-        console.error(e);
-        showNotification("Connection Failed", e?.message || String(e), true);
-        connectBtn.disabled = false;
-        connectBtn.innerText = "Connect Wallet";
+        // 注意：如果用户关闭modal，open会返回，但不会触发connected状态，需要重置按钮
+        // 但无法区分是关闭modal还是连接成功，所以我们在open之后也检查一下状态
+        setTimeout(() => {
+          // 如果按钮仍然是加载状态且没有地址，可能是用户关闭了modal，重置
+          if (connectBtn.innerHTML.includes('loading-spinner') && !userAddress) {
+            resetConnectButton();
+            if (connectionTimeout) clearTimeout(connectionTimeout);
+          }
+        }, 2000);
+      } catch (error) {
+        console.error('Connect wallet error:', error);
+        showNotification("Connection Failed", error?.message || String(error), true);
+        resetConnectButton();
+        if (connectionTimeout) clearTimeout(connectionTimeout);
       }
     }
 
@@ -852,16 +817,7 @@
       }
     }
 
-    // ========== 事件绑定 ==========
-    connectBtn.addEventListener('click', connectWallet);
-    disconnectBtn.addEventListener('click', disconnectWallet);
-    bnbAmountInput.addEventListener('input', estimateTokens);
-    copyBtn.addEventListener('click', () => {
-      referralLink.select();
-      document.execCommand('copy');
-      showNotification('Copied!', 'Referral link copied to clipboard', false);
-    });
-
+    // ========== 购买和领取函数 ==========
     async function buyTokens() {
       if (!signer || !contract) return;
       let amount = parseFloat(bnbAmountInput.value);
@@ -899,12 +855,22 @@
       }
     }
 
+    // ========== 事件绑定 ==========
+    connectBtn.addEventListener('click', connectWallet);
+    disconnectBtn.addEventListener('click', disconnectWallet);
+    bnbAmountInput.addEventListener('input', estimateTokens);
+    copyBtn.addEventListener('click', () => {
+      referralLink.select();
+      document.execCommand('copy');
+      showNotification('Copied!', 'Referral link copied to clipboard', false);
+    });
     buyButton.addEventListener('click', buyTokens);
     claimButton.addEventListener('click', claimTokens);
 
-    // ========== 初始化 ==========
+    // 初始化Web3Modal并加载只读数据
     initWeb3Modal();
-    refreshContractData();  // 初始加载只读数据
+    refreshContractData();
+    setInterval(updateCountdown, 1000); // 启动倒计时更新
   </script>
 </body>
 </html>
