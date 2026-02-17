@@ -30,6 +30,10 @@
     body { background-color: var(--dark-bg); color: var(--text-white); line-height: 1.6; overflow-x: hidden; }
     .container { max-width: 1400px; margin: 0 auto; padding: 0 24px; }
 
+    /* ==================== bullzilla 风格：一次只显示一个页面 ==================== */
+    .page { display: none; }
+    .page.is-active { display: block; }
+
     /* ==================== 固定导航栏 ==================== */
     .navbar {
       position: fixed; top: 0; left: 0; width: 100%; z-index: 999;
@@ -38,9 +42,17 @@
       border-bottom: 1px solid var(--dark-border);
     }
     .navbar-content { display: flex; justify-content: space-between; align-items: center; }
-    .navbar-logo { font-size: 28px; font-weight: 900; color: var(--gold-primary); letter-spacing: -0.5px; }
+    .navbar-logo {
+      font-size: 28px; font-weight: 900; color: var(--gold-primary); letter-spacing: -0.5px;
+      text-decoration: none;
+    }
+    .navbar-logo:hover { opacity: 0.9; }
+
     .navbar-links { display: flex; gap: 32px; align-items: center; }
-    .navbar-links a { color: var(--text-gray); text-decoration: none; font-weight: 500; transition: color 0.3s ease; }
+    .navbar-links a {
+      color: var(--text-gray); text-decoration: none; font-weight: 500;
+      transition: color 0.3s ease;
+    }
     .navbar-links a:hover { color: var(--gold-primary); }
 
     /* 钱包容器 */
@@ -100,7 +112,7 @@
       background: rgba(255, 68, 68, 0.08);
     }
 
-    /* ========== 其余样式与原版完全相同 ========== */
+    /* ==================== 其余样式与原版保持一致 ==================== */
     .hero { min-height: 100vh; padding-top: 120px; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; background: linear-gradient(180deg, #0A0500 0%, var(--dark-bg) 100%); position: relative; overflow: hidden; }
     .hero-bg-glow { position: absolute; top: -50%; left: 50%; transform: translateX(-50%); width: 1200px; height: 1200px; background: radial-gradient(circle, rgba(255, 215, 0, 0.15) 0%, transparent 70%); z-index: 0; }
     .hero-content { position: relative; z-index: 1; max-width: 900px; }
@@ -230,14 +242,17 @@
   <!-- 导航栏 -->
   <nav class="navbar">
     <div class="container navbar-content">
-      <div class="navbar-logo">🐂 BULLFORGE</div>
+      <!-- ✅ 点击 LOGO 切回首页（home） -->
+      <a class="navbar-logo" href="#home" data-nav="home">🐂 BULLFORGE</a>
+
       <div class="navbar-links">
-        <a href="#about">About</a>
-        <a href="#mechanics">Mechanics</a>
-        <a href="#tokenomics">Tokenomics</a>
-        <a href="#dashboard">My Assets</a>
-        <a href="#roadmap">Roadmap</a>
-        <a href="#faq">FAQ</a>
+        <!-- ✅ bullzilla 风格：点击切换页面，不滚动 -->
+        <a href="#about" data-nav="about">About</a>
+        <a href="#mechanics" data-nav="mechanics">Mechanics</a>
+        <a href="#tokenomics" data-nav="tokenomics">Tokenomics</a>
+        <a href="#dashboard" data-nav="dashboard">My Assets</a>
+        <a href="#roadmap" data-nav="roadmap">Roadmap</a>
+        <a href="#faq" data-nav="faq">FAQ</a>
 
         <div class="wallet-container">
           <span id="networkBadge">BNB</span>
@@ -248,8 +263,8 @@
     </div>
   </nav>
 
-  <!-- Hero 区域 -->
-  <section class="hero">
+  <!-- ✅ Home 页面（Hero） -->
+  <section class="hero page" data-page="home">
     <div class="hero-bg-glow"></div>
     <div class="container hero-content">
       <h1 class="hero-title">The Future isn't Just Bullish. It's Bullforge.</h1>
@@ -301,8 +316,8 @@
     </div>
   </section>
 
-  <!-- About 区域 -->
-  <section class="section" id="about">
+  <!-- ✅ About 页面 -->
+  <section class="section page" id="about" data-page="about">
     <div class="container">
       <div class="section-header">
         <div class="section-subtitle">About Bullforge</div>
@@ -318,8 +333,8 @@
     </div>
   </section>
 
-  <!-- 核心机制 -->
-  <section class="section" id="mechanics">
+  <!-- ✅ Mechanics 页面 -->
+  <section class="section page" id="mechanics" data-page="mechanics">
     <div class="container">
       <div class="section-header">
         <div class="section-subtitle">Core Mechanics</div>
@@ -359,8 +374,8 @@
     </div>
   </section>
 
-  <!-- Tokenomics 区域 -->
-  <section class="section tokenomics-section" id="tokenomics">
+  <!-- ✅ Tokenomics 页面 -->
+  <section class="section tokenomics-section page" id="tokenomics" data-page="tokenomics">
     <div class="container">
       <div class="section-header">
         <div class="section-subtitle">Bullforge DNA</div>
@@ -380,8 +395,8 @@
     </div>
   </section>
 
-  <!-- 我的资产板块 -->
-  <section class="section dashboard-section" id="dashboard">
+  <!-- ✅ Dashboard 页面 -->
+  <section class="section dashboard-section page" id="dashboard" data-page="dashboard">
     <div class="container">
       <div class="section-header">
         <div class="section-subtitle">Your Forge</div>
@@ -438,8 +453,8 @@
     </div>
   </section>
 
-  <!-- Roadmap 区域 -->
-  <section class="section" id="roadmap">
+  <!-- ✅ Roadmap 页面 -->
+  <section class="section page" id="roadmap" data-page="roadmap">
     <div class="container">
       <div class="section-header">
         <div class="section-subtitle">The Forge Launch Sequence</div>
@@ -454,8 +469,23 @@
     </div>
   </section>
 
-  <!-- Audit 区域 -->
-  <section class="section audit-section">
+  <!-- ✅ FAQ 页面 -->
+  <section class="section page" id="faq" data-page="faq">
+    <div class="container">
+      <div class="section-header"><div class="section-subtitle">FAQ</div><h2 class="section-title">Frequently Asked Questions</h2></div>
+      <div class="faq-grid">
+        <div class="faq-item"><div class="faq-question">What is Bullforge ($BULL)? <span>✦</span></div><div class="faq-answer">Bullforge is a BNB Chain-based memecoin forged in the chaos of the blockchain — a living myth designed to turn red candles into rocket fuel.</div></div>
+        <div class="faq-item"><div class="faq-question">How does the presale work? <span>✦</span></div><div class="faq-answer">Every 48 hours or once $100,000 is raised — whichever comes first — the price of $BULL automatically climbs higher.</div></div>
+        <div class="faq-item"><div class="faq-question">Is there a minimum buy amount? <span>✦</span></div><div class="faq-answer">No, you can buy any amount of $BULL. However, a minimum of $50 during the presale is required to unlock your referral code.</div></div>
+        <div class="faq-item"><div class="faq-question">Which wallets can I use? <span>✦</span></div><div class="faq-answer">Bullforge is compatible with wallets like MetaMask, Trust Wallet, and Coinbase Wallet. Any BEP-20 compatible wallet will work.</div></div>
+        <div class="faq-item"><div class="faq-question">When can I claim my tokens? <span>✦</span></div><div class="faq-answer">Token claim will be available immediately after the presale ends and liquidity is added to the DEX.</div></div>
+        <div class="faq-item"><div class="faq-question">How does the referral program work? <span>✦</span></div><div class="faq-answer">Share your unique referral link, and you'll earn 10% of every buy made through your link. The person you refer also gets a 10% bonus.</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ✅ 只在首页显示：Audit（home） -->
+  <section class="section audit-section page" data-page="home">
     <div class="container">
       <div class="audit-card">
         <div class="audit-icon">🛡️</div>
@@ -473,23 +503,8 @@
     </div>
   </section>
 
-  <!-- FAQ 区域 -->
-  <section class="section" id="faq">
-    <div class="container">
-      <div class="section-header"><div class="section-subtitle">FAQ</div><h2 class="section-title">Frequently Asked Questions</h2></div>
-      <div class="faq-grid">
-        <div class="faq-item"><div class="faq-question">What is Bullforge ($BULL)? <span>✦</span></div><div class="faq-answer">Bullforge is a BNB Chain-based memecoin forged in the chaos of the blockchain — a living myth designed to turn red candles into rocket fuel.</div></div>
-        <div class="faq-item"><div class="faq-question">How does the presale work? <span>✦</span></div><div class="faq-answer">Every 48 hours or once $100,000 is raised — whichever comes first — the price of $BULL automatically climbs higher.</div></div>
-        <div class="faq-item"><div class="faq-question">Is there a minimum buy amount? <span>✦</span></div><div class="faq-answer">No, you can buy any amount of $BULL. However, a minimum of $50 during the presale is required to unlock your referral code.</div></div>
-        <div class="faq-item"><div class="faq-question">Which wallets can I use? <span>✦</span></div><div class="faq-answer">Bullforge is compatible with wallets like MetaMask, Trust Wallet, and Coinbase Wallet. Any BEP-20 compatible wallet will work.</div></div>
-        <div class="faq-item"><div class="faq-question">When can I claim my tokens? <span>✦</span></div><div class="faq-answer">Token claim will be available immediately after the presale ends and liquidity is added to the DEX.</div></div>
-        <div class="faq-item"><div class="faq-question">How does the referral program work? <span>✦</span></div><div class="faq-answer">Share your unique referral link, and you'll earn 10% of every buy made through your link. The person you refer also gets a 10% bonus.</div></div>
-      </div>
-    </div>
-  </section>
-
-  <!-- 合作伙伴区域 -->
-  <section class="partners-section">
+  <!-- ✅ 只在首页显示：Partners（home） -->
+  <section class="partners-section page" data-page="home">
     <div class="container">
       <div class="section-header"><div class="section-subtitle">Powered By</div></div>
       <div class="partners-grid">
@@ -498,17 +513,17 @@
     </div>
   </section>
 
-  <!-- 页脚 -->
-  <footer class="footer">
+  <!-- ✅ 只在首页显示：Footer（home） -->
+  <footer class="footer page" data-page="home">
     <div class="container footer-content">
       <div class="footer-logo">🐂 BULLFORGE</div>
       <div class="footer-links">
-        <a href="#about">About</a>
-        <a href="#mechanics">Mechanics</a>
-        <a href="#tokenomics">Tokenomics</a>
-        <a href="#dashboard">My Assets</a>
-        <a href="#roadmap">Roadmap</a>
-        <a href="#faq">FAQ</a>
+        <a href="#about" data-nav="about">About</a>
+        <a href="#mechanics" data-nav="mechanics">Mechanics</a>
+        <a href="#tokenomics" data-nav="tokenomics">Tokenomics</a>
+        <a href="#dashboard" data-nav="dashboard">My Assets</a>
+        <a href="#roadmap" data-nav="roadmap">Roadmap</a>
+        <a href="#faq" data-nav="faq">FAQ</a>
         <a href="https://bscscan.com/address/0x16D6c1a692AaC51a3821bA2903115d4600649F07" target="_blank" rel="noreferrer">Contract</a>
       </div>
       <div class="footer-contract">Contract Address: 0x16D6c1a692AaC51a3821bA2903115d4600649F07</div>
@@ -516,7 +531,7 @@
     </div>
   </footer>
 
-  <!-- ✅ 已整合：连接后立刻显示状态 + 实时检测 + 断开重连不丢UI -->
+  <!-- ✅ 已整合：连接后立刻显示状态 + 实时检测 + 断开重连不丢UI + bullzilla切页 -->
   <script type="module">
     import { ethers } from 'https://esm.sh/ethers@5.7.2';
     import { createWeb3Modal, defaultConfig } from 'https://esm.sh/@web3modal/ethers5@4.1.2';
@@ -533,7 +548,6 @@
       EXPLORER: "https://bscscan.com"
     };
 
-    // ABI（保留你原有功能）
     const CONTRACT_ABI = [
       "function name() view returns (string)",
       "function symbol() view returns (string)",
@@ -557,7 +571,7 @@
       "event Buy(address indexed buyer, uint256 bnbAmount, uint256 tokenAmount, uint256 price, address indexed referrer)"
     ];
 
-    // ========== UI 元素 ==========
+    // ========== UI ==========
     const notif = document.getElementById('notification');
     const notifTitle = document.getElementById('notificationTitle');
     const notifDesc = document.getElementById('notificationDesc');
@@ -609,13 +623,7 @@
     const minutesSpan = document.getElementById('countdownMinutes');
     const secondsSpan = document.getElementById('countdownSeconds');
 
-    // （保留你的元素，不实现 staking）
-    const stakeButton = document.getElementById('stakeButton');
-    const unstakeButton = document.getElementById('unstakeButton');
-    const stakeAmount = document.getElementById('stakeAmount');
-    const lockDays = document.getElementById('lockDays');
-
-    // ========== 全局状态 ==========
+    // ========== 状态 ==========
     let provider, signer, contract, userAddress;
     let web3Modal;
 
@@ -628,7 +636,7 @@
     let watcherInterval;
     let isUIConnected = false;
 
-    // ========== 工具 ==========
+    // ========== 通用 ==========
     function showNotification(title, desc, isError = false) {
       notifTitle.innerText = title;
       notifDesc.innerText = desc;
@@ -705,10 +713,7 @@
     async function switchToBSC(walletProvider) {
       if (!walletProvider?.request) return;
       try {
-        await walletProvider.request({
-          method: 'wallet_switchEthereumChain',
-          params: [{ chainId: CONFIG.CHAIN_ID_HEX }]
-        });
+        await walletProvider.request({ method: 'wallet_switchEthereumChain', params: [{ chainId: CONFIG.CHAIN_ID_HEX }] });
       } catch (e) {
         try {
           await walletProvider.request({
@@ -727,7 +732,7 @@
       }
     }
 
-    // ========== 用户购买历史 ==========
+    // ========== 用户历史 ==========
     async function loadUserHistory() {
       if (!contract || !userAddress || !provider) return;
       try {
@@ -760,7 +765,7 @@
       }
     }
 
-    // ========== 合约数据刷新（只读 + 已连接用户数据） ==========
+    // ========== 合约刷新 ==========
     async function refreshContractData() {
       try {
         const readProvider = new ethers.providers.JsonRpcProvider(CONFIG.BSC_RPC);
@@ -878,7 +883,7 @@
       });
     }
 
-    // ========== 关键：实时检测连接状态 ==========
+    // ========== 实时检测连接 ==========
     async function getConnectedAccounts(walletProvider) {
       if (!walletProvider?.request) return [];
       try {
@@ -988,13 +993,11 @@
 
           const accounts = await getConnectedAccounts(walletProvider);
 
-          // 实际已连接但 UI 还没更新
           if (accounts.length && !isUIConnected) {
             await syncWallet({ silent: true });
             return;
           }
 
-          // 实际已断开但 UI 还显示连接
           if (!accounts.length && isUIConnected) {
             hardResetUI();
             return;
@@ -1013,7 +1016,6 @@
 
         await web3Modal.open();
 
-        // open 后立刻同步
         const ok = await syncWallet();
         if (!ok) resetConnectButtonUI();
       } catch (e) {
@@ -1093,7 +1095,7 @@
       }
     }
 
-    // ========== FAQ 折叠（原来没写，这里补上不影响钱包逻辑） ==========
+    // ========== FAQ 折叠 ==========
     document.querySelectorAll('.faq-item').forEach(item => {
       const q = item.querySelector('.faq-question');
       const a = item.querySelector('.faq-answer');
@@ -1102,6 +1104,38 @@
         a.style.display = isOpen ? 'none' : 'block';
       });
     });
+
+    // ========== bullzilla 风格：切页（一次只显示一个页面） ==========
+    function setActivePage(pageName) {
+      document.querySelectorAll('.page').forEach(p => {
+        p.classList.toggle('is-active', p.getAttribute('data-page') === pageName);
+      });
+
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+
+      if (location.hash !== `#${pageName}`) history.replaceState(null, '', `#${pageName}`);
+    }
+
+    function getPageFromHash() {
+      const h = (location.hash || '').replace('#', '').trim();
+      // 允许旧锚点（#about/#mechanics 等）直接工作
+      return h || 'home';
+    }
+
+    // 点击导航切换（包含 footer 的 nav）
+    document.querySelectorAll('[data-nav]').forEach(a => {
+      a.addEventListener('click', (e) => {
+        // 外链不要拦截
+        const href = a.getAttribute('href') || '';
+        const isExternal = href.startsWith('http');
+        if (isExternal) return;
+
+        e.preventDefault();
+        setActivePage(a.getAttribute('data-nav'));
+      });
+    });
+
+    window.addEventListener('hashchange', () => setActivePage(getPageFromHash()));
 
     // ========== 事件绑定 ==========
     connectBtn.addEventListener('click', connectWallet);
@@ -1122,8 +1156,11 @@
     refreshContractData();
     setInterval(updateCountdown, 1000);
 
-    // ✅ 实时检测：解决“断开/重连 UI 不跟随”
+    // ✅ 实时检测连接：解决“断开/重连 UI 不跟随”
     startRealtimeWatcher();
+
+    // ✅ 首次加载：显示 home 或 hash 对应页面
+    setActivePage(getPageFromHash());
 
     // ✅ 页面加载自动同步：如果 session 已缓存，会立刻显示地址
     setTimeout(() => syncWallet({ silent: true }), 300);
