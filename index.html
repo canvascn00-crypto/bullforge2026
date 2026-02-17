@@ -5,13 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Bullforge | The Future isn't Just Bullish. It's Bullforge.</title>
 
-  <!-- 字体 -->
+  <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&display=swap" rel="stylesheet">
 
   <style>
-    /* ==================== 全局样式 ==================== */
+    /* ==================== Global ==================== */
     :root {
       --gold-primary: #FFD700;
       --gold-secondary: #FFA500;
@@ -30,11 +30,11 @@
     body { background-color: var(--dark-bg); color: var(--text-white); line-height: 1.6; overflow-x: hidden; }
     .container { max-width: 1400px; margin: 0 auto; padding: 0 24px; }
 
-    /* ==================== bullzilla 风格：一次只显示一个页面 ==================== */
+    /* ==================== One-page routing ==================== */
     .page { display: none; }
     .page.is-active { display: block; }
 
-    /* ==================== 固定导航栏 ==================== */
+    /* ==================== Navbar ==================== */
     .navbar {
       position: fixed; top: 0; left: 0; width: 100%; z-index: 999;
       padding: 16px 0; background: rgba(5, 5, 5, 0.9);
@@ -44,20 +44,17 @@
     .navbar-content { display: flex; justify-content: space-between; align-items: center; gap: 16px; }
     .navbar-logo {
       font-size: 28px; font-weight: 900; color: var(--gold-primary); letter-spacing: -0.5px;
-      text-decoration: none;
-      white-space: nowrap;
+      text-decoration: none; white-space: nowrap;
     }
     .navbar-logo:hover { opacity: 0.9; }
 
     .navbar-links { display: flex; gap: 22px; align-items: center; flex-wrap: wrap; justify-content: flex-end; }
     .navbar-links a {
       color: var(--text-gray); text-decoration: none; font-weight: 600;
-      transition: color 0.3s ease;
-      white-space: nowrap;
+      transition: color 0.3s ease; white-space: nowrap;
     }
     .navbar-links a:hover { color: var(--gold-primary); }
 
-    /* 钱包容器 */
     .wallet-container {
       position: relative;
       display: flex;
@@ -95,7 +92,6 @@
     }
     #disconnectBtn:hover { background: rgba(255, 215, 0, 0.1); }
 
-    /* 网络徽章（连接后显示） */
     #networkBadge {
       display: none;
       padding: 6px 12px;
@@ -114,46 +110,118 @@
       background: rgba(255, 68, 68, 0.08);
     }
 
-    /* ==================== 其余样式与原版保持一致 ==================== */
-    .hero { min-height: 100vh; padding-top: 120px; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; background: linear-gradient(180deg, #0A0500 0%, var(--dark-bg) 100%); position: relative; overflow: hidden; }
+    /* ==================== Hero (Buy Now only) ==================== */
+    .hero {
+      min-height: 100vh;
+      padding-top: 120px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      background: linear-gradient(180deg, #0A0500 0%, var(--dark-bg) 100%);
+      position: relative;
+      overflow: hidden;
+    }
     .hero-bg-glow { position: absolute; top: -50%; left: 50%; transform: translateX(-50%); width: 1200px; height: 1200px; background: radial-gradient(circle, rgba(255, 215, 0, 0.15) 0%, transparent 70%); z-index: 0; }
-    .hero-content { position: relative; z-index: 1; max-width: 900px; }
-    .hero-title { font-size: 72px; font-weight: 900; line-height: 1.1; margin-bottom: 16px; background: linear-gradient(180deg, var(--gold-primary) 0%, var(--gold-secondary) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-    .hero-slogan { font-size: 24px; color: var(--text-gray); margin-bottom: 48px; font-weight: 400; }
-    .presale-stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 32px; width: 100%; }
+    .hero-content { position: relative; z-index: 1; max-width: 1000px; }
+    .hero-title {
+      font-size: 72px; font-weight: 900; line-height: 1.1; margin-bottom: 16px;
+      background: linear-gradient(180deg, var(--gold-primary) 0%, var(--gold-secondary) 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    .hero-slogan { font-size: 24px; color: var(--text-gray); margin-bottom: 40px; font-weight: 400; }
+
+    .hero-cta-row {
+      display: flex; justify-content: center; gap: 14px; flex-wrap: wrap;
+      margin-bottom: 34px;
+    }
+    .hero-cta-primary {
+      padding: 14px 22px;
+      background: linear-gradient(90deg, var(--gold-secondary) 0%, var(--gold-primary) 100%);
+      color: var(--dark-bg);
+      border: none;
+      border-radius: 999px;
+      font-weight: 900;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    .hero-cta-primary:hover { box-shadow: 0 0 32px rgba(255, 215, 0, 0.35); transform: translateY(-2px); }
+    .hero-cta-secondary {
+      padding: 12px 20px;
+      background: transparent;
+      color: var(--gold-primary);
+      border: 2px solid var(--gold-primary);
+      border-radius: 999px;
+      font-weight: 900;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    .hero-cta-secondary:hover { background: rgba(255,215,0,0.08); }
+
+    .presale-stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 28px; width: 100%; }
     .stat-card { background: var(--dark-card); border: 1px solid var(--dark-border); border-radius: 12px; padding: 20px; text-align: left; }
     .stat-label { font-size: 13px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px; }
     .stat-value { font-size: 24px; font-weight: 700; color: var(--gold-primary); }
-    .countdown-wrapper { margin: 32px 0; }
+
+    .countdown-wrapper { margin: 26px 0; }
     .countdown-title { font-size: 14px; color: var(--text-gray); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 16px; }
     .countdown-grid { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
     .countdown-box { background: var(--dark-card); border: 1px solid var(--gold-primary); border-radius: 12px; min-width: 100px; padding: 16px 8px; }
     .countdown-number { font-size: 40px; font-weight: 900; color: var(--gold-primary); line-height: 1; }
     .countdown-text { font-size: 12px; color: var(--text-gray); margin-top: 8px; text-transform: uppercase; }
-    .progress-wrapper { width: 100%; margin: 32px 0; }
+
+    .progress-wrapper { width: 100%; margin: 24px 0; }
     .progress-header { display: flex; justify-content: space-between; margin-bottom: 12px; }
     .progress-header span { font-size: 14px; color: var(--text-gray); }
     .progress-bar-container { width: 100%; height: 12px; background: var(--dark-card); border-radius: 100px; overflow: hidden; border: 1px solid var(--dark-border); }
     .progress-bar-fill { height: 100%; background: linear-gradient(90deg, var(--gold-secondary) 0%, var(--gold-primary) 100%); width: 0%; transition: width 0.8s ease; border-radius: 100px; }
-    .buy-form-card { background: var(--dark-card); border: 1px solid var(--dark-border); border-radius: 16px; padding: 32px; max-width: 600px; margin: 0 auto; width: 100%; }
+
+    .buy-form-card { background: var(--dark-card); border: 1px solid var(--dark-border); border-radius: 16px; padding: 32px; max-width: 680px; margin: 0 auto; width: 100%; }
     .form-input-group { margin-bottom: 16px; }
     .form-label { display: flex; justify-content: space-between; gap: 10px; margin-bottom: 8px; font-size: 14px; color: var(--text-gray); flex-wrap: wrap; }
-    .form-input { width: 100%; padding: 16px; background: var(--dark-bg); border: 1px solid var(--dark-border); border-radius: 12px; color: var(--text-white); font-size: 18px; font-weight: 600; transition: border-color 0.3s ease; }
+    .form-input {
+      width: 100%; padding: 16px; background: var(--dark-bg);
+      border: 1px solid var(--dark-border); border-radius: 12px;
+      color: var(--text-white); font-size: 18px; font-weight: 600;
+      transition: border-color 0.3s ease;
+    }
     .form-input:focus { outline: none; border-color: var(--gold-primary); }
-    .form-select { width: 100%; padding: 16px; background: var(--dark-bg); border: 1px solid var(--dark-border); border-radius: 12px; color: var(--text-white); font-size: 16px; transition: border-color 0.3s ease; }
-    .form-select:focus { outline: none; border-color: var(--gold-primary); }
+
     .token-estimate { text-align: left; font-size: 14px; color: var(--text-gray); margin: 12px 0 24px; }
-    .buy-button { width: 100%; padding: 18px; background: linear-gradient(90deg, var(--gold-secondary) 0%, var(--gold-primary) 100%); color: var(--dark-bg); border: none; border-radius: 12px; font-size: 18px; font-weight: 900; text-transform: uppercase; cursor: pointer; transition: all 0.3s ease; }
+    .buy-button {
+      width: 100%; padding: 18px;
+      background: linear-gradient(90deg, var(--gold-secondary) 0%, var(--gold-primary) 100%);
+      color: var(--dark-bg);
+      border: none; border-radius: 12px;
+      font-size: 18px; font-weight: 900;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
     .buy-button:hover:not(:disabled) { box-shadow: 0 0 32px rgba(255, 215, 0, 0.4); transform: translateY(-2px); }
     .buy-button:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
-    .btn-secondary { width: 100%; padding: 14px; background: transparent; color: var(--gold-primary); border: 2px solid var(--gold-primary); border-radius: 12px; font-size: 16px; font-weight: 800; cursor: pointer; transition: all 0.3s ease; margin-top: 12px; }
+
+    .btn-secondary {
+      width: 100%; padding: 14px;
+      background: transparent;
+      color: var(--gold-primary);
+      border: 2px solid var(--gold-primary);
+      border-radius: 12px;
+      font-size: 16px; font-weight: 800;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      margin-top: 12px;
+    }
     .btn-secondary:hover:not(:disabled) { background: rgba(255, 215, 0, 0.1); }
     .btn-small { width: auto; padding: 10px 20px; font-size: 14px; margin: 5px; }
+
+    /* ==================== Sections (BullZilla-style flow on Home) ==================== */
     .section { padding: 120px 0; position: relative; }
-    .section-header { text-align: center; margin-bottom: 80px; }
+    .section-header { text-align: center; margin-bottom: 70px; }
     .section-subtitle { font-size: 14px; text-transform: uppercase; letter-spacing: 2px; color: var(--gold-primary); margin-bottom: 12px; font-weight: 700; }
     .section-title { font-size: 56px; font-weight: 900; line-height: 1.1; margin-bottom: 16px; }
-    .section-desc { font-size: 18px; color: var(--text-gray); max-width: 700px; margin: 0 auto; }
+    .section-desc { font-size: 18px; color: var(--text-gray); max-width: 820px; margin: 0 auto; }
 
     .feature-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(380px, 1fr)); gap: 32px; }
     .feature-card { background: var(--dark-card); border: 1px solid var(--dark-border); border-radius: 16px; padding: 40px; transition: all 0.3s ease; }
@@ -162,32 +230,54 @@
     .feature-title { font-size: 28px; font-weight: 800; margin-bottom: 16px; color: var(--gold-primary); }
     .feature-desc { font-size: 16px; color: var(--text-gray); line-height: 1.8; }
 
+    .split-section {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 28px;
+      align-items: center;
+    }
+    .split-media {
+      border-radius: 18px;
+      border: 1px solid var(--dark-border);
+      background:
+        radial-gradient(circle at 30% 20%, rgba(255,215,0,0.16), rgba(0,0,0,0.24) 62%),
+        linear-gradient(180deg, rgba(255,165,0,0.12), rgba(0,0,0,0.06));
+      min-height: 320px;
+      position: relative;
+      overflow: hidden;
+    }
+    .split-media::after {
+      content: "";
+      position: absolute; inset: 0;
+      background: radial-gradient(circle at 65% 55%, rgba(255,215,0,0.18), transparent 55%);
+      opacity: 0.75;
+      pointer-events: none;
+    }
+    .split-copy {
+      background: var(--dark-card);
+      border: 1px solid var(--dark-border);
+      border-radius: 18px;
+      padding: 34px 28px;
+    }
+    .split-kicker { color: var(--gold-primary); font-weight: 900; text-transform: uppercase; letter-spacing: 1.6px; font-size: 13px; margin-bottom: 12px; }
+    .split-title { font-size: 34px; font-weight: 900; line-height: 1.15; margin-bottom: 12px; }
+    .split-text { color: var(--text-gray); font-size: 16px; line-height: 1.85; margin-bottom: 18px; }
+
     .tokenomics-section { background: var(--dark-card); }
     .tokenomics-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; }
     .tokenomics-card { background: var(--dark-bg); border: 1px solid var(--dark-border); border-radius: 16px; padding: 32px; }
     .tokenomics-percent { font-size: 48px; font-weight: 900; color: var(--gold-primary); margin-bottom: 8px; }
     .tokenomics-label { font-size: 18px; font-weight: 700; margin-bottom: 12px; }
     .tokenomics-desc { font-size: 14px; color: var(--text-gray); }
-    .tokenomics-total { text-align: center; margin-top: 48px; padding: 32px; border: 1px solid var(--gold-primary); border-radius: 16px; background: rgba(255, 215, 0, 0.05); }
+    .tokenomics-total {
+      text-align: center; margin-top: 48px; padding: 32px;
+      border: 1px solid var(--gold-primary); border-radius: 16px;
+      background: rgba(255, 215, 0, 0.05);
+    }
     .tokenomics-total-value { font-size: 36px; font-weight: 900; color: var(--gold-primary); }
 
-    .dashboard-section { background: var(--dark-card); }
-    .dashboard-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; margin-bottom: 40px; }
-    .dashboard-card { background: var(--dark-bg); border: 1px solid var(--dark-border); border-radius: 16px; padding: 24px; }
-    .dashboard-label { font-size: 13px; color: var(--text-muted); text-transform: uppercase; margin-bottom: 8px; }
-    .dashboard-value { font-size: 28px; font-weight: 700; color: var(--gold-primary); }
-
-    .history-table { width: 100%; margin-top: 40px; border-collapse: collapse; background: var(--dark-bg); border-radius: 16px; overflow: hidden; }
-    .history-table th { background: var(--dark-card); color: var(--gold-primary); font-weight: 700; padding: 16px; text-align: left; border-bottom: 1px solid var(--dark-border); }
-    .history-table td { padding: 16px; border-bottom: 1px solid var(--dark-border); color: var(--text-gray); }
-    .history-table tr:last-child td { border-bottom: none; }
-
-    .referral-box { background: var(--dark-bg); border: 1px solid var(--dark-border); border-radius: 16px; padding: 32px; margin-top: 32px; }
-    .referral-link { display: flex; gap: 12px; margin-top: 16px; }
-    .referral-link input { flex: 1; padding: 12px; background: var(--dark-bg); border: 1px solid var(--dark-border); border-radius: 8px; color: var(--text-white); font-family: monospace; }
-
     .roadmap-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 32px; }
-    .roadmap-card { background: var(--dark-card); border: 1px solid var(--dark-border); border-radius: 16px; padding: 32px; position: relative; }
+    .roadmap-card { background: var(--dark-card); border: 1px solid var(--dark-border); border-radius: 16px; padding: 32px; }
     .roadmap-phase { font-size: 13px; text-transform: uppercase; letter-spacing: 1px; color: var(--gold-primary); font-weight: 700; margin-bottom: 12px; }
     .roadmap-title { font-size: 24px; font-weight: 800; margin-bottom: 20px; }
     .roadmap-list { list-style: none; }
@@ -195,15 +285,27 @@
     .roadmap-list li::before { content: "✦"; position: absolute; left: 0; color: var(--gold-primary); }
 
     .audit-section { background: var(--dark-card); }
-    .audit-card { background: var(--dark-bg); border: 1px solid var(--gold-primary); border-radius: 16px; padding: 40px; text-align: center; max-width: 800px; margin: 0 auto; }
+    .audit-card { background: var(--dark-bg); border: 1px solid var(--gold-primary); border-radius: 16px; padding: 40px; text-align: center; max-width: 900px; margin: 0 auto; }
     .audit-icon { font-size: 64px; margin-bottom: 24px; }
-    .audit-title { font-size: 32px; font-weight: 800; margin-bottom: 16px; }
+    .audit-title { font-size: 32px; font-weight: 900; margin-bottom: 16px; }
     .audit-desc { font-size: 16px; color: var(--text-gray); margin-bottom: 24px; }
 
     .faq-grid { max-width: 900px; margin: 0 auto; }
     .faq-item { background: var(--dark-card); border: 1px solid var(--dark-border); border-radius: 12px; margin-bottom: 16px; overflow: hidden; }
-    .faq-question { padding: 24px; font-size: 18px; font-weight: 700; cursor: pointer; display: flex; justify-content: space-between; align-items: center; }
+    .faq-question { padding: 24px; font-size: 18px; font-weight: 800; cursor: pointer; display: flex; justify-content: space-between; align-items: center; }
     .faq-answer { padding: 0 24px 24px; color: var(--text-gray); line-height: 1.8; display: none; }
+
+    .cta-home {
+      background: var(--dark-card);
+      border: 1px solid var(--dark-border);
+      border-radius: 18px;
+      padding: 42px 26px;
+      text-align: center;
+      max-width: 980px;
+      margin: 0 auto;
+    }
+    .cta-home h3 { font-size: 26px; font-weight: 900; margin-bottom: 10px; }
+    .cta-home p { color: var(--text-gray); margin-bottom: 18px; }
 
     .partners-section { padding: 60px 0; background: var(--dark-card); }
     .partners-grid { display: flex; flex-wrap: wrap; gap: 32px; justify-content: center; align-items: center; }
@@ -214,113 +316,52 @@
     .footer-content { display: flex; flex-direction: column; align-items: center; text-align: center; }
     .footer-logo { font-size: 36px; font-weight: 900; color: var(--gold-primary); margin-bottom: 24px; }
     .footer-links { display: flex; gap: 32px; margin-bottom: 32px; flex-wrap: wrap; justify-content: center; }
-    .footer-links a { color: var(--text-gray); text-decoration: none; font-weight: 500; transition: color 0.3s ease; }
+    .footer-links a { color: var(--text-gray); text-decoration: none; font-weight: 600; transition: color 0.3s ease; }
     .footer-links a:hover { color: var(--gold-primary); }
     .footer-contract { font-family: monospace; font-size: 14px; color: var(--text-muted); margin-bottom: 24px; word-break: break-all; }
     .footer-copyright { font-size: 14px; color: var(--text-muted); }
 
     .notification { position: fixed; top: 100px; right: 24px; max-width: 400px; padding: 20px 24px; background: var(--dark-card); border: 1px solid var(--gold-primary); border-radius: 12px; z-index: 9999; box-shadow: 0 16px 40px rgba(0,0,0,0.5); transform: translateX(120%); transition: transform 0.3s ease; }
     .notification.show { transform: translateX(0); }
-    .notification-title { font-weight: 700; margin-bottom: 8px; }
+    .notification-title { font-weight: 900; margin-bottom: 8px; }
     .notification-desc { font-size: 14px; color: var(--text-gray); }
     .loading-spinner { display: inline-block; width: 20px; height: 20px; border: 2px solid var(--text-muted); border-radius: 50%; border-top-color: var(--gold-primary); animation: spin 1s linear infinite; vertical-align: middle; }
     @keyframes spin { to { transform: rotate(360deg); } }
 
-    /* ==================== Blog（bullzilla 风格） ==================== */
+    /* ==================== Blog list & post ==================== */
     .blog-hero { padding-top: 40px; padding-bottom: 10px; text-align: center; }
     .blog-title { font-size: 56px; font-weight: 900; line-height: 1.1; margin-bottom: 6px; }
-
-    .blog-grid {
-      margin-top: 28px;
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 24px;
-    }
-    .blog-card {
-      background: var(--dark-card);
-      border: 1px solid var(--dark-border);
-      border-radius: 16px;
-      overflow: hidden;
-      cursor: pointer;
-      transition: all 0.25s ease;
-    }
-    .blog-card:hover {
-      border-color: var(--gold-primary);
-      transform: translateY(-6px);
-      box-shadow: 0 16px 40px rgba(255, 215, 0, 0.08);
-    }
-    .blog-thumb {
-      width: 100%;
-      aspect-ratio: 16/9;
-      background: radial-gradient(circle at 30% 20%, rgba(255,215,0,0.18), rgba(0,0,0,0.2) 60%),
-                linear-gradient(180deg, rgba(255,165,0,0.12), rgba(0,0,0,0.05));
-      border-bottom: 1px solid var(--dark-border);
-      background-size: cover;
-      background-position: center;
-    }
+    .blog-grid { margin-top: 28px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+    .blog-card { background: var(--dark-card); border: 1px solid var(--dark-border); border-radius: 16px; overflow: hidden; cursor: pointer; transition: all 0.25s ease; }
+    .blog-card:hover { border-color: var(--gold-primary); transform: translateY(-6px); box-shadow: 0 16px 40px rgba(255, 215, 0, 0.08); }
+    .blog-thumb { width: 100%; aspect-ratio: 16/9; background: radial-gradient(circle at 30% 20%, rgba(255,215,0,0.18), rgba(0,0,0,0.2) 60%), linear-gradient(180deg, rgba(255,165,0,0.12), rgba(0,0,0,0.05)); border-bottom: 1px solid var(--dark-border); background-size: cover; background-position: center; }
     .blog-body { padding: 18px 18px 20px; }
     .blog-post-title { font-size: 18px; font-weight: 900; color: var(--text-white); margin-bottom: 10px; line-height: 1.35; }
     .blog-post-excerpt { color: var(--text-gray); font-size: 14px; line-height: 1.75; }
-
     .blog-pagination { margin-top: 28px; display: flex; justify-content: center; gap: 12px; }
-    .blog-cta {
-      margin-top: 44px;
-      background: var(--dark-card);
-      border: 1px solid var(--dark-border);
-      border-radius: 16px;
-      padding: 34px 24px;
-      text-align: center;
-    }
+    .blog-cta { margin-top: 44px; background: var(--dark-card); border: 1px solid var(--dark-border); border-radius: 16px; padding: 34px 24px; text-align: center; }
     .blog-cta-title { font-size: 22px; font-weight: 900; margin-bottom: 10px; color: var(--text-white); }
     .blog-cta-desc { color: var(--text-gray); font-size: 14px; margin-bottom: 18px; }
 
-    /* ==================== Blog Post（bullzilla 风格文章页） ==================== */
     .blogpost-topbar { display: flex; justify-content: flex-start; margin-top: 18px; }
     .blogpost-hero { text-align: center; margin-top: 18px; margin-bottom: 22px; }
     .blogpost-title { font-size: 48px; font-weight: 900; line-height: 1.15; margin-bottom: 10px; }
     .blogpost-meta { color: var(--text-gray); font-size: 14px; }
-    .blogpost-cover {
-      width: 100%;
-      aspect-ratio: 16/6;
-      border-radius: 16px;
-      border: 1px solid var(--dark-border);
-      overflow: hidden;
-      margin: 22px 0 26px;
-      background: radial-gradient(circle at 30% 20%, rgba(255,215,0,0.18), rgba(0,0,0,0.2) 60%),
-                linear-gradient(180deg, rgba(255,165,0,0.12), rgba(0,0,0,0.05));
-      background-size: cover;
-      background-position: center;
-      display: none;
-    }
-    .blogpost-content {
-      max-width: 900px;
-      margin: 0 auto;
-      background: var(--dark-card);
-      border: 1px solid var(--dark-border);
-      border-radius: 16px;
-      padding: 26px 22px;
-      color: var(--text-gray);
-      line-height: 1.9;
-      font-size: 16px;
-    }
-    .blogpost-content h2,
-    .blogpost-content h3 { color: var(--text-white); margin-top: 18px; margin-bottom: 10px; }
+    .blogpost-cover { width: 100%; aspect-ratio: 16/6; border-radius: 16px; border: 1px solid var(--dark-border); overflow: hidden; margin: 22px 0 26px; background: radial-gradient(circle at 30% 20%, rgba(255,215,0,0.18), rgba(0,0,0,0.2) 60%), linear-gradient(180deg, rgba(255,165,0,0.12), rgba(0,0,0,0.05)); background-size: cover; background-position: center; display: none; }
+    .blogpost-content { max-width: 900px; margin: 0 auto; background: var(--dark-card); border: 1px solid var(--dark-border); border-radius: 16px; padding: 26px 22px; color: var(--text-gray); line-height: 1.9; font-size: 16px; }
+    .blogpost-content h2, .blogpost-content h3 { color: var(--text-white); margin-top: 18px; margin-bottom: 10px; }
     .blogpost-content p { margin: 12px 0; }
     .blogpost-content a { color: var(--gold-primary); text-decoration: none; }
     .blogpost-content a:hover { text-decoration: underline; }
     .blogpost-content ul { margin: 10px 0 10px 22px; }
-    .blogpost-nav {
-      max-width: 900px;
-      margin: 18px auto 0;
-      display: flex;
-      justify-content: space-between;
-      gap: 12px;
-    }
+    .blogpost-nav { max-width: 900px; margin: 18px auto 0; display: flex; justify-content: space-between; gap: 12px; }
 
+    /* ==================== Responsive ==================== */
     @media (max-width: 1100px) {
       .blog-grid { grid-template-columns: repeat(2, 1fr); }
+      .split-section { grid-template-columns: 1fr; }
+      .split-media { min-height: 280px; }
     }
-
     @media (max-width: 768px) {
       .navbar-links a:not(.wallet-container *) { display: none; }
       .hero-title { font-size: 40px; }
@@ -330,13 +371,11 @@
       .countdown-box { min-width: 70px; }
       .countdown-number { font-size: 28px; }
       .section-title { font-size: 36px; }
-      .feature-grid, .tokenomics-grid, .roadmap-grid, .dashboard-grid { grid-template-columns: 1fr; }
-      .referral-link { flex-direction: column; }
+      .feature-grid, .tokenomics-grid, .roadmap-grid { grid-template-columns: 1fr; }
       .notification { right: 12px; left: 12px; max-width: none; }
       .wallet-container { gap: 6px; }
       #walletConnectBtn { padding: 9px 18px; }
       #disconnectBtn { padding: 7px 14px; }
-
       .blog-title { font-size: 36px; }
       .blog-grid { grid-template-columns: 1fr; }
       .blogpost-title { font-size: 32px; }
@@ -347,20 +386,18 @@
 </head>
 
 <body>
-  <!-- 通知弹窗 -->
+  <!-- Notification -->
   <div id="notification" class="notification">
     <div class="notification-title" id="notificationTitle"></div>
     <div class="notification-desc" id="notificationDesc"></div>
   </div>
 
-  <!-- 导航栏 -->
+  <!-- Navbar -->
   <nav class="navbar">
     <div class="container navbar-content">
-      <!-- ✅ 点击 LOGO 切回首页（Buy Now / home） -->
       <a class="navbar-logo" href="#home" data-nav="home">🐂 BULLFORGE</a>
 
       <div class="navbar-links">
-        <!-- ✅ 你要求的导航按钮顺序/文案 -->
         <a href="#home" data-nav="home">Buy Now</a>
         <a href="#howtobuy" data-nav="howtobuy">How to Buy</a>
         <a href="#whitepaper" data-nav="whitepaper">Whitepaper</a>
@@ -377,14 +414,20 @@
     </div>
   </nav>
 
-  <!-- ✅ Home 页面（Buy Now） -->
+  <!-- ==================== HOME (BullZilla-style) ==================== -->
+  <!-- Buy form is ONLY here (Buy Now/Home) -->
   <section class="hero page" data-page="home">
     <div class="hero-bg-glow"></div>
     <div class="container hero-content">
-      <h1 class="hero-title">The Future isn't Just Bullish. It's Bullforge.</h1>
-      <p class="hero-slogan">Forged in the chaos of the blockchain, built to thrive where others fall.</p>
+      <h1 class="hero-title">Bullforge</h1>
+      <p class="hero-slogan">The Future isn't Just Bullish. It's Bullforge.</p>
 
-      <!-- 预售核心数据 -->
+      <div class="hero-cta-row">
+        <button class="hero-cta-primary" id="jumpToBuyBtn">Join $BULL Presale</button>
+        <button class="hero-cta-secondary" id="jumpToWhitepaperBtn">Whitepaper</button>
+      </div>
+
+      <!-- Core stats -->
       <div class="presale-stats-grid">
         <div class="stat-card"><div class="stat-label">Current Price</div><div class="stat-value" id="currentPrice"><span class="loading-spinner"></span></div></div>
         <div class="stat-card"><div class="stat-label">Total Raised</div><div class="stat-value" id="totalRaised"><span class="loading-spinner"></span></div></div>
@@ -392,7 +435,7 @@
         <div class="stat-card"><div class="stat-label">1 BNB =</div><div class="stat-value" id="tokenRate"><span class="loading-spinner"></span></div></div>
       </div>
 
-      <!-- 倒计时 -->
+      <!-- Countdown -->
       <div class="countdown-wrapper">
         <div class="countdown-title" id="countdownTitle">PRESALE ENDS IN</div>
         <div class="countdown-grid" id="countdownGrid">
@@ -403,26 +446,29 @@
         </div>
       </div>
 
-      <!-- 进度条 -->
+      <!-- Progress -->
       <div class="progress-wrapper">
         <div class="progress-header"><span>Presale Progress</span><span id="progressPercent">0%</span></div>
         <div class="progress-bar-container"><div class="progress-bar-fill" id="progressBarFill"></div></div>
       </div>
 
-      <!-- 购买表单 -->
-      <div class="buy-form-card">
+      <!-- ✅ Buy form (ONLY on Buy Now/Home) -->
+      <div class="buy-form-card" id="buyFormAnchor">
         <div class="form-input-group">
           <div class="form-label"><span>Amount (BNB)</span><span>Balance: <span id="walletBalance">0.00</span> BNB</span></div>
           <input type="number" class="form-input" id="bnbAmount" placeholder="0.0" step="0.01" min="0">
         </div>
+
         <div class="form-input-group">
           <div class="form-label"><span>Slippage Tolerance</span></div>
           <input type="number" class="form-input" id="slippage" placeholder="1.0" step="0.1" min="0.1" value="1.0">
         </div>
+
         <div class="form-input-group">
           <div class="form-label"><span>Referrer Address (Optional)</span></div>
           <input type="text" class="form-input" id="referrerAddress" placeholder="0x...">
         </div>
+
         <div class="token-estimate" id="tokenEstimate">Enter BNB amount to see estimated $BULL tokens</div>
         <button class="buy-button" id="buyButton" disabled>Connect Wallet To Buy</button>
         <button class="btn-secondary" id="claimButton" style="display:none;">Claim Your $BULL Tokens</button>
@@ -430,7 +476,301 @@
     </div>
   </section>
 
-  <!-- ✅ How to Buy 页面 -->
+  <!-- About (Home only) -->
+  <section class="section page" data-page="home" id="homeAbout">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-subtitle">About Bullforge</div>
+        <h2 class="section-title">Forged in Chaos. Built for Momentum.</h2>
+        <p class="section-desc">
+          Bullforge is a meme-driven myth with real mechanics: a progressive presale engine that advances by time or milestones,
+          milestone burns that tighten supply, staking that rewards conviction, and a referral system designed to amplify community growth.
+        </p>
+      </div>
+
+      <div class="feature-grid">
+        <div class="feature-card">
+          <div class="feature-icon">⏱️</div>
+          <div class="feature-title">Progressive Price Engine</div>
+          <div class="feature-desc">Price advances stage-by-stage (time-based or raise milestones). Early believers forge the best entries.</div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">🔥</div>
+          <div class="feature-title">Milestone Burns</div>
+          <div class="feature-desc">Supply is reduced on key milestones — a ritual that strengthens scarcity as the forge evolves.</div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">💎</div>
+          <div class="feature-title">Holder-First Rewards</div>
+          <div class="feature-desc">Staking + referral incentives built for believers — not tourists.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Staking teaser (Home only, BullZilla-style split) -->
+  <section class="section page" data-page="home" id="homeStaking">
+    <div class="container">
+      <div class="split-section">
+        <div class="split-media" aria-hidden="true"></div>
+        <div class="split-copy">
+          <div class="split-kicker">Staking</div>
+          <div class="split-title">The HODL Forge — 70% APY</div>
+          <div class="split-text">
+            In the Bullforge universe, loyalty isn’t just respected — it’s rewarded.
+            Lock your $BULL in the HODL Forge and turn conviction into compounding momentum.
+          </div>
+          <div style="display:flex; gap:12px; flex-wrap:wrap;">
+            <a href="#staking" data-nav="staking"><button class="hero-cta-primary" style="border-radius:12px;">Stake Now</button></a>
+            <a href="#whitepaper" data-nav="whitepaper"><button class="hero-cta-secondary" style="border-radius:12px;">Learn More</button></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Burn (Home only) -->
+  <section class="section page" data-page="home" id="homeBurn">
+    <div class="container">
+      <div class="split-section">
+        <div class="split-copy">
+          <div class="split-kicker">Burn Event</div>
+          <div class="split-title">Forge Burn</div>
+          <div class="split-text">
+            Forge Burn is Bullforge’s signature supply strike — a live on-chain event triggered on major presale milestones.
+            Every burn permanently removes tokens from circulation, tightening supply and amplifying scarcity.
+          </div>
+          <div class="split-text" style="margin-bottom:0;">
+            When the forge flares, the market listens.
+          </div>
+        </div>
+        <div class="split-media" aria-hidden="true"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Referral (Home only) -->
+  <section class="section page" data-page="home" id="homeReferral">
+    <div class="container">
+      <div class="split-section">
+        <div class="split-media" aria-hidden="true"></div>
+        <div class="split-copy">
+          <div class="split-kicker">Referral</div>
+          <div class="split-title">Forge-To-Earn</div>
+          <div class="split-text">
+            Turn your network into rewards. Share your referral link and earn from every buy routed through your code,
+            while your invitees can receive a bonus.
+          </div>
+          <a href="#referral" data-nav="referral">
+            <button class="hero-cta-primary" style="border-radius:12px;">Generate Your Referral Link</button>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Audit (Home only) -->
+  <section class="section audit-section page" data-page="home" id="homeAudit">
+    <div class="container">
+      <div class="audit-card">
+        <div class="audit-icon">🛡️</div>
+        <h3 class="audit-title">Audit Section</h3>
+        <p class="audit-desc">
+          Bullforge’s smart contract is built for transparency and security. You can verify on-chain activity, contract address, and transaction history.
+        </p>
+        <div style="display:flex; gap:16px; flex-wrap:wrap; justify-content:center;">
+          <a href="https://bscscan.com/address/0x16D6c1a692AaC51a3821bA2903115d4600649F07" target="_blank" rel="noreferrer">
+            <button class="hero-cta-primary" style="border-radius:12px;">View Contract</button>
+          </a>
+          <a href="#whitepaper" data-nav="whitepaper">
+            <button class="hero-cta-secondary" style="border-radius:12px;">Read Whitepaper</button>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Tokenomics (Home only) -->
+  <section class="section tokenomics-section page" data-page="home" id="homeTokenomics">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-subtitle">Tokenomics</div>
+        <h2 class="section-title">Forge DNA</h2>
+        <p class="section-desc">
+          A balanced allocation designed for presale momentum, staking rewards, ecosystem growth, and controlled burns.
+        </p>
+      </div>
+
+      <div class="tokenomics-grid">
+        <div class="tokenomics-card">
+          <div class="tokenomics-percent">50%</div>
+          <div class="tokenomics-label">Presale</div>
+          <div class="tokenomics-desc">Distributed through presale stages to believers who spark the legend.</div>
+        </div>
+        <div class="tokenomics-card">
+          <div class="tokenomics-percent">20%</div>
+          <div class="tokenomics-label">Staking</div>
+          <div class="tokenomics-desc">Rewards the fireproof — designed to incentivize long-term holding.</div>
+        </div>
+        <div class="tokenomics-card">
+          <div class="tokenomics-percent">20%</div>
+          <div class="tokenomics-label">Community & Ecosystem</div>
+          <div class="tokenomics-desc">Liquidity, growth initiatives, partnerships, referral rewards, and expansion.</div>
+        </div>
+        <div class="tokenomics-card">
+          <div class="tokenomics-percent">5%</div>
+          <div class="tokenomics-label">Burn Reserve</div>
+          <div class="tokenomics-desc">Reserved for scheduled milestone burns to tighten supply over time.</div>
+        </div>
+        <div class="tokenomics-card">
+          <div class="tokenomics-percent">5%</div>
+          <div class="tokenomics-label">Team</div>
+          <div class="tokenomics-desc">Time-aligned allocation intended for long-term execution and delivery.</div>
+        </div>
+      </div>
+
+      <div class="tokenomics-total">
+        <div class="section-subtitle" style="margin-bottom:10px;">Total Supply</div>
+        <div class="tokenomics-total-value" id="totalSupplyDisplay">1,000,000,000 $BULL</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ✅ Roadmap (Home only) -->
+  <section class="section page" data-page="home" id="homeRoadmap">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-subtitle">Roadmap</div>
+        <h2 class="section-title">The Bullforge Launch Sequence</h2>
+        <p class="section-desc">A staged plan from presale ignition to post-launch expansion.</p>
+      </div>
+
+      <div class="roadmap-grid">
+        <div class="roadmap-card">
+          <div class="roadmap-phase">Phase I</div>
+          <div class="roadmap-title">The Spark (Q1 2026)</div>
+          <ul class="roadmap-list">
+            <li>Brand reveal, lore + mechanics rollout</li>
+            <li>Smart contract development & internal testing</li>
+            <li>Referral infrastructure + presale UX polish</li>
+            <li>Community growth campaign</li>
+          </ul>
+        </div>
+
+        <div class="roadmap-card">
+          <div class="roadmap-phase">Phase II</div>
+          <div class="roadmap-title">The Presale Forge (Q1–Q2 2026)</div>
+          <ul class="roadmap-list">
+            <li>Presale goes live: progressive stages</li>
+            <li>Milestone burns trigger + on-chain transparency</li>
+            <li>Referral program active</li>
+            <li>Staking details finalized</li>
+          </ul>
+        </div>
+
+        <div class="roadmap-card">
+          <div class="roadmap-phase">Phase III</div>
+          <div class="roadmap-title">The HODL Forge Opens (Post-Presale)</div>
+          <ul class="roadmap-list">
+            <li>Staking launch (target 70% APY)</li>
+            <li>Vesting logic for staking/referrals</li>
+            <li>Ongoing burns and milestone events</li>
+          </ul>
+        </div>
+
+        <div class="roadmap-card">
+          <div class="roadmap-phase">Phase IV</div>
+          <div class="roadmap-title">The Roar (Launch)</div>
+          <ul class="roadmap-list">
+            <li>Token launch + liquidity deployment</li>
+            <li>Listings and tracking integrations</li>
+            <li>Ecosystem funding roadmap activates</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ (Home only) -->
+  <section class="section page" data-page="home" id="homeFaq">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-subtitle">FAQs</div>
+        <h2 class="section-title">Frequently Asked Questions</h2>
+        <p class="section-desc">Quick answers for buyers, stakers, and community builders.</p>
+      </div>
+
+      <div class="faq-grid">
+        <div class="faq-item">
+          <div class="faq-question">1. What is Bullforge ($BULL)? <span>+</span></div>
+          <div class="faq-answer">Bullforge is a meme-driven myth built with mechanics: progressive presale stages, milestone burns, staking rewards, and a referral system designed to grow the forge.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-question">2. How does the presale work? <span>+</span></div>
+          <div class="faq-answer">The presale advances by stages. Price progression is controlled by the stage system (time and/or milestone triggers), with burns and narrative milestones reinforcing scarcity.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-question">3. Which wallets can I use? <span>+</span></div>
+          <div class="faq-answer">MetaMask, Trust Wallet, and WalletConnect-compatible wallets on BNB Smart Chain are supported.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-question">4. When can I stake? <span>+</span></div>
+          <div class="faq-answer">Staking becomes available after presale (once the staking contract is live). This page is already prepared to connect to that contract later.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Collaborate CTA (Home only) -->
+  <section class="section page" data-page="home" id="homeCta">
+    <div class="container">
+      <div class="cta-home">
+        <h3>Want to Collaborate with Bullforge?</h3>
+        <p>Partnerships, media, community collaborations — let’s forge something legendary.</p>
+        <a href="#" target="_blank" rel="noreferrer">
+          <button class="buy-button" style="max-width: 320px;">Contact the Team</button>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Powered by (Home only) -->
+  <section class="partners-section page" data-page="home">
+    <div class="container">
+      <div class="section-header"><div class="section-subtitle">Powered By</div></div>
+      <div class="partners-grid">
+        <div class="partner-logo">BNB Chain</div>
+        <div class="partner-logo">MetaMask</div>
+        <div class="partner-logo">Trust Wallet</div>
+        <div class="partner-logo">BscScan</div>
+        <div class="partner-logo">PancakeSwap</div>
+        <div class="partner-logo">CoinMarketCap</div>
+        <div class="partner-logo">CoinGecko</div>
+        <div class="partner-logo">AWS</div>
+        <div class="partner-logo">Cloudflare</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer (Home only) -->
+  <footer class="footer page" data-page="home">
+    <div class="container footer-content">
+      <div class="footer-logo">🐂 BULLFORGE</div>
+      <div class="footer-links">
+        <a href="#home" data-nav="home">Buy Now</a>
+        <a href="#howtobuy" data-nav="howtobuy">How to Buy</a>
+        <a href="#whitepaper" data-nav="whitepaper">Whitepaper</a>
+        <a href="#staking" data-nav="staking">Staking</a>
+        <a href="#referral" data-nav="referral">Referral</a>
+        <a href="#blog" data-nav="blog">Blog</a>
+        <a href="https://bscscan.com/address/0x16D6c1a692AaC51a3821bA2903115d4600649F07" target="_blank" rel="noreferrer">Contract</a>
+      </div>
+      <div class="footer-contract">Contract Address: 0x16D6c1a692AaC51a3821bA2903115d4600649F07</div>
+      <div class="footer-copyright">© 2026 Bullforge. All rights reserved.</div>
+    </div>
+  </footer>
+
+  <!-- ==================== OTHER NAV PAGES ==================== -->
   <section class="section page" id="howtobuy" data-page="howtobuy">
     <div class="container">
       <div class="section-header">
@@ -459,7 +799,6 @@
     </div>
   </section>
 
-  <!-- ✅ Whitepaper 页面 -->
   <section class="section page" id="whitepaper" data-page="whitepaper">
     <div class="container">
       <div class="section-header">
@@ -479,7 +818,6 @@
     </div>
   </section>
 
-  <!-- ✅ Staking 页面 -->
   <section class="section page" id="staking" data-page="staking">
     <div class="container">
       <div class="section-header">
@@ -489,7 +827,7 @@
       </div>
 
       <div class="buy-form-card" style="max-width: 800px;">
-        <h3 style="margin-bottom: 16px; color: var(--gold-primary);">70% APY (After Presale)</h3>
+        <h3 style="margin-bottom: 16px; color: var(--gold-primary); font-weight:900;">70% APY (After Presale)</h3>
         <p style="color: var(--text-gray);">
           Staking UI can be enabled once the staking contract is live. You can later connect this page to your staking contract.
         </p>
@@ -497,7 +835,6 @@
     </div>
   </section>
 
-  <!-- ✅ Referral 页面 -->
   <section class="section page" id="referral" data-page="referral">
     <div class="container">
       <div class="section-header">
@@ -506,18 +843,17 @@
         <p class="section-desc">Share your referral link and earn rewards.</p>
       </div>
 
-      <div class="referral-box" style="display:block; max-width: 900px; margin: 0 auto;">
-        <h3 style="margin-bottom: 16px; color: var(--gold-primary);">Your Referral Link</h3>
+      <div class="buy-form-card" style="max-width: 900px;">
+        <h3 style="margin-bottom: 16px; color: var(--gold-primary); font-weight:900;">Your Referral Link</h3>
         <p style="color: var(--text-gray); margin-bottom: 16px;">Connect wallet to generate your personal referral link.</p>
-        <div class="referral-link">
-          <input type="text" id="referralLink2" readonly value="Connect wallet to generate..." />
-          <button class="btn btn-small btn-secondary" id="copyReferralBtn2">Copy Link</button>
+        <div style="display:flex; gap:12px; flex-wrap:wrap;">
+          <input type="text" id="referralLink2" class="form-input" readonly value="Connect wallet to generate..." style="flex:1; min-width:240px;">
+          <button class="btn-secondary btn-small" id="copyReferralBtn2">Copy Link</button>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ✅ Blog 列表页（bullzilla 风格） -->
   <section class="section page" id="blog" data-page="blog">
     <div class="container">
       <div class="blog-hero">
@@ -541,7 +877,6 @@
     </div>
   </section>
 
-  <!-- ✅ Blog 详情页（bullzilla 单篇文章风格） -->
   <section class="section page" id="blogpost" data-page="blogpost">
     <div class="container">
       <div class="blogpost-topbar">
@@ -566,59 +901,12 @@
     </div>
   </section>
 
-  <!-- ✅ 只在首页显示：Audit（home） -->
-  <section class="section audit-section page" data-page="home">
-    <div class="container">
-      <div class="audit-card">
-        <div class="audit-icon">🛡️</div>
-        <h3 class="audit-title">Fully Audited Smart Contract</h3>
-        <p class="audit-desc">Bullforge's smart contract is fully audited, ensuring the forge's foundation is as secure as its roar is loud. All code is verified on BscScan, with no backdoors, no hidden fees, and full transparency for the community.</p>
-        <div style="display:flex; gap:16px; flex-wrap:wrap; justify-content:center;">
-          <a href="https://bscscan.com/address/0x16D6c1a692AaC51a3821bA2903115d4600649F07" target="_blank" rel="noreferrer">
-            <button class="buy-button" style="max-width:300px;">View Contract on BscScan</button>
-          </a>
-          <a href="#" target="_blank" rel="noreferrer">
-            <button class="btn-secondary" style="max-width:300px;">Read Whitepaper</button>
-          </a>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ✅ 只在首页显示：Partners（home） -->
-  <section class="partners-section page" data-page="home">
-    <div class="container">
-      <div class="section-header"><div class="section-subtitle">Powered By</div></div>
-      <div class="partners-grid">
-        <div class="partner-logo">BNB Chain</div><div class="partner-logo">MetaMask</div><div class="partner-logo">Trust Wallet</div><div class="partner-logo">BscScan</div><div class="partner-logo">PancakeSwap</div><div class="partner-logo">CoinMarketCap</div><div class="partner-logo">CoinGecko</div><div class="partner-logo">AWS</div><div class="partner-logo">Cloudflare</div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ✅ 只在首页显示：Footer（home） -->
-  <footer class="footer page" data-page="home">
-    <div class="container footer-content">
-      <div class="footer-logo">🐂 BULLFORGE</div>
-      <div class="footer-links">
-        <a href="#home" data-nav="home">Buy Now</a>
-        <a href="#howtobuy" data-nav="howtobuy">How to Buy</a>
-        <a href="#whitepaper" data-nav="whitepaper">Whitepaper</a>
-        <a href="#staking" data-nav="staking">Staking</a>
-        <a href="#referral" data-nav="referral">Referral</a>
-        <a href="#blog" data-nav="blog">Blog</a>
-        <a href="https://bscscan.com/address/0x16D6c1a692AaC51a3821bA2903115d4600649F07" target="_blank" rel="noreferrer">Contract</a>
-      </div>
-      <div class="footer-contract">Contract Address: 0x16D6c1a692AaC51a3821bA2903115d4600649F07</div>
-      <div class="footer-copyright">© 2026 Bullforge. All rights reserved.</div>
-    </div>
-  </footer>
-
   <script type="module">
     import { ethers } from 'https://esm.sh/ethers@5.7.2';
     import { createWeb3Modal, defaultConfig } from 'https://esm.sh/@web3modal/ethers5@4.1.2';
     import { marked } from 'https://esm.sh/marked@12.0.2';
 
-    // ==================== 核心配置 ====================
+    // ==================== Config ====================
     const CONFIG = {
       CONTRACT_ADDRESS: "0x16D6c1a692AaC51a3821bA2903115d4600649F07",
       WALLETCONNECT_PROJECT_ID: "fe819ed06d9e5489f764fc7b1dae1c4e",
@@ -635,25 +923,17 @@
       "function symbol() view returns (string)",
       "function decimals() view returns (uint8)",
       "function totalSupply() view returns (uint256)",
-      "function balanceOf(address) view returns (uint256)",
-      "function transfer(address to, uint amount) returns (bool)",
-      "function allowance(address owner, address spender) view returns (uint256)",
-      "function approve(address spender, uint256 amount) returns (bool)",
-      "function transferFrom(address from, address to, uint256 amount) returns (bool)",
       "function totalRaised() view returns (uint256)",
       "function currentStage() view returns (uint256)",
       "function stageEndTime() view returns (uint256)",
       "function getCurrentPrice() view returns (uint256)",
       "function getRate() view returns (uint256)",
       "function hardCap() view returns (uint256)",
-      "function contributed(address) view returns (uint256)",
-      "function referralRewards(address) view returns (uint256)",
       "function buyTokens(address _referrer, uint256 _minTokensOut) payable",
-      "function claimTokens() external",
-      "event Buy(address indexed buyer, uint256 bnbAmount, uint256 tokenAmount, uint256 price, address indexed referrer)"
+      "function claimTokens() external"
     ];
 
-    // ========== UI ==========
+    // ==================== UI ====================
     const notif = document.getElementById('notification');
     const notifTitle = document.getElementById('notificationTitle');
     const notifDesc = document.getElementById('notificationDesc');
@@ -662,49 +942,50 @@
     const disconnectBtn = document.getElementById('disconnectBtn');
     const networkBadge = document.getElementById('networkBadge');
 
-    const bnbAmountInput = document.getElementById('bnbAmount');
-    const slippageInput = document.getElementById('slippage');
-    const referrerInput = document.getElementById('referrerAddress');
-    const tokenEstimate = document.getElementById('tokenEstimate');
-    const walletBalanceSpan = document.getElementById('walletBalance');
-
     const currentPriceSpan = document.getElementById('currentPrice');
     const totalRaisedSpan = document.getElementById('totalRaised');
     const currentStageSpan = document.getElementById('currentStage');
     const tokenRateSpan = document.getElementById('tokenRate');
-    const totalSupplySpan = document.getElementById('totalSupplyDisplay');
 
     const progressPercent = document.getElementById('progressPercent');
     const progressBarFill = document.getElementById('progressBarFill');
-
-    const buyButton = document.getElementById('buyButton');
-    const claimButton = document.getElementById('claimButton');
 
     const daysSpan = document.getElementById('countdownDays');
     const hoursSpan = document.getElementById('countdownHours');
     const minutesSpan = document.getElementById('countdownMinutes');
     const secondsSpan = document.getElementById('countdownSeconds');
 
+    const bnbAmountInput = document.getElementById('bnbAmount');
+    const slippageInput = document.getElementById('slippage');
+    const referrerInput = document.getElementById('referrerAddress');
+    const tokenEstimate = document.getElementById('tokenEstimate');
+    const walletBalanceSpan = document.getElementById('walletBalance');
+    const buyButton = document.getElementById('buyButton');
+    const claimButton = document.getElementById('claimButton');
+
+    const totalSupplyDisplay = document.getElementById('totalSupplyDisplay');
+
+    const jumpToBuyBtn = document.getElementById('jumpToBuyBtn');
+    const jumpToWhitepaperBtn = document.getElementById('jumpToWhitepaperBtn');
+
+    // Referral page
     const referralLink2 = document.getElementById('referralLink2');
     const copyBtn2 = document.getElementById('copyReferralBtn2');
 
-    // blog UI
-    const blogGrid = document.getElementById('blogGrid');
-    const blogPrevBtn = document.getElementById('blogPrevBtn');
-    const blogNextBtn = document.getElementById('blogNextBtn');
+    // FAQ accordion (Home)
+    document.querySelectorAll('.faq-question').forEach(q => {
+      q.addEventListener('click', () => {
+        const parent = q.closest('.faq-item');
+        const ans = parent.querySelector('.faq-answer');
+        const isOpen = ans.style.display === 'block';
+        document.querySelectorAll('.faq-answer').forEach(a => a.style.display = 'none');
+        ans.style.display = isOpen ? 'none' : 'block';
+      });
+    });
 
-    const blogBackBtn = document.getElementById('blogBackBtn');
-    const blogpostTitle = document.getElementById('blogpostTitle');
-    const blogpostMeta = document.getElementById('blogpostMeta');
-    const blogpostCover = document.getElementById('blogpostCover');
-    const blogpostContent = document.getElementById('blogpostContent');
-    const blogpostPrev = document.getElementById('blogpostPrev');
-    const blogpostNext = document.getElementById('blogpostNext');
-
-    // ========== 状态 ==========
+    // ==================== State ====================
     let provider, signer, contract, userAddress;
     let web3Modal;
-
     let currentRate = 0;
     let totalRaisedBNB = 0;
     let hardcapBNB = 2000;
@@ -733,9 +1014,9 @@
 Bullforge is forged for momentum: progressive pricing, milestone burns, and a holder-first narrative.
 
 ## Step-by-step
-- **1) Switch to BNB Smart Chain (56)**  
-- **2) Connect wallet** (MetaMask / Trust Wallet / WalletConnect)  
-- **3) Enter BNB amount** and set slippage (default **1%**)  
+- **1) Switch to BNB Smart Chain (56)**
+- **2) Connect wallet** (MetaMask / Trust Wallet / WalletConnect)
+- **3) Enter BNB amount** and set slippage (default **1%**)
 - **4) Confirm transaction** and track it on BscScan
 
 ## Safety checklist
@@ -746,46 +1027,43 @@ Bullforge is forged for momentum: progressive pricing, milestone burns, and a ho
       },
       {
         slug: "progressive-price-engine-explained",
-        title: "Progressive Price Engine Explained: 48 Hours or $100,000 Raised",
-        excerpt: "How stage timing + raise milestones affect the entry price and stage transitions.",
+        title: "Progressive Price Engine Explained",
+        excerpt: "How stage timing + raise milestones affect entry price and stage transitions.",
         date: "2026-02-16",
         readTime: "3 min read",
         cover: "",
         content: `
-## The rule
-Bullforge price progresses by stage:
-- Every **48 hours**, or
-- Every **$100,000 raised**  
-(whichever comes first)
+## The engine
+Bullforge progresses in stages. Each stage is designed to build momentum while maintaining transparency.
 
 ## What it means
-Early stages = lower price. As stages advance, scarcity narrative strengthens and entry cost increases.
+Early stages = lower price. As stages advance, the forge hardens and the entry cost increases.
 
 ## Pro tip
-If you’re planning to buy, watch the **stage timer** and the **total raised** counter.
+Watch the **stage timer** and **total raised** counters — they define the presale tempo.
 `
       },
       {
         slug: "forge-burn-scarcity",
-        title: "Forge Burn: How Supply Tightens at Every Milestone",
-        excerpt: "Each burn permanently removes tokens from circulation — scarcity increases as the forge evolves.",
+        title: "Forge Burn: Tightening Supply at Milestones",
+        excerpt: "Each burn permanently removes tokens from circulation — scarcity strengthens as the forge evolves.",
         date: "2026-02-15",
         readTime: "3 min read",
         cover: "",
         content: `
 ## What is Forge Burn?
-A scheduled on-chain burn before each stage change.
+A scheduled on-chain burn triggered on key milestones.
 
 ## Why it matters
-Burns reduce circulating supply over time — reinforcing scarcity and long-term holder narrative.
+Burns reduce supply over time — reinforcing scarcity and long-term holder narrative.
 
 ## Transparency
-All burns and contract activity should be verifiable on-chain.
+All burns and contract activity are verifiable on-chain.
 `
       }
     ];
 
-    // ========== 通用 ==========
+    // ==================== Helpers ====================
     function showNotification(title, desc, isError = false) {
       notifTitle.innerText = title;
       notifDesc.innerText = desc;
@@ -827,7 +1105,6 @@ All burns and contract activity should be verifiable on-chain.
       claimButton.style.display = 'none';
 
       walletBalanceSpan.innerText = '0.00';
-
       if (referralLink2) referralLink2.value = 'Connect wallet to generate...';
     }
 
@@ -856,7 +1133,7 @@ All burns and contract activity should be verifiable on-chain.
       if (!walletProvider?.request) return;
       try {
         await walletProvider.request({ method: 'wallet_switchEthereumChain', params: [{ chainId: CONFIG.CHAIN_ID_HEX }] });
-      } catch (e) {
+      } catch {
         try {
           await walletProvider.request({
             method: 'wallet_addEthereumChain',
@@ -868,13 +1145,20 @@ All burns and contract activity should be verifiable on-chain.
               blockExplorerUrls: [CONFIG.EXPLORER]
             }]
           });
-        } catch (err) {
-          console.warn('switch/add chain failed:', err);
-        }
+        } catch {}
       }
     }
 
-    // ========== 合约刷新 ==========
+    function estimateTokens() {
+      const val = parseFloat(bnbAmountInput.value);
+      if (isNaN(val) || val <= 0 || !currentRate) {
+        tokenEstimate.innerText = 'Enter BNB amount to see estimated $BULL tokens';
+        return;
+      }
+      tokenEstimate.innerText = `You will receive approx. ${(val * currentRate).toFixed(2)} $BULL`;
+    }
+
+    // ==================== Contract refresh ====================
     async function refreshContractData() {
       try {
         const readProvider = new ethers.providers.JsonRpcProvider(CONFIG.BSC_RPC);
@@ -897,20 +1181,19 @@ All burns and contract activity should be verifiable on-chain.
         tokenRateSpan.innerText = currentRate.toFixed(0) + ' $BULL';
 
         const priceWei = await readContract.getCurrentPrice().catch(() => null);
-        if (priceWei) {
-          currentPriceSpan.innerText = parseFloat(ethers.utils.formatEther(priceWei)).toFixed(6) + ' BNB';
-        } else {
-          currentPriceSpan.innerText = (1 / currentRate).toFixed(6) + ' BNB';
-        }
+        if (priceWei) currentPriceSpan.innerText = parseFloat(ethers.utils.formatEther(priceWei)).toFixed(6) + ' BNB';
+        else currentPriceSpan.innerText = (1 / currentRate).toFixed(6) + ' BNB';
 
         const endTime = await readContract.stageEndTime().catch(() => null);
         stageEndTimestamp = endTime ? endTime.toNumber() : (Math.floor(Date.now() / 1000) + 48 * 3600);
         updateCountdown();
 
         const totalSupplyWei = await readContract.totalSupply().catch(() => null);
-        totalSupplySpan.innerText = totalSupplyWei
-          ? (Number(ethers.utils.formatEther(totalSupplyWei)).toLocaleString() + ' $BULL')
-          : '1,000,000,000 $BULL';
+        if (totalSupplyDisplay) {
+          totalSupplyDisplay.innerText = totalSupplyWei
+            ? (Number(ethers.utils.formatEther(totalSupplyWei)).toLocaleString() + ' $BULL')
+            : '1,000,000,000 $BULL';
+        }
 
         const capWei = await readContract.hardCap().catch(() => null);
         if (capWei) hardcapBNB = parseFloat(ethers.utils.formatEther(capWei));
@@ -921,7 +1204,6 @@ All burns and contract activity should be verifiable on-chain.
         progressPercent.innerText = progress.toFixed(1) + '%';
         progressBarFill.style.width = progress + '%';
 
-        // 已连接钱包 => 刷新个人数据（Buy Now 页面显示余额即可）
         if (isUIConnected && userAddress && provider && contract) {
           const balWei = await provider.getBalance(userAddress).catch(() => null);
           if (balWei) walletBalanceSpan.innerText = parseFloat(ethers.utils.formatEther(balWei)).toFixed(4);
@@ -933,16 +1215,7 @@ All burns and contract activity should be verifiable on-chain.
       }
     }
 
-    function estimateTokens() {
-      const val = parseFloat(bnbAmountInput.value);
-      if (isNaN(val) || val <= 0 || !currentRate) {
-        tokenEstimate.innerText = 'Enter BNB amount to see estimated $BULL tokens';
-        return;
-      }
-      tokenEstimate.innerText = `You will receive approx. ${(val * currentRate).toFixed(2)} $BULL`;
-    }
-
-    // ========== Web3Modal 初始化 ==========
+    // ==================== Web3Modal ====================
     function initWeb3Modal() {
       const chains = [{
         chainId: CONFIG.CHAIN_ID,
@@ -976,57 +1249,37 @@ All burns and contract activity should be verifiable on-chain.
       });
     }
 
-    // ========== 实时检测连接 ==========
     async function getConnectedAccounts(walletProvider) {
       if (!walletProvider?.request) return [];
       try {
         const accounts = await walletProvider.request({ method: 'eth_accounts' });
         return Array.isArray(accounts) ? accounts : [];
-      } catch {
-        return [];
-      }
+      } catch { return []; }
     }
 
     function attachWalletListeners(walletProvider) {
       if (!walletProvider?.on) return;
-
       walletProvider.removeListener?.('accountsChanged', onAccountsChanged);
       walletProvider.removeListener?.('chainChanged', onChainChanged);
       walletProvider.removeListener?.('disconnect', onDisconnect);
-
       walletProvider.on('accountsChanged', onAccountsChanged);
       walletProvider.on('chainChanged', onChainChanged);
       walletProvider.on('disconnect', onDisconnect);
     }
 
     async function onAccountsChanged(accounts) {
-      if (!accounts || accounts.length === 0) {
-        hardResetUI();
-        return;
-      }
+      if (!accounts || accounts.length === 0) { hardResetUI(); return; }
       await syncWallet({ silent: true });
     }
-
-    async function onChainChanged() {
-      await syncWallet({ silent: true });
-    }
-
-    function onDisconnect() {
-      hardResetUI();
-    }
+    async function onChainChanged() { await syncWallet({ silent: true }); }
+    function onDisconnect() { hardResetUI(); }
 
     async function syncWallet({ silent = false } = {}) {
       const walletProvider = await web3Modal.getWalletProvider?.();
-      if (!walletProvider) {
-        if (isUIConnected) hardResetUI();
-        return false;
-      }
+      if (!walletProvider) { if (isUIConnected) hardResetUI(); return false; }
 
       const accounts = await getConnectedAccounts(walletProvider);
-      if (!accounts.length) {
-        if (isUIConnected) hardResetUI();
-        return false;
-      }
+      if (!accounts.length) { if (isUIConnected) hardResetUI(); return false; }
 
       provider = new ethers.providers.Web3Provider(walletProvider);
       signer = provider.getSigner();
@@ -1044,7 +1297,6 @@ All burns and contract activity should be verifiable on-chain.
 
       contract = new ethers.Contract(CONFIG.CONTRACT_ADDRESS, CONTRACT_ABI, signer);
 
-      // 立刻更新 UI
       isUIConnected = true;
       connectBtn.innerText = userAddress.slice(0, 6) + '...' + userAddress.slice(-4);
       connectBtn.disabled = true;
@@ -1054,11 +1306,9 @@ All burns and contract activity should be verifiable on-chain.
       buyButton.innerText = 'Buy $BULL';
       claimButton.style.display = 'block';
 
-      // referral link
       if (referralLink2) referralLink2.value = `${window.location.origin}?ref=${userAddress}`;
 
       attachWalletListeners(walletProvider);
-
       await refreshContractData();
 
       if (countdownInterval) clearInterval(countdownInterval);
@@ -1070,87 +1320,50 @@ All burns and contract activity should be verifiable on-chain.
 
     function startRealtimeWatcher() {
       if (watcherInterval) clearInterval(watcherInterval);
-
       watcherInterval = setInterval(async () => {
         try {
           const walletProvider = await web3Modal.getWalletProvider?.();
-          if (!walletProvider) {
-            if (isUIConnected) hardResetUI();
-            return;
-          }
-
+          if (!walletProvider) { if (isUIConnected) hardResetUI(); return; }
           const accounts = await getConnectedAccounts(walletProvider);
-
-          if (accounts.length && !isUIConnected) {
-            await syncWallet({ silent: true });
-            return;
-          }
-
-          if (!accounts.length && isUIConnected) {
-            hardResetUI();
-            return;
-          }
-        } catch {
-          // ignore
-        }
+          if (accounts.length && !isUIConnected) { await syncWallet({ silent: true }); return; }
+          if (!accounts.length && isUIConnected) { hardResetUI(); return; }
+        } catch {}
       }, 800);
     }
 
-    // ========== 连接/断开 ==========
     async function connectWallet() {
       try {
         connectBtn.disabled = true;
         connectBtn.innerHTML = `<span class="loading-spinner"></span>`;
-
         await web3Modal.open();
-
         const ok = await syncWallet();
         if (!ok) resetConnectButtonUI();
       } catch (e) {
-        console.warn('connectWallet error:', e);
         showNotification("Connection Failed", e?.message || String(e), true);
         resetConnectButtonUI();
       }
     }
 
     async function disconnectWallet() {
-      try {
-        if (web3Modal?.disconnect) await web3Modal.disconnect();
-      } catch (e) {
-        console.warn('disconnect error:', e);
-      } finally {
-        hardResetUI();
-        showNotification("Disconnected", "Wallet disconnected", false);
-      }
+      try { if (web3Modal?.disconnect) await web3Modal.disconnect(); }
+      catch {}
+      finally { hardResetUI(); showNotification("Disconnected", "Wallet disconnected", false); }
     }
 
-    // ========== 购买/领取 ==========
     async function buyTokens() {
-      if (!isUIConnected || !signer || !contract) {
-        showNotification('Not Connected', 'Please connect wallet first', true);
-        return;
-      }
-
+      if (!isUIConnected || !signer || !contract) { showNotification('Not Connected', 'Please connect wallet first', true); return; }
       const net = await provider.getNetwork().catch(() => ({ chainId: null }));
-      if (net.chainId !== CONFIG.CHAIN_ID) {
-        showNotification("Wrong Network", "Switch to BNB Smart Chain (Mainnet) to buy.", true);
-        return;
-      }
+      if (net.chainId !== CONFIG.CHAIN_ID) { showNotification("Wrong Network", "Switch to BNB Smart Chain (Mainnet) to buy.", true); return; }
 
       const amount = parseFloat(bnbAmountInput.value);
-      if (isNaN(amount) || amount <= 0) {
-        showNotification('Invalid amount', 'Enter a positive BNB amount', true);
-        return;
-      }
+      if (isNaN(amount) || amount <= 0) { showNotification('Invalid amount', 'Enter a positive BNB amount', true); return; }
 
       const slippage = parseFloat(slippageInput.value) / 100;
       const minTokensOut = Math.floor(amount * currentRate * (1 - slippage));
       const referrer = referrerInput.value.trim() || '0x0000000000000000000000000000000000000000';
 
       try {
-        const tx = await contract.buyTokens(referrer, minTokensOut, {
-          value: ethers.utils.parseEther(amount.toString())
-        });
+        const tx = await contract.buyTokens(referrer, minTokensOut, { value: ethers.utils.parseEther(amount.toString()) });
         showNotification('Purchase Submitted', `Tx: ${tx.hash}`, false);
         await tx.wait();
         showNotification('Success', 'You bought $BULL tokens!', false);
@@ -1161,16 +1374,9 @@ All burns and contract activity should be verifiable on-chain.
     }
 
     async function claimTokens() {
-      if (!isUIConnected || !signer || !contract) {
-        showNotification('Not Connected', 'Please connect wallet first', true);
-        return;
-      }
-
+      if (!isUIConnected || !signer || !contract) { showNotification('Not Connected', 'Please connect wallet first', true); return; }
       const net = await provider.getNetwork().catch(() => ({ chainId: null }));
-      if (net.chainId !== CONFIG.CHAIN_ID) {
-        showNotification("Wrong Network", "Switch to BNB Smart Chain (Mainnet) to claim.", true);
-        return;
-      }
+      if (net.chainId !== CONFIG.CHAIN_ID) { showNotification("Wrong Network", "Switch to BNB Smart Chain (Mainnet) to claim.", true); return; }
 
       try {
         const tx = await contract.claimTokens();
@@ -1183,7 +1389,18 @@ All burns and contract activity should be verifiable on-chain.
       }
     }
 
-    // ==================== Blog：自动读取内容 + bullzilla风格渲染 ====================
+    // ==================== Blog ====================
+    const blogGrid = document.getElementById('blogGrid');
+    const blogPrevBtn = document.getElementById('blogPrevBtn');
+    const blogNextBtn = document.getElementById('blogNextBtn');
+    const blogBackBtn = document.getElementById('blogBackBtn');
+    const blogpostTitle = document.getElementById('blogpostTitle');
+    const blogpostMeta = document.getElementById('blogpostMeta');
+    const blogpostCover = document.getElementById('blogpostCover');
+    const blogpostContent = document.getElementById('blogpostContent');
+    const blogpostPrev = document.getElementById('blogpostPrev');
+    const blogpostNext = document.getElementById('blogpostNext');
+
     async function loadBlogPosts() {
       try {
         const res = await fetch('/blog/posts.json', { cache: 'no-store' });
@@ -1210,7 +1427,6 @@ All burns and contract activity should be verifiable on-chain.
       const totalPages = Math.max(1, Math.ceil(total / BLOG_PAGE_SIZE));
       if (blogPage > totalPages) blogPage = totalPages;
       if (blogPage < 1) blogPage = 1;
-
       const start = (blogPage - 1) * BLOG_PAGE_SIZE;
       const end = start + BLOG_PAGE_SIZE;
       return { items: blogPosts.slice(start, end), totalPages };
@@ -1218,7 +1434,6 @@ All burns and contract activity should be verifiable on-chain.
 
     function renderBlog() {
       if (!blogGrid || !blogPrevBtn || !blogNextBtn) return;
-
       const { items, totalPages } = getBlogSlice();
 
       blogGrid.innerHTML = items.map(p => `
@@ -1245,9 +1460,7 @@ All burns and contract activity should be verifiable on-chain.
       });
     }
 
-    function findPostIndexBySlug(slug) {
-      return blogPosts.findIndex(p => p.slug === slug);
-    }
+    function findPostIndexBySlug(slug) { return blogPosts.findIndex(p => p.slug === slug); }
 
     function renderBlogPost(slug) {
       const idx = findPostIndexBySlug(slug);
@@ -1302,21 +1515,18 @@ All burns and contract activity should be verifiable on-chain.
       setActivePage('blog');
       const newHash = `#blog`;
       if (location.hash !== newHash) history.pushState(null, '', newHash);
+      renderBlog();
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
     async function initBlog() {
       await loadBlogPosts();
       renderBlog();
-
-      // 如果用户刷新在 #blog/<slug>，加载完数据后直接渲染
       const rr = getRouteFromHash();
-      if (rr.page === 'blogpost' && rr.slug) {
-        renderBlogPost(rr.slug);
-      }
+      if (rr.page === 'blogpost' && rr.slug) renderBlogPost(rr.slug);
     }
 
-    // ========== bullzilla 风格：路由/切页 ==========
+    // ==================== Routing ====================
     function setActivePage(pageName) {
       document.querySelectorAll('.page').forEach(p => {
         p.classList.toggle('is-active', p.getAttribute('data-page') === pageName);
@@ -1327,19 +1537,14 @@ All burns and contract activity should be verifiable on-chain.
     function getRouteFromHash() {
       const raw = (location.hash || '').replace('#', '').trim();
       if (!raw) return { page: 'home' };
-
-      // Blog: #blog or #blog/<slug>
       if (raw === 'blog') return { page: 'blog' };
       if (raw.startsWith('blog/')) {
         const slug = decodeURIComponent(raw.slice('blog/'.length));
         return { page: 'blogpost', slug };
       }
-
-      // others
       return { page: raw };
     }
 
-    // 点击导航切换（外链不拦截）
     document.querySelectorAll('[data-nav]').forEach(a => {
       a.addEventListener('click', (e) => {
         const href = a.getAttribute('href') || '';
@@ -1347,19 +1552,12 @@ All burns and contract activity should be verifiable on-chain.
 
         e.preventDefault();
         const target = a.getAttribute('data-nav');
-
-        // 用 hash 维护状态
         history.pushState(null, '', `#${target}`);
-
-        // 切页
         setActivePage(target);
-
-        // Blog 页面进入时刷新渲染一次（防止首次为空）
         if (target === 'blog') renderBlog();
       });
     });
 
-    // hash 改变 => 切页 + 文章渲染
     window.addEventListener('hashchange', () => {
       const r = getRouteFromHash();
       setActivePage(r.page);
@@ -1367,7 +1565,7 @@ All burns and contract activity should be verifiable on-chain.
       if (r.page === 'blog') renderBlog();
     });
 
-    // ========== 事件绑定 ==========
+    // ==================== Events ====================
     connectBtn.addEventListener('click', connectWallet);
     disconnectBtn.addEventListener('click', disconnectWallet);
     bnbAmountInput.addEventListener('input', estimateTokens);
@@ -1382,21 +1580,25 @@ All burns and contract activity should be verifiable on-chain.
 
     blogBackBtn?.addEventListener('click', backToBlogList);
 
-    // ========== 初始化 ==========
+    jumpToBuyBtn?.addEventListener('click', () => {
+      document.getElementById('buyFormAnchor')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+    jumpToWhitepaperBtn?.addEventListener('click', () => {
+      history.pushState(null, '', '#whitepaper');
+      setActivePage('whitepaper');
+    });
+
+    // ==================== Init ====================
     initWeb3Modal();
     refreshContractData();
     setInterval(updateCountdown, 1000);
     startRealtimeWatcher();
 
-    // 初次路由
     const r0 = getRouteFromHash();
     setActivePage(r0.page);
     if (r0.page === 'blogpost' && r0.slug) renderBlogPost(r0.slug);
 
-    // Blog init
     initBlog();
-
-    // 页面加载自动同步（如果 session 已缓存，会立刻显示地址）
     setTimeout(() => syncWallet({ silent: true }), 300);
   </script>
 </body>
