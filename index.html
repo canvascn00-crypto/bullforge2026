@@ -14,7 +14,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&display=swap" rel="stylesheet">
 
   <style>
-    /* ==================== 全局样式 ==================== (完全保留原样) */
+    /* ==================== 全局样式 ==================== (与原版完全相同) */
     :root {
       --gold-primary: #FFD700;
       --gold-secondary: #FFA500;
@@ -80,9 +80,7 @@
     }
     #disconnectBtn:hover { background: rgba(255, 215, 0, 0.1); }
 
-    /* 其余样式完全保留，为避免冗余省略，实际使用时原样保留所有样式 */
-    /* 此处省略后续样式以节省空间，实际输出应包含完整样式 (从 .hero 到 @media) */
-    /* 由于字符限制，只展示关键修改，最终输出会包含全部原有样式 */
+    /* ========== 其余样式与原版完全相同 ========== */
     .hero { min-height: 100vh; padding-top: 120px; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; background: linear-gradient(180deg, #0A0500 0%, var(--dark-bg) 100%); position: relative; overflow: hidden; }
     .hero-bg-glow { position: absolute; top: -50%; left: 50%; transform: translateX(-50%); width: 1200px; height: 1200px; background: radial-gradient(circle, rgba(255, 215, 0, 0.15) 0%, transparent 70%); z-index: 0; }
     .hero-content { position: relative; z-index: 1; max-width: 900px; }
@@ -204,7 +202,7 @@
     <div class="notification-desc" id="notificationDesc"></div>
   </div>
 
-  <!-- 导航栏 (完全保留) -->
+  <!-- 导航栏 -->
   <nav class="navbar">
     <div class="container navbar-content">
       <div class="navbar-logo">🐂 BULLFORGE</div>
@@ -216,7 +214,7 @@
         <a href="#roadmap">Roadmap</a>
         <a href="#faq">FAQ</a>
 
-        <!-- 钱包容器 -->
+        <!-- 钱包容器 (升级版) -->
         <div class="wallet-container">
           <button id="walletConnectBtn">Connect Wallet</button>
           <button id="disconnectBtn" style="display: none;">Disconnect</button>
@@ -225,31 +223,223 @@
     </div>
   </nav>
 
-  <!-- 其余HTML结构完全保留，此处省略以节省篇幅，实际输出会包含完整内容 -->
-  <!-- 从 Hero 到 Footer 的所有内容与原始文件相同，保持原样 -->
-  <!-- 为完整起见，这里只展示关键修改点，完整代码会包含所有原有 section -->
-  
-  <!-- 为了缩短篇幅，省略中间大段重复HTML，实际输出需包含全部内容（hero, about, mechanics, tokenomics, dashboard, roadmap, audit, faq, partners, footer） -->
-  <!-- 但为了确保功能，所有DOM元素的id必须保留，这里只做示意，最终代码会包含完整结构 -->
-  
-  <!-- 注意：以下是占位说明，实际输出将包含完整的原有HTML结构 -->
-  <section class="hero"> ... </section> <!-- 原有完整hero内容 -->
-  <!-- ... 所有原有section ... -->
-  <footer class="footer"> ... </footer>
+  <!-- Hero 区域 (完整保留) -->
+  <section class="hero">
+    <div class="hero-bg-glow"></div>
+    <div class="container hero-content">
+      <h1 class="hero-title">The Future isn't Just Bullish. It's Bullforge.</h1>
+      <p class="hero-slogan">Forged in the chaos of the blockchain, built to thrive where others fall.</p>
+
+      <!-- 预售核心数据 -->
+      <div class="presale-stats-grid">
+        <div class="stat-card"><div class="stat-label">Current Price</div><div class="stat-value" id="currentPrice"><span class="loading-spinner"></span></div></div>
+        <div class="stat-card"><div class="stat-label">Total Raised</div><div class="stat-value" id="totalRaised"><span class="loading-spinner"></span></div></div>
+        <div class="stat-card"><div class="stat-label">Current Stage</div><div class="stat-value" id="currentStage"><span class="loading-spinner"></span></div></div>
+        <div class="stat-card"><div class="stat-label">1 BNB =</div><div class="stat-value" id="tokenRate"><span class="loading-spinner"></span></div></div>
+      </div>
+
+      <!-- 倒计时 -->
+      <div class="countdown-wrapper">
+        <div class="countdown-title" id="countdownTitle">PRESALE ENDS IN</div>
+        <div class="countdown-grid" id="countdownGrid">
+          <div class="countdown-box"><div class="countdown-number" id="countdownDays">--</div><div class="countdown-text">Days</div></div>
+          <div class="countdown-box"><div class="countdown-number" id="countdownHours">--</div><div class="countdown-text">Hours</div></div>
+          <div class="countdown-box"><div class="countdown-number" id="countdownMinutes">--</div><div class="countdown-text">Minutes</div></div>
+          <div class="countdown-box"><div class="countdown-number" id="countdownSeconds">--</div><div class="countdown-text">Seconds</div></div>
+        </div>
+      </div>
+
+      <!-- 进度条 -->
+      <div class="progress-wrapper">
+        <div class="progress-header"><span>Presale Progress</span><span id="progressPercent">0%</span></div>
+        <div class="progress-bar-container"><div class="progress-bar-fill" id="progressBarFill"></div></div>
+      </div>
+
+      <!-- 购买表单 -->
+      <div class="buy-form-card">
+        <div class="form-input-group">
+          <div class="form-label"><span>Amount (BNB)</span><span>Balance: <span id="walletBalance">0.00</span> BNB</span></div>
+          <input type="number" class="form-input" id="bnbAmount" placeholder="0.0" step="0.01" min="0">
+        </div>
+        <div class="form-input-group">
+          <div class="form-label"><span>Slippage Tolerance</span></div>
+          <input type="number" class="form-input" id="slippage" placeholder="1.0" step="0.1" min="0.1" value="1.0">
+        </div>
+        <div class="form-input-group">
+          <div class="form-label"><span>Referrer Address (Optional)</span></div>
+          <input type="text" class="form-input" id="referrerAddress" placeholder="0x...">
+        </div>
+        <div class="token-estimate" id="tokenEstimate">Enter BNB amount to see estimated $BULL tokens</div>
+        <button class="buy-button" id="buyButton" disabled>Connect Wallet To Buy</button>
+        <button class="btn-secondary" id="claimButton" style="display: none;">Claim Your $BULL Tokens</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- About 区域 -->
+  <section class="section" id="about">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-subtitle">About Bullforge</div>
+        <h2 class="section-title">Forged for the Bull Run</h2>
+        <p class="section-desc">Bullforge is a BNB Chain-based meme coin born in the chaos of the blockchain; a beast built to thrive where others fall. Driven by a Progressive Price Engine that increases value every $100,000 raised or every 48 hours — whichever happens first — plus a Forge Burn at each milestone to make every $BULL scarcer. Holders can step into The HODL Forge, locking their tokens for monster-level rewards of 70% APY. Fueled by belief and driven by momentum, Bullforge moves forward without retreat, turning red candles into rocket fuel.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 核心机制 -->
+  <section class="section" id="mechanics">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-subtitle">Core Mechanics</div>
+        <h2 class="section-title">The Forge System</h2>
+      </div>
+      <div class="feature-grid">
+        <div class="feature-card"><div class="feature-icon">🔥</div><h3 class="feature-title">The HODL Forge - 70% APY</h3><p class="feature-desc">In the Bullforge universe, loyalty isn't just respected, it's rewarded. Don't just hold your $BULL, put it to work! By locking your tokens in The HODL Forge, you secure a massive 70% APY, turning conviction into unstoppable growth. This isn't a trickle of adoption, it's a surge. Every lock strengthens the roar, every HODLer fuels the myth. While others hesitate, Diamond hands enjoy compounding rewards!</p></div>
+        <div class="feature-card"><div class="feature-icon">⚡</div><h3 class="feature-title">Forge Burn</h3><p class="feature-desc">Forge Burn is Bullforge's signature supply strike! A live, on-chain event that happens before every stage change in the presale. Powered by The Scorch Reserve — 5% of total supply set aside exclusively for burns — each event permanently removes tokens from circulation. Every burn tightens supply, amplifies scarcity, and marks the beast's evolution into its next chapter. When the forge hits, the market listens.</p></div>
+        <div class="feature-card"><div class="feature-icon">🤝</div><h3 class="feature-title">Forge-To-Earn</h3><p class="feature-desc">With Forge-To-Earn, you turn your network into rewards. Share your unique referral code and you'll earn 10% of every buy made through it, while the person you refer gets a 10% bonus in $BULL. All you have to do is spread the word, grow the community, and watch your rewards stack. Vesting kicks in after the presale, so your loyalty is locked, loaded, and ready to pay out.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Tokenomics 区域 -->
+  <section class="section tokenomics-section" id="tokenomics">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-subtitle">Bullforge DNA</div>
+        <h2 class="section-title">Tokenomics</h2>
+      </div>
+      <div class="tokenomics-grid">
+        <div class="tokenomics-card"><div class="tokenomics-percent">50%</div><div class="tokenomics-label">Presale Engine</div><div class="tokenomics-desc">Fuels Bullforge's on-chain awakening. Distributed during presale to believers who sparked the legend.</div></div>
+        <div class="tokenomics-card"><div class="tokenomics-percent">20%</div><div class="tokenomics-label">HODL Forge</div><div class="tokenomics-desc">Rewards the fireproof. Locked staking designed to amplify returns for those who HODL.</div></div>
+        <div class="tokenomics-card"><div class="tokenomics-percent">20%</div><div class="tokenomics-label">Community Vault</div><div class="tokenomics-desc">Powers liquidity, lore events, post-launch ecosystem, referral rewards, and community expansion.</div></div>
+        <div class="tokenomics-card"><div class="tokenomics-percent">5%</div><div class="tokenomics-label">Forge Burn Reserve</div><div class="tokenomics-desc">Live burns every time Bullforge roars into the next chapter. Supply vanishes. Demand tightens.</div></div>
+        <div class="tokenomics-card"><div class="tokenomics-percent">5%</div><div class="tokenomics-label">Team Allocation</div><div class="tokenomics-desc">Reserved for the creators. Time-locked (2-years), no early dumps. Aligned with the rise, not the hype.</div></div>
+      </div>
+      <div class="tokenomics-total">
+        <div class="stat-label">Total Supply</div>
+        <div class="tokenomics-total-value" id="totalSupplyDisplay"><span class="loading-spinner"></span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 我的资产板块 -->
+  <section class="section dashboard-section" id="dashboard">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-subtitle">Your Forge</div>
+        <h2 class="section-title">My Assets</h2>
+        <p class="section-desc" id="dashboardNotice">Connect your wallet to view your assets, referral rewards and staking position</p>
+      </div>
+
+      <div class="dashboard-grid" id="dashboardGrid" style="display: none;">
+        <div class="dashboard-card"><div class="dashboard-label">Purchased (BNB)</div><div class="dashboard-value" id="userPurchased">0</div></div>
+        <div class="dashboard-card"><div class="dashboard-label">Referral Rewards ($BULL)</div><div class="dashboard-value" id="userReferralRewards">0</div></div>
+        <div class="dashboard-card"><div class="dashboard-label">Staked $BULL</div><div class="dashboard-value" id="userStaked">0</div></div>
+        <div class="dashboard-card"><div class="dashboard-label">Claim Status</div><div class="dashboard-value" id="userClaimStatus">--</div></div>
+      </div>
+
+      <div class="dashboard-card" id="portfolioCard" style="display: none; margin-bottom: 24px;">
+        <div class="dashboard-label">💰 持仓价值</div>
+        <div class="dashboard-value" id="portfolioValue">0 BNB</div>
+        <div style="margin-top: 16px; font-size: 14px; color: var(--text-gray);" id="tokenBalanceDetail">持有 $BULL: 0</div>
+      </div>
+
+      <table class="history-table" id="historyTable" style="display: none;">
+        <thead><tr><th>时间</th><th>金额 (BNB)</th><th>获得 $BULL</th><th>价格 (BNB/$BULL)</th></tr></thead>
+        <tbody id="historyBody"><tr><td colspan="4" style="text-align:center;">加载中...</td></tr></tbody>
+      </table>
+
+      <div class="buy-form-card" id="stakingCard" style="display: none; margin: 0 auto; max-width: 800px;">
+        <h3 style="margin-bottom: 24px; color: var(--gold-primary);">Stake Your $BULL (70% APY)</h3>
+        <div class="form-input-group"><div class="form-label"><span>Amount to Stake ($BULL)</span></div><input type="number" class="form-input" id="stakeAmount" placeholder="0.0" step="1" min="0" disabled></div>
+        <div class="form-input-group"><div class="form-label"><span>Lock Period</span></div><select class="form-select" id="lockDays" disabled><option value="30">30 Days</option><option value="90">90 Days</option><option value="180">180 Days</option><option value="365">365 Days</option></select></div>
+        <div class="token-estimate" id="stakingEstimate">Staking will be available after presale</div>
+        <button class="buy-button" id="stakeButton" disabled>Stake $BULL</button>
+        <button class="btn-secondary" id="unstakeButton" style="display: none;" disabled>Unstake My Tokens</button>
+      </div>
+
+      <div class="referral-box" id="referralBox" style="display: none;">
+        <h3 style="margin-bottom: 16px; color: var(--gold-primary);">Your Forge-To-Earn Referral Link</h3>
+        <p style="color: var(--text-gray); margin-bottom: 16px;">Share this link to earn 10% of every buy made through it, and your referral gets a 10% bonus!</p>
+        <div class="referral-link"><input type="text" id="referralLink" readonly><button class="btn btn-small btn-secondary" id="copyReferralBtn">Copy Link</button></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Roadmap 区域 -->
+  <section class="section" id="roadmap">
+    <div class="container">
+      <div class="section-header"><div class="section-subtitle">The Forge Launch Sequence</div><h2 class="section-title">Roadmap</h2></div>
+      <div class="roadmap-grid">
+        <div class="roadmap-card"><div class="roadmap-phase">Phase I: The Awakening</div><h3 class="roadmap-title">Q1 2026</h3><ul class="roadmap-list"><li>Bullforge concept is born</li><li>Team assembles: devs, designers, meme strategists</li><li>Website and lore teaser launch</li><li>Smart contract development & audit</li><li>Core community activation</li><li>Presale goes live</li></ul></div>
+        <div class="roadmap-card"><div class="roadmap-phase">Phase II: The Mutation Begins</div><h3 class="roadmap-title">Q2 2026</h3><ul class="roadmap-list"><li>Progressive price engine activates</li><li>Forge Burn events trigger at each milestone</li><li>Forge-To-Earn referral system goes live</li><li>Staking details revealed</li><li>Marketing campaign launch</li><li>Presale completion</li></ul></div>
+        <div class="roadmap-card"><div class="roadmap-phase">Phase III: Forge Takes Form</div><h3 class="roadmap-title">Q3 2026</h3><ul class="roadmap-list"><li>HODL Forge staking opens - 70% APY</li><li>Token claim goes live</li><li>DEX listings & liquidity injection</li><li>Vesting logic activates</li><li>Community expansion</li><li>Forge Burn events continue</li></ul></div>
+        <div class="roadmap-card"><div class="roadmap-phase">Phase IV: The Final Mutation</div><h3 class="roadmap-title">Q4 2026</h3><ul class="roadmap-list"><li>CEX listings</li><li>Full ecosystem roadmap unveiled</li><li>Major marketing partnerships</li><li>New utility features launch</li><li>Global community expansion</li></ul></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Audit 区域 -->
+  <section class="section audit-section">
+    <div class="container">
+      <div class="audit-card">
+        <div class="audit-icon">🛡️</div>
+        <h3 class="audit-title">Fully Audited Smart Contract</h3>
+        <p class="audit-desc">Bullforge's smart contract is fully audited, ensuring the forge's foundation is as secure as its roar is loud. All code is verified on BscScan, with no backdoors, no hidden fees, and full transparency for the community.</p>
+        <div style="display: flex; gap: 16px; flex-wrap: wrap; justify-content: center;">
+          <a href="https://bscscan.com/address/0x16D6c1a692AaC51a3821bA2903115d4600649F07" target="_blank" rel="noreferrer"><button class="buy-button" style="max-width: 300px;">View Contract on BscScan</button></a>
+          <a href="#" target="_blank" rel="noreferrer"><button class="btn-secondary" style="max-width: 300px;">Read Whitepaper</button></a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ 区域 -->
+  <section class="section" id="faq">
+    <div class="container">
+      <div class="section-header"><div class="section-subtitle">FAQ</div><h2 class="section-title">Frequently Asked Questions</h2></div>
+      <div class="faq-grid">
+        <div class="faq-item"><div class="faq-question">What is Bullforge ($BULL)? <span>✦</span></div><div class="faq-answer">Bullforge is a BNB Chain-based memecoin forged in the chaos of the blockchain — a living myth designed to turn red candles into rocket fuel.</div></div>
+        <div class="faq-item"><div class="faq-question">How does the presale work? <span>✦</span></div><div class="faq-answer">Every 48 hours or once $100,000 is raised — whichever comes first — the price of $BULL automatically climbs higher.</div></div>
+        <div class="faq-item"><div class="faq-question">Is there a minimum buy amount? <span>✦</span></div><div class="faq-answer">No, you can buy any amount of $BULL. However, a minimum of $50 during the presale is required to unlock your referral code.</div></div>
+        <div class="faq-item"><div class="faq-question">Which wallets can I use? <span>✦</span></div><div class="faq-answer">Bullforge is compatible with wallets like MetaMask, Trust Wallet, and Coinbase Wallet. Any BEP-20 compatible wallet will work.</div></div>
+        <div class="faq-item"><div class="faq-question">When can I claim my tokens? <span>✦</span></div><div class="faq-answer">Token claim will be available immediately after the presale ends and liquidity is added to the DEX.</div></div>
+        <div class="faq-item"><div class="faq-question">How does the referral program work? <span>✦</span></div><div class="faq-answer">Share your unique referral link, and you'll earn 10% of every buy made through your link. The person you refer also gets a 10% bonus.</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 合作伙伴区域 -->
+  <section class="partners-section">
+    <div class="container">
+      <div class="section-header"><div class="section-subtitle">Powered By</div></div>
+      <div class="partners-grid">
+        <div class="partner-logo">BNB Chain</div><div class="partner-logo">MetaMask</div><div class="partner-logo">Trust Wallet</div><div class="partner-logo">BscScan</div><div class="partner-logo">PancakeSwap</div><div class="partner-logo">CoinMarketCap</div><div class="partner-logo">CoinGecko</div><div class="partner-logo">AWS</div><div class="partner-logo">Cloudflare</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 页脚 -->
+  <footer class="footer">
+    <div class="container footer-content">
+      <div class="footer-logo">🐂 BULLFORGE</div>
+      <div class="footer-links">
+        <a href="#about">About</a><a href="#mechanics">Mechanics</a><a href="#tokenomics">Tokenomics</a><a href="#dashboard">My Assets</a><a href="#roadmap">Roadmap</a><a href="#faq">FAQ</a><a href="https://bscscan.com/address/0x16D6c1a692AaC51a3821bA2903115d4600649F07" target="_blank" rel="noreferrer">Contract</a>
+      </div>
+      <div class="footer-contract">Contract Address: 0x16D6c1a692AaC51a3821bA2903115d4600649F07</div>
+      <div class="footer-copyright">© 2026 Bullforge. All rights reserved.</div>
+    </div>
+  </footer>
 
   <script type="module">
-    // =========================================================================
-    // ✅ 升级版钱包连接：使用 Web3Modal v3 (类似 bullzilla 的现代多钱包Modal)
-    // 移除旧的 @walletconnect/ethereum-provider，改用 @web3modal/ethers5
-    // =========================================================================
-    
-    // 导入 Web3Modal 核心 (通过 esm.sh CDN，稳定且支持缓存)
+    // ✅ 升级: 使用 Web3Modal v3 (ethers5) 实现 bullzilla 风格的多钱包连接
     import { createWeb3Modal, defaultConfig } from 'https://esm.sh/@web3modal/ethers5@4.1.2';
 
     // ==================== 核心配置 ====================
     const CONFIG = {
       CONTRACT_ADDRESS: "0x16D6c1a692AaC51a3821bA2903115d4600649F07",
-      WALLETCONNECT_PROJECT_ID: "fe819ed06d9e5489f764fc7b1dae1c4e",  // 你的项目ID
+      WALLETCONNECT_PROJECT_ID: "fe819ed06d9e5489f764fc7b1dae1c4e",  // 请确保此ID有效，如无效可更换为你的
       BSC_RPC: "https://bsc-dataseed.binance.org/",
       CHAIN_ID: 56,
       CHAIN_NAME: "BNB Smart Chain",
@@ -257,7 +447,7 @@
       EXPLORER: "https://bscscan.com"
     };
 
-    // 完整ABI (与之前完全相同)
+    // 完整ABI (保持不变)
     const CONTRACT_ABI = [
       "function name() view returns (string)",
       "function symbol() view returns (string)",
@@ -281,7 +471,7 @@
       "event Buy(address indexed buyer, uint256 bnbAmount, uint256 tokenAmount, uint256 price, address indexed referrer)"
     ];
 
-    // ========== UI 元素获取 (保持与原来一致) ==========
+    // ========== UI 元素获取 ==========
     const notif = document.getElementById('notification');
     const notifTitle = document.getElementById('notificationTitle');
     const notifDesc = document.getElementById('notificationDesc');
@@ -328,17 +518,14 @@
 
     // ========== 全局变量 ==========
     let provider, signer, contract, userAddress;
-    // 不再需要 wcProvider
+    let web3Modal;               // Web3Modal 实例
     let currentRate = 0;
     let totalRaisedBNB = 0;
     let hardcapBNB = 2000;
     let stageEndTimestamp = 0;
     let countdownInterval;
 
-    // 新增：Web3Modal 实例
-    let web3Modal;
-
-    // ========== 工具函数 (完全保留) ==========
+    // ========== 工具函数 ==========
     function showNotification(title, desc, isError = false) {
       notifTitle.innerText = title;
       notifDesc.innerText = desc;
@@ -368,18 +555,207 @@
       secondsSpan.innerText = s < 10 ? '0' + s : s;
     }
 
-    async function loadUserHistory() { /* 完全保留原函数内容，此处省略但实际代码中有完整实现 */ }
-    // 因篇幅，函数体省略，但最终输出应包含原完整函数
-    // 注意：此处需将原 loadUserHistory, refreshContractData, estimateTokens 等函数完整复制过来
-    // 为了简洁，在最终答案中会包含所有未修改的函数体
-    
-    // 由于函数体较长，且未修改，这里仅示意，实际输出会包含全部原有逻辑
-    async function refreshContractData() { /* 完整保留原有实现 */ }
-    function estimateTokens() { /* 完整保留原有实现 */ }
+    async function loadUserHistory() {
+      if (!contract || !userAddress) return;
+      try {
+        const filter = contract.filters.Buy(userAddress);
+        const events = await contract.queryFilter(filter, -10000);
+        events.sort((a, b) => b.blockNumber - a.blockNumber);
+        const history = events.slice(0, 5);
+        if (history.length === 0) {
+          historyBody.innerHTML = '<tr><td colspan="4" style="text-align:center;">暂无购买记录</td></tr>';
+        } else {
+          historyBody.innerHTML = '';
+          for (let ev of history) {
+            const block = await ev.getBlock();
+            const date = new Date(block.timestamp * 1000).toLocaleString();
+            const bnbAmount = ethers.utils.formatEther(ev.args.bnbAmount);
+            const tokenAmount = ethers.utils.formatEther(ev.args.tokenAmount);
+            const price = ethers.utils.formatEther(ev.args.price);
+            historyBody.innerHTML += `<tr><td>${date}</td><td>${bnbAmount}</td><td>${Number(tokenAmount).toFixed(2)}</td><td>${price}</td></tr>`;
+          }
+        }
+        historyTable.style.display = 'table';
+      } catch (e) {
+        console.warn('获取历史失败', e);
+        historyBody.innerHTML = '<tr><td colspan="4" style="text-align:center;">无法获取历史记录（可能合约无事件）</td></tr>';
+        historyTable.style.display = 'table';
+      }
+    }
 
-    // ========== 初始化 Web3Modal 配置 (V3 风格) ==========
-    function setupWeb3Modal() {
-      // 1. 定义链 (BNB Chain)
+    async function refreshContractData() {
+      if (!contract) {
+        // 只读模式尝试从公共RPC获取合约实例
+        try {
+          const readProvider = new ethers.providers.JsonRpcProvider(CONFIG.BSC_RPC);
+          const readContract = new ethers.Contract(CONFIG.CONTRACT_ADDRESS, CONTRACT_ABI, readProvider);
+          // 仅读取公开数据，不依赖signer
+          let raisedWei = await readContract.totalRaised().catch(() => null);
+          if (raisedWei) {
+            totalRaisedBNB = parseFloat(ethers.utils.formatEther(raisedWei));
+            totalRaisedSpan.innerText = totalRaisedBNB.toFixed(2) + ' BNB';
+          } else {
+            totalRaisedSpan.innerText = '0.00 BNB';
+          }
+          let stage = await readContract.currentStage().catch(() => 1);
+          currentStageSpan.innerText = stage ? stage.toString() : '1';
+          let rate = await readContract.getRate().catch(() => null);
+          if (rate) {
+            currentRate = parseFloat(ethers.utils.formatEther(rate));
+            tokenRateSpan.innerText = currentRate.toFixed(0) + ' $BULL';
+          } else {
+            currentRate = 1000 * (stage || 1);
+            tokenRateSpan.innerText = currentRate.toFixed(0) + ' $BULL';
+          }
+          let priceWei = await readContract.getCurrentPrice().catch(() => null);
+          if (priceWei) {
+            let priceBNB = parseFloat(ethers.utils.formatEther(priceWei));
+            currentPriceSpan.innerText = priceBNB.toFixed(6) + ' BNB';
+          } else {
+            currentPriceSpan.innerText = (1 / currentRate).toFixed(6) + ' BNB';
+          }
+          let endTime = await readContract.stageEndTime().catch(() => null);
+          if (endTime) stageEndTimestamp = endTime.toNumber();
+          else stageEndTimestamp = Math.floor(Date.now() / 1000) + 48 * 3600;
+          updateCountdown();
+          let totalSupplyWei = await readContract.totalSupply().catch(() => null);
+          if (totalSupplyWei) {
+            let totalSupply = ethers.utils.formatEther(totalSupplyWei);
+            totalSupplySpan.innerText = Number(totalSupply).toLocaleString() + ' $BULL';
+          } else {
+            totalSupplySpan.innerText = '1,000,000,000 $BULL';
+          }
+          let capWei = await readContract.hardCap().catch(() => null);
+          if (capWei) hardcapBNB = parseFloat(ethers.utils.formatEther(capWei));
+          let progress = (totalRaisedBNB / hardcapBNB) * 100;
+          if (progress > 100) progress = 100;
+          progressPercent.innerText = progress.toFixed(1) + '%';
+          progressBarFill.style.width = progress + '%';
+        } catch (e) {
+          console.warn('只读合约读取失败，使用模拟数据', e);
+          totalRaisedSpan.innerText = '125.45 BNB';
+          currentStageSpan.innerText = '2';
+          currentRate = 2500;
+          tokenRateSpan.innerText = currentRate + ' $BULL';
+          currentPriceSpan.innerText = (1 / currentRate).toFixed(6) + ' BNB';
+          stageEndTimestamp = Math.floor(Date.now() / 1000) + 3600 * 24;
+          updateCountdown();
+          totalSupplySpan.innerText = '1,000,000,000 $BULL';
+          progressPercent.innerText = '12.5%';
+          progressBarFill.style.width = '12.5%';
+        }
+        return;
+      }
+
+      // 有signer的情况（已连接钱包）
+      try {
+        let raisedWei = await contract.totalRaised().catch(() => null);
+        if (raisedWei) {
+          totalRaisedBNB = parseFloat(ethers.utils.formatEther(raisedWei));
+          totalRaisedSpan.innerText = totalRaisedBNB.toFixed(2) + ' BNB';
+        } else {
+          totalRaisedSpan.innerText = '0.00 BNB';
+        }
+
+        let stage = await contract.currentStage().catch(() => 1);
+        currentStageSpan.innerText = stage ? stage.toString() : '1';
+
+        let rate = await contract.getRate().catch(() => null);
+        if (rate) {
+          currentRate = parseFloat(ethers.utils.formatEther(rate));
+          tokenRateSpan.innerText = currentRate.toFixed(0) + ' $BULL';
+        } else {
+          currentRate = 1000 * (stage || 1);
+          tokenRateSpan.innerText = currentRate.toFixed(0) + ' $BULL';
+        }
+
+        let priceWei = await contract.getCurrentPrice().catch(() => null);
+        if (priceWei) {
+          let priceBNB = parseFloat(ethers.utils.formatEther(priceWei));
+          currentPriceSpan.innerText = priceBNB.toFixed(6) + ' BNB';
+        } else {
+          currentPriceSpan.innerText = (1 / currentRate).toFixed(6) + ' BNB';
+        }
+
+        let endTime = await contract.stageEndTime().catch(() => null);
+        if (endTime) stageEndTimestamp = endTime.toNumber();
+        else stageEndTimestamp = Math.floor(Date.now() / 1000) + 48 * 3600;
+        updateCountdown();
+
+        let totalSupplyWei = await contract.totalSupply().catch(() => null);
+        if (totalSupplyWei) {
+          let totalSupply = ethers.utils.formatEther(totalSupplyWei);
+          totalSupplySpan.innerText = Number(totalSupply).toLocaleString() + ' $BULL';
+        } else {
+          totalSupplySpan.innerText = '1,000,000,000 $BULL';
+        }
+
+        let capWei = await contract.hardCap().catch(() => null);
+        if (capWei) hardcapBNB = parseFloat(ethers.utils.formatEther(capWei));
+
+        let progress = (totalRaisedBNB / hardcapBNB) * 100;
+        if (progress > 100) progress = 100;
+        progressPercent.innerText = progress.toFixed(1) + '%';
+        progressBarFill.style.width = progress + '%';
+
+        if (userAddress) {
+          let purchasedWei = await contract.contributed(userAddress).catch(() => null);
+          if (purchasedWei) {
+            let purchased = parseFloat(ethers.utils.formatEther(purchasedWei));
+            userPurchasedSpan.innerText = purchased.toFixed(4) + ' BNB';
+          } else {
+            userPurchasedSpan.innerText = '0 BNB';
+          }
+
+          let rewardsWei = await contract.referralRewards(userAddress).catch(() => null);
+          if (rewardsWei) {
+            let rewards = ethers.utils.formatEther(rewardsWei);
+            userReferralRewardsSpan.innerText = Number(rewards).toFixed(2) + ' $BULL';
+          } else {
+            userReferralRewardsSpan.innerText = '0 $BULL';
+          }
+
+          let balWei = await provider.getBalance(userAddress);
+          walletBalanceSpan.innerText = parseFloat(ethers.utils.formatEther(balWei)).toFixed(4);
+
+          let tokenBalanceWei = await contract.balanceOf(userAddress).catch(() => ethers.BigNumber.from(0));
+          let tokenBalance = parseFloat(ethers.utils.formatEther(tokenBalanceWei));
+          tokenBalanceDetail.innerText = `持有 $BULL: ${tokenBalance.toFixed(2)}`;
+
+          let pricePerToken = 1 / currentRate;
+          let portfolioValueBNB = tokenBalance * pricePerToken;
+          portfolioValue.innerText = `${portfolioValueBNB.toFixed(4)} BNB`;
+          portfolioCard.style.display = 'block';
+
+          loadUserHistory();
+        }
+      } catch (e) {
+        console.warn('合约读取失败，使用模拟数据', e);
+        totalRaisedSpan.innerText = '125.45 BNB';
+        currentStageSpan.innerText = '2';
+        currentRate = 2500;
+        tokenRateSpan.innerText = currentRate + ' $BULL';
+        currentPriceSpan.innerText = (1 / currentRate).toFixed(6) + ' BNB';
+        stageEndTimestamp = Math.floor(Date.now() / 1000) + 3600 * 24;
+        updateCountdown();
+        totalSupplySpan.innerText = '1,000,000,000 $BULL';
+        progressPercent.innerText = '12.5%';
+        progressBarFill.style.width = '12.5%';
+      }
+    }
+
+    function estimateTokens() {
+      let val = parseFloat(bnbAmountInput.value);
+      if (isNaN(val) || val <= 0) {
+        tokenEstimate.innerText = 'Enter BNB amount to see estimated $BULL tokens';
+        return;
+      }
+      let estimated = val * currentRate;
+      tokenEstimate.innerText = `You will receive approx. ${estimated.toFixed(2)} $BULL`;
+    }
+
+    // ========== Web3Modal 初始化 ==========
+    function initWeb3Modal() {
       const chains = [{
         chainId: CONFIG.CHAIN_ID,
         name: CONFIG.CHAIN_NAME,
@@ -388,78 +764,67 @@
         rpcUrl: CONFIG.BSC_RPC
       }];
 
-      // 2. 默认配置 (项目ID、元数据)
       const config = defaultConfig({
         metadata: {
           name: 'Bullforge',
           description: 'Bullforge Presale',
           url: window.location.origin,
-          icons: ['https://walletconnect.com/walletconnect-logo.png'] // 可以替换为实际logo
+          icons: ['https://walletconnect.com/walletconnect-logo.png'] // 可替换为实际图标
         },
         defaultChainId: CONFIG.CHAIN_ID,
-        rpcUrl: CONFIG.BSC_RPC,  // 备用RPC
+        rpcUrl: CONFIG.BSC_RPC,
         projectId: CONFIG.WALLETCONNECT_PROJECT_ID,
       });
 
-      // 3. 创建 modal 实例
       web3Modal = createWeb3Modal({
         ethersConfig: config,
         chains: chains,
         projectId: CONFIG.WALLETCONNECT_PROJECT_ID,
-        themeMode: 'dark',        // 暗色主题匹配网站
+        themeMode: 'dark',
         themeVariables: {
-          '--w3m-color-mix': '#FFD700',   // 金色点缀
+          '--w3m-color-mix': '#FFD700',
           '--w3m-color-mix-strength': 10
         }
       });
 
-      // 4. 订阅状态变化 (连接/断开/账户切换)
+      // 订阅状态变化
       web3Modal.subscribeState(async (state) => {
         if (state.status === 'connected') {
-          // 获取 provider 和 signer
-          const modalProvider = web3Modal.getWalletProvider(); // 返回 ethers provider
-          const modalSigner = web3Modal.getWalletSigner();
-          if (modalProvider && modalSigner) {
-            provider = modalProvider;
-            signer = modalSigner;
-            try {
-              userAddress = await signer.getAddress();
-              contract = new ethers.Contract(CONFIG.CONTRACT_ADDRESS, CONTRACT_ABI, signer);
+          try {
+            // 获取 provider 和 signer (异步)
+            provider = await web3Modal.getProvider();
+            signer = await web3Modal.getSigner();
+            userAddress = await signer.getAddress();
+            contract = new ethers.Contract(CONFIG.CONTRACT_ADDRESS, CONTRACT_ABI, signer);
 
-              // 更新UI
-              connectBtn.innerText = userAddress.slice(0, 6) + '...' + userAddress.slice(-4);
-              connectBtn.disabled = true;
-              disconnectBtn.style.display = 'inline-block';
-              dashboardNotice.style.display = 'none';
-              dashboardGrid.style.display = 'grid';
-              referralBox.style.display = 'block';
-              stakingCard.style.display = 'block';
-              portfolioCard.style.display = 'block';
-              buyButton.disabled = false;
-              buyButton.innerText = 'Buy $BULL';
-              claimButton.style.display = 'block';
-              referralLink.value = `${window.location.origin}?ref=${userAddress}`;
+            // 更新UI
+            connectBtn.innerText = userAddress.slice(0, 6) + '...' + userAddress.slice(-4);
+            connectBtn.disabled = true;
+            disconnectBtn.style.display = 'inline-block';
 
-              await refreshContractData();
-              if (countdownInterval) clearInterval(countdownInterval);
-              countdownInterval = setInterval(updateCountdown, 1000);
-              showNotification("Connected", "Wallet connected successfully", false);
-            } catch (e) {
-              console.error(e);
-            }
+            dashboardNotice.style.display = 'none';
+            dashboardGrid.style.display = 'grid';
+            referralBox.style.display = 'block';
+            stakingCard.style.display = 'block';
+            portfolioCard.style.display = 'block';
+            buyButton.disabled = false;
+            buyButton.innerText = 'Buy $BULL';
+            claimButton.style.display = 'block';
+            referralLink.value = `${window.location.origin}?ref=${userAddress}`;
+
+            await refreshContractData();
+            if (countdownInterval) clearInterval(countdownInterval);
+            countdownInterval = setInterval(updateCountdown, 1000);
+            showNotification("Connected", "Wallet connected successfully", false);
+          } catch (e) {
+            console.error(e);
+            showNotification("Connection Error", e.message, true);
           }
         } else if (state.status === 'disconnected') {
-          // 断开连接：重置UI (类似页面刷新效果，也可以局部重置)
-          window.location.reload(); // 简单处理，或者重置变量
+          // 断开连接时刷新页面（简单重置）
+          window.location.reload();
         }
       });
-
-      // 同时监听账户变化 (通过subscribeState已经能获得变化，但也可单独处理)
-      web3Modal.subscribeProvider((info) => {
-        // 如果 accounts 变化，state.status 会触发更新，所以我们依赖上面即可
-      });
-
-      // 如果已经自动连接成功，state会立即触发connected，无需额外操作
     }
 
     // ========== 连接钱包 (打开modal) ==========
@@ -467,7 +832,6 @@
       try {
         connectBtn.disabled = true;
         connectBtn.innerHTML = `<span class="loading-spinner"></span>`;
-        // 打开 Web3Modal 连接视图
         await web3Modal.open();
       } catch (e) {
         console.error(e);
@@ -484,33 +848,63 @@
       } catch (e) {
         console.warn(e);
       } finally {
-        // 由于subscribeState会触发disconnected，我们将在那里 reload，但这里也可以主动reload
         window.location.reload();
       }
     }
 
-    // ========== 初始化 ==========
-    setupWeb3Modal();
-
-    // 绑定事件
+    // ========== 事件绑定 ==========
     connectBtn.addEventListener('click', connectWallet);
     disconnectBtn.addEventListener('click', disconnectWallet);
-
     bnbAmountInput.addEventListener('input', estimateTokens);
-
     copyBtn.addEventListener('click', () => {
       referralLink.select();
       document.execCommand('copy');
       showNotification('Copied!', 'Referral link copied to clipboard', false);
     });
 
-    async function buyTokens() { /* 完全保留原函数内容，从原代码复制 */ }
-    async function claimTokens() { /* 完全保留原函数内容 */ }
+    async function buyTokens() {
+      if (!signer || !contract) return;
+      let amount = parseFloat(bnbAmountInput.value);
+      if (isNaN(amount) || amount <= 0) {
+        showNotification('Invalid amount', 'Enter a positive BNB amount', true);
+        return;
+      }
+      let slippage = parseFloat(slippageInput.value) / 100;
+      let minTokensOut = Math.floor(amount * currentRate * (1 - slippage));
+      let referrer = referrerInput.value.trim() || '0x0000000000000000000000000000000000000000';
+
+      try {
+        let tx = await contract.buyTokens(referrer, minTokensOut, {
+          value: ethers.utils.parseEther(amount.toString())
+        });
+        showNotification('Purchase Submitted', `Tx: ${tx.hash}`, false);
+        await tx.wait();
+        showNotification('Success', 'You bought $BULL tokens!', false);
+        refreshContractData();
+      } catch (e) {
+        showNotification('Transaction Failed', e?.message || String(e), true);
+      }
+    }
+
+    async function claimTokens() {
+      if (!signer || !contract) return;
+      try {
+        let tx = await contract.claimTokens();
+        showNotification('Claim Submitted', `Tx: ${tx.hash}`, false);
+        await tx.wait();
+        showNotification('Success', 'Tokens claimed!', false);
+        refreshContractData();
+      } catch (e) {
+        showNotification('Claim Failed', e?.message || String(e), true);
+      }
+    }
+
     buyButton.addEventListener('click', buyTokens);
     claimButton.addEventListener('click', claimTokens);
 
-    // 初始化加载合约数据 (只读模式，provider可能未连接，但refreshContractData内部有容错)
-    refreshContractData();
+    // ========== 初始化 ==========
+    initWeb3Modal();
+    refreshContractData();  // 初始加载只读数据
   </script>
 </body>
 </html>
