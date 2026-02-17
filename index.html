@@ -41,17 +41,19 @@
       backdrop-filter: blur(10px);
       border-bottom: 1px solid var(--dark-border);
     }
-    .navbar-content { display: flex; justify-content: space-between; align-items: center; }
+    .navbar-content { display: flex; justify-content: space-between; align-items: center; gap: 16px; }
     .navbar-logo {
       font-size: 28px; font-weight: 900; color: var(--gold-primary); letter-spacing: -0.5px;
       text-decoration: none;
+      white-space: nowrap;
     }
     .navbar-logo:hover { opacity: 0.9; }
 
-    .navbar-links { display: flex; gap: 32px; align-items: center; }
+    .navbar-links { display: flex; gap: 22px; align-items: center; flex-wrap: wrap; justify-content: flex-end; }
     .navbar-links a {
-      color: var(--text-gray); text-decoration: none; font-weight: 500;
+      color: var(--text-gray); text-decoration: none; font-weight: 600;
       transition: color 0.3s ease;
+      white-space: nowrap;
     }
     .navbar-links a:hover { color: var(--gold-primary); }
 
@@ -71,7 +73,7 @@
       color: var(--dark-bg);
       border: none;
       border-radius: 50px;
-      font-weight: 700;
+      font-weight: 800;
       cursor: pointer;
       transition: all 0.3s ease;
       white-space: nowrap;
@@ -85,7 +87,7 @@
       color: var(--gold-primary);
       border: 1px solid var(--gold-primary);
       border-radius: 50px;
-      font-weight: 600;
+      font-weight: 700;
       font-size: 14px;
       cursor: pointer;
       transition: all 0.3s ease;
@@ -101,7 +103,7 @@
       border: 1px solid var(--dark-border);
       background: rgba(255, 215, 0, 0.08);
       color: var(--gold-primary);
-      font-weight: 700;
+      font-weight: 800;
       font-size: 12px;
       letter-spacing: 0.2px;
       white-space: nowrap;
@@ -124,7 +126,7 @@
     .stat-value { font-size: 24px; font-weight: 700; color: var(--gold-primary); }
     .countdown-wrapper { margin: 32px 0; }
     .countdown-title { font-size: 14px; color: var(--text-gray); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 16px; }
-    .countdown-grid { display: flex; gap: 16px; justify-content: center; }
+    .countdown-grid { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
     .countdown-box { background: var(--dark-card); border: 1px solid var(--gold-primary); border-radius: 12px; min-width: 100px; padding: 16px 8px; }
     .countdown-number { font-size: 40px; font-weight: 900; color: var(--gold-primary); line-height: 1; }
     .countdown-text { font-size: 12px; color: var(--text-gray); margin-top: 8px; text-transform: uppercase; }
@@ -135,7 +137,7 @@
     .progress-bar-fill { height: 100%; background: linear-gradient(90deg, var(--gold-secondary) 0%, var(--gold-primary) 100%); width: 0%; transition: width 0.8s ease; border-radius: 100px; }
     .buy-form-card { background: var(--dark-card); border: 1px solid var(--dark-border); border-radius: 16px; padding: 32px; max-width: 600px; margin: 0 auto; width: 100%; }
     .form-input-group { margin-bottom: 16px; }
-    .form-label { display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 14px; color: var(--text-gray); }
+    .form-label { display: flex; justify-content: space-between; gap: 10px; margin-bottom: 8px; font-size: 14px; color: var(--text-gray); flex-wrap: wrap; }
     .form-input { width: 100%; padding: 16px; background: var(--dark-bg); border: 1px solid var(--dark-border); border-radius: 12px; color: var(--text-white); font-size: 18px; font-weight: 600; transition: border-color 0.3s ease; }
     .form-input:focus { outline: none; border-color: var(--gold-primary); }
     .form-select { width: 100%; padding: 16px; background: var(--dark-bg); border: 1px solid var(--dark-border); border-radius: 12px; color: var(--text-white); font-size: 16px; transition: border-color 0.3s ease; }
@@ -144,7 +146,7 @@
     .buy-button { width: 100%; padding: 18px; background: linear-gradient(90deg, var(--gold-secondary) 0%, var(--gold-primary) 100%); color: var(--dark-bg); border: none; border-radius: 12px; font-size: 18px; font-weight: 900; text-transform: uppercase; cursor: pointer; transition: all 0.3s ease; }
     .buy-button:hover:not(:disabled) { box-shadow: 0 0 32px rgba(255, 215, 0, 0.4); transform: translateY(-2px); }
     .buy-button:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
-    .btn-secondary { width: 100%; padding: 14px; background: transparent; color: var(--gold-primary); border: 2px solid var(--gold-primary); border-radius: 12px; font-size: 16px; font-weight: 700; cursor: pointer; transition: all 0.3s ease; margin-top: 12px; }
+    .btn-secondary { width: 100%; padding: 14px; background: transparent; color: var(--gold-primary); border: 2px solid var(--gold-primary); border-radius: 12px; font-size: 16px; font-weight: 800; cursor: pointer; transition: all 0.3s ease; margin-top: 12px; }
     .btn-secondary:hover:not(:disabled) { background: rgba(255, 215, 0, 0.1); }
     .btn-small { width: auto; padding: 10px 20px; font-size: 14px; margin: 5px; }
     .section { padding: 120px 0; position: relative; }
@@ -152,12 +154,14 @@
     .section-subtitle { font-size: 14px; text-transform: uppercase; letter-spacing: 2px; color: var(--gold-primary); margin-bottom: 12px; font-weight: 700; }
     .section-title { font-size: 56px; font-weight: 900; line-height: 1.1; margin-bottom: 16px; }
     .section-desc { font-size: 18px; color: var(--text-gray); max-width: 700px; margin: 0 auto; }
+
     .feature-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(380px, 1fr)); gap: 32px; }
     .feature-card { background: var(--dark-card); border: 1px solid var(--dark-border); border-radius: 16px; padding: 40px; transition: all 0.3s ease; }
     .feature-card:hover { border-color: var(--gold-primary); transform: translateY(-8px); box-shadow: 0 16px 40px rgba(255, 215, 0, 0.1); }
     .feature-icon { font-size: 48px; margin-bottom: 24px; }
     .feature-title { font-size: 28px; font-weight: 800; margin-bottom: 16px; color: var(--gold-primary); }
     .feature-desc { font-size: 16px; color: var(--text-gray); line-height: 1.8; }
+
     .tokenomics-section { background: var(--dark-card); }
     .tokenomics-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; }
     .tokenomics-card { background: var(--dark-bg); border: 1px solid var(--dark-border); border-radius: 16px; padding: 32px; }
@@ -166,18 +170,22 @@
     .tokenomics-desc { font-size: 14px; color: var(--text-gray); }
     .tokenomics-total { text-align: center; margin-top: 48px; padding: 32px; border: 1px solid var(--gold-primary); border-radius: 16px; background: rgba(255, 215, 0, 0.05); }
     .tokenomics-total-value { font-size: 36px; font-weight: 900; color: var(--gold-primary); }
+
     .dashboard-section { background: var(--dark-card); }
     .dashboard-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; margin-bottom: 40px; }
     .dashboard-card { background: var(--dark-bg); border: 1px solid var(--dark-border); border-radius: 16px; padding: 24px; }
     .dashboard-label { font-size: 13px; color: var(--text-muted); text-transform: uppercase; margin-bottom: 8px; }
     .dashboard-value { font-size: 28px; font-weight: 700; color: var(--gold-primary); }
+
     .history-table { width: 100%; margin-top: 40px; border-collapse: collapse; background: var(--dark-bg); border-radius: 16px; overflow: hidden; }
     .history-table th { background: var(--dark-card); color: var(--gold-primary); font-weight: 700; padding: 16px; text-align: left; border-bottom: 1px solid var(--dark-border); }
     .history-table td { padding: 16px; border-bottom: 1px solid var(--dark-border); color: var(--text-gray); }
     .history-table tr:last-child td { border-bottom: none; }
+
     .referral-box { background: var(--dark-bg); border: 1px solid var(--dark-border); border-radius: 16px; padding: 32px; margin-top: 32px; }
     .referral-link { display: flex; gap: 12px; margin-top: 16px; }
     .referral-link input { flex: 1; padding: 12px; background: var(--dark-bg); border: 1px solid var(--dark-border); border-radius: 8px; color: var(--text-white); font-family: monospace; }
+
     .roadmap-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 32px; }
     .roadmap-card { background: var(--dark-card); border: 1px solid var(--dark-border); border-radius: 16px; padding: 32px; position: relative; }
     .roadmap-phase { font-size: 13px; text-transform: uppercase; letter-spacing: 1px; color: var(--gold-primary); font-weight: 700; margin-bottom: 12px; }
@@ -185,19 +193,23 @@
     .roadmap-list { list-style: none; }
     .roadmap-list li { padding: 8px 0; color: var(--text-gray); position: relative; padding-left: 24px; }
     .roadmap-list li::before { content: "✦"; position: absolute; left: 0; color: var(--gold-primary); }
+
     .audit-section { background: var(--dark-card); }
     .audit-card { background: var(--dark-bg); border: 1px solid var(--gold-primary); border-radius: 16px; padding: 40px; text-align: center; max-width: 800px; margin: 0 auto; }
     .audit-icon { font-size: 64px; margin-bottom: 24px; }
     .audit-title { font-size: 32px; font-weight: 800; margin-bottom: 16px; }
     .audit-desc { font-size: 16px; color: var(--text-gray); margin-bottom: 24px; }
+
     .faq-grid { max-width: 900px; margin: 0 auto; }
     .faq-item { background: var(--dark-card); border: 1px solid var(--dark-border); border-radius: 12px; margin-bottom: 16px; overflow: hidden; }
     .faq-question { padding: 24px; font-size: 18px; font-weight: 700; cursor: pointer; display: flex; justify-content: space-between; align-items: center; }
     .faq-answer { padding: 0 24px 24px; color: var(--text-gray); line-height: 1.8; display: none; }
+
     .partners-section { padding: 60px 0; background: var(--dark-card); }
     .partners-grid { display: flex; flex-wrap: wrap; gap: 32px; justify-content: center; align-items: center; }
     .partner-logo { font-size: 18px; font-weight: 700; color: var(--text-muted); transition: color 0.3s ease; }
     .partner-logo:hover { color: var(--gold-primary); }
+
     .footer { padding: 60px 0 30px; border-top: 1px solid var(--dark-border); }
     .footer-content { display: flex; flex-direction: column; align-items: center; text-align: center; }
     .footer-logo { font-size: 36px; font-weight: 900; color: var(--gold-primary); margin-bottom: 24px; }
@@ -206,12 +218,108 @@
     .footer-links a:hover { color: var(--gold-primary); }
     .footer-contract { font-family: monospace; font-size: 14px; color: var(--text-muted); margin-bottom: 24px; word-break: break-all; }
     .footer-copyright { font-size: 14px; color: var(--text-muted); }
+
     .notification { position: fixed; top: 100px; right: 24px; max-width: 400px; padding: 20px 24px; background: var(--dark-card); border: 1px solid var(--gold-primary); border-radius: 12px; z-index: 9999; box-shadow: 0 16px 40px rgba(0,0,0,0.5); transform: translateX(120%); transition: transform 0.3s ease; }
     .notification.show { transform: translateX(0); }
     .notification-title { font-weight: 700; margin-bottom: 8px; }
     .notification-desc { font-size: 14px; color: var(--text-gray); }
     .loading-spinner { display: inline-block; width: 20px; height: 20px; border: 2px solid var(--text-muted); border-radius: 50%; border-top-color: var(--gold-primary); animation: spin 1s linear infinite; vertical-align: middle; }
     @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* ==================== Blog（bullzilla 风格） ==================== */
+    .blog-hero { padding-top: 40px; padding-bottom: 10px; text-align: center; }
+    .blog-title { font-size: 56px; font-weight: 900; line-height: 1.1; margin-bottom: 6px; }
+
+    .blog-grid {
+      margin-top: 28px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+    .blog-card {
+      background: var(--dark-card);
+      border: 1px solid var(--dark-border);
+      border-radius: 16px;
+      overflow: hidden;
+      cursor: pointer;
+      transition: all 0.25s ease;
+    }
+    .blog-card:hover {
+      border-color: var(--gold-primary);
+      transform: translateY(-6px);
+      box-shadow: 0 16px 40px rgba(255, 215, 0, 0.08);
+    }
+    .blog-thumb {
+      width: 100%;
+      aspect-ratio: 16/9;
+      background: radial-gradient(circle at 30% 20%, rgba(255,215,0,0.18), rgba(0,0,0,0.2) 60%),
+                linear-gradient(180deg, rgba(255,165,0,0.12), rgba(0,0,0,0.05));
+      border-bottom: 1px solid var(--dark-border);
+      background-size: cover;
+      background-position: center;
+    }
+    .blog-body { padding: 18px 18px 20px; }
+    .blog-post-title { font-size: 18px; font-weight: 900; color: var(--text-white); margin-bottom: 10px; line-height: 1.35; }
+    .blog-post-excerpt { color: var(--text-gray); font-size: 14px; line-height: 1.75; }
+
+    .blog-pagination { margin-top: 28px; display: flex; justify-content: center; gap: 12px; }
+    .blog-cta {
+      margin-top: 44px;
+      background: var(--dark-card);
+      border: 1px solid var(--dark-border);
+      border-radius: 16px;
+      padding: 34px 24px;
+      text-align: center;
+    }
+    .blog-cta-title { font-size: 22px; font-weight: 900; margin-bottom: 10px; color: var(--text-white); }
+    .blog-cta-desc { color: var(--text-gray); font-size: 14px; margin-bottom: 18px; }
+
+    /* ==================== Blog Post（bullzilla 风格文章页） ==================== */
+    .blogpost-topbar { display: flex; justify-content: flex-start; margin-top: 18px; }
+    .blogpost-hero { text-align: center; margin-top: 18px; margin-bottom: 22px; }
+    .blogpost-title { font-size: 48px; font-weight: 900; line-height: 1.15; margin-bottom: 10px; }
+    .blogpost-meta { color: var(--text-gray); font-size: 14px; }
+    .blogpost-cover {
+      width: 100%;
+      aspect-ratio: 16/6;
+      border-radius: 16px;
+      border: 1px solid var(--dark-border);
+      overflow: hidden;
+      margin: 22px 0 26px;
+      background: radial-gradient(circle at 30% 20%, rgba(255,215,0,0.18), rgba(0,0,0,0.2) 60%),
+                linear-gradient(180deg, rgba(255,165,0,0.12), rgba(0,0,0,0.05));
+      background-size: cover;
+      background-position: center;
+      display: none;
+    }
+    .blogpost-content {
+      max-width: 900px;
+      margin: 0 auto;
+      background: var(--dark-card);
+      border: 1px solid var(--dark-border);
+      border-radius: 16px;
+      padding: 26px 22px;
+      color: var(--text-gray);
+      line-height: 1.9;
+      font-size: 16px;
+    }
+    .blogpost-content h2,
+    .blogpost-content h3 { color: var(--text-white); margin-top: 18px; margin-bottom: 10px; }
+    .blogpost-content p { margin: 12px 0; }
+    .blogpost-content a { color: var(--gold-primary); text-decoration: none; }
+    .blogpost-content a:hover { text-decoration: underline; }
+    .blogpost-content ul { margin: 10px 0 10px 22px; }
+    .blogpost-nav {
+      max-width: 900px;
+      margin: 18px auto 0;
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    @media (max-width: 1100px) {
+      .blog-grid { grid-template-columns: repeat(2, 1fr); }
+    }
 
     @media (max-width: 768px) {
       .navbar-links a:not(.wallet-container *) { display: none; }
@@ -228,6 +336,12 @@
       .wallet-container { gap: 6px; }
       #walletConnectBtn { padding: 9px 18px; }
       #disconnectBtn { padding: 7px 14px; }
+
+      .blog-title { font-size: 36px; }
+      .blog-grid { grid-template-columns: 1fr; }
+      .blogpost-title { font-size: 32px; }
+      .blogpost-content { padding: 20px 16px; }
+      .blogpost-nav { flex-direction: column; }
     }
   </style>
 </head>
@@ -242,17 +356,17 @@
   <!-- 导航栏 -->
   <nav class="navbar">
     <div class="container navbar-content">
-      <!-- ✅ 点击 LOGO 切回首页（home） -->
+      <!-- ✅ 点击 LOGO 切回首页（Buy Now / home） -->
       <a class="navbar-logo" href="#home" data-nav="home">🐂 BULLFORGE</a>
 
       <div class="navbar-links">
-        <!-- ✅ bullzilla 风格：点击切换页面，不滚动 -->
-        <a href="#about" data-nav="about">About</a>
-        <a href="#mechanics" data-nav="mechanics">Mechanics</a>
-        <a href="#tokenomics" data-nav="tokenomics">Tokenomics</a>
-        <a href="#dashboard" data-nav="dashboard">My Assets</a>
-        <a href="#roadmap" data-nav="roadmap">Roadmap</a>
-        <a href="#faq" data-nav="faq">FAQ</a>
+        <!-- ✅ 你要求的导航按钮顺序/文案 -->
+        <a href="#home" data-nav="home">Buy Now</a>
+        <a href="#howtobuy" data-nav="howtobuy">How to Buy</a>
+        <a href="#whitepaper" data-nav="whitepaper">Whitepaper</a>
+        <a href="#staking" data-nav="staking">Staking</a>
+        <a href="#referral" data-nav="referral">Referral</a>
+        <a href="#blog" data-nav="blog">Blog</a>
 
         <div class="wallet-container">
           <span id="networkBadge">BNB</span>
@@ -263,7 +377,7 @@
     </div>
   </nav>
 
-  <!-- ✅ Home 页面（Hero） -->
+  <!-- ✅ Home 页面（Buy Now） -->
   <section class="hero page" data-page="home">
     <div class="hero-bg-glow"></div>
     <div class="container hero-content">
@@ -316,170 +430,138 @@
     </div>
   </section>
 
-  <!-- ✅ About 页面 -->
-  <section class="section page" id="about" data-page="about">
+  <!-- ✅ How to Buy 页面 -->
+  <section class="section page" id="howtobuy" data-page="howtobuy">
     <div class="container">
       <div class="section-header">
-        <div class="section-subtitle">About Bullforge</div>
-        <h2 class="section-title">Forged for the Bull Run</h2>
-        <p class="section-desc">
-          Bullforge is a BNB Chain-based meme coin born in the chaos of the blockchain; a beast built to thrive where others fall.
-          Driven by a Progressive Price Engine that increases value every $100,000 raised or every 48 hours — whichever happens first —
-          plus a Forge Burn at each milestone to make every $BULL scarcer. Holders can step into The HODL Forge, locking their tokens
-          for monster-level rewards of 70% APY. Fueled by belief and driven by momentum, Bullforge moves forward without retreat,
-          turning red candles into rocket fuel.
+        <div class="section-subtitle">How to Buy</div>
+        <h2 class="section-title">Buy $BULL in Minutes</h2>
+        <p class="section-desc">Step-by-step guide for buying during presale.</p>
+      </div>
+
+      <div class="feature-grid">
+        <div class="feature-card">
+          <div class="feature-icon">1️⃣</div>
+          <h3 class="feature-title">Get a Wallet</h3>
+          <p class="feature-desc">Use MetaMask / Trust Wallet and ensure it supports BNB Smart Chain.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">2️⃣</div>
+          <h3 class="feature-title">Fund with BNB</h3>
+          <p class="feature-desc">Send BNB to your wallet address (BNB Smart Chain / Chain ID 56).</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">3️⃣</div>
+          <h3 class="feature-title">Connect & Buy</h3>
+          <p class="feature-desc">Go to Buy Now, connect wallet, enter BNB amount, confirm transaction.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ✅ Whitepaper 页面 -->
+  <section class="section page" id="whitepaper" data-page="whitepaper">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-subtitle">Whitepaper</div>
+        <h2 class="section-title">Bullforge Whitepaper</h2>
+        <p class="section-desc">Replace the button link below with your official whitepaper URL.</p>
+      </div>
+
+      <div class="buy-form-card" style="max-width: 900px;">
+        <p style="color: var(--text-gray); margin-bottom: 16px;">
+          Tip: Host your PDF and set the link to it (e.g. /whitepaper.pdf or a CDN URL).
+        </p>
+        <a href="#" target="_blank" rel="noreferrer">
+          <button class="buy-button" style="max-width: 320px;">Open Whitepaper</button>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ✅ Staking 页面 -->
+  <section class="section page" id="staking" data-page="staking">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-subtitle">Staking</div>
+        <h2 class="section-title">HODL Forge</h2>
+        <p class="section-desc">Stake $BULL to earn rewards (available after presale).</p>
+      </div>
+
+      <div class="buy-form-card" style="max-width: 800px;">
+        <h3 style="margin-bottom: 16px; color: var(--gold-primary);">70% APY (After Presale)</h3>
+        <p style="color: var(--text-gray);">
+          Staking UI can be enabled once the staking contract is live. You can later connect this page to your staking contract.
         </p>
       </div>
     </div>
   </section>
 
-  <!-- ✅ Mechanics 页面 -->
-  <section class="section page" id="mechanics" data-page="mechanics">
+  <!-- ✅ Referral 页面 -->
+  <section class="section page" id="referral" data-page="referral">
     <div class="container">
       <div class="section-header">
-        <div class="section-subtitle">Core Mechanics</div>
-        <h2 class="section-title">The Forge System</h2>
-      </div>
-      <div class="feature-grid">
-        <div class="feature-card">
-          <div class="feature-icon">🔥</div>
-          <h3 class="feature-title">The HODL Forge - 70% APY</h3>
-          <p class="feature-desc">
-            In the Bullforge universe, loyalty isn't just respected, it's rewarded. Don't just hold your $BULL, put it to work!
-            By locking your tokens in The HODL Forge, you secure a massive 70% APY, turning conviction into unstoppable growth.
-            This isn't a trickle of adoption, it's a surge. Every lock strengthens the roar, every HODLer fuels the myth.
-            While others hesitate, Diamond hands enjoy compounding rewards!
-          </p>
-        </div>
-        <div class="feature-card">
-          <div class="feature-icon">⚡</div>
-          <h3 class="feature-title">Forge Burn</h3>
-          <p class="feature-desc">
-            Forge Burn is Bullforge's signature supply strike! A live, on-chain event that happens before every stage change in the presale.
-            Powered by The Scorch Reserve — 5% of total supply set aside exclusively for burns — each event permanently removes tokens
-            from circulation. Every burn tightens supply, amplifies scarcity, and marks the beast's evolution into its next chapter.
-            When the forge hits, the market listens.
-          </p>
-        </div>
-        <div class="feature-card">
-          <div class="feature-icon">🤝</div>
-          <h3 class="feature-title">Forge-To-Earn</h3>
-          <p class="feature-desc">
-            With Forge-To-Earn, you turn your network into rewards. Share your unique referral code and you'll earn 10% of every buy
-            made through it, while the person you refer gets a 10% bonus in $BULL. All you have to do is spread the word, grow the community,
-            and watch your rewards stack. Vesting kicks in after the presale, so your loyalty is locked, loaded, and ready to pay out.
-          </p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ✅ Tokenomics 页面 -->
-  <section class="section tokenomics-section page" id="tokenomics" data-page="tokenomics">
-    <div class="container">
-      <div class="section-header">
-        <div class="section-subtitle">Bullforge DNA</div>
-        <h2 class="section-title">Tokenomics</h2>
-      </div>
-      <div class="tokenomics-grid">
-        <div class="tokenomics-card"><div class="tokenomics-percent">50%</div><div class="tokenomics-label">Presale Engine</div><div class="tokenomics-desc">Fuels Bullforge's on-chain awakening. Distributed during presale to believers who sparked the legend.</div></div>
-        <div class="tokenomics-card"><div class="tokenomics-percent">20%</div><div class="tokenomics-label">HODL Forge</div><div class="tokenomics-desc">Rewards the fireproof. Locked staking designed to amplify returns for those who HODL.</div></div>
-        <div class="tokenomics-card"><div class="tokenomics-percent">20%</div><div class="tokenomics-label">Community Vault</div><div class="tokenomics-desc">Powers liquidity, lore events, post-launch ecosystem, referral rewards, and community expansion.</div></div>
-        <div class="tokenomics-card"><div class="tokenomics-percent">5%</div><div class="tokenomics-label">Forge Burn Reserve</div><div class="tokenomics-desc">Live burns every time Bullforge roars into the next chapter. Supply vanishes. Demand tightens.</div></div>
-        <div class="tokenomics-card"><div class="tokenomics-percent">5%</div><div class="tokenomics-label">Team Allocation</div><div class="tokenomics-desc">Reserved for the creators. Time-locked (2-years), no early dumps. Aligned with the rise, not the hype.</div></div>
-      </div>
-      <div class="tokenomics-total">
-        <div class="stat-label">Total Supply</div>
-        <div class="tokenomics-total-value" id="totalSupplyDisplay"><span class="loading-spinner"></span></div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ✅ Dashboard 页面 -->
-  <section class="section dashboard-section page" id="dashboard" data-page="dashboard">
-    <div class="container">
-      <div class="section-header">
-        <div class="section-subtitle">Your Forge</div>
-        <h2 class="section-title">My Assets</h2>
-        <p class="section-desc" id="dashboardNotice">Connect your wallet to view your assets, referral rewards and staking position</p>
+        <div class="section-subtitle">Referral</div>
+        <h2 class="section-title">Forge-To-Earn</h2>
+        <p class="section-desc">Share your referral link and earn rewards.</p>
       </div>
 
-      <div class="dashboard-grid" id="dashboardGrid" style="display:none;">
-        <div class="dashboard-card"><div class="dashboard-label">Purchased (BNB)</div><div class="dashboard-value" id="userPurchased">0</div></div>
-        <div class="dashboard-card"><div class="dashboard-label">Referral Rewards ($BULL)</div><div class="dashboard-value" id="userReferralRewards">0</div></div>
-        <div class="dashboard-card"><div class="dashboard-label">Staked $BULL</div><div class="dashboard-value" id="userStaked">0</div></div>
-        <div class="dashboard-card"><div class="dashboard-label">Claim Status</div><div class="dashboard-value" id="userClaimStatus">--</div></div>
-      </div>
-
-      <div class="dashboard-card" id="portfolioCard" style="display:none; margin-bottom:24px;">
-        <div class="dashboard-label">💰 持仓价值</div>
-        <div class="dashboard-value" id="portfolioValue">0 BNB</div>
-        <div style="margin-top:16px; font-size:14px; color:var(--text-gray);" id="tokenBalanceDetail">持有 $BULL: 0</div>
-      </div>
-
-      <table class="history-table" id="historyTable" style="display:none;">
-        <thead><tr><th>时间</th><th>金额 (BNB)</th><th>获得 $BULL</th><th>价格 (BNB/$BULL)</th></tr></thead>
-        <tbody id="historyBody"><tr><td colspan="4" style="text-align:center;">加载中...</td></tr></tbody>
-      </table>
-
-      <div class="buy-form-card" id="stakingCard" style="display:none; margin:0 auto; max-width:800px;">
-        <h3 style="margin-bottom:24px; color:var(--gold-primary);">Stake Your $BULL (70% APY)</h3>
-        <div class="form-input-group">
-          <div class="form-label"><span>Amount to Stake ($BULL)</span></div>
-          <input type="number" class="form-input" id="stakeAmount" placeholder="0.0" step="1" min="0" disabled>
-        </div>
-        <div class="form-input-group">
-          <div class="form-label"><span>Lock Period</span></div>
-          <select class="form-select" id="lockDays" disabled>
-            <option value="30">30 Days</option>
-            <option value="90">90 Days</option>
-            <option value="180">180 Days</option>
-            <option value="365">365 Days</option>
-          </select>
-        </div>
-        <div class="token-estimate" id="stakingEstimate">Staking will be available after presale</div>
-        <button class="buy-button" id="stakeButton" disabled>Stake $BULL</button>
-        <button class="btn-secondary" id="unstakeButton" style="display:none;" disabled>Unstake My Tokens</button>
-      </div>
-
-      <div class="referral-box" id="referralBox" style="display:none;">
-        <h3 style="margin-bottom:16px; color:var(--gold-primary);">Your Forge-To-Earn Referral Link</h3>
-        <p style="color:var(--text-gray); margin-bottom:16px;">Share this link to earn 10% of every buy made through it, and your referral gets a 10% bonus!</p>
+      <div class="referral-box" style="display:block; max-width: 900px; margin: 0 auto;">
+        <h3 style="margin-bottom: 16px; color: var(--gold-primary);">Your Referral Link</h3>
+        <p style="color: var(--text-gray); margin-bottom: 16px;">Connect wallet to generate your personal referral link.</p>
         <div class="referral-link">
-          <input type="text" id="referralLink" readonly>
-          <button class="btn btn-small btn-secondary" id="copyReferralBtn">Copy Link</button>
+          <input type="text" id="referralLink2" readonly value="Connect wallet to generate..." />
+          <button class="btn btn-small btn-secondary" id="copyReferralBtn2">Copy Link</button>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ✅ Roadmap 页面 -->
-  <section class="section page" id="roadmap" data-page="roadmap">
+  <!-- ✅ Blog 列表页（bullzilla 风格） -->
+  <section class="section page" id="blog" data-page="blog">
     <div class="container">
-      <div class="section-header">
-        <div class="section-subtitle">The Forge Launch Sequence</div>
-        <h2 class="section-title">Roadmap</h2>
+      <div class="blog-hero">
+        <h2 class="blog-title">Blog</h2>
       </div>
-      <div class="roadmap-grid">
-        <div class="roadmap-card"><div class="roadmap-phase">Phase I: The Awakening</div><h3 class="roadmap-title">Q1 2026</h3><ul class="roadmap-list"><li>Bullforge concept is born</li><li>Team assembles: devs, designers, meme strategists</li><li>Website and lore teaser launch</li><li>Smart contract development & audit</li><li>Core community activation</li><li>Presale goes live</li></ul></div>
-        <div class="roadmap-card"><div class="roadmap-phase">Phase II: The Mutation Begins</div><h3 class="roadmap-title">Q2 2026</h3><ul class="roadmap-list"><li>Progressive price engine activates</li><li>Forge Burn events trigger at each milestone</li><li>Forge-To-Earn referral system goes live</li><li>Staking details revealed</li><li>Marketing campaign launch</li><li>Presale completion</li></ul></div>
-        <div class="roadmap-card"><div class="roadmap-phase">Phase III: Forge Takes Form</div><h3 class="roadmap-title">Q3 2026</h3><ul class="roadmap-list"><li>HODL Forge staking opens - 70% APY</li><li>Token claim goes live</li><li>DEX listings & liquidity injection</li><li>Vesting logic activates</li><li>Community expansion</li><li>Forge Burn events continue</li></ul></div>
-        <div class="roadmap-card"><div class="roadmap-phase">Phase IV: The Final Mutation</div><h3 class="roadmap-title">Q4 2026</h3><ul class="roadmap-list"><li>CEX listings</li><li>Full ecosystem roadmap unveiled</li><li>Major marketing partnerships</li><li>New utility features launch</li><li>Global community expansion</li></ul></div>
+
+      <div class="blog-grid" id="blogGrid"></div>
+
+      <div class="blog-pagination">
+        <button class="btn-secondary btn-small" id="blogPrevBtn">Previous</button>
+        <button class="btn-secondary btn-small" id="blogNextBtn">Next</button>
+      </div>
+
+      <div class="blog-cta">
+        <h3 class="blog-cta-title">Want to Collaborate with Bullforge?</h3>
+        <p class="blog-cta-desc">Let’s forge something legendary — partnerships, media, and community collaborations.</p>
+        <a href="#" target="_blank" rel="noreferrer">
+          <button class="buy-button" style="max-width: 320px;">Contact the Team</button>
+        </a>
       </div>
     </div>
   </section>
 
-  <!-- ✅ FAQ 页面 -->
-  <section class="section page" id="faq" data-page="faq">
+  <!-- ✅ Blog 详情页（bullzilla 单篇文章风格） -->
+  <section class="section page" id="blogpost" data-page="blogpost">
     <div class="container">
-      <div class="section-header"><div class="section-subtitle">FAQ</div><h2 class="section-title">Frequently Asked Questions</h2></div>
-      <div class="faq-grid">
-        <div class="faq-item"><div class="faq-question">What is Bullforge ($BULL)? <span>✦</span></div><div class="faq-answer">Bullforge is a BNB Chain-based memecoin forged in the chaos of the blockchain — a living myth designed to turn red candles into rocket fuel.</div></div>
-        <div class="faq-item"><div class="faq-question">How does the presale work? <span>✦</span></div><div class="faq-answer">Every 48 hours or once $100,000 is raised — whichever comes first — the price of $BULL automatically climbs higher.</div></div>
-        <div class="faq-item"><div class="faq-question">Is there a minimum buy amount? <span>✦</span></div><div class="faq-answer">No, you can buy any amount of $BULL. However, a minimum of $50 during the presale is required to unlock your referral code.</div></div>
-        <div class="faq-item"><div class="faq-question">Which wallets can I use? <span>✦</span></div><div class="faq-answer">Bullforge is compatible with wallets like MetaMask, Trust Wallet, and Coinbase Wallet. Any BEP-20 compatible wallet will work.</div></div>
-        <div class="faq-item"><div class="faq-question">When can I claim my tokens? <span>✦</span></div><div class="faq-answer">Token claim will be available immediately after the presale ends and liquidity is added to the DEX.</div></div>
-        <div class="faq-item"><div class="faq-question">How does the referral program work? <span>✦</span></div><div class="faq-answer">Share your unique referral link, and you'll earn 10% of every buy made through your link. The person you refer also gets a 10% bonus.</div></div>
+      <div class="blogpost-topbar">
+        <button class="btn-secondary btn-small" id="blogBackBtn">← Back to Blog</button>
+      </div>
+
+      <div class="blogpost-hero">
+        <h2 class="blogpost-title" id="blogpostTitle">Loading...</h2>
+        <div class="blogpost-meta" id="blogpostMeta">—</div>
+      </div>
+
+      <div class="blogpost-cover" id="blogpostCover"></div>
+
+      <article class="blogpost-content" id="blogpostContent">
+        <p style="color: var(--text-gray);">Loading...</p>
+      </article>
+
+      <div class="blogpost-nav">
+        <button class="btn-secondary btn-small" id="blogpostPrev">← Previous</button>
+        <button class="btn-secondary btn-small" id="blogpostNext">Next →</button>
       </div>
     </div>
   </section>
@@ -518,12 +600,12 @@
     <div class="container footer-content">
       <div class="footer-logo">🐂 BULLFORGE</div>
       <div class="footer-links">
-        <a href="#about" data-nav="about">About</a>
-        <a href="#mechanics" data-nav="mechanics">Mechanics</a>
-        <a href="#tokenomics" data-nav="tokenomics">Tokenomics</a>
-        <a href="#dashboard" data-nav="dashboard">My Assets</a>
-        <a href="#roadmap" data-nav="roadmap">Roadmap</a>
-        <a href="#faq" data-nav="faq">FAQ</a>
+        <a href="#home" data-nav="home">Buy Now</a>
+        <a href="#howtobuy" data-nav="howtobuy">How to Buy</a>
+        <a href="#whitepaper" data-nav="whitepaper">Whitepaper</a>
+        <a href="#staking" data-nav="staking">Staking</a>
+        <a href="#referral" data-nav="referral">Referral</a>
+        <a href="#blog" data-nav="blog">Blog</a>
         <a href="https://bscscan.com/address/0x16D6c1a692AaC51a3821bA2903115d4600649F07" target="_blank" rel="noreferrer">Contract</a>
       </div>
       <div class="footer-contract">Contract Address: 0x16D6c1a692AaC51a3821bA2903115d4600649F07</div>
@@ -531,10 +613,10 @@
     </div>
   </footer>
 
-  <!-- ✅ 已整合：连接后立刻显示状态 + 实时检测 + 断开重连不丢UI + bullzilla切页 -->
   <script type="module">
     import { ethers } from 'https://esm.sh/ethers@5.7.2';
     import { createWeb3Modal, defaultConfig } from 'https://esm.sh/@web3modal/ethers5@4.1.2';
+    import { marked } from 'https://esm.sh/marked@12.0.2';
 
     // ==================== 核心配置 ====================
     const CONFIG = {
@@ -595,26 +677,6 @@
     const progressPercent = document.getElementById('progressPercent');
     const progressBarFill = document.getElementById('progressBarFill');
 
-    const dashboardGrid = document.getElementById('dashboardGrid');
-    const dashboardNotice = document.getElementById('dashboardNotice');
-
-    const referralBox = document.getElementById('referralBox');
-    const referralLink = document.getElementById('referralLink');
-    const copyBtn = document.getElementById('copyReferralBtn');
-
-    const userPurchasedSpan = document.getElementById('userPurchased');
-    const userReferralRewardsSpan = document.getElementById('userReferralRewards');
-    const userStakedSpan = document.getElementById('userStaked');
-    const userClaimStatusSpan = document.getElementById('userClaimStatus');
-
-    const stakingCard = document.getElementById('stakingCard');
-    const portfolioCard = document.getElementById('portfolioCard');
-    const portfolioValue = document.getElementById('portfolioValue');
-    const tokenBalanceDetail = document.getElementById('tokenBalanceDetail');
-
-    const historyTable = document.getElementById('historyTable');
-    const historyBody = document.getElementById('historyBody');
-
     const buyButton = document.getElementById('buyButton');
     const claimButton = document.getElementById('claimButton');
 
@@ -622,6 +684,22 @@
     const hoursSpan = document.getElementById('countdownHours');
     const minutesSpan = document.getElementById('countdownMinutes');
     const secondsSpan = document.getElementById('countdownSeconds');
+
+    const referralLink2 = document.getElementById('referralLink2');
+    const copyBtn2 = document.getElementById('copyReferralBtn2');
+
+    // blog UI
+    const blogGrid = document.getElementById('blogGrid');
+    const blogPrevBtn = document.getElementById('blogPrevBtn');
+    const blogNextBtn = document.getElementById('blogNextBtn');
+
+    const blogBackBtn = document.getElementById('blogBackBtn');
+    const blogpostTitle = document.getElementById('blogpostTitle');
+    const blogpostMeta = document.getElementById('blogpostMeta');
+    const blogpostCover = document.getElementById('blogpostCover');
+    const blogpostContent = document.getElementById('blogpostContent');
+    const blogpostPrev = document.getElementById('blogpostPrev');
+    const blogpostNext = document.getElementById('blogpostNext');
 
     // ========== 状态 ==========
     let provider, signer, contract, userAddress;
@@ -635,6 +713,77 @@
     let countdownInterval;
     let watcherInterval;
     let isUIConnected = false;
+
+    // ==================== Blog state ====================
+    const BLOG_PAGE_SIZE = 9;
+    let blogPage = 1;
+    let blogPosts = [];
+    let currentPostSlug = null;
+
+    const DEFAULT_BLOG_POSTS = [
+      {
+        slug: "bullforge-presale-guide",
+        title: "Bullforge Presale Guide: How to Buy $BULL Safely",
+        excerpt: "Connect wallet, set slippage, buy on BNB Chain — forged for speed and clarity.",
+        date: "2026-02-17",
+        readTime: "4 min read",
+        cover: "",
+        content: `
+## Overview
+Bullforge is forged for momentum: progressive pricing, milestone burns, and a holder-first narrative.
+
+## Step-by-step
+- **1) Switch to BNB Smart Chain (56)**  
+- **2) Connect wallet** (MetaMask / Trust Wallet / WalletConnect)  
+- **3) Enter BNB amount** and set slippage (default **1%**)  
+- **4) Confirm transaction** and track it on BscScan
+
+## Safety checklist
+- Verify the **official contract address**
+- Don’t sign unknown approvals
+- Double-check network and URLs
+`
+      },
+      {
+        slug: "progressive-price-engine-explained",
+        title: "Progressive Price Engine Explained: 48 Hours or $100,000 Raised",
+        excerpt: "How stage timing + raise milestones affect the entry price and stage transitions.",
+        date: "2026-02-16",
+        readTime: "3 min read",
+        cover: "",
+        content: `
+## The rule
+Bullforge price progresses by stage:
+- Every **48 hours**, or
+- Every **$100,000 raised**  
+(whichever comes first)
+
+## What it means
+Early stages = lower price. As stages advance, scarcity narrative strengthens and entry cost increases.
+
+## Pro tip
+If you’re planning to buy, watch the **stage timer** and the **total raised** counter.
+`
+      },
+      {
+        slug: "forge-burn-scarcity",
+        title: "Forge Burn: How Supply Tightens at Every Milestone",
+        excerpt: "Each burn permanently removes tokens from circulation — scarcity increases as the forge evolves.",
+        date: "2026-02-15",
+        readTime: "3 min read",
+        cover: "",
+        content: `
+## What is Forge Burn?
+A scheduled on-chain burn before each stage change.
+
+## Why it matters
+Burns reduce circulating supply over time — reinforcing scarcity and long-term holder narrative.
+
+## Transparency
+All burns and contract activity should be verifiable on-chain.
+`
+      }
+    ];
 
     // ========== 通用 ==========
     function showNotification(title, desc, isError = false) {
@@ -673,20 +822,13 @@
 
       resetConnectButtonUI();
 
-      dashboardNotice.style.display = 'block';
-      dashboardGrid.style.display = 'none';
-      referralBox.style.display = 'none';
-      stakingCard.style.display = 'none';
-      portfolioCard.style.display = 'none';
-      historyTable.style.display = 'none';
-
       buyButton.disabled = true;
       buyButton.innerText = 'Connect Wallet To Buy';
       claimButton.style.display = 'none';
 
       walletBalanceSpan.innerText = '0.00';
-      tokenBalanceDetail.innerText = '持有 $BULL: 0';
-      portfolioValue.innerText = '0 BNB';
+
+      if (referralLink2) referralLink2.value = 'Connect wallet to generate...';
     }
 
     function updateCountdown() {
@@ -729,39 +871,6 @@
         } catch (err) {
           console.warn('switch/add chain failed:', err);
         }
-      }
-    }
-
-    // ========== 用户历史 ==========
-    async function loadUserHistory() {
-      if (!contract || !userAddress || !provider) return;
-      try {
-        const filter = contract.filters.Buy(userAddress);
-        const latest = await provider.getBlockNumber().catch(() => null);
-        const fromBlock = latest ? Math.max(0, latest - 12000) : 0;
-
-        const events = await contract.queryFilter(filter, fromBlock, 'latest');
-        events.sort((a, b) => b.blockNumber - a.blockNumber);
-        const history = events.slice(0, 5);
-
-        if (history.length === 0) {
-          historyBody.innerHTML = '<tr><td colspan="4" style="text-align:center;">暂无购买记录</td></tr>';
-        } else {
-          historyBody.innerHTML = '';
-          for (let ev of history) {
-            const block = await ev.getBlock();
-            const date = new Date(block.timestamp * 1000).toLocaleString();
-            const bnbAmount = ethers.utils.formatEther(ev.args.bnbAmount);
-            const tokenAmount = ethers.utils.formatEther(ev.args.tokenAmount);
-            const price = ethers.utils.formatEther(ev.args.price);
-            historyBody.innerHTML += `<tr><td>${date}</td><td>${bnbAmount}</td><td>${Number(tokenAmount).toFixed(2)}</td><td>${price}</td></tr>`;
-          }
-        }
-        historyTable.style.display = 'table';
-      } catch (e) {
-        console.warn('获取历史失败', e);
-        historyBody.innerHTML = '<tr><td colspan="4" style="text-align:center;">无法获取历史记录（RPC 不支持或合约无事件）</td></tr>';
-        historyTable.style.display = 'table';
       }
     }
 
@@ -812,26 +921,10 @@
         progressPercent.innerText = progress.toFixed(1) + '%';
         progressBarFill.style.width = progress + '%';
 
-        // 已连接钱包 => 刷新个人数据
+        // 已连接钱包 => 刷新个人数据（Buy Now 页面显示余额即可）
         if (isUIConnected && userAddress && provider && contract) {
-          const purchasedWei = await contract.contributed(userAddress).catch(() => null);
-          userPurchasedSpan.innerText = purchasedWei ? (parseFloat(ethers.utils.formatEther(purchasedWei)).toFixed(4) + ' BNB') : '0 BNB';
-
-          const rewardsWei = await contract.referralRewards(userAddress).catch(() => null);
-          userReferralRewardsSpan.innerText = rewardsWei ? (Number(ethers.utils.formatEther(rewardsWei)).toFixed(2) + ' $BULL') : '0 $BULL';
-
-          const balWei = await provider.getBalance(userAddress);
-          walletBalanceSpan.innerText = parseFloat(ethers.utils.formatEther(balWei)).toFixed(4);
-
-          const tokenBalanceWei = await contract.balanceOf(userAddress).catch(() => ethers.BigNumber.from(0));
-          const tokenBalance = parseFloat(ethers.utils.formatEther(tokenBalanceWei));
-          tokenBalanceDetail.innerText = `持有 $BULL: ${tokenBalance.toFixed(2)}`;
-
-          const pricePerToken = currentRate > 0 ? (1 / currentRate) : 0;
-          portfolioValue.innerText = `${(tokenBalance * pricePerToken).toFixed(4)} BNB`;
-
-          portfolioCard.style.display = 'block';
-          loadUserHistory();
+          const balWei = await provider.getBalance(userAddress).catch(() => null);
+          if (balWei) walletBalanceSpan.innerText = parseFloat(ethers.utils.formatEther(balWei)).toFixed(4);
         }
 
         estimateTokens();
@@ -957,17 +1050,12 @@
       connectBtn.disabled = true;
       disconnectBtn.style.display = 'inline-block';
 
-      dashboardNotice.style.display = 'none';
-      dashboardGrid.style.display = 'grid';
-      referralBox.style.display = 'block';
-      stakingCard.style.display = 'block';
-      portfolioCard.style.display = 'block';
-
       buyButton.disabled = false;
       buyButton.innerText = 'Buy $BULL';
       claimButton.style.display = 'block';
 
-      referralLink.value = `${window.location.origin}?ref=${userAddress}`;
+      // referral link
+      if (referralLink2) referralLink2.value = `${window.location.origin}?ref=${userAddress}`;
 
       attachWalletListeners(walletProvider);
 
@@ -1095,74 +1183,220 @@
       }
     }
 
-    // ========== FAQ 折叠 ==========
-    document.querySelectorAll('.faq-item').forEach(item => {
-      const q = item.querySelector('.faq-question');
-      const a = item.querySelector('.faq-answer');
-      q?.addEventListener('click', () => {
-        const isOpen = a.style.display === 'block';
-        a.style.display = isOpen ? 'none' : 'block';
-      });
-    });
+    // ==================== Blog：自动读取内容 + bullzilla风格渲染 ====================
+    async function loadBlogPosts() {
+      try {
+        const res = await fetch('/blog/posts.json', { cache: 'no-store' });
+        if (!res.ok) throw new Error('posts.json not found');
+        const data = await res.json();
+        if (!Array.isArray(data)) throw new Error('posts.json invalid');
+        blogPosts = data;
+      } catch {
+        blogPosts = DEFAULT_BLOG_POSTS;
+      }
+    }
 
-    // ========== bullzilla 风格：切页（一次只显示一个页面） ==========
+    function escapeHtml(str) {
+      return String(str ?? '')
+        .replaceAll('&', '&amp;')
+        .replaceAll('<', '&lt;')
+        .replaceAll('>', '&gt;')
+        .replaceAll('"', '&quot;')
+        .replaceAll("'", '&#039;');
+    }
+
+    function getBlogSlice() {
+      const total = blogPosts.length;
+      const totalPages = Math.max(1, Math.ceil(total / BLOG_PAGE_SIZE));
+      if (blogPage > totalPages) blogPage = totalPages;
+      if (blogPage < 1) blogPage = 1;
+
+      const start = (blogPage - 1) * BLOG_PAGE_SIZE;
+      const end = start + BLOG_PAGE_SIZE;
+      return { items: blogPosts.slice(start, end), totalPages };
+    }
+
+    function renderBlog() {
+      if (!blogGrid || !blogPrevBtn || !blogNextBtn) return;
+
+      const { items, totalPages } = getBlogSlice();
+
+      blogGrid.innerHTML = items.map(p => `
+        <article class="blog-card" data-slug="${escapeHtml(p.slug)}">
+          <div class="blog-thumb" style="${p.cover ? `background-image:url('${escapeHtml(p.cover)}');` : ''}"></div>
+          <div class="blog-body">
+            <div class="blog-post-title">${escapeHtml(p.title)}</div>
+            <div class="blog-post-excerpt">${escapeHtml(p.excerpt)}</div>
+          </div>
+        </article>
+      `).join('');
+
+      blogPrevBtn.disabled = blogPage <= 1;
+      blogNextBtn.disabled = blogPage >= totalPages;
+
+      blogPrevBtn.onclick = () => { blogPage -= 1; renderBlog(); window.scrollTo({ top: 0, behavior: 'smooth' }); };
+      blogNextBtn.onclick = () => { blogPage += 1; renderBlog(); window.scrollTo({ top: 0, behavior: 'smooth' }); };
+
+      blogGrid.querySelectorAll('.blog-card').forEach(card => {
+        card.addEventListener('click', () => {
+          const slug = card.getAttribute('data-slug');
+          openBlogPost(slug);
+        });
+      });
+    }
+
+    function findPostIndexBySlug(slug) {
+      return blogPosts.findIndex(p => p.slug === slug);
+    }
+
+    function renderBlogPost(slug) {
+      const idx = findPostIndexBySlug(slug);
+      const post = idx >= 0 ? blogPosts[idx] : null;
+
+      if (!blogpostTitle || !blogpostMeta || !blogpostCover || !blogpostContent || !blogpostPrev || !blogpostNext) return;
+
+      if (!post) {
+        blogpostTitle.innerText = "Post not found";
+        blogpostMeta.innerText = "";
+        blogpostCover.style.display = "none";
+        blogpostContent.innerHTML = `<p style="color: var(--text-gray);">This post does not exist.</p>`;
+        blogpostPrev.disabled = true;
+        blogpostNext.disabled = true;
+        return;
+      }
+
+      currentPostSlug = slug;
+      blogpostTitle.innerText = post.title || '';
+      blogpostMeta.innerText = `${post.date || ''}${post.readTime ? ' • ' + post.readTime : ''}`;
+
+      if (post.cover) {
+        blogpostCover.style.display = 'block';
+        blogpostCover.style.backgroundImage = `url('${post.cover}')`;
+      } else {
+        blogpostCover.style.display = 'none';
+        blogpostCover.style.backgroundImage = '';
+      }
+
+      const md = post.content || '';
+      blogpostContent.innerHTML = marked.parse(md);
+
+      const prev = idx > 0 ? blogPosts[idx - 1] : null;
+      const next = idx < blogPosts.length - 1 ? blogPosts[idx + 1] : null;
+
+      blogpostPrev.disabled = !prev;
+      blogpostNext.disabled = !next;
+
+      blogpostPrev.onclick = () => prev && openBlogPost(prev.slug);
+      blogpostNext.onclick = () => next && openBlogPost(next.slug);
+    }
+
+    function openBlogPost(slug) {
+      setActivePage('blogpost');
+      const newHash = `#blog/${encodeURIComponent(slug)}`;
+      if (location.hash !== newHash) history.pushState(null, '', newHash);
+      renderBlogPost(slug);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function backToBlogList() {
+      setActivePage('blog');
+      const newHash = `#blog`;
+      if (location.hash !== newHash) history.pushState(null, '', newHash);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    async function initBlog() {
+      await loadBlogPosts();
+      renderBlog();
+
+      // 如果用户刷新在 #blog/<slug>，加载完数据后直接渲染
+      const rr = getRouteFromHash();
+      if (rr.page === 'blogpost' && rr.slug) {
+        renderBlogPost(rr.slug);
+      }
+    }
+
+    // ========== bullzilla 风格：路由/切页 ==========
     function setActivePage(pageName) {
       document.querySelectorAll('.page').forEach(p => {
         p.classList.toggle('is-active', p.getAttribute('data-page') === pageName);
       });
-
       window.scrollTo({ top: 0, behavior: 'smooth' });
-
-      if (location.hash !== `#${pageName}`) history.replaceState(null, '', `#${pageName}`);
     }
 
-    function getPageFromHash() {
-      const h = (location.hash || '').replace('#', '').trim();
-      // 允许旧锚点（#about/#mechanics 等）直接工作
-      return h || 'home';
+    function getRouteFromHash() {
+      const raw = (location.hash || '').replace('#', '').trim();
+      if (!raw) return { page: 'home' };
+
+      // Blog: #blog or #blog/<slug>
+      if (raw === 'blog') return { page: 'blog' };
+      if (raw.startsWith('blog/')) {
+        const slug = decodeURIComponent(raw.slice('blog/'.length));
+        return { page: 'blogpost', slug };
+      }
+
+      // others
+      return { page: raw };
     }
 
-    // 点击导航切换（包含 footer 的 nav）
+    // 点击导航切换（外链不拦截）
     document.querySelectorAll('[data-nav]').forEach(a => {
       a.addEventListener('click', (e) => {
-        // 外链不要拦截
         const href = a.getAttribute('href') || '';
-        const isExternal = href.startsWith('http');
-        if (isExternal) return;
+        if (href.startsWith('http')) return;
 
         e.preventDefault();
-        setActivePage(a.getAttribute('data-nav'));
+        const target = a.getAttribute('data-nav');
+
+        // 用 hash 维护状态
+        history.pushState(null, '', `#${target}`);
+
+        // 切页
+        setActivePage(target);
+
+        // Blog 页面进入时刷新渲染一次（防止首次为空）
+        if (target === 'blog') renderBlog();
       });
     });
 
-    window.addEventListener('hashchange', () => setActivePage(getPageFromHash()));
+    // hash 改变 => 切页 + 文章渲染
+    window.addEventListener('hashchange', () => {
+      const r = getRouteFromHash();
+      setActivePage(r.page);
+      if (r.page === 'blogpost' && r.slug) renderBlogPost(r.slug);
+      if (r.page === 'blog') renderBlog();
+    });
 
     // ========== 事件绑定 ==========
     connectBtn.addEventListener('click', connectWallet);
     disconnectBtn.addEventListener('click', disconnectWallet);
     bnbAmountInput.addEventListener('input', estimateTokens);
+    buyButton.addEventListener('click', buyTokens);
+    claimButton.addEventListener('click', claimTokens);
 
-    copyBtn.addEventListener('click', () => {
-      referralLink.select();
+    copyBtn2?.addEventListener('click', () => {
+      referralLink2?.select();
       document.execCommand('copy');
       showNotification('Copied!', 'Referral link copied to clipboard', false);
     });
 
-    buyButton.addEventListener('click', buyTokens);
-    claimButton.addEventListener('click', claimTokens);
+    blogBackBtn?.addEventListener('click', backToBlogList);
 
     // ========== 初始化 ==========
     initWeb3Modal();
     refreshContractData();
     setInterval(updateCountdown, 1000);
-
-    // ✅ 实时检测连接：解决“断开/重连 UI 不跟随”
     startRealtimeWatcher();
 
-    // ✅ 首次加载：显示 home 或 hash 对应页面
-    setActivePage(getPageFromHash());
+    // 初次路由
+    const r0 = getRouteFromHash();
+    setActivePage(r0.page);
+    if (r0.page === 'blogpost' && r0.slug) renderBlogPost(r0.slug);
 
-    // ✅ 页面加载自动同步：如果 session 已缓存，会立刻显示地址
+    // Blog init
+    initBlog();
+
+    // 页面加载自动同步（如果 session 已缓存，会立刻显示地址）
     setTimeout(() => syncWallet({ silent: true }), 300);
   </script>
 </body>
