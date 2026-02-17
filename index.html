@@ -810,47 +810,102 @@
       }
     }
 
-    // ========== 连接 WalletConnect v2 (使用内置模态框，自动处理移动端跳转) ==========
+    // ========== 连接 WalletConnect v2 (移动端直接跳转，桌面端显示二维码) ==========
     async function connectWalletConnect() {
+      const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+      
       try {
-        // 统一使用 showQrModal: true，让 WalletConnect 自行处理移动端跳转和二维码
-        wcProvider = await EthereumProvider.init({
-          projectId: CONFIG.WALLETCONNECT_PROJECT_ID,
-          chains: [CONFIG.CHAIN_ID],
-          optionalChains: [CONFIG.CHAIN_ID],
-          rpcMap: { [CONFIG.CHAIN_ID]: CONFIG.BSC_RPC },
-          showQrModal: true,  // 启用内置模态框，移动端自动显示跳转按钮
-        });
+        if (isMobile) {
+          // 移动端：不显示二维码，直接获取uri后跳转，唤起系统选择器
+          wcProvider = await EthereumProvider.init({
+            projectId: CONFIG.WALLETCONNECT_PROJECT_ID,
+            chains: [CONFIG.CHAIN_ID],
+            optionalChains: [CONFIG.CHAIN_ID],
+            rpcMap: { [CONFIG.CHAIN_ID]: CONFIG.BSC_RPC },
+            showQrModal: false,
+            redirect: {
+              native: window.location.href, // 钱包授权后返回当前页面
+              universal: window.location.href
+            }
+          });
 
-        await wcProvider.connect(); // 此方法会在移动端跳转后返回时正确解析
-        
-        provider = new ethers.providers.Web3Provider(wcProvider);
-        signer = provider.getSigner();
-        userAddress = await signer.getAddress();
-        contract = new ethers.Contract(CONFIG.CONTRACT_ADDRESS, CONTRACT_ABI, signer);
-        
-        setupProviderListeners(wcProvider);
-        
-        // 更新UI
-        connectBtn.innerText = userAddress.slice(0, 6) + '...' + userAddress.slice(-4);
-        connectBtn.disabled = true;
-        disconnectBtn.style.display = 'inline-block';
-        walletSelector.classList.remove('show');
-        
-        dashboardNotice.style.display = 'none';
-        dashboardGrid.style.display = 'grid';
-        referralBox.style.display = 'block';
-        stakingCard.style.display = 'block';
-        portfolioCard.style.display = 'block';
-        buyButton.disabled = false;
-        buyButton.innerText = 'Buy $BULL';
-        claimButton.style.display = 'block';
-        referralLink.value = `${window.location.origin}?ref=${userAddress}`;
-        
-        await refreshContractData();
-        if (countdownInterval) clearInterval(countdownInterval);
-        countdownInterval = setInterval(updateCountdown, 1000);
-        showNotification("Connected", "Wallet connected successfully", false);
+          // 监听 display_uri 事件，一旦拿到uri就跳转
+          wcProvider.once('display_uri', (uri) => {
+            // 直接跳转，系统会弹出选择钱包的对话框
+            window.location.href = uri;
+          });
+
+          // 开始连接，此调用会在跳转前触发 display_uri，然后等待从钱包返回后 resolve
+          await wcProvider.connect();
+          
+          // 用户从钱包返回后，provider 已连接，继续执行
+          provider = new ethers.providers.Web3Provider(wcProvider);
+          signer = provider.getSigner();
+          userAddress = await signer.getAddress();
+          contract = new ethers.Contract(CONFIG.CONTRACT_ADDRESS, CONTRACT_ABI, signer);
+          
+          setupProviderListeners(wcProvider);
+          
+          // 更新UI
+          connectBtn.innerText = userAddress.slice(0, 6) + '...' + userAddress.slice(-4);
+          connectBtn.disabled = true;
+          disconnectBtn.style.display = 'inline-block';
+          walletSelector.classList.remove('show');
+          
+          dashboardNotice.style.display = 'none';
+          dashboardGrid.style.display = 'grid';
+          referralBox.style.display = 'block';
+          stakingCard.style.display = 'block';
+          portfolioCard.style.display = 'block';
+          buyButton.disabled = false;
+          buyButton.innerText = 'Buy $BULL';
+          claimButton.style.display = 'block';
+          referralLink.value = `${window.location.origin}?ref=${userAddress}`;
+          
+          await refreshContractData();
+          if (countdownInterval) clearInterval(countdownInterval);
+          countdownInterval = setInterval(updateCountdown, 1000);
+          showNotification("Connected", "Wallet connected successfully", false);
+        } else {
+          // 桌面端：显示二维码模态框
+          wcProvider = await EthereumProvider.init({
+            projectId: CONFIG.WALLETCONNECT_PROJECT_ID,
+            chains: [CONFIG.CHAIN_ID],
+            optionalChains: [CONFIG.CHAIN_ID],
+            rpcMap: { [CONFIG.CHAIN_ID]: CONFIG.BSC_RPC },
+            showQrModal: true,
+          });
+
+          await wcProvider.connect();
+          
+          provider = new ethers.providers.Web3Provider(wcProvider);
+          signer = provider.getSigner();
+          userAddress = await signer.getAddress();
+          contract = new ethers.Contract(CONFIG.CONTRACT_ADDRESS, CONTRACT_ABI, signer);
+          
+          setupProviderListeners(wcProvider);
+          
+          // 更新UI
+          connectBtn.innerText = userAddress.slice(0, 6) + '...' + userAddress.slice(-4);
+          connectBtn.disabled = true;
+          disconnectBtn.style.display = 'inline-block';
+          walletSelector.classList.remove('show');
+          
+          dashboardNotice.style.display = 'none';
+          dashboardGrid.style.display = 'grid';
+          referralBox.style.display = 'block';
+          stakingCard.style.display = 'block';
+          portfolioCard.style.display = 'block';
+          buyButton.disabled = false;
+          buyButton.innerText = 'Buy $BULL';
+          claimButton.style.display = 'block';
+          referralLink.value = `${window.location.origin}?ref=${userAddress}`;
+          
+          await refreshContractData();
+          if (countdownInterval) clearInterval(countdownInterval);
+          countdownInterval = setInterval(updateCountdown, 1000);
+          showNotification("Connected", "Wallet connected successfully", false);
+        }
       } catch (e) {
         console.error(e);
         showNotification("Connection Failed", e?.message || String(e), true);
