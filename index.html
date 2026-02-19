@@ -28,9 +28,6 @@
     body { background-color: var(--dark-bg); color: var(--text-white); line-height: 1.6; overflow-x: hidden; }
     .container { max-width: 1400px; margin: 0 auto; padding: 0 24px; }
 
-    .page { display: none; }
-    .page.is-active { display: block; }
-
     .navbar {
       position: fixed; top: 0; left: 0; width: 100%; z-index: 999;
       padding: 16px 0; background: rgba(5, 5, 5, 0.9);
@@ -231,11 +228,28 @@
     .roadmap-list li { padding: 8px 0; color: var(--text-gray); position: relative; padding-left: 24px; }
     .roadmap-list li::before { content: "✦"; position: absolute; left: 0; color: var(--gold-primary); }
 
-    .hero { min-height: 100vh; padding-top: 120px; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; background: linear-gradient(180deg, #0A0500 0%, var(--dark-bg) 100%); position: relative; overflow: hidden; }
+    /* Buy 页面（hero） */
+    .hero {
+      min-height: 100vh;
+      padding-top: 120px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      background: linear-gradient(180deg, #0A0500 0%, var(--dark-bg) 100%);
+      position: relative;
+      overflow: hidden;
+    }
     .hero-bg-glow { position: absolute; top: -50%; left: 50%; transform: translateX(-50%); width: 1200px; height: 1200px; background: radial-gradient(circle, rgba(255, 215, 0, 0.15) 0%, transparent 70%); z-index: 0; }
     .hero-content { position: relative; z-index: 1; max-width: 900px; width: 100%; }
     .hero-title { font-size: 72px; font-weight: 900; line-height: 1.1; margin-bottom: 16px; background: linear-gradient(180deg, var(--gold-primary) 0%, var(--gold-secondary) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
     .hero-slogan { font-size: 24px; color: var(--text-gray); margin-bottom: 48px; font-weight: 400; }
+
+    /* ✅ 关键修复：防止 .hero 的 display:flex 把未激活页面也显示出来 */
+    .page { display: none !important; }
+    .page.is-active { display: block !important; }
+    .hero.page.is-active { display: flex !important; }
 
     .presale-stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 32px; width: 100%; }
     .stat-card { background: var(--dark-card); border: 1px solid var(--dark-border); border-radius: 12px; padding: 20px; text-align: left; }
@@ -286,7 +300,6 @@
     .footer-links a:hover { color: var(--gold-primary); }
     .footer-contract { font-family: monospace; font-size: 14px; color: var(--text-muted); margin-bottom: 18px; word-break: break-all; }
 
-    /* X / TG 按钮 */
     .social-row { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; margin-bottom: 18px; }
     .social-btn {
       display: inline-flex;
@@ -308,13 +321,19 @@
       box-shadow: 0 10px 24px rgba(255,215,0,.10);
       transform: translateY(-2px);
     }
-    .social-dot {
-      width: 8px; height: 8px; border-radius: 999px; background: var(--gold-primary);
-    }
+    .social-dot { width: 8px; height: 8px; border-radius: 999px; background: var(--gold-primary); }
 
     .footer-copyright { font-size: 14px; color: var(--text-muted); }
 
-    .notification { position: fixed; top: 100px; right: 24px; max-width: 400px; padding: 20px 24px; background: var(--dark-card); border: 1px solid var(--gold-primary); border-radius: 12px; z-index: 9999; box-shadow: 0 16px 40px rgba(0,0,0,0.5); transform: translateX(120%); transition: transform 0.3s ease; }
+    .notification {
+      position: fixed; top: 100px; right: 24px; max-width: 400px;
+      padding: 20px 24px; background: var(--dark-card);
+      border: 1px solid var(--gold-primary);
+      border-radius: 12px; z-index: 9999;
+      box-shadow: 0 16px 40px rgba(0,0,0,0.5);
+      transform: translateX(120%);
+      transition: transform 0.3s ease;
+    }
     .notification.show { transform: translateX(0); }
     .notification-title { font-weight: 800; margin-bottom: 8px; }
     .notification-desc { font-size: 14px; color: var(--text-gray); }
@@ -490,7 +509,7 @@
     </div>
   </section>
 
-  <!-- BUY (只有这里有购买框) -->
+  <!-- BUY（只有这里有购买框） -->
   <section class="hero page" data-page="buy" id="buy">
     <div class="hero-bg-glow"></div>
     <div class="container hero-content">
@@ -607,7 +626,6 @@
     <div class="container footer-content">
       <div class="footer-logo">🐂 BULLFORGE</div>
 
-      <!-- X / TG -->
       <div class="social-row">
         <!-- TODO: 换成你的 X 链接 -->
         <a class="social-btn" href="https://x.com/" target="_blank" rel="noreferrer">
@@ -632,13 +650,17 @@
       <div class="footer-copyright">© 2026 Bullforge. All rights reserved.</div>
     </div>
   </footer>
+
   <script type="module">
     import { ethers } from 'https://esm.sh/ethers@5.7.2';
     import { createWeb3Modal, defaultConfig } from 'https://esm.sh/@web3modal/ethers5@4.1.2';
 
     const CONFIG = {
+      // TODO: 如需更换，改这里
       CONTRACT_ADDRESS: "0x16D6c1a692AaC51a3821bA2903115d4600649F07",
+      // TODO: 如需更换，改这里
       WALLETCONNECT_PROJECT_ID: "fe819ed06d9e5489f764fc7b1dae1c4e",
+
       BSC_RPC: "https://bsc-dataseed.binance.org/",
       CHAIN_ID: 56,
       CHAIN_NAME: "BNB Smart Chain",
@@ -823,7 +845,6 @@
       if (tokenEstimate) tokenEstimate.innerText = `Enter BNB amount to see estimated $${CONFIG.TOKEN_SYMBOL} tokens`;
     }
 
-    // ---------- Read chain ----------
     async function refreshContractData() {
       try {
         const readProvider = new ethers.providers.JsonRpcProvider(CONFIG.BSC_RPC);
@@ -870,7 +891,6 @@
       }
     }
 
-    // ---------- Web3Modal ----------
     function initWeb3Modal() {
       const chains = [{
         chainId: CONFIG.CHAIN_ID,
@@ -932,7 +952,6 @@
       showNotification('Disconnected', 'Wallet disconnected');
     }
 
-    // ---------- Actions ----------
     async function buyTokens() {
       if (!isUIConnected || !contract) return showNotification('Not Connected', 'Please connect wallet first', true);
 
@@ -993,7 +1012,6 @@
       }
     }
 
-    // ---------- Navigation ----------
     function bindNavigation() {
       document.querySelectorAll('[data-nav]').forEach(el => {
         el.addEventListener('click', (e) => {
@@ -1012,7 +1030,6 @@
       });
     }
 
-    // ---------- Bind events ----------
     connectBtn?.addEventListener('click', connectWallet);
     disconnectBtn?.addEventListener('click', disconnectWallet);
     bnbAmountInput?.addEventListener('input', estimateTokens);
@@ -1031,7 +1048,6 @@
       }
     });
 
-    // ---------- Init ----------
     initWeb3Modal();
     bindNavigation();
 
