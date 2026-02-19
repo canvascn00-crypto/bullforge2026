@@ -1,572 +1,1405 @@
+```html
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Bullforge | The Future isn't Just Bullish. It's Bullforge.</title>
+
+  <!-- 字体 -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&display=swap" rel="stylesheet">
 
   <style>
-    :root{
-      --gold-primary:#FFD700; --gold-secondary:#FFA500;
-      --dark-bg:#050505; --dark-card:#0F0F0F; --dark-border:#1A1A1A;
-      --text-white:#fff; --text-gray:#A0A0A0; --text-muted:#666;
-      --danger:#FF4444; --success:#00C853;
+    /* ==================== 全局样式 ==================== */
+    :root {
+      --gold-primary: #FFD700;
+      --gold-secondary: #FFA500;
+      --dark-bg: #050505;
+      --dark-card: #0F0F0F;
+      --dark-border: #1A1A1A;
+      --text-white: #FFFFFF;
+      --text-gray: #A0A0A0;
+      --text-muted: #666666;
+      --danger: #FF4444;
+      --success: #00C853;
     }
-    *{margin:0;padding:0;box-sizing:border-box;font-family:Inter,sans-serif}
-    html{scroll-behavior:smooth}
-    body{background:var(--dark-bg);color:var(--text-white);line-height:1.6;overflow-x:hidden}
-    .container{max-width:1320px;margin:0 auto;padding:0 20px}
-    .page{display:none}.page.is-active{display:block}
 
-    .navbar{position:fixed;top:0;left:0;width:100%;z-index:999;padding:14px 0;background:rgba(5,5,5,.9);backdrop-filter:blur(10px);border-bottom:1px solid var(--dark-border)}
-    .navbar-content{display:flex;justify-content:space-between;align-items:center;gap:16px}
-    .navbar-logo{font-size:26px;font-weight:900;color:var(--gold-primary);text-decoration:none;white-space:nowrap}
-    .navbar-links{display:flex;gap:18px;align-items:center;flex-wrap:wrap;justify-content:flex-end}
-    .navbar-links a{color:var(--text-gray);text-decoration:none;font-weight:700}
-    .navbar-links a:hover{color:var(--gold-primary)}
-    .wallet-container{display:flex;gap:8px;align-items:center}
-    #walletConnectBtn,#disconnectBtn,#networkBadge{border-radius:999px}
-    #walletConnectBtn{padding:10px 18px;border:none;font-weight:900;background:var(--gold-primary);color:#111;cursor:pointer}
-    #walletConnectBtn:disabled{opacity:.65;cursor:not-allowed}
-    #disconnectBtn{display:none;padding:8px 14px;border:1px solid var(--gold-primary);background:transparent;color:var(--gold-primary);font-weight:800;cursor:pointer}
-    #networkBadge{display:none;padding:5px 10px;border:1px solid var(--dark-border);color:var(--gold-primary);font-size:12px;font-weight:800}
-    #networkBadge.bad{border-color:var(--danger);color:var(--danger)}
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
+    html { scroll-behavior: smooth; }
+    body { background-color: var(--dark-bg); color: var(--text-white); line-height: 1.6; overflow-x: hidden; }
+    .container { max-width: 1400px; margin: 0 auto; padding: 0 24px; }
 
-    .section{padding:110px 0;position:relative}
-    .section-header{text-align:center;margin-bottom:56px}
-    .section-subtitle{font-size:13px;text-transform:uppercase;letter-spacing:2px;color:var(--gold-primary);font-weight:800;margin-bottom:8px}
-    .section-title{font-size:48px;font-weight:900;line-height:1.1;margin-bottom:10px}
-    .section-desc{font-size:16px;color:var(--text-gray);max-width:820px;margin:0 auto}
+    /* ==================== bullzilla 风格：一次只显示一个页面 ==================== */
+    .page { display: none; }
+    .page.is-active { display: block; }
 
-    .hero{min-height:100vh;padding-top:120px;display:flex;align-items:center;text-align:center;background:linear-gradient(180deg,#0A0500 0%,#050505 100%)}
-    .hero-bg-glow{position:absolute;top:-45%;left:50%;transform:translateX(-50%);width:1000px;height:1000px;background:radial-gradient(circle,rgba(255,215,0,.14),transparent 70%);pointer-events:none}
-    .hero-content{position:relative;z-index:1;width:100%}
-    .hero-title{font-size:68px;font-weight:900;line-height:1.06;background:linear-gradient(180deg,var(--gold-primary),var(--gold-secondary));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-    .hero-slogan{font-size:22px;color:var(--text-gray);margin:12px 0 26px}
-    .hero-cta-row{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;margin-bottom:28px}
-    .hero-cta-primary,.hero-cta-secondary{cursor:pointer;font-weight:900;border-radius:999px}
-    .hero-cta-primary{padding:12px 20px;border:none;background:linear-gradient(90deg,var(--gold-secondary),var(--gold-primary));color:#111}
-    .hero-cta-secondary{padding:10px 18px;border:2px solid var(--gold-primary);background:transparent;color:var(--gold-primary)}
-
-    .presale-stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:24px}
-    .stat-card{background:var(--dark-card);border:1px solid var(--dark-border);border-radius:12px;padding:16px;text-align:left}
-    .stat-label{font-size:12px;color:var(--text-muted);text-transform:uppercase;margin-bottom:6px}
-    .stat-value{font-size:22px;font-weight:800;color:var(--gold-primary)}
-
-    .countdown-wrapper{margin:20px 0}
-    .countdown-title{font-size:13px;color:var(--text-gray);letter-spacing:1px;text-transform:uppercase;margin-bottom:10px}
-    .countdown-grid{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
-    .countdown-box{min-width:90px;background:var(--dark-card);border:1px solid var(--gold-primary);border-radius:10px;padding:12px 8px}
-    .countdown-number{font-size:34px;font-weight:900;color:var(--gold-primary);line-height:1}
-    .countdown-text{font-size:11px;color:var(--text-gray);margin-top:6px;text-transform:uppercase}
-
-    .progress-wrapper{width:100%;margin:20px 0}
-    .progress-header{display:flex;justify-content:space-between;margin-bottom:8px}
-    .progress-header span{font-size:13px;color:var(--text-gray)}
-    .progress-bar-container{height:10px;background:var(--dark-card);border:1px solid var(--dark-border);border-radius:999px;overflow:hidden}
-    .progress-bar-fill{height:100%;width:0;background:linear-gradient(90deg,var(--gold-secondary),var(--gold-primary));transition:width .45s ease}
-
-    .buy-form-card{background:var(--dark-card);border:1px solid var(--dark-border);border-radius:14px;padding:24px;max-width:680px;margin:0 auto}
-    .form-input-group{margin-bottom:12px}
-    .form-label{display:flex;justify-content:space-between;color:var(--text-gray);font-size:13px;margin-bottom:6px;gap:10px;flex-wrap:wrap}
-    .form-input{width:100%;padding:14px;background:#070707;border:1px solid var(--dark-border);border-radius:10px;color:#fff;font-size:16px;font-weight:600}
-    .form-input:focus{outline:none;border-color:var(--gold-primary)}
-    .token-estimate{font-size:13px;color:var(--text-gray);margin:8px 0 14px}
-    .buy-button{width:100%;padding:15px;border:none;border-radius:10px;background:linear-gradient(90deg,var(--gold-secondary),var(--gold-primary));color:#111;font-size:16px;font-weight:900;cursor:pointer}
-    .buy-button:disabled{opacity:.55;cursor:not-allowed}
-    .btn-secondary{width:100%;padding:12px;border:2px solid var(--gold-primary);background:transparent;color:var(--gold-primary);border-radius:10px;font-weight:800;margin-top:10px;cursor:pointer}
-    .btn-small{width:auto;padding:9px 14px;font-size:13px;margin:4px}
-
-    .feature-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:20px}
-    .feature-card{background:var(--dark-card);border:1px solid var(--dark-border);border-radius:14px;padding:26px}
-    .feature-title{font-size:24px;font-weight:800;color:var(--gold-primary);margin-bottom:8px}
-    .feature-desc{color:var(--text-gray)}
-    .feature-icon{font-size:38px;margin-bottom:12px}
-
-    .split-section{display:grid;grid-template-columns:1.1fr .9fr;gap:24px;align-items:center}
-    .split-media{border-radius:16px;border:1px solid var(--dark-border);min-height:300px;background:radial-gradient(circle at 30% 20%, rgba(255,215,0,.16), rgba(0,0,0,.2) 62%),linear-gradient(180deg, rgba(255,165,0,.12), rgba(0,0,0,.06));overflow:hidden}
-    .split-copy{background:var(--dark-card);border:1px solid var(--dark-border);border-radius:16px;padding:24px}
-    .split-kicker{color:var(--gold-primary);font-size:12px;text-transform:uppercase;letter-spacing:1.5px;font-weight:900;margin-bottom:8px}
-    .split-title{font-size:30px;font-weight:900;line-height:1.2;margin-bottom:10px}
-    .split-text{color:var(--text-gray)}
-
-    /* 路线图“旁边图片”内置容器 */
-    .roadmap-visual{
-      border:1px solid var(--dark-border);
-      border-radius:16px;
-      padding:14px;
-      background:linear-gradient(180deg,#111,#090909);
+    /* ==================== 固定导航栏 ==================== */
+    .navbar {
+      position: fixed; top: 0; left: 0; width: 100%; z-index: 999;
+      padding: 16px 0; background: rgba(5, 5, 5, 0.9);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--dark-border);
     }
-    .roadmap-visual svg{width:100%;height:auto;display:block}
+    .navbar-content { display: flex; justify-content: space-between; align-items: center; gap: 16px; }
+    .navbar-logo {
+      font-size: 28px; font-weight: 900; color: var(--gold-primary); letter-spacing: -0.5px;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+    .navbar-logo:hover { opacity: 0.9; }
 
-    .roadmap-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:18px}
-    .roadmap-card{background:var(--dark-card);border:1px solid var(--dark-border);border-radius:14px;padding:22px}
-    .roadmap-phase{font-size:12px;color:var(--gold-primary);font-weight:800;text-transform:uppercase;margin-bottom:6px}
-    .roadmap-title{font-size:22px;font-weight:800;margin-bottom:10px}
-    .roadmap-list{list-style:none}
-    .roadmap-list li{padding:6px 0 6px 20px;color:var(--text-gray);position:relative}
-    .roadmap-list li:before{content:"✦";position:absolute;left:0;color:var(--gold-primary)}
+    .navbar-links { display: flex; gap: 22px; align-items: center; flex-wrap: wrap; justify-content: flex-end; }
+    .navbar-links a {
+      color: var(--text-gray); text-decoration: none; font-weight: 600;
+      transition: color 0.3s ease;
+      white-space: nowrap;
+    }
+    .navbar-links a:hover { color: var(--gold-primary); }
 
-    .faq-item{background:var(--dark-card);border:1px solid var(--dark-border);border-radius:12px;margin-bottom:10px;overflow:hidden}
-    .faq-question{padding:18px;font-size:17px;font-weight:800;display:flex;justify-content:space-between;cursor:pointer}
-    .faq-answer{display:none;padding:0 18px 18px;color:var(--text-gray)}
+    /* 钱包容器 */
+    .wallet-container {
+      position: relative;
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
 
-    .notification{position:fixed;top:90px;right:16px;max-width:360px;background:var(--dark-card);border:1px solid var(--gold-primary);padding:14px 16px;border-radius:10px;z-index:9999;transform:translateX(120%);transition:transform .25s}
-    .notification.show{transform:translateX(0)}
-    .notification-title{font-weight:900;margin-bottom:4px}
-    .notification-desc{font-size:13px;color:var(--text-gray)}
+    #walletConnectBtn {
+      padding: 10px 24px;
+      background: var(--gold-primary);
+      color: var(--dark-bg);
+      border: none;
+      border-radius: 50px;
+      font-weight: 800;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      white-space: nowrap;
+    }
+    #walletConnectBtn:hover:not(:disabled) { box-shadow: 0 0 24px rgba(255, 215, 0, 0.4); transform: scale(1.03); }
+    #walletConnectBtn:disabled { opacity: 0.6; cursor: not-allowed; transform: none; background: #b89400; }
 
-    .loading-spinner{display:inline-block;width:16px;height:16px;border:2px solid var(--text-muted);border-top-color:var(--gold-primary);border-radius:50%;animation:spin .9s linear infinite;vertical-align:middle}
-    @keyframes spin{to{transform:rotate(360deg)}}
+    #disconnectBtn {
+      padding: 8px 16px;
+      background: transparent;
+      color: var(--gold-primary);
+      border: 1px solid var(--gold-primary);
+      border-radius: 50px;
+      font-weight: 700;
+      font-size: 14px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      white-space: nowrap;
+    }
+    #disconnectBtn:hover { background: rgba(255, 215, 0, 0.1); }
 
-    @media(max-width:980px){.split-section{grid-template-columns:1fr}.presale-stats-grid{grid-template-columns:repeat(2,1fr)}}
-    @media(max-width:768px){
-      .navbar-links a{display:none}
-      .hero-title{font-size:42px}
-      .hero-slogan{font-size:17px}
-      .section-title{font-size:34px}
-      .countdown-box{min-width:72px}.countdown-number{font-size:26px}
-      .notification{left:12px;right:12px;max-width:none}
+    /* 网络徽章（连接后显示） */
+    #networkBadge {
+      display: none;
+      padding: 6px 12px;
+      border-radius: 999px;
+      border: 1px solid var(--dark-border);
+      background: rgba(255, 215, 0, 0.08);
+      color: var(--gold-primary);
+      font-weight: 800;
+      font-size: 12px;
+      letter-spacing: 0.2px;
+      white-space: nowrap;
+    }
+    #networkBadge.bad {
+      border-color: var(--danger);
+      color: var(--danger);
+      background: rgba(255, 68, 68, 0.08);
+    }
+
+    /* ==================== 其余样式与原版保持一致 ==================== */
+    .hero { min-height: 100vh; padding-top: 120px; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; background: linear-gradient(180deg, #0A0500 0%, var(--dark-bg) 100%); position: relative; overflow: hidden; }
+    .hero-bg-glow { position: absolute; top: -50%; left: 50%; transform: translateX(-50%); width: 1200px; height: 1200px; background: radial-gradient(circle, rgba(255, 215, 0, 0.15) 0%, transparent 70%); z-index: 0; }
+    .hero-content { position: relative; z-index: 1; max-width: 900px; }
+    .hero-title { font-size: 72px; font-weight: 900; line-height: 1.1; margin-bottom: 16px; background: linear-gradient(180deg, var(--gold-primary) 0%, var(--gold-secondary) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .hero-slogan { font-size: 24px; color: var(--text-gray); margin-bottom: 48px; font-weight: 400; }
+    .presale-stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 32px; width: 100%; }
+    .stat-card { background: var(--dark-card); border: 1px solid var(--dark-border); border-radius: 12px; padding: 20px; text-align: left; }
+    .stat-label { font-size: 13px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px; }
+    .stat-value { font-size: 24px; font-weight: 700; color: var(--gold-primary); }
+    .countdown-wrapper { margin: 32px 0; }
+    .countdown-title { font-size: 14px; color: var(--text-gray); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 16px; }
+    .countdown-grid { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+    .countdown-box { background: var(--dark-card); border: 1px solid var(--gold-primary); border-radius: 12px; min-width: 100px; padding: 16px 8px; }
+    .countdown-number { font-size: 40px; font-weight: 900; color: var(--gold-primary); line-height: 1; }
+    .countdown-text { font-size: 12px; color: var(--text-gray); margin-top: 8px; text-transform: uppercase; }
+    .progress-wrapper { width: 100%; margin: 32px 0; }
+    .progress-header { display: flex; justify-content: space-between; margin-bottom: 12px; }
+    .progress-header span { font-size: 14px; color: var(--text-gray); }
+    .progress-bar-container { width: 100%; height: 12px; background: var(--dark-card); border-radius: 100px; overflow: hidden; border: 1px solid var(--dark-border); }
+    .progress-bar-fill { height: 100%; background: linear-gradient(90deg, var(--gold-secondary) 0%, var(--gold-primary) 100%); width: 0%; transition: width 0.8s ease; border-radius: 100px; }
+    .buy-form-card { background: var(--dark-card); border: 1px solid var(--dark-border); border-radius: 16px; padding: 32px; max-width: 600px; margin: 0 auto; width: 100%; }
+    .form-input-group { margin-bottom: 16px; }
+    .form-label { display: flex; justify-content: space-between; gap: 10px; margin-bottom: 8px; font-size: 14px; color: var(--text-gray); flex-wrap: wrap; }
+    .form-input { width: 100%; padding: 16px; background: var(--dark-bg); border: 1px solid var(--dark-border); border-radius: 12px; color: var(--text-white); font-size: 18px; font-weight: 600; transition: border-color 0.3s ease; }
+    .form-input:focus { outline: none; border-color: var(--gold-primary); }
+    .form-select { width: 100%; padding: 16px; background: var(--dark-bg); border: 1px solid var(--dark-border); border-radius: 12px; color: var(--text-white); font-size: 16px; transition: border-color 0.3s ease; }
+    .form-select:focus { outline: none; border-color: var(--gold-primary); }
+    .token-estimate { text-align: left; font-size: 14px; color: var(--text-gray); margin: 12px 0 24px; }
+    .buy-button { width: 100%; padding: 18px; background: linear-gradient(90deg, var(--gold-secondary) 0%, var(--gold-primary) 100%); color: var(--dark-bg); border: none; border-radius: 12px; font-size: 18px; font-weight: 900; text-transform: uppercase; cursor: pointer; transition: all 0.3s ease; }
+    .buy-button:hover:not(:disabled) { box-shadow: 0 0 32px rgba(255, 215, 0, 0.4); transform: translateY(-2px); }
+    .buy-button:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+    .btn-secondary { width: 100%; padding: 14px; background: transparent; color: var(--gold-primary); border: 2px solid var(--gold-primary); border-radius: 12px; font-size: 16px; font-weight: 800; cursor: pointer; transition: all 0.3s ease; margin-top: 12px; }
+    .btn-secondary:hover:not(:disabled) { background: rgba(255, 215, 0, 0.1); }
+    .btn-small { width: auto; padding: 10px 20px; font-size: 14px; margin: 5px; }
+    .section { padding: 120px 0; position: relative; }
+    .section-header { text-align: center; margin-bottom: 80px; }
+    .section-subtitle { font-size: 14px; text-transform: uppercase; letter-spacing: 2px; color: var(--gold-primary); margin-bottom: 12px; font-weight: 700; }
+    .section-title { font-size: 56px; font-weight: 900; line-height: 1.1; margin-bottom: 16px; }
+    .section-desc { font-size: 18px; color: var(--text-gray); max-width: 700px; margin: 0 auto; }
+
+    .feature-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(380px, 1fr)); gap: 32px; }
+    .feature-card { background: var(--dark-card); border: 1px solid var(--dark-border); border-radius: 16px; padding: 40px; transition: all 0.3s ease; }
+    .feature-card:hover { border-color: var(--gold-primary); transform: translateY(-8px); box-shadow: 0 16px 40px rgba(255, 215, 0, 0.1); }
+    .feature-icon { font-size: 48px; margin-bottom: 24px; }
+    .feature-title { font-size: 28px; font-weight: 800; margin-bottom: 16px; color: var(--gold-primary); }
+    .feature-desc { font-size: 16px; color: var(--text-gray); line-height: 1.8; }
+
+    .tokenomics-section { background: var(--dark-card); }
+    .tokenomics-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; }
+    .tokenomics-card { background: var(--dark-bg); border: 1px solid var(--dark-border); border-radius: 16px; padding: 32px; }
+    .tokenomics-percent { font-size: 48px; font-weight: 900; color: var(--gold-primary); margin-bottom: 8px; }
+    .tokenomics-label { font-size: 18px; font-weight: 700; margin-bottom: 12px; }
+    .tokenomics-desc { font-size: 14px; color: var(--text-gray); }
+    .tokenomics-total { text-align: center; margin-top: 48px; padding: 32px; border: 1px solid var(--gold-primary); border-radius: 16px; background: rgba(255, 215, 0, 0.05); }
+    .tokenomics-total-value { font-size: 36px; font-weight: 900; color: var(--gold-primary); }
+
+    .dashboard-section { background: var(--dark-card); }
+    .dashboard-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; margin-bottom: 40px; }
+    .dashboard-card { background: var(--dark-bg); border: 1px solid var(--dark-border); border-radius: 16px; padding: 24px; }
+    .dashboard-label { font-size: 13px; color: var(--text-muted); text-transform: uppercase; margin-bottom: 8px; }
+    .dashboard-value { font-size: 28px; font-weight: 700; color: var(--gold-primary); }
+
+    .history-table { width: 100%; margin-top: 40px; border-collapse: collapse; background: var(--dark-bg); border-radius: 16px; overflow: hidden; }
+    .history-table th { background: var(--dark-card); color: var(--gold-primary); font-weight: 700; padding: 16px; text-align: left; border-bottom: 1px solid var(--dark-border); }
+    .history-table td { padding: 16px; border-bottom: 1px solid var(--dark-border); color: var(--text-gray); }
+    .history-table tr:last-child td { border-bottom: none; }
+
+    .referral-box { background: var(--dark-bg); border: 1px solid var(--dark-border); border-radius: 16px; padding: 32px; margin-top: 32px; }
+    .referral-link { display: flex; gap: 12px; margin-top: 16px; }
+    .referral-link input { flex: 1; padding: 12px; background: var(--dark-bg); border: 1px solid var(--dark-border); border-radius: 8px; color: var(--text-white); font-family: monospace; }
+
+    .roadmap-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 32px; }
+    .roadmap-card { background: var(--dark-card); border: 1px solid var(--dark-border); border-radius: 16px; padding: 32px; position: relative; }
+    .roadmap-phase { font-size: 13px; text-transform: uppercase; letter-spacing: 1px; color: var(--gold-primary); font-weight: 700; margin-bottom: 12px; }
+    .roadmap-title { font-size: 24px; font-weight: 800; margin-bottom: 20px; }
+    .roadmap-list { list-style: none; }
+    .roadmap-list li { padding: 8px 0; color: var(--text-gray); position: relative; padding-left: 24px; }
+    .roadmap-list li::before { content: "✦"; position: absolute; left: 0; color: var(--gold-primary); }
+
+    .audit-section { background: var(--dark-card); }
+    .audit-card { background: var(--dark-bg); border: 1px solid var(--gold-primary); border-radius: 16px; padding: 40px; text-align: center; max-width: 800px; margin: 0 auto; }
+    .audit-icon { font-size: 64px; margin-bottom: 24px; }
+    .audit-title { font-size: 32px; font-weight: 800; margin-bottom: 16px; }
+    .audit-desc { font-size: 16px; color: var(--text-gray); margin-bottom: 24px; }
+
+    .faq-grid { max-width: 900px; margin: 0 auto; }
+    .faq-item { background: var(--dark-card); border: 1px solid var(--dark-border); border-radius: 12px; margin-bottom: 16px; overflow: hidden; }
+    .faq-question { padding: 24px; font-size: 18px; font-weight: 700; cursor: pointer; display: flex; justify-content: space-between; align-items: center; }
+    .faq-answer { padding: 0 24px 24px; color: var(--text-gray); line-height: 1.8; display: none; }
+
+    .partners-section { padding: 60px 0; background: var(--dark-card); }
+    .partners-grid { display: flex; flex-wrap: wrap; gap: 32px; justify-content: center; align-items: center; }
+    .partner-logo { font-size: 18px; font-weight: 700; color: var(--text-muted); transition: color 0.3s ease; }
+    .partner-logo:hover { color: var(--gold-primary); }
+
+    .footer { padding: 60px 0 30px; border-top: 1px solid var(--dark-border); }
+    .footer-content { display: flex; flex-direction: column; align-items: center; text-align: center; }
+    .footer-logo { font-size: 36px; font-weight: 900; color: var(--gold-primary); margin-bottom: 24px; }
+    .footer-links { display: flex; gap: 32px; margin-bottom: 32px; flex-wrap: wrap; justify-content: center; }
+    .footer-links a { color: var(--text-gray); text-decoration: none; font-weight: 500; transition: color 0.3s ease; }
+    .footer-links a:hover { color: var(--gold-primary); }
+    .footer-contract { font-family: monospace; font-size: 14px; color: var(--text-muted); margin-bottom: 24px; word-break: break-all; }
+    .footer-copyright { font-size: 14px; color: var(--text-muted); }
+
+    .notification { position: fixed; top: 100px; right: 24px; max-width: 400px; padding: 20px 24px; background: var(--dark-card); border: 1px solid var(--gold-primary); border-radius: 12px; z-index: 9999; box-shadow: 0 16px 40px rgba(0,0,0,0.5); transform: translateX(120%); transition: transform 0.3s ease; }
+    .notification.show { transform: translateX(0); }
+    .notification-title { font-weight: 700; margin-bottom: 8px; }
+    .notification-desc { font-size: 14px; color: var(--text-gray); }
+    .loading-spinner { display: inline-block; width: 20px; height: 20px; border: 2px solid var(--text-muted); border-radius: 50%; border-top-color: var(--gold-primary); animation: spin 1s linear infinite; vertical-align: middle; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* ==================== Blog（bullzilla 风格） ==================== */
+    .blog-hero { padding-top: 40px; padding-bottom: 10px; text-align: center; }
+    .blog-title { font-size: 56px; font-weight: 900; line-height: 1.1; margin-bottom: 6px; }
+
+    .blog-grid {
+      margin-top: 28px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+    .blog-card {
+      background: var(--dark-card);
+      border: 1px solid var(--dark-border);
+      border-radius: 16px;
+      overflow: hidden;
+      cursor: pointer;
+      transition: all 0.25s ease;
+    }
+    .blog-card:hover {
+      border-color: var(--gold-primary);
+      transform: translateY(-6px);
+      box-shadow: 0 16px 40px rgba(255, 215, 0, 0.08);
+    }
+    .blog-thumb {
+      width: 100%;
+      aspect-ratio: 16/9;
+      background: radial-gradient(circle at 30% 20%, rgba(255,215,0,0.18), rgba(0,0,0,0.2) 60%),
+                linear-gradient(180deg, rgba(255,165,0,0.12), rgba(0,0,0,0.05));
+      border-bottom: 1px solid var(--dark-border);
+      background-size: cover;
+      background-position: center;
+    }
+    .blog-body { padding: 18px 18px 20px; }
+    .blog-post-title { font-size: 18px; font-weight: 900; color: var(--text-white); margin-bottom: 10px; line-height: 1.35; }
+    .blog-post-excerpt { color: var(--text-gray); font-size: 14px; line-height: 1.75; }
+
+    .blog-pagination { margin-top: 28px; display: flex; justify-content: center; gap: 12px; }
+    .blog-cta {
+      margin-top: 44px;
+      background: var(--dark-card);
+      border: 1px solid var(--dark-border);
+      border-radius: 16px;
+      padding: 34px 24px;
+      text-align: center;
+    }
+    .blog-cta-title { font-size: 22px; font-weight: 900; margin-bottom: 10px; color: var(--text-white); }
+    .blog-cta-desc { color: var(--text-gray); font-size: 14px; margin-bottom: 18px; }
+
+    /* ==================== Blog Post（bullzilla 风格文章页） ==================== */
+    .blogpost-topbar { display: flex; justify-content: flex-start; margin-top: 18px; }
+    .blogpost-hero { text-align: center; margin-top: 18px; margin-bottom: 22px; }
+    .blogpost-title { font-size: 48px; font-weight: 900; line-height: 1.15; margin-bottom: 10px; }
+    .blogpost-meta { color: var(--text-gray); font-size: 14px; }
+    .blogpost-cover {
+      width: 100%;
+      aspect-ratio: 16/6;
+      border-radius: 16px;
+      border: 1px solid var(--dark-border);
+      overflow: hidden;
+      margin: 22px 0 26px;
+      background: radial-gradient(circle at 30% 20%, rgba(255,215,0,0.18), rgba(0,0,0,0.2) 60%),
+                linear-gradient(180deg, rgba(255,165,0,0.12), rgba(0,0,0,0.05));
+      background-size: cover;
+      background-position: center;
+      display: none;
+    }
+    .blogpost-content {
+      max-width: 900px;
+      margin: 0 auto;
+      background: var(--dark-card);
+      border: 1px solid var(--dark-border);
+      border-radius: 16px;
+      padding: 26px 22px;
+      color: var(--text-gray);
+      line-height: 1.9;
+      font-size: 16px;
+    }
+    .blogpost-content h2,
+    .blogpost-content h3 { color: var(--text-white); margin-top: 18px; margin-bottom: 10px; }
+    .blogpost-content p { margin: 12px 0; }
+    .blogpost-content a { color: var(--gold-primary); text-decoration: none; }
+    .blogpost-content a:hover { text-decoration: underline; }
+    .blogpost-content ul { margin: 10px 0 10px 22px; }
+    .blogpost-nav {
+      max-width: 900px;
+      margin: 18px auto 0;
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    @media (max-width: 1100px) {
+      .blog-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (max-width: 768px) {
+      .navbar-links a:not(.wallet-container *) { display: none; }
+      .hero-title { font-size: 40px; }
+      .hero-slogan { font-size: 18px; }
+      .presale-stats-grid { grid-template-columns: repeat(2, 1fr); }
+      .countdown-grid { gap: 8px; }
+      .countdown-box { min-width: 70px; }
+      .countdown-number { font-size: 28px; }
+      .section-title { font-size: 36px; }
+      .feature-grid, .tokenomics-grid, .roadmap-grid, .dashboard-grid { grid-template-columns: 1fr; }
+      .referral-link { flex-direction: column; }
+      .notification { right: 12px; left: 12px; max-width: none; }
+      .wallet-container { gap: 6px; }
+      #walletConnectBtn { padding: 9px 18px; }
+      #disconnectBtn { padding: 7px 14px; }
+
+      .blog-title { font-size: 36px; }
+      .blog-grid { grid-template-columns: 1fr; }
+      .blogpost-title { font-size: 32px; }
+      .blogpost-content { padding: 20px 16px; }
+      .blogpost-nav { flex-direction: column; }
     }
   </style>
 </head>
+
 <body>
+  <!-- 通知弹窗 -->
   <div id="notification" class="notification">
-    <div id="notificationTitle" class="notification-title"></div>
-    <div id="notificationDesc" class="notification-desc"></div>
+    <div class="notification-title" id="notificationTitle"></div>
+    <div class="notification-desc" id="notificationDesc"></div>
   </div>
 
+  <!-- 导航栏 -->
   <nav class="navbar">
     <div class="container navbar-content">
+      <!-- ✅ 点击 LOGO 切回首页（Buy Now / home） -->
       <a class="navbar-logo" href="#home" data-nav="home">🐂 BULLFORGE</a>
+
       <div class="navbar-links">
+        <!-- ✅ 你要求的导航按钮顺序/文案 -->
         <a href="#home" data-nav="home">Buy Now</a>
         <a href="#howtobuy" data-nav="howtobuy">How to Buy</a>
         <a href="#whitepaper" data-nav="whitepaper">Whitepaper</a>
         <a href="#staking" data-nav="staking">Staking</a>
         <a href="#referral" data-nav="referral">Referral</a>
         <a href="#blog" data-nav="blog">Blog</a>
+
         <div class="wallet-container">
           <span id="networkBadge">BNB</span>
           <button id="walletConnectBtn">Connect Wallet</button>
-          <button id="disconnectBtn">Disconnect</button>
+          <button id="disconnectBtn" style="display:none;">Disconnect</button>
         </div>
       </div>
     </div>
   </nav>
 
-  <!-- HOME -->
+  <!-- ✅ Home 页面（Buy Now） -->
   <section class="hero page" data-page="home">
     <div class="hero-bg-glow"></div>
     <div class="container hero-content">
-      <h1 class="hero-title">Bullforge</h1>
-      <p class="hero-slogan">The Future isn't Just Bullish. It's Bullforge.</p>
+      <h1 class="hero-title">The Future isn't Just Bullish. It's Bullforge.</h1>
+      <p class="hero-slogan">Forged in the chaos of the blockchain, built to thrive where others fall.</p>
 
-      <div class="hero-cta-row">
-        <button class="hero-cta-primary" id="jumpToBuyBtn">立即购买</button>
-        <button class="hero-cta-secondary" id="jumpToWhitepaperBtn">Whitepaper</button>
-      </div>
-
+      <!-- 预售核心数据 -->
       <div class="presale-stats-grid">
-        <div class="stat-card"><div class="stat-label">Current Price</div><div id="currentPrice" class="stat-value"><span class="loading-spinner"></span></div></div>
-        <div class="stat-card"><div class="stat-label">Total Raised</div><div id="totalRaised" class="stat-value"><span class="loading-spinner"></span></div></div>
-        <div class="stat-card"><div class="stat-label">Current Stage</div><div id="currentStage" class="stat-value"><span class="loading-spinner"></span></div></div>
-        <div class="stat-card"><div class="stat-label">1 BNB =</div><div id="tokenRate" class="stat-value"><span class="loading-spinner"></span></div></div>
+        <div class="stat-card"><div class="stat-label">Current Price</div><div class="stat-value" id="currentPrice"><span class="loading-spinner"></span></div></div>
+        <div class="stat-card"><div class="stat-label">Total Raised</div><div class="stat-value" id="totalRaised"><span class="loading-spinner"></span></div></div>
+        <div class="stat-card"><div class="stat-label">Current Stage</div><div class="stat-value" id="currentStage"><span class="loading-spinner"></span></div></div>
+        <div class="stat-card"><div class="stat-label">1 BNB =</div><div class="stat-value" id="tokenRate"><span class="loading-spinner"></span></div></div>
       </div>
 
+      <!-- 倒计时 -->
       <div class="countdown-wrapper">
-        <div class="countdown-title">PRESALE ENDS IN</div>
-        <div class="countdown-grid">
-          <div class="countdown-box"><div id="countdownDays" class="countdown-number">--</div><div class="countdown-text">Days</div></div>
-          <div class="countdown-box"><div id="countdownHours" class="countdown-number">--</div><div class="countdown-text">Hours</div></div>
-          <div class="countdown-box"><div id="countdownMinutes" class="countdown-number">--</div><div class="countdown-text">Minutes</div></div>
-          <div class="countdown-box"><div id="countdownSeconds" class="countdown-number">--</div><div class="countdown-text">Seconds</div></div>
+        <div class="countdown-title" id="countdownTitle">PRESALE ENDS IN</div>
+        <div class="countdown-grid" id="countdownGrid">
+          <div class="countdown-box"><div class="countdown-number" id="countdownDays">--</div><div class="countdown-text">Days</div></div>
+          <div class="countdown-box"><div class="countdown-number" id="countdownHours">--</div><div class="countdown-text">Hours</div></div>
+          <div class="countdown-box"><div class="countdown-number" id="countdownMinutes">--</div><div class="countdown-text">Minutes</div></div>
+          <div class="countdown-box"><div class="countdown-number" id="countdownSeconds">--</div><div class="countdown-text">Seconds</div></div>
         </div>
       </div>
 
+      <!-- 进度条 -->
       <div class="progress-wrapper">
         <div class="progress-header"><span>Presale Progress</span><span id="progressPercent">0%</span></div>
-        <div class="progress-bar-container"><div id="progressBarFill" class="progress-bar-fill"></div></div>
+        <div class="progress-bar-container"><div class="progress-bar-fill" id="progressBarFill"></div></div>
       </div>
 
-      <!-- 购买栏只在 home -->
-      <div class="buy-form-card" id="buyFormAnchor">
+      <!-- 购买表单 -->
+      <div class="buy-form-card">
         <div class="form-input-group">
           <div class="form-label"><span>Amount (BNB)</span><span>Balance: <span id="walletBalance">0.00</span> BNB</span></div>
-          <input id="bnbAmount" class="form-input" type="number" step="0.01" min="0" placeholder="0.0" />
+          <input type="number" class="form-input" id="bnbAmount" placeholder="0.0" step="0.01" min="0">
         </div>
         <div class="form-input-group">
-          <div class="form-label"><span>Slippage Tolerance (%)</span></div>
-          <input id="slippage" class="form-input" type="number" step="0.1" min="0.1" value="1.0" />
+          <div class="form-label"><span>Slippage Tolerance</span></div>
+          <input type="number" class="form-input" id="slippage" placeholder="1.0" step="0.1" min="0.1" value="1.0">
         </div>
         <div class="form-input-group">
           <div class="form-label"><span>Referrer Address (Optional)</span></div>
-          <input id="referrerAddress" class="form-input" type="text" placeholder="0x..." />
+          <input type="text" class="form-input" id="referrerAddress" placeholder="0x...">
         </div>
-        <div id="tokenEstimate" class="token-estimate">Enter BNB amount to see estimated $BULL tokens</div>
-        <button id="buyButton" class="buy-button" disabled>Connect Wallet To Buy</button>
-        <button id="claimButton" class="btn-secondary" style="display:none;">Claim Your $BULL Tokens</button>
+        <div class="token-estimate" id="tokenEstimate">Enter BNB amount to see estimated $BULL tokens</div>
+        <button class="buy-button" id="buyButton" disabled>Connect Wallet To Buy</button>
+        <button class="btn-secondary" id="claimButton" style="display:none;">Claim Your $BULL Tokens</button>
       </div>
     </div>
   </section>
 
-  <section class="section page" data-page="home">
+  <!-- ✅ How to Buy 页面 -->
+  <section class="section page" id="howtobuy" data-page="howtobuy">
     <div class="container">
       <div class="section-header">
-        <div class="section-subtitle">About Bullforge</div>
-        <h2 class="section-title">Forged in Chaos. Built for Momentum.</h2>
-        <p class="section-desc">Bullforge is a meme-driven myth with real mechanics.</p>
+        <div class="section-subtitle">How to Buy</div>
+        <h2 class="section-title">Buy $BULL in Minutes</h2>
+        <p class="section-desc">Step-by-step guide for buying during presale.</p>
       </div>
+
       <div class="feature-grid">
-        <div class="feature-card"><div class="feature-icon">⏱️</div><div class="feature-title">Progressive Price Engine</div><div class="feature-desc">Price advances stage by stage.</div></div>
-        <div class="feature-card"><div class="feature-icon">🔥</div><div class="feature-title">Milestone Burns</div><div class="feature-desc">Supply reduces at key milestones.</div></div>
-        <div class="feature-card"><div class="feature-icon">💎</div><div class="feature-title">Holder-First Rewards</div><div class="feature-desc">Staking + referral for believers.</div></div>
+        <div class="feature-card">
+          <div class="feature-icon">1️⃣</div>
+          <h3 class="feature-title">Get a Wallet</h3>
+          <p class="feature-desc">Use MetaMask / Trust Wallet and ensure it supports BNB Smart Chain.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">2️⃣</div>
+          <h3 class="feature-title">Fund with BNB</h3>
+          <p class="feature-desc">Send BNB to your wallet address (BNB Smart Chain / Chain ID 56).</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">3️⃣</div>
+          <h3 class="feature-title">Connect & Buy</h3>
+          <p class="feature-desc">Go to Buy Now, connect wallet, enter BNB amount, confirm transaction.</p>
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- 路线图 + 旁边图片（已生成） -->
-  <section class="section page" data-page="home">
+  <!-- ✅ Whitepaper 页面 -->
+  <section class="section page" id="whitepaper" data-page="whitepaper">
     <div class="container">
       <div class="section-header">
-        <div class="section-subtitle">Roadmap</div>
-        <h2 class="section-title">The Bullforge Launch Sequence</h2>
+        <div class="section-subtitle">Whitepaper</div>
+        <h2 class="section-title">Bullforge Whitepaper</h2>
+        <p class="section-desc">Replace the button link below with your official whitepaper URL.</p>
       </div>
 
-      <div class="split-section" style="margin-bottom:20px;">
-        <div class="roadmap-visual" aria-label="Roadmap visual">
-          <!-- 内置SVG，稳定不依赖外链 -->
-          <svg viewBox="0 0 1200 700" xmlns="http://www.w3.org/2000/svg" role="img">
-            <defs>
-              <linearGradient id="g1" x1="0" x2="1">
-                <stop offset="0%" stop-color="#FFA500"/>
-                <stop offset="100%" stop-color="#FFD700"/>
-              </linearGradient>
-            </defs>
-            <rect width="1200" height="700" fill="#0b0b0b"/>
-            <circle cx="970" cy="120" r="180" fill="url(#g1)" opacity=".08"/>
-            <path d="M120 560 C300 420, 460 620, 650 470 C820 340, 940 430, 1090 300" stroke="url(#g1)" stroke-width="10" fill="none"/>
-            <g fill="#FFD700">
-              <circle cx="180" cy="540" r="12"/><circle cx="430" cy="550" r="12"/><circle cx="700" cy="470" r="12"/><circle cx="950" cy="410" r="12"/>
-            </g>
-            <g fill="#fff" font-size="26" font-weight="800" font-family="Inter, sans-serif">
-              <text x="130" y="505">Phase I</text>
-              <text x="380" y="515">Phase II</text>
-              <text x="650" y="435">Phase III</text>
-              <text x="900" y="375">Phase IV</text>
-            </g>
-            <text x="70" y="90" fill="#FFD700" font-size="44" font-weight="900" font-family="Inter, sans-serif">BULLFORGE ROADMAP</text>
-          </svg>
-        </div>
-
-        <div class="split-copy">
-          <div class="split-kicker">Visual</div>
-          <div class="split-title">Roadmap Momentum Curve</div>
-          <p class="split-text">这张图已直接内置到页面里，不需要额外图片资源，部署最稳定。</p>
-        </div>
-      </div>
-
-      <div class="roadmap-grid">
-        <div class="roadmap-card"><div class="roadmap-phase">Phase I</div><div class="roadmap-title">The Spark</div><ul class="roadmap-list"><li>Brand reveal</li><li>Contract testing</li></ul></div>
-        <div class="roadmap-card"><div class="roadmap-phase">Phase II</div><div class="roadmap-title">Presale Forge</div><ul class="roadmap-list"><li>Presale live</li><li>Milestone burns</li></ul></div>
-        <div class="roadmap-card"><div class="roadmap-phase">Phase III</div><div class="roadmap-title">HODL Forge</div><ul class="roadmap-list"><li>Staking launch</li><li>Vesting logic</li></ul></div>
-        <div class="roadmap-card"><div class="roadmap-phase">Phase IV</div><div class="roadmap-title">The Roar</div><ul class="roadmap-list"><li>Liquidity</li><li>Listings</li></ul></div>
+      <div class="buy-form-card" style="max-width: 900px;">
+        <p style="color: var(--text-gray); margin-bottom: 16px;">
+          Tip: Host your PDF and set the link to it (e.g. /whitepaper.pdf or a CDN URL).
+        </p>
+        <a href="#" target="_blank" rel="noreferrer">
+          <button class="buy-button" style="max-width: 320px;">Open Whitepaper</button>
+        </a>
       </div>
     </div>
   </section>
 
-  <section class="section page" id="howtobuy" data-page="howtobuy"><div class="container"><div class="section-header"><div class="section-subtitle">How to Buy</div><h2 class="section-title">Buy $BULL in Minutes</h2></div></div></section>
-  <section class="section page" id="whitepaper" data-page="whitepaper"><div class="container"><div class="section-header"><div class="section-subtitle">Whitepaper</div><h2 class="section-title">Bullforge Whitepaper</h2></div></div></section>
-  <section class="section page" id="staking" data-page="staking"><div class="container"><div class="section-header"><div class="section-subtitle">Staking</div><h2 class="section-title">HODL Forge</h2></div></div></section>
+  <!-- ✅ Staking 页面 -->
+  <section class="section page" id="staking" data-page="staking">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-subtitle">Staking</div>
+        <h2 class="section-title">HODL Forge</h2>
+        <p class="section-desc">Stake $BULL to earn rewards (available after presale).</p>
+      </div>
+
+      <div class="buy-form-card" style="max-width: 800px;">
+        <h3 style="margin-bottom: 16px; color: var(--gold-primary);">70% APY (After Presale)</h3>
+        <p style="color: var(--text-gray);">
+          Staking UI can be enabled once the staking contract is live. You can later connect this page to your staking contract.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ✅ Referral 页面 -->
   <section class="section page" id="referral" data-page="referral">
     <div class="container">
-      <div class="section-header"><div class="section-subtitle">Referral</div><h2 class="section-title">Forge-To-Earn</h2></div>
-      <div class="buy-form-card" style="max-width:900px;">
-        <div style="display:flex;gap:10px;flex-wrap:wrap;">
-          <input id="referralLink2" class="form-input" readonly value="Connect wallet to generate..." style="flex:1;min-width:230px;">
-          <button id="copyReferralBtn2" class="btn-secondary btn-small">Copy Link</button>
+      <div class="section-header">
+        <div class="section-subtitle">Referral</div>
+        <h2 class="section-title">Forge-To-Earn</h2>
+        <p class="section-desc">Share your referral link and earn rewards.</p>
+      </div>
+
+      <div class="referral-box" style="display:block; max-width: 900px; margin: 0 auto;">
+        <h3 style="margin-bottom: 16px; color: var(--gold-primary);">Your Referral Link</h3>
+        <p style="color: var(--text-gray); margin-bottom: 16px;">Connect wallet to generate your personal referral link.</p>
+        <div class="referral-link">
+          <input type="text" id="referralLink2" readonly value="Connect wallet to generate..." />
+          <button class="btn btn-small btn-secondary" id="copyReferralBtn2">Copy Link</button>
         </div>
       </div>
     </div>
   </section>
-  <section class="section page" id="blog" data-page="blog"><div class="container"><div class="section-header"><div class="section-subtitle">Blog</div><h2 class="section-title">Blog</h2></div></div></section>
-  <section class="section page" id="blogpost" data-page="blogpost"><div class="container"><div class="section-header"><h2 class="section-title">Post</h2></div></div></section>
+
+  <!-- ✅ Blog 列表页（bullzilla 风格） -->
+  <section class="section page" id="blog" data-page="blog">
+    <div class="container">
+      <div class="blog-hero">
+        <h2 class="blog-title">Blog</h2>
+      </div>
+
+      <div class="blog-grid" id="blogGrid"></div>
+
+      <div class="blog-pagination">
+        <button class="btn-secondary btn-small" id="blogPrevBtn">Previous</button>
+        <button class="btn-secondary btn-small" id="blogNextBtn">Next</button>
+      </div>
+
+      <div class="blog-cta">
+        <h3 class="blog-cta-title">Want to Collaborate with Bullforge?</h3>
+        <p class="blog-cta-desc">Let’s forge something legendary — partnerships, media, and community collaborations.</p>
+        <a href="#" target="_blank" rel="noreferrer">
+          <button class="buy-button" style="max-width: 320px;">Contact the Team</button>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ✅ Blog 详情页（bullzilla 单篇文章风格） -->
+  <section class="section page" id="blogpost" data-page="blogpost">
+    <div class="container">
+      <div class="blogpost-topbar">
+        <button class="btn-secondary btn-small" id="blogBackBtn">← Back to Blog</button>
+      </div>
+
+      <div class="blogpost-hero">
+        <h2 class="blogpost-title" id="blogpostTitle">Loading...</h2>
+        <div class="blogpost-meta" id="blogpostMeta">—</div>
+      </div>
+
+      <div class="blogpost-cover" id="blogpostCover"></div>
+
+      <article class="blogpost-content" id="blogpostContent">
+        <p style="color: var(--text-gray);">Loading...</p>
+      </article>
+
+      <div class="blogpost-nav">
+        <button class="btn-secondary btn-small" id="blogpostPrev">← Previous</button>
+        <button class="btn-secondary btn-small" id="blogpostNext">Next →</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ✅ 只在首页显示：Audit（home） -->
+  <section class="section audit-section page" data-page="home">
+    <div class="container">
+      <div class="audit-card">
+        <div class="audit-icon">🛡️</div>
+        <h3 class="audit-title">Fully Audited Smart Contract</h3>
+        <p class="audit-desc">Bullforge's smart contract is fully audited, ensuring the forge's foundation is as secure as its roar is loud. All code is verified on BscScan, with no backdoors, no hidden fees, and full transparency for the community.</p>
+        <div style="display:flex; gap:16px; flex-wrap:wrap; justify-content:center;">
+          <a href="https://bscscan.com/address/0x16D6c1a692AaC51a3821bA2903115d4600649F07" target="_blank" rel="noreferrer">
+            <button class="buy-button" style="max-width:300px;">View Contract on BscScan</button>
+          </a>
+          <a href="#" target="_blank" rel="noreferrer">
+            <button class="btn-secondary" style="max-width:300px;">Read Whitepaper</button>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ✅ 只在首页显示：Partners（home） -->
+  <section class="partners-section page" data-page="home">
+    <div class="container">
+      <div class="section-header"><div class="section-subtitle">Powered By</div></div>
+      <div class="partners-grid">
+        <div class="partner-logo">BNB Chain</div><div class="partner-logo">MetaMask</div><div class="partner-logo">Trust Wallet</div><div class="partner-logo">BscScan</div><div class="partner-logo">PancakeSwap</div><div class="partner-logo">CoinMarketCap</div><div class="partner-logo">CoinGecko</div><div class="partner-logo">AWS</div><div class="partner-logo">Cloudflare</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ✅ 只在首页显示：Footer（home） -->
+  <footer class="footer page" data-page="home">
+    <div class="container footer-content">
+      <div class="footer-logo">🐂 BULLFORGE</div>
+      <div class="footer-links">
+        <a href="#home" data-nav="home">Buy Now</a>
+        <a href="#howtobuy" data-nav="howtobuy">How to Buy</a>
+        <a href="#whitepaper" data-nav="whitepaper">Whitepaper</a>
+        <a href="#staking" data-nav="staking">Staking</a>
+        <a href="#referral" data-nav="referral">Referral</a>
+        <a href="#blog" data-nav="blog">Blog</a>
+        <a href="https://bscscan.com/address/0x16D6c1a692AaC51a3821bA2903115d4600649F07" target="_blank" rel="noreferrer">Contract</a>
+      </div>
+      <div class="footer-contract">Contract Address: 0x16D6c1a692AaC51a3821bA2903115d4600649F07</div>
+      <div class="footer-copyright">© 2026 Bullforge. All rights reserved.</div>
+    </div>
+  </footer>
 
   <script type="module">
     import { ethers } from 'https://esm.sh/ethers@5.7.2';
-    import { Web3Modal } from 'https://esm.sh/@web3modal/html@2.7.1';
-    import { EthereumClient, w3mConnectors, w3mProvider } from 'https://esm.sh/@web3modal/ethereum@2.7.1';
-    import { configureChains, createClient } from 'https://esm.sh/wagmi@1.4.13';
-    import { bsc } from 'https://esm.sh/wagmi/chains';
+    import { createWeb3Modal, defaultConfig } from 'https://esm.sh/@web3modal/ethers5@4.1.2';
+    import { marked } from 'https://esm.sh/marked@12.0.2';
 
-    // ====== 配置 ======
+    // ==================== 核心配置 ====================
     const CONFIG = {
       CONTRACT_ADDRESS: "0x16D6c1a692AaC51a3821bA2903115d4600649F07",
       WALLETCONNECT_PROJECT_ID: "fe819ed06d9e5489f764fc7b1dae1c4e",
       BSC_RPC: "https://bsc-dataseed.binance.org/",
-      CHAIN_ID: 56
+      CHAIN_ID: 56,
+      CHAIN_ID_HEX: "0x38",
+      CHAIN_NAME: "BNB Smart Chain",
+      CURRENCY: "BNB",
+      EXPLORER: "https://bscscan.com"
     };
 
-    const ABI = [
+    const CONTRACT_ABI = [
+      "function name() view returns (string)",
+      "function symbol() view returns (string)",
+      "function decimals() view returns (uint8)",
+      "function totalSupply() view returns (uint256)",
+      "function balanceOf(address) view returns (uint256)",
+      "function transfer(address to, uint amount) returns (bool)",
+      "function allowance(address owner, address spender) view returns (uint256)",
+      "function approve(address spender, uint256 amount) returns (bool)",
+      "function transferFrom(address from, address to, uint256 amount) returns (bool)",
       "function totalRaised() view returns (uint256)",
       "function currentStage() view returns (uint256)",
       "function stageEndTime() view returns (uint256)",
       "function getCurrentPrice() view returns (uint256)",
       "function getRate() view returns (uint256)",
       "function hardCap() view returns (uint256)",
-      "function totalSupply() view returns (uint256)",
+      "function contributed(address) view returns (uint256)",
+      "function referralRewards(address) view returns (uint256)",
       "function buyTokens(address _referrer, uint256 _minTokensOut) payable",
-      "function claimTokens()"
+      "function claimTokens() external",
+      "event Buy(address indexed buyer, uint256 bnbAmount, uint256 tokenAmount, uint256 price, address indexed referrer)"
     ];
 
-    // ====== DOM ======
-    const $ = (id)=>document.getElementById(id);
-    const notif=$('notification'), notifTitle=$('notificationTitle'), notifDesc=$('notificationDesc');
-    const connectBtn=$('walletConnectBtn'), disconnectBtn=$('disconnectBtn'), networkBadge=$('networkBadge');
-    const currentPriceSpan=$('currentPrice'), totalRaisedSpan=$('totalRaised'), currentStageSpan=$('currentStage'), tokenRateSpan=$('tokenRate');
-    const progressPercent=$('progressPercent'), progressBarFill=$('progressBarFill');
-    const daysSpan=$('countdownDays'), hoursSpan=$('countdownHours'), minutesSpan=$('countdownMinutes'), secondsSpan=$('countdownSeconds');
-    const bnbAmountInput=$('bnbAmount'), slippageInput=$('slippage'), referrerInput=$('referrerAddress');
-    const tokenEstimate=$('tokenEstimate'), walletBalanceSpan=$('walletBalance');
-    const buyButton=$('buyButton'), claimButton=$('claimButton');
-    const referralLink2=$('referralLink2'), copyBtn2=$('copyReferralBtn2');
-    const jumpToBuyBtn=$('jumpToBuyBtn'), jumpToWhitepaperBtn=$('jumpToWhitepaperBtn');
+    // ========== UI ==========
+    const notif = document.getElementById('notification');
+    const notifTitle = document.getElementById('notificationTitle');
+    const notifDesc = document.getElementById('notificationDesc');
 
-    // ====== 状态 ======
-    let provider=null, signer=null, contract=null, userAddress=null;
-    let readProvider = new ethers.providers.JsonRpcProvider(CONFIG.BSC_RPC);
-    let currentRate=0, totalRaisedBNB=0, hardcapBNB=2000, stageEndTimestamp=0;
-    let countdownTimer=null;
+    const connectBtn = document.getElementById('walletConnectBtn');
+    const disconnectBtn = document.getElementById('disconnectBtn');
+    const networkBadge = document.getElementById('networkBadge');
 
-    function showNotification(title, desc, error=false){
-      notifTitle.textContent=title; notifDesc.textContent=desc;
-      notif.style.borderColor = error ? 'var(--danger)' : 'var(--gold-primary)';
-      notif.classList.add('show'); setTimeout(()=>notif.classList.remove('show'), 3800);
+    const bnbAmountInput = document.getElementById('bnbAmount');
+    const slippageInput = document.getElementById('slippage');
+    const referrerInput = document.getElementById('referrerAddress');
+    const tokenEstimate = document.getElementById('tokenEstimate');
+    const walletBalanceSpan = document.getElementById('walletBalance');
+
+    const currentPriceSpan = document.getElementById('currentPrice');
+    const totalRaisedSpan = document.getElementById('totalRaised');
+    const currentStageSpan = document.getElementById('currentStage');
+    const tokenRateSpan = document.getElementById('tokenRate');
+    const totalSupplySpan = document.getElementById('totalSupplyDisplay');
+
+    const progressPercent = document.getElementById('progressPercent');
+    const progressBarFill = document.getElementById('progressBarFill');
+
+    const buyButton = document.getElementById('buyButton');
+    const claimButton = document.getElementById('claimButton');
+
+    const daysSpan = document.getElementById('countdownDays');
+    const hoursSpan = document.getElementById('countdownHours');
+    const minutesSpan = document.getElementById('countdownMinutes');
+    const secondsSpan = document.getElementById('countdownSeconds');
+
+    const referralLink2 = document.getElementById('referralLink2');
+    const copyBtn2 = document.getElementById('copyReferralBtn2');
+
+    // blog UI
+    const blogGrid = document.getElementById('blogGrid');
+    const blogPrevBtn = document.getElementById('blogPrevBtn');
+    const blogNextBtn = document.getElementById('blogNextBtn');
+
+    const blogBackBtn = document.getElementById('blogBackBtn');
+    const blogpostTitle = document.getElementById('blogpostTitle');
+    const blogpostMeta = document.getElementById('blogpostMeta');
+    const blogpostCover = document.getElementById('blogpostCover');
+    const blogpostContent = document.getElementById('blogpostContent');
+    const blogpostPrev = document.getElementById('blogpostPrev');
+    const blogpostNext = document.getElementById('blogpostNext');
+
+    // ========== 状态 ==========
+    let provider, signer, contract, userAddress;
+    let web3Modal;
+
+    let currentRate = 0;
+    let totalRaisedBNB = 0;
+    let hardcapBNB = 2000;
+    let stageEndTimestamp = 0;
+
+    let countdownInterval;
+    let watcherInterval;
+    let isUIConnected = false;
+
+    // ==================== Blog state ====================
+    const BLOG_PAGE_SIZE = 9;
+    let blogPage = 1;
+    let blogPosts = [];
+    let currentPostSlug = null;
+
+    const DEFAULT_BLOG_POSTS = [
+      {
+        slug: "bullforge-presale-guide",
+        title: "Bullforge Presale Guide: How to Buy $BULL Safely",
+        excerpt: "Connect wallet, set slippage, buy on BNB Chain — forged for speed and clarity.",
+        date: "2026-02-17",
+        readTime: "4 min read",
+        cover: "",
+        content: `
+## Overview
+Bullforge is forged for momentum: progressive pricing, milestone burns, and a holder-first narrative.
+
+## Step-by-step
+- **1) Switch to BNB Smart Chain (56)**  
+- **2) Connect wallet** (MetaMask / Trust Wallet / WalletConnect)  
+- **3) Enter BNB amount** and set slippage (default **1%**)  
+- **4) Confirm transaction** and track it on BscScan
+
+## Safety checklist
+- Verify the **official contract address**
+- Don’t sign unknown approvals
+- Double-check network and URLs
+`
+      },
+      {
+        slug: "progressive-price-engine-explained",
+        title: "Progressive Price Engine Explained: 48 Hours or $100,000 Raised",
+        excerpt: "How stage timing + raise milestones affect the entry price and stage transitions.",
+        date: "2026-02-16",
+        readTime: "3 min read",
+        cover: "",
+        content: `
+## The rule
+Bullforge price progresses by stage:
+- Every **48 hours**, or
+- Every **$100,000 raised**  
+(whichever comes first)
+
+## What it means
+Early stages = lower price. As stages advance, scarcity narrative strengthens and entry cost increases.
+
+## Pro tip
+If you’re planning to buy, watch the **stage timer** and the **total raised** counter.
+`
+      },
+      {
+        slug: "forge-burn-scarcity",
+        title: "Forge Burn: How Supply Tightens at Every Milestone",
+        excerpt: "Each burn permanently removes tokens from circulation — scarcity increases as the forge evolves.",
+        date: "2026-02-15",
+        readTime: "3 min read",
+        cover: "",
+        content: `
+## What is Forge Burn?
+A scheduled on-chain burn before each stage change.
+
+## Why it matters
+Burns reduce circulating supply over time — reinforcing scarcity and long-term holder narrative.
+
+## Transparency
+All burns and contract activity should be verifiable on-chain.
+`
+      }
+    ];
+
+    // ========== 通用 ==========
+    function showNotification(title, desc, isError = false) {
+      notifTitle.innerText = title;
+      notifDesc.innerText = desc;
+      notif.classList.add('show');
+      notif.style.borderColor = isError ? 'var(--danger)' : 'var(--gold-primary)';
+      setTimeout(() => notif.classList.remove('show'), 5000);
     }
 
-    function setActivePage(page){
-      document.querySelectorAll('.page').forEach(p=>p.classList.toggle('is-active', p.dataset.page===page));
-    }
-    function routeFromHash(){
-      const raw=(location.hash||'#home').replace('#','');
-      if(!raw) return {page:'home'};
-      if(raw.startsWith('blog/')) return {page:'blogpost',slug:raw.slice(5)};
-      return {page:raw};
-    }
-
-    function setNetworkBadge(chainId){
-      networkBadge.style.display='inline-block';
-      if(chainId===CONFIG.CHAIN_ID){networkBadge.textContent='BNB (56)';networkBadge.classList.remove('bad');}
-      else {networkBadge.textContent='Wrong Net';networkBadge.classList.add('bad');}
+    function setNetworkBadge(chainId) {
+      networkBadge.style.display = 'inline-block';
+      if (chainId === CONFIG.CHAIN_ID) {
+        networkBadge.innerText = 'BNB (56)';
+        networkBadge.classList.remove('bad');
+      } else {
+        networkBadge.innerText = `Wrong Net (${chainId})`;
+        networkBadge.classList.add('bad');
+      }
     }
 
-    function estimateTokens(){
-      const v=parseFloat(bnbAmountInput.value);
-      if(!v || v<=0 || !currentRate){tokenEstimate.textContent='Enter BNB amount to see estimated $BULL tokens';return;}
-      tokenEstimate.textContent=`You will receive approx. ${(v*currentRate).toFixed(2)} $BULL`;
+    function resetConnectButtonUI() {
+      connectBtn.disabled = false;
+      connectBtn.innerHTML = 'Connect Wallet';
+      disconnectBtn.style.display = 'none';
+      networkBadge.style.display = 'none';
+      networkBadge.classList.remove('bad');
     }
 
-    function updateCountdown(){
-      if(!stageEndTimestamp){daysSpan.textContent=hoursSpan.textContent=minutesSpan.textContent=secondsSpan.textContent='--';return;}
-      const now=Math.floor(Date.now()/1000), diff=stageEndTimestamp-now;
-      if(diff<=0){daysSpan.textContent=hoursSpan.textContent=minutesSpan.textContent=secondsSpan.textContent='00';return;}
-      const d=Math.floor(diff/86400), h=Math.floor((diff%86400)/3600), m=Math.floor((diff%3600)/60), s=diff%60;
-      daysSpan.textContent=String(d).padStart(2,'0'); hoursSpan.textContent=String(h).padStart(2,'0');
-      minutesSpan.textContent=String(m).padStart(2,'0'); secondsSpan.textContent=String(s).padStart(2,'0');
+    function hardResetUI() {
+      isUIConnected = false;
+      userAddress = null;
+      provider = null;
+      signer = null;
+      contract = null;
+
+      resetConnectButtonUI();
+
+      buyButton.disabled = true;
+      buyButton.innerText = 'Connect Wallet To Buy';
+      claimButton.style.display = 'none';
+
+      walletBalanceSpan.innerText = '0.00';
+
+      if (referralLink2) referralLink2.value = 'Connect wallet to generate...';
     }
 
-    async function refreshContractData(){
-      try{
-        const readContract = new ethers.Contract(CONFIG.CONTRACT_ADDRESS, ABI, readProvider);
+    function updateCountdown() {
+      if (!stageEndTimestamp || stageEndTimestamp <= 0) {
+        daysSpan.innerText = '--'; hoursSpan.innerText = '--'; minutesSpan.innerText = '--'; secondsSpan.innerText = '--';
+        return;
+      }
+      const now = Math.floor(Date.now() / 1000);
+      const diff = stageEndTimestamp - now;
+      if (diff <= 0) {
+        daysSpan.innerText = '00'; hoursSpan.innerText = '00'; minutesSpan.innerText = '00'; secondsSpan.innerText = '00';
+        return;
+      }
+      const d = Math.floor(diff / 86400);
+      const h = Math.floor((diff % 86400) / 3600);
+      const m = Math.floor((diff % 3600) / 60);
+      const s = diff % 60;
+      daysSpan.innerText = d < 10 ? '0' + d : String(d);
+      hoursSpan.innerText = h < 10 ? '0' + h : String(h);
+      minutesSpan.innerText = m < 10 ? '0' + m : String(m);
+      secondsSpan.innerText = s < 10 ? '0' + s : String(s);
+    }
 
-        const [raisedWei,stage,priceWei,rateRaw,endTime,hardCapWei] = await Promise.all([
-          readContract.totalRaised().catch(()=>ethers.constants.Zero),
-          readContract.currentStage().catch(()=>1),
-          readContract.getCurrentPrice().catch(()=>ethers.constants.Zero),
-          readContract.getRate().catch(()=>ethers.constants.Zero),
-          readContract.stageEndTime().catch(()=>ethers.constants.Zero),
-          readContract.hardCap().catch(()=>ethers.utils.parseEther('2000'))
-        ]);
+    async function switchToBSC(walletProvider) {
+      if (!walletProvider?.request) return;
+      try {
+        await walletProvider.request({ method: 'wallet_switchEthereumChain', params: [{ chainId: CONFIG.CHAIN_ID_HEX }] });
+      } catch (e) {
+        try {
+          await walletProvider.request({
+            method: 'wallet_addEthereumChain',
+            params: [{
+              chainId: CONFIG.CHAIN_ID_HEX,
+              chainName: CONFIG.CHAIN_NAME,
+              nativeCurrency: { name: 'BNB', symbol: 'BNB', decimals: 18 },
+              rpcUrls: [CONFIG.BSC_RPC],
+              blockExplorerUrls: [CONFIG.EXPLORER]
+            }]
+          });
+        } catch (err) {
+          console.warn('switch/add chain failed:', err);
+        }
+      }
+    }
 
-        totalRaisedBNB=parseFloat(ethers.utils.formatEther(raisedWei));
-        hardcapBNB=parseFloat(ethers.utils.formatEther(hardCapWei));
-        currentRate = rateRaw.gt(0) ? Number(rateRaw.toString()) : 0;
-        stageEndTimestamp = Number(endTime.toString());
+    // ========== 合约刷新 ==========
+    async function refreshContractData() {
+      try {
+        const readProvider = new ethers.providers.JsonRpcProvider(CONFIG.BSC_RPC);
+        const readContract = new ethers.Contract(CONFIG.CONTRACT_ADDRESS, CONTRACT_ABI, readProvider);
 
-        totalRaisedSpan.textContent = `${totalRaisedBNB.toFixed(2)} BNB`;
-        currentStageSpan.textContent = `Stage ${stage}`;
-        currentPriceSpan.textContent = `${parseFloat(ethers.utils.formatEther(priceWei||0)).toFixed(8)} BNB`;
-        tokenRateSpan.textContent = `${currentRate||0} $BULL`;
+        const raisedWei = await readContract.totalRaised().catch(() => null);
+        if (raisedWei) {
+          totalRaisedBNB = parseFloat(ethers.utils.formatEther(raisedWei));
+          totalRaisedSpan.innerText = totalRaisedBNB.toFixed(2) + ' BNB';
+        } else {
+          totalRaisedBNB = 0;
+          totalRaisedSpan.innerText = '0.00 BNB';
+        }
 
-        const p=Math.max(0,Math.min(100,(totalRaisedBNB/hardcapBNB)*100));
-        progressPercent.textContent=p.toFixed(2)+'%';
-        progressBarFill.style.width=p+'%';
+        const stage = await readContract.currentStage().catch(() => 1);
+        currentStageSpan.innerText = String(stage || 1);
 
+        const rate = await readContract.getRate().catch(() => null);
+        currentRate = rate ? parseFloat(ethers.utils.formatEther(rate)) : (1000 * (stage || 1));
+        tokenRateSpan.innerText = currentRate.toFixed(0) + ' $BULL';
+
+        const priceWei = await readContract.getCurrentPrice().catch(() => null);
+        if (priceWei) {
+          currentPriceSpan.innerText = parseFloat(ethers.utils.formatEther(priceWei)).toFixed(6) + ' BNB';
+        } else {
+          currentPriceSpan.innerText = (1 / currentRate).toFixed(6) + ' BNB';
+        }
+
+        const endTime = await readContract.stageEndTime().catch(() => null);
+        stageEndTimestamp = endTime ? endTime.toNumber() : (Math.floor(Date.now() / 1000) + 48 * 3600);
         updateCountdown();
-        estimateTokens();
 
-        if(provider && userAddress){
-          const bal = await provider.getBalance(userAddress);
-          walletBalanceSpan.textContent = parseFloat(ethers.utils.formatEther(bal)).toFixed(4);
+        const totalSupplyWei = await readContract.totalSupply().catch(() => null);
+        totalSupplySpan.innerText = totalSupplyWei
+          ? (Number(ethers.utils.formatEther(totalSupplyWei)).toLocaleString() + ' $BULL')
+          : '1,000,000,000 $BULL';
+
+        const capWei = await readContract.hardCap().catch(() => null);
+        if (capWei) hardcapBNB = parseFloat(ethers.utils.formatEther(capWei));
+
+        let progress = (totalRaisedBNB / hardcapBNB) * 100;
+        if (!isFinite(progress) || progress < 0) progress = 0;
+        if (progress > 100) progress = 100;
+        progressPercent.innerText = progress.toFixed(1) + '%';
+        progressBarFill.style.width = progress + '%';
+
+        // 已连接钱包 => 刷新个人数据（Buy Now 页面显示余额即可）
+        if (isUIConnected && userAddress && provider && contract) {
+          const balWei = await provider.getBalance(userAddress).catch(() => null);
+          if (balWei) walletBalanceSpan.innerText = parseFloat(ethers.utils.formatEther(balWei)).toFixed(4);
         }
-      }catch(e){
-        console.warn('refreshContractData fail',e);
+
+        estimateTokens();
+      } catch (e) {
+        console.warn('refreshContractData failed:', e);
       }
     }
 
-    // ====== Web3Modal v2（稳定）======
-    const chains=[bsc];
-    const { publicClient } = configureChains(chains, [w3mProvider({ projectId: CONFIG.WALLETCONNECT_PROJECT_ID })]);
-    const wagmiClient = createClient({
-      autoConnect:true,
-      connectors:w3mConnectors({ projectId: CONFIG.WALLETCONNECT_PROJECT_ID, chains }),
-      publicClient
-    });
-    const ethereumClient = new EthereumClient(wagmiClient, chains);
-    const web3modal = new Web3Modal({
-      projectId: CONFIG.WALLETCONNECT_PROJECT_ID,
-      themeMode:'dark'
-    }, ethereumClient);
+    function estimateTokens() {
+      const val = parseFloat(bnbAmountInput.value);
+      if (isNaN(val) || val <= 0 || !currentRate) {
+        tokenEstimate.innerText = 'Enter BNB amount to see estimated $BULL tokens';
+        return;
+      }
+      tokenEstimate.innerText = `You will receive approx. ${(val * currentRate).toFixed(2)} $BULL`;
+    }
 
-    async function connectWallet(){
-      try{
-        connectBtn.disabled=true; connectBtn.innerHTML='<span class="loading-spinner"></span>';
-        await web3modal.openModal();
+    // ========== Web3Modal 初始化 ==========
+    function initWeb3Modal() {
+      const chains = [{
+        chainId: CONFIG.CHAIN_ID,
+        name: CONFIG.CHAIN_NAME,
+        currency: CONFIG.CURRENCY,
+        explorerUrl: CONFIG.EXPLORER,
+        rpcUrl: CONFIG.BSC_RPC
+      }];
 
-        // 等待注入 provider
-        const injected = await new Promise((resolve,reject)=>{
-          let t=0; const id=setInterval(()=>{
-            t+=200;
-            if(window.ethereum){clearInterval(id);resolve(window.ethereum);}
-            if(t>8000){clearInterval(id);reject(new Error('No wallet provider'));}
-          },200);
-        });
+      const config = defaultConfig({
+        metadata: {
+          name: 'Bullforge',
+          description: 'Bullforge Presale',
+          url: window.location.origin,
+          icons: ['https://walletconnect.com/walletconnect-logo.png']
+        },
+        defaultChainId: CONFIG.CHAIN_ID,
+        rpcUrl: CONFIG.BSC_RPC,
+        projectId: CONFIG.WALLETCONNECT_PROJECT_ID
+      });
 
-        provider = new ethers.providers.Web3Provider(injected, 'any');
-        signer = provider.getSigner();
-        userAddress = await signer.getAddress();
-        contract = new ethers.Contract(CONFIG.CONTRACT_ADDRESS, ABI, signer);
+      web3Modal = createWeb3Modal({
+        ethersConfig: config,
+        chains,
+        projectId: CONFIG.WALLETCONNECT_PROJECT_ID,
+        themeMode: 'dark',
+        themeVariables: {
+          '--w3m-color-mix': '#FFD700',
+          '--w3m-color-mix-strength': 10
+        }
+      });
+    }
 
-        const net = await provider.getNetwork();
-        setNetworkBadge(net.chainId);
+    // ========== 实时检测连接 ==========
+    async function getConnectedAccounts(walletProvider) {
+      if (!walletProvider?.request) return [];
+      try {
+        const accounts = await walletProvider.request({ method: 'eth_accounts' });
+        return Array.isArray(accounts) ? accounts : [];
+      } catch {
+        return [];
+      }
+    }
 
-        if(net.chainId!==CONFIG.CHAIN_ID){
-          try{
-            await injected.request({method:'wallet_switchEthereumChain', params:[{chainId:'0x38'}]});
-          }catch{
-            showNotification('Wrong Network','Please switch to BNB Smart Chain',true);
+    function attachWalletListeners(walletProvider) {
+      if (!walletProvider?.on) return;
+
+      walletProvider.removeListener?.('accountsChanged', onAccountsChanged);
+      walletProvider.removeListener?.('chainChanged', onChainChanged);
+      walletProvider.removeListener?.('disconnect', onDisconnect);
+
+      walletProvider.on('accountsChanged', onAccountsChanged);
+      walletProvider.on('chainChanged', onChainChanged);
+      walletProvider.on('disconnect', onDisconnect);
+    }
+
+    async function onAccountsChanged(accounts) {
+      if (!accounts || accounts.length === 0) {
+        hardResetUI();
+        return;
+      }
+      await syncWallet({ silent: true });
+    }
+
+    async function onChainChanged() {
+      await syncWallet({ silent: true });
+    }
+
+    function onDisconnect() {
+      hardResetUI();
+    }
+
+    async function syncWallet({ silent = false } = {}) {
+      const walletProvider = await web3Modal.getWalletProvider?.();
+      if (!walletProvider) {
+        if (isUIConnected) hardResetUI();
+        return false;
+      }
+
+      const accounts = await getConnectedAccounts(walletProvider);
+      if (!accounts.length) {
+        if (isUIConnected) hardResetUI();
+        return false;
+      }
+
+      provider = new ethers.providers.Web3Provider(walletProvider);
+      signer = provider.getSigner();
+      userAddress = accounts[0];
+
+      const net = await provider.getNetwork().catch(() => ({ chainId: null }));
+      setNetworkBadge(net.chainId);
+
+      if (net.chainId !== CONFIG.CHAIN_ID) {
+        if (!silent) showNotification("Wrong Network", "Please switch to BNB Smart Chain (Mainnet).", true);
+        await switchToBSC(walletProvider);
+        setTimeout(() => syncWallet({ silent: true }), 800);
+        return true;
+      }
+
+      contract = new ethers.Contract(CONFIG.CONTRACT_ADDRESS, CONTRACT_ABI, signer);
+
+      // 立刻更新 UI
+      isUIConnected = true;
+      connectBtn.innerText = userAddress.slice(0, 6) + '...' + userAddress.slice(-4);
+      connectBtn.disabled = true;
+      disconnectBtn.style.display = 'inline-block';
+
+      buyButton.disabled = false;
+      buyButton.innerText = 'Buy $BULL';
+      claimButton.style.display = 'block';
+
+      // referral link
+      if (referralLink2) referralLink2.value = `${window.location.origin}?ref=${userAddress}`;
+
+      attachWalletListeners(walletProvider);
+
+      await refreshContractData();
+
+      if (countdownInterval) clearInterval(countdownInterval);
+      countdownInterval = setInterval(updateCountdown, 1000);
+
+      if (!silent) showNotification("Connected", "Wallet connected successfully", false);
+      return true;
+    }
+
+    function startRealtimeWatcher() {
+      if (watcherInterval) clearInterval(watcherInterval);
+
+      watcherInterval = setInterval(async () => {
+        try {
+          const walletProvider = await web3Modal.getWalletProvider?.();
+          if (!walletProvider) {
+            if (isUIConnected) hardResetUI();
+            return;
           }
+
+          const accounts = await getConnectedAccounts(walletProvider);
+
+          if (accounts.length && !isUIConnected) {
+            await syncWallet({ silent: true });
+            return;
+          }
+
+          if (!accounts.length && isUIConnected) {
+            hardResetUI();
+            return;
+          }
+        } catch {
+          // ignore
         }
+      }, 800);
+    }
 
-        connectBtn.textContent=`${userAddress.slice(0,6)}...${userAddress.slice(-4)}`;
-        disconnectBtn.style.display='inline-block';
-        buyButton.disabled=false; buyButton.textContent='Buy $BULL';
-        claimButton.style.display='block';
-        referralLink2.value=`${location.origin}?ref=${userAddress}`;
+    // ========== 连接/断开 ==========
+    async function connectWallet() {
+      try {
+        connectBtn.disabled = true;
+        connectBtn.innerHTML = `<span class="loading-spinner"></span>`;
 
-        injected.removeAllListeners?.('accountsChanged');
-        injected.removeAllListeners?.('chainChanged');
-        injected.on?.('accountsChanged', ()=>location.reload());
-        injected.on?.('chainChanged', ()=>location.reload());
+        await web3Modal.open();
 
-        await refreshContractData();
-        showNotification('Connected','Wallet connected');
-      }catch(e){
-        connectBtn.disabled=false; connectBtn.textContent='Connect Wallet';
-        showNotification('Connection failed', e.message || String(e), true);
+        const ok = await syncWallet();
+        if (!ok) resetConnectButtonUI();
+      } catch (e) {
+        console.warn('connectWallet error:', e);
+        showNotification("Connection Failed", e?.message || String(e), true);
+        resetConnectButtonUI();
       }
     }
 
-    async function disconnectWallet(){
-      provider=null; signer=null; contract=null; userAddress=null;
-      connectBtn.disabled=false; connectBtn.textContent='Connect Wallet';
-      disconnectBtn.style.display='none';
-      networkBadge.style.display='none';
-      buyButton.disabled=true; buyButton.textContent='Connect Wallet To Buy';
-      claimButton.style.display='none';
-      walletBalanceSpan.textContent='0.00';
-      referralLink2.value='Connect wallet to generate...';
-      showNotification('Disconnected','Wallet disconnected');
+    async function disconnectWallet() {
+      try {
+        if (web3Modal?.disconnect) await web3Modal.disconnect();
+      } catch (e) {
+        console.warn('disconnect error:', e);
+      } finally {
+        hardResetUI();
+        showNotification("Disconnected", "Wallet disconnected", false);
+      }
     }
 
-    async function buyTokens(){
-      if(!contract || !provider || !signer){showNotification('Not Connected','Please connect wallet',true);return;}
-      try{
-        const amount=parseFloat(bnbAmountInput.value);
-        if(!amount || amount<=0){showNotification('Invalid amount','Enter valid BNB amount',true);return;}
-        const slippage=parseFloat(slippageInput.value||'1')/100;
-        const expected=amount*currentRate;
-        const minOut=Math.floor(expected*(1-slippage));
-        const ref = (referrerInput.value||'').trim();
-        const refAddr = ethers.utils.isAddress(ref)?ref:ethers.constants.AddressZero;
+    // ========== 购买/领取 ==========
+    async function buyTokens() {
+      if (!isUIConnected || !signer || !contract) {
+        showNotification('Not Connected', 'Please connect wallet first', true);
+        return;
+      }
 
-        const tx = await contract.buyTokens(refAddr, minOut, {value: ethers.utils.parseEther(String(amount))});
-        showNotification('Submitted', `Tx: ${tx.hash.slice(0,10)}...`);
+      const net = await provider.getNetwork().catch(() => ({ chainId: null }));
+      if (net.chainId !== CONFIG.CHAIN_ID) {
+        showNotification("Wrong Network", "Switch to BNB Smart Chain (Mainnet) to buy.", true);
+        return;
+      }
+
+      const amount = parseFloat(bnbAmountInput.value);
+      if (isNaN(amount) || amount <= 0) {
+        showNotification('Invalid amount', 'Enter a positive BNB amount', true);
+        return;
+      }
+
+      const slippage = parseFloat(slippageInput.value) / 100;
+      const minTokensOut = Math.floor(amount * currentRate * (1 - slippage));
+      const referrer = referrerInput.value.trim() || '0x0000000000000000000000000000000000000000';
+
+      try {
+        const tx = await contract.buyTokens(referrer, minTokensOut, {
+          value: ethers.utils.parseEther(amount.toString())
+        });
+        showNotification('Purchase Submitted', `Tx: ${tx.hash}`, false);
         await tx.wait();
-        showNotification('Success','You bought $BULL');
-        bnbAmountInput.value='';
-        estimateTokens();
-        await refreshContractData();
-      }catch(e){
-        showNotification('Transaction failed', e?.data?.message || e.message || String(e), true);
+        showNotification('Success', 'You bought $BULL tokens!', false);
+        refreshContractData();
+      } catch (e) {
+        showNotification('Transaction Failed', e?.data?.message || e?.message || String(e), true);
       }
     }
 
-    async function claimTokens(){
-      if(!contract){showNotification('Not Connected','Please connect wallet',true);return;}
-      try{
-        const tx=await contract.claimTokens();
-        showNotification('Submitted', `Tx: ${tx.hash.slice(0,10)}...`);
+    async function claimTokens() {
+      if (!isUIConnected || !signer || !contract) {
+        showNotification('Not Connected', 'Please connect wallet first', true);
+        return;
+      }
+
+      const net = await provider.getNetwork().catch(() => ({ chainId: null }));
+      if (net.chainId !== CONFIG.CHAIN_ID) {
+        showNotification("Wrong Network", "Switch to BNB Smart Chain (Mainnet) to claim.", true);
+        return;
+      }
+
+      try {
+        const tx = await contract.claimTokens();
+        showNotification('Claim Submitted', `Tx: ${tx.hash}`, false);
         await tx.wait();
-        showNotification('Success','Claim complete');
-      }catch(e){
-        showNotification('Claim failed', e?.data?.message || e.message || String(e), true);
+        showNotification('Success', 'Tokens claimed!', false);
+        refreshContractData();
+      } catch (e) {
+        showNotification('Claim Failed', e?.data?.message || e?.message || String(e), true);
       }
     }
 
-    // 事件
-    document.querySelectorAll('[data-nav]').forEach(a=>{
-      a.addEventListener('click',(e)=>{
-        const target=a.dataset.nav; const href=a.getAttribute('href')||'';
-        if(href.startsWith('http')) return;
-        e.preventDefault(); history.pushState(null,'',`#${target}`); setActivePage(target);
+    // ==================== Blog：自动读取内容 + bullzilla风格渲染 ====================
+    async function loadBlogPosts() {
+      try {
+        const res = await fetch('/blog/posts.json', { cache: 'no-store' });
+        if (!res.ok) throw new Error('posts.json not found');
+        const data = await res.json();
+        if (!Array.isArray(data)) throw new Error('posts.json invalid');
+        blogPosts = data;
+      } catch {
+        blogPosts = DEFAULT_BLOG_POSTS;
+      }
+    }
+
+    function escapeHtml(str) {
+      return String(str ?? '')
+        .replaceAll('&', '&amp;')
+        .replaceAll('<', '&lt;')
+        .replaceAll('>', '&gt;')
+        .replaceAll('"', '&quot;')
+        .replaceAll("'", '&#039;');
+    }
+
+    function getBlogSlice() {
+      const total = blogPosts.length;
+      const totalPages = Math.max(1, Math.ceil(total / BLOG_PAGE_SIZE));
+      if (blogPage > totalPages) blogPage = totalPages;
+      if (blogPage < 1) blogPage = 1;
+
+      const start = (blogPage - 1) * BLOG_PAGE_SIZE;
+      const end = start + BLOG_PAGE_SIZE;
+      return { items: blogPosts.slice(start, end), totalPages };
+    }
+
+    function renderBlog() {
+      if (!blogGrid || !blogPrevBtn || !blogNextBtn) return;
+
+      const { items, totalPages } = getBlogSlice();
+
+      blogGrid.innerHTML = items.map(p => `
+        <article class="blog-card" data-slug="${escapeHtml(p.slug)}">
+          <div class="blog-thumb" style="${p.cover ? `background-image:url('${escapeHtml(p.cover)}');` : ''}"></div>
+          <div class="blog-body">
+            <div class="blog-post-title">${escapeHtml(p.title)}</div>
+            <div class="blog-post-excerpt">${escapeHtml(p.excerpt)}</div>
+          </div>
+        </article>
+      `).join('');
+
+      blogPrevBtn.disabled = blogPage <= 1;
+      blogNextBtn.disabled = blogPage >= totalPages;
+
+      blogPrevBtn.onclick = () => { blogPage -= 1; renderBlog(); window.scrollTo({ top: 0, behavior: 'smooth' }); };
+      blogNextBtn.onclick = () => { blogPage += 1; renderBlog(); window.scrollTo({ top: 0, behavior: 'smooth' }); };
+
+      blogGrid.querySelectorAll('.blog-card').forEach(card => {
+        card.addEventListener('click', () => {
+          const slug = card.getAttribute('data-slug');
+          openBlogPost(slug);
+        });
+      });
+    }
+
+    function findPostIndexBySlug(slug) {
+      return blogPosts.findIndex(p => p.slug === slug);
+    }
+
+    function renderBlogPost(slug) {
+      const idx = findPostIndexBySlug(slug);
+      const post = idx >= 0 ? blogPosts[idx] : null;
+
+      if (!blogpostTitle || !blogpostMeta || !blogpostCover || !blogpostContent || !blogpostPrev || !blogpostNext) return;
+
+      if (!post) {
+        blogpostTitle.innerText = "Post not found";
+        blogpostMeta.innerText = "";
+        blogpostCover.style.display = "none";
+        blogpostContent.innerHTML = `<p style="color: var(--text-gray);">This post does not exist.</p>`;
+        blogpostPrev.disabled = true;
+        blogpostNext.disabled = true;
+        return;
+      }
+
+      currentPostSlug = slug;
+      blogpostTitle.innerText = post.title || '';
+      blogpostMeta.innerText = `${post.date || ''}${post.readTime ? ' • ' + post.readTime : ''}`;
+
+      if (post.cover) {
+        blogpostCover.style.display = 'block';
+        blogpostCover.style.backgroundImage = `url('${post.cover}')`;
+      } else {
+        blogpostCover.style.display = 'none';
+        blogpostCover.style.backgroundImage = '';
+      }
+
+      const md = post.content || '';
+      blogpostContent.innerHTML = marked.parse(md);
+
+      const prev = idx > 0 ? blogPosts[idx - 1] : null;
+      const next = idx < blogPosts.length - 1 ? blogPosts[idx + 1] : null;
+
+      blogpostPrev.disabled = !prev;
+      blogpostNext.disabled = !next;
+
+      blogpostPrev.onclick = () => prev && openBlogPost(prev.slug);
+      blogpostNext.onclick = () => next && openBlogPost(next.slug);
+    }
+
+    function openBlogPost(slug) {
+      setActivePage('blogpost');
+      const newHash = `#blog/${encodeURIComponent(slug)}`;
+      if (location.hash !== newHash) history.pushState(null, '', newHash);
+      renderBlogPost(slug);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function backToBlogList() {
+      setActivePage('blog');
+      const newHash = `#blog`;
+      if (location.hash !== newHash) history.pushState(null, '', newHash);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    async function initBlog() {
+      await loadBlogPosts();
+      renderBlog();
+
+      // 如果用户刷新在 #blog/<slug>，加载完数据后直接渲染
+      const rr = getRouteFromHash();
+      if (rr.page === 'blogpost' && rr.slug) {
+        renderBlogPost(rr.slug);
+      }
+    }
+
+    // ========== bullzilla 风格：路由/切页 ==========
+    function setActivePage(pageName) {
+      document.querySelectorAll('.page').forEach(p => {
+        p.classList.toggle('is-active', p.getAttribute('data-page') === pageName);
+      });
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function getRouteFromHash() {
+      const raw = (location.hash || '').replace('#', '').trim();
+      if (!raw) return { page: 'home' };
+
+      // Blog: #blog or #blog/<slug>
+      if (raw === 'blog') return { page: 'blog' };
+      if (raw.startsWith('blog/')) {
+        const slug = decodeURIComponent(raw.slice('blog/'.length));
+        return { page: 'blogpost', slug };
+      }
+
+      // others
+      return { page: raw };
+    }
+
+    // 点击导航切换（外链不拦截）
+    document.querySelectorAll('[data-nav]').forEach(a => {
+      a.addEventListener('click', (e) => {
+        const href = a.getAttribute('href') || '';
+        if (href.startsWith('http')) return;
+
+        e.preventDefault();
+        const target = a.getAttribute('data-nav');
+
+        // 用 hash 维护状态
+        history.pushState(null, '', `#${target}`);
+
+        // 切页
+        setActivePage(target);
+
+        // Blog 页面进入时刷新渲染一次（防止首次为空）
+        if (target === 'blog') renderBlog();
       });
     });
-    window.addEventListener('hashchange',()=>setActivePage(routeFromHash().page));
 
-    jumpToBuyBtn.addEventListener('click', ()=>{
-      history.pushState(null,'','#home'); setActivePage('home');
-      setTimeout(()=>$('buyFormAnchor')?.scrollIntoView({behavior:'smooth',block:'start'}),80);
+    // hash 改变 => 切页 + 文章渲染
+    window.addEventListener('hashchange', () => {
+      const r = getRouteFromHash();
+      setActivePage(r.page);
+      if (r.page === 'blogpost' && r.slug) renderBlogPost(r.slug);
+      if (r.page === 'blog') renderBlog();
     });
-    jumpToWhitepaperBtn.addEventListener('click', ()=>{history.pushState(null,'','#whitepaper'); setActivePage('whitepaper');});
 
-    bnbAmountInput.addEventListener('input', estimateTokens);
+    // ========== 事件绑定 ==========
     connectBtn.addEventListener('click', connectWallet);
     disconnectBtn.addEventListener('click', disconnectWallet);
+    bnbAmountInput.addEventListener('input', estimateTokens);
     buyButton.addEventListener('click', buyTokens);
     claimButton.addEventListener('click', claimTokens);
-    copyBtn2.addEventListener('click', async ()=>{
-      try{await navigator.clipboard.writeText(referralLink2.value); showNotification('Copied','Referral link copied');}
-      catch{referralLink2.select(); document.execCommand('copy'); showNotification('Copied','Referral link copied');}
+
+    copyBtn2?.addEventListener('click', () => {
+      referralLink2?.select();
+      document.execCommand('copy');
+      showNotification('Copied!', 'Referral link copied to clipboard', false);
     });
 
-    document.querySelectorAll('.faq-question').forEach(q=>{
-      q.addEventListener('click',()=>{
-        const a=q.parentElement.querySelector('.faq-answer');
-        const open=a.style.display==='block';
-        document.querySelectorAll('.faq-answer').forEach(x=>x.style.display='none');
-        a.style.display=open?'none':'block';
-      });
-    });
+    blogBackBtn?.addEventListener('click', backToBlogList);
 
-    // 初始化
-    const r=routeFromHash(); setActivePage(r.page||'home');
+    // ========== 初始化 ==========
+    initWeb3Modal();
     refreshContractData();
-    countdownTimer=setInterval(updateCountdown,1000);
-    setInterval(refreshContractData,10000);
+    setInterval(updateCountdown, 1000);
+    startRealtimeWatcher();
+
+    // 初次路由
+    const r0 = getRouteFromHash();
+    setActivePage(r0.page);
+    if (r0.page === 'blogpost' && r0.slug) renderBlogPost(r0.slug);
+
+    // Blog init
+    initBlog();
+
+    // 页面加载自动同步（如果 session 已缓存，会立刻显示地址）
+    setTimeout(() => syncWallet({ silent: true }), 300);
   </script>
 </body>
 </html>
+```
