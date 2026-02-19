@@ -168,12 +168,59 @@
     .btn-secondary:hover:not(:disabled) { background: rgba(255, 215, 0, 0.1); }
     .btn-small { width: auto; padding: 10px 20px; font-size: 14px; margin: 5px; }
 
-    .tokenomics-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 24px; }
-    .tokenomics-card { background: var(--dark-card); border: 1px solid var(--dark-border); border-radius: 16px; padding: 30px; transition: .3s ease; }
-    .tokenomics-card:hover { border-color: var(--gold-primary); box-shadow: 0 10px 30px rgba(255,215,0,.12); transform: translateY(-6px); }
-    .tokenomics-percent { font-size: 44px; font-weight: 900; color: var(--gold-primary); margin-bottom: 8px; }
-    .tokenomics-label { font-size: 18px; font-weight: 700; margin-bottom: 12px; }
-    .tokenomics-desc { font-size: 14px; color: var(--text-gray); }
+    /* DNA 单一卡片 */
+    .dna-card {
+      background: var(--dark-card);
+      border: 1px solid var(--dark-border);
+      border-radius: 18px;
+      padding: 34px;
+      max-width: 980px;
+      margin: 0 auto;
+      transition: .3s ease;
+    }
+    .dna-card:hover {
+      border-color: var(--gold-primary);
+      box-shadow: 0 12px 34px rgba(255,215,0,.12);
+      transform: translateY(-6px);
+    }
+    .dna-header {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+    .dna-title {
+      font-size: 22px;
+      font-weight: 900;
+      color: var(--gold-primary);
+      letter-spacing: .2px;
+    }
+    .dna-note {
+      font-size: 14px;
+      color: var(--text-gray);
+    }
+    .dna-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px 22px;
+      margin-top: 12px;
+    }
+    .dna-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 12px 14px;
+      border: 1px solid var(--dark-border);
+      border-radius: 12px;
+      background: rgba(255,255,255,0.02);
+    }
+    .dna-left { display: flex; flex-direction: column; gap: 2px; }
+    .dna-label { font-weight: 800; color: var(--text-white); font-size: 14px; }
+    .dna-desc { font-size: 12px; color: var(--text-gray); }
+    .dna-pct { font-weight: 900; color: var(--gold-primary); font-size: 18px; }
 
     .roadmap-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 32px; }
     .roadmap-card { background: var(--dark-card); border: 1px solid var(--dark-border); border-radius: 16px; padding: 32px; transition: .3s ease; }
@@ -211,10 +258,8 @@
     .buy-form-card { background: var(--dark-card); border: 1px solid var(--dark-border); border-radius: 16px; padding: 32px; max-width: 600px; margin: 0 auto; width: 100%; }
     .form-input-group { margin-bottom: 16px; }
     .form-label { display: flex; justify-content: space-between; gap: 10px; margin-bottom: 8px; font-size: 14px; color: var(--text-gray); flex-wrap: wrap; }
-    .form-input, .form-select { width: 100%; padding: 16px; background: var(--dark-bg); border: 1px solid var(--dark-border); border-radius: 12px; color: var(--text-white); transition: border-color 0.3s ease; }
-    .form-input { font-size: 18px; font-weight: 600; }
-    .form-select { font-size: 16px; }
-    .form-input:focus, .form-select:focus { outline: none; border-color: var(--gold-primary); }
+    .form-input { width: 100%; padding: 16px; background: var(--dark-bg); border: 1px solid var(--dark-border); border-radius: 12px; color: var(--text-white); transition: border-color 0.3s ease; font-size: 18px; font-weight: 600; }
+    .form-input:focus { outline: none; border-color: var(--gold-primary); }
     .token-estimate { text-align: left; font-size: 14px; color: var(--text-gray); margin: 12px 0 24px; }
 
     .feature-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 32px; }
@@ -235,16 +280,43 @@
 
     .footer { padding: 60px 0 30px; border-top: 1px solid var(--dark-border); }
     .footer-content { display: flex; flex-direction: column; align-items: center; text-align: center; }
-    .footer-logo { font-size: 36px; font-weight: 900; color: var(--gold-primary); margin-bottom: 24px; }
-    .footer-links { display: flex; gap: 32px; margin-bottom: 32px; flex-wrap: wrap; justify-content: center; }
-    .footer-links a { color: var(--text-gray); text-decoration: none; font-weight: 500; transition: color 0.3s ease; }
+    .footer-logo { font-size: 36px; font-weight: 900; color: var(--gold-primary); margin-bottom: 18px; }
+    .footer-links { display: flex; gap: 22px; margin-bottom: 22px; flex-wrap: wrap; justify-content: center; }
+    .footer-links a { color: var(--text-gray); text-decoration: none; font-weight: 600; transition: color 0.3s ease; }
     .footer-links a:hover { color: var(--gold-primary); }
-    .footer-contract { font-family: monospace; font-size: 14px; color: var(--text-muted); margin-bottom: 24px; word-break: break-all; }
+    .footer-contract { font-family: monospace; font-size: 14px; color: var(--text-muted); margin-bottom: 18px; word-break: break-all; }
+
+    /* X / TG 按钮 */
+    .social-row { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; margin-bottom: 18px; }
+    .social-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 10px 16px;
+      border-radius: 999px;
+      border: 1px solid var(--dark-border);
+      background: rgba(255,255,255,0.02);
+      color: var(--text-white);
+      text-decoration: none;
+      font-weight: 900;
+      transition: .25s ease;
+      min-width: 120px;
+    }
+    .social-btn:hover {
+      border-color: var(--gold-primary);
+      box-shadow: 0 10px 24px rgba(255,215,0,.10);
+      transform: translateY(-2px);
+    }
+    .social-dot {
+      width: 8px; height: 8px; border-radius: 999px; background: var(--gold-primary);
+    }
+
     .footer-copyright { font-size: 14px; color: var(--text-muted); }
 
     .notification { position: fixed; top: 100px; right: 24px; max-width: 400px; padding: 20px 24px; background: var(--dark-card); border: 1px solid var(--gold-primary); border-radius: 12px; z-index: 9999; box-shadow: 0 16px 40px rgba(0,0,0,0.5); transform: translateX(120%); transition: transform 0.3s ease; }
     .notification.show { transform: translateX(0); }
-    .notification-title { font-weight: 700; margin-bottom: 8px; }
+    .notification-title { font-weight: 800; margin-bottom: 8px; }
     .notification-desc { font-size: 14px; color: var(--text-gray); }
     .loading-spinner { display: inline-block; width: 20px; height: 20px; border: 2px solid var(--text-muted); border-radius: 50%; border-top-color: var(--gold-primary); animation: spin 1s linear infinite; vertical-align: middle; }
     @keyframes spin { to { transform: rotate(360deg); } }
@@ -259,7 +331,8 @@
       .countdown-box { min-width: 70px; }
       .countdown-number { font-size: 28px; }
       .section-title { font-size: 36px; }
-      .feature-grid, .tokenomics-grid, .roadmap-grid { grid-template-columns: 1fr; }
+      .dna-grid { grid-template-columns: 1fr; }
+      .feature-grid, .roadmap-grid { grid-template-columns: 1fr; }
       .referral-link { flex-direction: column; }
       .notification { right: 12px; left: 12px; max-width: none; }
       .wallet-container { gap: 6px; }
@@ -294,35 +367,88 @@
     </div>
   </nav>
 
+  <!-- HOME -->
   <section class="section page is-active home-landing" id="home" data-page="home">
     <div class="home-hero-glow"></div>
     <div class="container">
       <div class="section-header" style="margin-top:80px;">
         <div class="section-subtitle">WELCOME TO BULLFORGE</div>
-        <h1 class="hero-token-title">$BULL</h1>
+        <h1 class="hero-token-title">$BFG</h1>
         <p class="section-desc">The Future isn't Just Bullish. It's Bullforge.</p>
         <div style="margin-top:30px;">
           <button class="buy-button" style="max-width:260px;" onclick="location.hash='buy'">Buy Now</button>
         </div>
       </div>
 
+      <!-- DNA (单一卡片) -->
       <div class="section-header" style="margin-bottom:30px;">
         <div class="section-subtitle">DNA Allocation</div>
         <h2 class="section-title" style="font-size:42px;">Token DNA</h2>
       </div>
-      <div class="tokenomics-grid">
-        <div class="tokenomics-card"><div class="tokenomics-percent">35%</div><div class="tokenomics-label">Presale</div><div class="tokenomics-desc">Public access distribution</div></div>
-        <div class="tokenomics-card"><div class="tokenomics-percent">20%</div><div class="tokenomics-label">Staking Rewards</div><div class="tokenomics-desc">Sustainable yield incentives</div></div>
-        <div class="tokenomics-card"><div class="tokenomics-percent">15%</div><div class="tokenomics-label">Liquidity</div><div class="tokenomics-desc">DEX stability and depth</div></div>
-        <div class="tokenomics-card"><div class="tokenomics-percent">10%</div><div class="tokenomics-label">Marketing</div><div class="tokenomics-desc">Global growth campaigns</div></div>
-        <div class="tokenomics-card"><div class="tokenomics-percent">10%</div><div class="tokenomics-label">Ecosystem</div><div class="tokenomics-desc">Partnerships & utilities</div></div>
-        <div class="tokenomics-card"><div class="tokenomics-percent">10%</div><div class="tokenomics-label">Team</div><div class="tokenomics-desc">Long-term vested allocation</div></div>
+
+      <div class="dna-card">
+        <div class="dna-header">
+          <div class="dna-title">$BFG Allocation</div>
+          <div class="dna-note">One card. Clean. Readable.</div>
+        </div>
+
+        <div class="dna-grid">
+          <div class="dna-row">
+            <div class="dna-left">
+              <div class="dna-label">Presale</div>
+              <div class="dna-desc">Public access distribution</div>
+            </div>
+            <div class="dna-pct">35%</div>
+          </div>
+
+          <div class="dna-row">
+            <div class="dna-left">
+              <div class="dna-label">Staking Rewards</div>
+              <div class="dna-desc">Sustainable yield incentives</div>
+            </div>
+            <div class="dna-pct">20%</div>
+          </div>
+
+          <div class="dna-row">
+            <div class="dna-left">
+              <div class="dna-label">Liquidity</div>
+              <div class="dna-desc">DEX stability and depth</div>
+            </div>
+            <div class="dna-pct">15%</div>
+          </div>
+
+          <div class="dna-row">
+            <div class="dna-left">
+              <div class="dna-label">Marketing</div>
+              <div class="dna-desc">Global growth campaigns</div>
+            </div>
+            <div class="dna-pct">10%</div>
+          </div>
+
+          <div class="dna-row">
+            <div class="dna-left">
+              <div class="dna-label">Ecosystem</div>
+              <div class="dna-desc">Partnerships & utilities</div>
+            </div>
+            <div class="dna-pct">10%</div>
+          </div>
+
+          <div class="dna-row">
+            <div class="dna-left">
+              <div class="dna-label">Team</div>
+              <div class="dna-desc">Long-term vested allocation</div>
+            </div>
+            <div class="dna-pct">10%</div>
+          </div>
+        </div>
       </div>
 
+      <!-- Roadmap -->
       <div class="section-header" style="margin-top:80px;">
         <div class="section-subtitle">Roadmap</div>
         <h2 class="section-title" style="font-size:42px;">Forge Evolution</h2>
       </div>
+
       <div class="roadmap-grid">
         <div class="roadmap-card">
           <div class="roadmap-phase">Phase 01</div>
@@ -364,10 +490,11 @@
     </div>
   </section>
 
+  <!-- BUY (只有这里有购买框) -->
   <section class="hero page" data-page="buy" id="buy">
     <div class="hero-bg-glow"></div>
     <div class="container hero-content">
-      <h1 class="hero-title">Buy $BULL</h1>
+      <h1 class="hero-title">Buy $BFG</h1>
       <p class="hero-slogan">Forged in the chaos of the blockchain, built to thrive where others fall.</p>
 
       <div class="presale-stats-grid">
@@ -397,17 +524,20 @@
           <div class="form-label"><span>Amount (BNB)</span><span>Balance: <span id="walletBalance">0.00</span> BNB</span></div>
           <input type="number" class="form-input" id="bnbAmount" placeholder="0.0" step="0.01" min="0">
         </div>
+
         <div class="form-input-group">
           <div class="form-label"><span>Slippage Tolerance (%)</span></div>
           <input type="number" class="form-input" id="slippage" placeholder="1.0" step="0.1" min="0.1" value="1.0">
         </div>
+
         <div class="form-input-group">
           <div class="form-label"><span>Referrer Address (Optional)</span></div>
           <input type="text" class="form-input" id="referrerAddress" placeholder="0x...">
         </div>
-        <div class="token-estimate" id="tokenEstimate">Enter BNB amount to see estimated $BULL tokens</div>
+
+        <div class="token-estimate" id="tokenEstimate">Enter BNB amount to see estimated $BFG tokens</div>
         <button class="buy-button" id="buyButton" disabled>Connect Wallet To Buy</button>
-        <button class="btn-secondary" id="claimButton" style="display:none;">Claim Your $BULL Tokens</button>
+        <button class="btn-secondary" id="claimButton" style="display:none;">Claim Your $BFG Tokens</button>
       </div>
     </div>
   </section>
@@ -416,12 +546,12 @@
     <div class="container">
       <div class="section-header">
         <div class="section-subtitle">How to Buy</div>
-        <h2 class="section-title">Buy $BULL in Minutes</h2>
+        <h2 class="section-title">Buy $BFG in Minutes</h2>
       </div>
       <div class="feature-grid">
         <div class="feature-card"><div class="feature-icon">1️⃣</div><h3 class="feature-title">Get a Wallet</h3><p class="feature-desc">Use MetaMask / Trust Wallet and ensure BNB Smart Chain support.</p></div>
         <div class="feature-card"><div class="feature-icon">2️⃣</div><h3 class="feature-title">Fund with BNB</h3><p class="feature-desc">Send BNB to your wallet address (Chain ID 56).</p></div>
-        <div class="feature-card"><div class="feature-icon">3️⃣</div><h3 class="feature-title">Connect & Buy</h3><p class="feature-desc">Go to Buy Now, connect wallet, enter BNB amount, confirm transaction.</p></div>
+        <div class="feature-card"><div class="feature-icon">3️⃣</div><h3 class="feature-title">Connect & Buy</h3><p class="feature-desc">Click Buy Now, connect wallet, enter BNB amount, confirm transaction.</p></div>
       </div>
     </div>
   </section>
@@ -464,7 +594,11 @@
     <div class="container">
       <div class="section-header"><div class="section-subtitle">Powered By</div></div>
       <div class="partners-grid">
-        <div class="partner-logo">BNB Chain</div><div class="partner-logo">MetaMask</div><div class="partner-logo">Trust Wallet</div><div class="partner-logo">BscScan</div><div class="partner-logo">PancakeSwap</div>
+        <div class="partner-logo">BNB Chain</div>
+        <div class="partner-logo">MetaMask</div>
+        <div class="partner-logo">Trust Wallet</div>
+        <div class="partner-logo">BscScan</div>
+        <div class="partner-logo">PancakeSwap</div>
       </div>
     </div>
   </section>
@@ -472,6 +606,19 @@
   <footer class="footer">
     <div class="container footer-content">
       <div class="footer-logo">🐂 BULLFORGE</div>
+
+      <!-- X / TG -->
+      <div class="social-row">
+        <!-- TODO: 换成你的 X 链接 -->
+        <a class="social-btn" href="https://x.com/" target="_blank" rel="noreferrer">
+          <span class="social-dot"></span> X
+        </a>
+        <!-- TODO: 换成你的 TG 链接 -->
+        <a class="social-btn" href="https://t.me/" target="_blank" rel="noreferrer">
+          <span class="social-dot"></span> TG
+        </a>
+      </div>
+
       <div class="footer-links">
         <a href="#home" data-nav="home">Home</a>
         <a href="#buy" data-nav="buy">Buy Now</a>
@@ -480,6 +627,7 @@
         <a href="#staking" data-nav="staking">Staking</a>
         <a href="#referral" data-nav="referral">Referral</a>
       </div>
+
       <div class="footer-contract">Contract Address: 0x16D6c1a692AaC51a3821bA2903115d4600649F07</div>
       <div class="footer-copyright">© 2026 Bullforge. All rights reserved.</div>
     </div>
@@ -493,10 +641,10 @@
       WALLETCONNECT_PROJECT_ID: "fe819ed06d9e5489f764fc7b1dae1c4e",
       BSC_RPC: "https://bsc-dataseed.binance.org/",
       CHAIN_ID: 56,
-      CHAIN_ID_HEX: "0x38",
       CHAIN_NAME: "BNB Smart Chain",
       CURRENCY: "BNB",
-      EXPLORER: "https://bscscan.com"
+      EXPLORER: "https://bscscan.com",
+      TOKEN_SYMBOL: "BFG"
     };
 
     const CONTRACT_ABI = [
@@ -594,11 +742,11 @@
       if (!tokenEstimate) return;
       const val = parseFloat(bnbAmountInput?.value || '');
       if (isNaN(val) || val <= 0 || !currentRate) {
-        tokenEstimate.innerText = 'Enter BNB amount to see estimated $BULL tokens';
+        tokenEstimate.innerText = `Enter BNB amount to see estimated $${CONFIG.TOKEN_SYMBOL} tokens`;
         return;
       }
       const est = val * currentRate;
-      tokenEstimate.innerText = `You will receive approx. ${est.toFixed(2)} $BULL`;
+      tokenEstimate.innerText = `You will receive approx. ${est.toFixed(2)} $${CONFIG.TOKEN_SYMBOL}`;
     }
 
     function updateCountdown() {
@@ -639,8 +787,9 @@
       connectBtn.disabled = true;
       disconnectBtn.style.display = 'inline-block';
       buyButton.disabled = false;
-      buyButton.innerText = 'Buy $BULL';
+      buyButton.innerText = `Buy $${CONFIG.TOKEN_SYMBOL}`;
       claimButton.style.display = 'block';
+      claimButton.innerText = `Claim Your $${CONFIG.TOKEN_SYMBOL} Tokens`;
       isUIConnected = true;
 
       if (referralLink2) referralLink2.value = `${window.location.origin}?ref=${userAddress}`;
@@ -671,6 +820,7 @@
       walletBalanceSpan.innerText = '0.00';
       if (referralLink2) referralLink2.value = 'Connect wallet to generate...';
       isUIConnected = false;
+      if (tokenEstimate) tokenEstimate.innerText = `Enter BNB amount to see estimated $${CONFIG.TOKEN_SYMBOL} tokens`;
     }
 
     // ---------- Read chain ----------
@@ -688,15 +838,12 @@
 
         const rateRaw = await readContract.getRate().catch(() => null);
         currentRate = rateRaw ? parseFloat(ethers.utils.formatEther(rateRaw)) : 1000;
-        if (tokenRateSpan) tokenRateSpan.innerText = `${currentRate.toFixed(0)} $BULL`;
+        if (tokenRateSpan) tokenRateSpan.innerText = `${currentRate.toFixed(0)} $${CONFIG.TOKEN_SYMBOL}`;
 
         const priceRaw = await readContract.getCurrentPrice().catch(() => null);
         if (currentPriceSpan) {
-          if (priceRaw) {
-            currentPriceSpan.innerText = `${parseFloat(ethers.utils.formatEther(priceRaw)).toFixed(8)} BNB`;
-          } else {
-            currentPriceSpan.innerText = `${(1 / Math.max(currentRate, 1)).toFixed(8)} BNB`;
-          }
+          if (priceRaw) currentPriceSpan.innerText = `${parseFloat(ethers.utils.formatEther(priceRaw)).toFixed(8)} BNB`;
+          else currentPriceSpan.innerText = `${(1 / Math.max(currentRate, 1)).toFixed(8)} BNB`;
         }
 
         const endTime = await readContract.stageEndTime().catch(() => null);
@@ -750,9 +897,7 @@
         chains,
         projectId: CONFIG.WALLETCONNECT_PROJECT_ID,
         themeMode: 'dark',
-        themeVariables: {
-          '--w3m-accent': '#FFD700'
-        }
+        themeVariables: { '--w3m-accent': '#FFD700' }
       });
     }
 
@@ -781,47 +926,28 @@
     }
 
     async function disconnectWallet() {
-      try {
-        if (web3Modal?.disconnect) await web3Modal.disconnect();
-      } catch {}
-
-      provider = null;
-      signer = null;
-      contract = null;
-      walletProvider = null;
-      userAddress = null;
+      try { if (web3Modal?.disconnect) await web3Modal.disconnect(); } catch {}
+      provider = null; signer = null; contract = null; walletProvider = null; userAddress = null;
       resetWalletUI();
       showNotification('Disconnected', 'Wallet disconnected');
     }
 
     // ---------- Actions ----------
     async function buyTokens() {
-      if (!isUIConnected || !contract) {
-        showNotification('Not Connected', 'Please connect wallet first', true);
-        return;
-      }
+      if (!isUIConnected || !contract) return showNotification('Not Connected', 'Please connect wallet first', true);
 
       const amount = parseFloat(bnbAmountInput.value || '');
-      if (isNaN(amount) || amount <= 0) {
-        showNotification('Invalid Amount', 'Please enter valid BNB amount', true);
-        return;
-      }
+      if (isNaN(amount) || amount <= 0) return showNotification('Invalid Amount', 'Please enter valid BNB amount', true);
 
       const network = await provider.getNetwork();
-      if (network.chainId !== CONFIG.CHAIN_ID) {
-        showNotification('Wrong Network', 'Switch to BNB Smart Chain (56)', true);
-        return;
-      }
+      if (network.chainId !== CONFIG.CHAIN_ID) return showNotification('Wrong Network', 'Switch to BNB Smart Chain (56)', true);
 
       let referrer = (referrerInput.value || '').trim();
       if (!referrer) referrer = ethers.constants.AddressZero;
       if (referrer !== ethers.constants.AddressZero && !isValidAddress(referrer)) {
-        showNotification('Invalid Referrer', 'Referrer address format is invalid', true);
-        return;
+        return showNotification('Invalid Referrer', 'Referrer address format is invalid', true);
       }
-      if (userAddress && referrer.toLowerCase() === userAddress.toLowerCase()) {
-        referrer = ethers.constants.AddressZero;
-      }
+      if (userAddress && referrer.toLowerCase() === userAddress.toLowerCase()) referrer = ethers.constants.AddressZero;
 
       const slippage = Math.max(parseFloat(slippageInput.value || '1') / 100, 0);
       const expected = amount * currentRate;
@@ -831,13 +957,11 @@
         buyButton.disabled = true;
         buyButton.innerText = 'Processing...';
 
-        const tx = await contract.buyTokens(referrer, minOut, {
-          value: ethers.utils.parseEther(amount.toString())
-        });
+        const tx = await contract.buyTokens(referrer, minOut, { value: ethers.utils.parseEther(amount.toString()) });
         showNotification('Transaction Sent', tx.hash);
 
         await tx.wait();
-        showNotification('Purchase Success', 'You bought $BULL successfully');
+        showNotification('Purchase Success', `You bought $${CONFIG.TOKEN_SYMBOL} successfully`);
         bnbAmountInput.value = '';
         estimateTokens();
         await refreshContractData();
@@ -845,15 +969,12 @@
         showNotification('Purchase Failed', e?.data?.message || e?.message || String(e), true);
       } finally {
         buyButton.disabled = false;
-        buyButton.innerText = 'Buy $BULL';
+        buyButton.innerText = `Buy $${CONFIG.TOKEN_SYMBOL}`;
       }
     }
 
     async function claimTokens() {
-      if (!isUIConnected || !contract) {
-        showNotification('Not Connected', 'Please connect wallet first', true);
-        return;
-      }
+      if (!isUIConnected || !contract) return showNotification('Not Connected', 'Please connect wallet first', true);
 
       try {
         claimButton.disabled = true;
@@ -861,13 +982,14 @@
 
         const tx = await contract.claimTokens();
         showNotification('Claim Submitted', tx.hash);
+
         await tx.wait();
         showNotification('Claim Success', 'Your tokens have been claimed');
       } catch (e) {
         showNotification('Claim Failed', e?.data?.message || e?.message || String(e), true);
       } finally {
         claimButton.disabled = false;
-        claimButton.innerText = 'Claim Your $BULL Tokens';
+        claimButton.innerText = `Claim Your $${CONFIG.TOKEN_SYMBOL} Tokens`;
       }
     }
 
