@@ -186,7 +186,7 @@
 
     .hero { min-height: 100vh; padding-top: 120px; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; background: linear-gradient(180deg, #0A0500 0%, var(--dark-bg) 100%); position: relative; overflow: hidden; }
     .hero-bg-glow { position: absolute; top: -50%; left: 50%; transform: translateX(-50%); width: 1200px; height: 1200px; background: radial-gradient(circle, rgba(255, 215, 0, 0.15) 0%, transparent 70%); z-index: 0; }
-    .hero-content { position: relative; z-index: 1; max-width: 900px; }
+    .hero-content { position: relative; z-index: 1; max-width: 900px; width: 100%; }
     .hero-title { font-size: 72px; font-weight: 900; line-height: 1.1; margin-bottom: 16px; background: linear-gradient(180deg, var(--gold-primary) 0%, var(--gold-secondary) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
     .hero-slogan { font-size: 24px; color: var(--text-gray); margin-bottom: 48px; font-weight: 400; }
 
@@ -217,7 +217,7 @@
     .form-input:focus, .form-select:focus { outline: none; border-color: var(--gold-primary); }
     .token-estimate { text-align: left; font-size: 14px; color: var(--text-gray); margin: 12px 0 24px; }
 
-    .feature-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(380px, 1fr)); gap: 32px; }
+    .feature-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 32px; }
     .feature-card { background: var(--dark-card); border: 1px solid var(--dark-border); border-radius: 16px; padding: 40px; transition: all 0.3s ease; }
     .feature-card:hover { border-color: var(--gold-primary); transform: translateY(-8px); box-shadow: 0 16px 40px rgba(255, 215, 0, 0.1); }
     .feature-icon { font-size: 48px; margin-bottom: 24px; }
@@ -249,8 +249,8 @@
     .loading-spinner { display: inline-block; width: 20px; height: 20px; border: 2px solid var(--text-muted); border-radius: 50%; border-top-color: var(--gold-primary); animation: spin 1s linear infinite; vertical-align: middle; }
     @keyframes spin { to { transform: rotate(360deg); } }
 
-    @media (max-width: 768px) {
-      .navbar-links a:not(.wallet-container *) { display: none; }
+    @media (max-width: 900px) {
+      .navbar-links a:not([data-nav="home"]):not([data-nav="buy"]) { display: none; }
       .hero-title { font-size: 40px; }
       .hero-token-title { font-size: 56px; }
       .hero-slogan { font-size: 18px; }
@@ -294,7 +294,6 @@
     </div>
   </nav>
 
-  <!-- HOME -->
   <section class="section page is-active home-landing" id="home" data-page="home">
     <div class="home-hero-glow"></div>
     <div class="container">
@@ -365,7 +364,6 @@
     </div>
   </section>
 
-  <!-- BUY PAGE -->
   <section class="hero page" data-page="buy" id="buy">
     <div class="hero-bg-glow"></div>
     <div class="container hero-content">
@@ -400,7 +398,7 @@
           <input type="number" class="form-input" id="bnbAmount" placeholder="0.0" step="0.01" min="0">
         </div>
         <div class="form-input-group">
-          <div class="form-label"><span>Slippage Tolerance</span></div>
+          <div class="form-label"><span>Slippage Tolerance (%)</span></div>
           <input type="number" class="form-input" id="slippage" placeholder="1.0" step="0.1" min="0.1" value="1.0">
         </div>
         <div class="form-input-group">
@@ -486,7 +484,6 @@
       <div class="footer-copyright">© 2026 Bullforge. All rights reserved.</div>
     </div>
   </footer>
-
   <script type="module">
     import { ethers } from 'https://esm.sh/ethers@5.7.2';
     import { createWeb3Modal, defaultConfig } from 'https://esm.sh/@web3modal/ethers5@4.1.2';
@@ -513,6 +510,7 @@
       "function claimTokens() external"
     ];
 
+    // ---------- Elements ----------
     const notif = document.getElementById('notification');
     const notifTitle = document.getElementById('notificationTitle');
     const notifDesc = document.getElementById('notificationDesc');
@@ -528,4 +526,399 @@
     const walletBalanceSpan = document.getElementById('walletBalance');
 
     const currentPriceSpan = document.getElementById('currentPrice');
-   
+    const totalRaisedSpan = document.getElementById('totalRaised');
+    const currentStageSpan = document.getElementById('currentStage');
+    const tokenRateSpan = document.getElementById('tokenRate');
+
+    const progressPercent = document.getElementById('progressPercent');
+    const progressBarFill = document.getElementById('progressBarFill');
+
+    const buyButton = document.getElementById('buyButton');
+    const claimButton = document.getElementById('claimButton');
+
+    const daysSpan = document.getElementById('countdownDays');
+    const hoursSpan = document.getElementById('countdownHours');
+    const minutesSpan = document.getElementById('countdownMinutes');
+    const secondsSpan = document.getElementById('countdownSeconds');
+
+    const referralLink2 = document.getElementById('referralLink2');
+    const copyBtn2 = document.getElementById('copyReferralBtn2');
+
+    // ---------- State ----------
+    let provider = null;
+    let signer = null;
+    let contract = null;
+    let userAddress = null;
+    let web3Modal = null;
+    let walletProvider = null;
+
+    let currentRate = 0;
+    let totalRaisedBNB = 0;
+    let hardcapBNB = 2000;
+    let stageEndTimestamp = 0;
+    let isUIConnected = false;
+
+    // ---------- Utils ----------
+    function showNotification(title, desc, isError = false) {
+      if (!notif) return;
+      notifTitle.innerText = title;
+      notifDesc.innerText = desc || '';
+      notif.style.borderColor = isError ? 'var(--danger)' : 'var(--gold-primary)';
+      notif.classList.add('show');
+      setTimeout(() => notif.classList.remove('show'), 4200);
+    }
+
+    function safeShort(addr) {
+      if (!addr || addr.length < 10) return addr || '';
+      return `${addr.slice(0, 6)}...${addr.slice(-4)}`;
+    }
+
+    function setActivePage(pageName) {
+      const target = pageName || 'home';
+      document.querySelectorAll('.page').forEach(p => {
+        p.classList.toggle('is-active', p.getAttribute('data-page') === target);
+      });
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function getRouteFromHash() {
+      const raw = (location.hash || '').replace('#', '').trim();
+      return { page: raw || 'home' };
+    }
+
+    function isValidAddress(addr) {
+      try { return ethers.utils.isAddress(addr); } catch { return false; }
+    }
+
+    function estimateTokens() {
+      if (!tokenEstimate) return;
+      const val = parseFloat(bnbAmountInput?.value || '');
+      if (isNaN(val) || val <= 0 || !currentRate) {
+        tokenEstimate.innerText = 'Enter BNB amount to see estimated $BULL tokens';
+        return;
+      }
+      const est = val * currentRate;
+      tokenEstimate.innerText = `You will receive approx. ${est.toFixed(2)} $BULL`;
+    }
+
+    function updateCountdown() {
+      if (!daysSpan) return;
+      if (!stageEndTimestamp || stageEndTimestamp <= 0) {
+        daysSpan.innerText = '--';
+        hoursSpan.innerText = '--';
+        minutesSpan.innerText = '--';
+        secondsSpan.innerText = '--';
+        return;
+      }
+
+      const now = Math.floor(Date.now() / 1000);
+      const diff = stageEndTimestamp - now;
+
+      if (diff <= 0) {
+        daysSpan.innerText = '00';
+        hoursSpan.innerText = '00';
+        minutesSpan.innerText = '00';
+        secondsSpan.innerText = '00';
+        return;
+      }
+
+      const d = Math.floor(diff / 86400);
+      const h = Math.floor((diff % 86400) / 3600);
+      const m = Math.floor((diff % 3600) / 60);
+      const s = diff % 60;
+
+      daysSpan.innerText = String(d).padStart(2, '0');
+      hoursSpan.innerText = String(h).padStart(2, '0');
+      minutesSpan.innerText = String(m).padStart(2, '0');
+      secondsSpan.innerText = String(s).padStart(2, '0');
+    }
+
+    async function updateWalletUIAfterConnect() {
+      if (!userAddress) return;
+      connectBtn.innerText = safeShort(userAddress);
+      connectBtn.disabled = true;
+      disconnectBtn.style.display = 'inline-block';
+      buyButton.disabled = false;
+      buyButton.innerText = 'Buy $BULL';
+      claimButton.style.display = 'block';
+      isUIConnected = true;
+
+      if (referralLink2) referralLink2.value = `${window.location.origin}?ref=${userAddress}`;
+
+      try {
+        const net = await provider.getNetwork();
+        networkBadge.style.display = 'inline-block';
+        if (net.chainId !== CONFIG.CHAIN_ID) {
+          networkBadge.classList.add('bad');
+          networkBadge.innerText = `Wrong Net (${net.chainId})`;
+          showNotification("Wrong Network", "Please switch to BNB Smart Chain (56)", true);
+        } else {
+          networkBadge.classList.remove('bad');
+          networkBadge.innerText = 'BNB (56)';
+        }
+      } catch {}
+    }
+
+    function resetWalletUI() {
+      connectBtn.disabled = false;
+      connectBtn.innerText = 'Connect Wallet';
+      disconnectBtn.style.display = 'none';
+      networkBadge.style.display = 'none';
+      networkBadge.classList.remove('bad');
+      buyButton.disabled = true;
+      buyButton.innerText = 'Connect Wallet To Buy';
+      claimButton.style.display = 'none';
+      walletBalanceSpan.innerText = '0.00';
+      if (referralLink2) referralLink2.value = 'Connect wallet to generate...';
+      isUIConnected = false;
+    }
+
+    // ---------- Read chain ----------
+    async function refreshContractData() {
+      try {
+        const readProvider = new ethers.providers.JsonRpcProvider(CONFIG.BSC_RPC);
+        const readContract = new ethers.Contract(CONFIG.CONTRACT_ADDRESS, CONTRACT_ABI, readProvider);
+
+        const raisedWei = await readContract.totalRaised().catch(() => null);
+        totalRaisedBNB = raisedWei ? parseFloat(ethers.utils.formatEther(raisedWei)) : 0;
+        if (totalRaisedSpan) totalRaisedSpan.innerText = `${totalRaisedBNB.toFixed(2)} BNB`;
+
+        const stage = await readContract.currentStage().catch(() => 1);
+        if (currentStageSpan) currentStageSpan.innerText = String(stage || 1);
+
+        const rateRaw = await readContract.getRate().catch(() => null);
+        currentRate = rateRaw ? parseFloat(ethers.utils.formatEther(rateRaw)) : 1000;
+        if (tokenRateSpan) tokenRateSpan.innerText = `${currentRate.toFixed(0)} $BULL`;
+
+        const priceRaw = await readContract.getCurrentPrice().catch(() => null);
+        if (currentPriceSpan) {
+          if (priceRaw) {
+            currentPriceSpan.innerText = `${parseFloat(ethers.utils.formatEther(priceRaw)).toFixed(8)} BNB`;
+          } else {
+            currentPriceSpan.innerText = `${(1 / Math.max(currentRate, 1)).toFixed(8)} BNB`;
+          }
+        }
+
+        const endTime = await readContract.stageEndTime().catch(() => null);
+        stageEndTimestamp = endTime ? endTime.toNumber() : Math.floor(Date.now() / 1000) + 72 * 3600;
+        updateCountdown();
+
+        const hardCapRaw = await readContract.hardCap().catch(() => null);
+        if (hardCapRaw) hardcapBNB = parseFloat(ethers.utils.formatEther(hardCapRaw));
+
+        let p = (totalRaisedBNB / hardcapBNB) * 100;
+        if (!isFinite(p) || p < 0) p = 0;
+        if (p > 100) p = 100;
+        if (progressPercent) progressPercent.innerText = `${p.toFixed(1)}%`;
+        if (progressBarFill) progressBarFill.style.width = `${p}%`;
+
+        if (isUIConnected && provider && userAddress) {
+          const bal = await provider.getBalance(userAddress).catch(() => null);
+          if (bal) walletBalanceSpan.innerText = parseFloat(ethers.utils.formatEther(bal)).toFixed(4);
+        }
+
+        estimateTokens();
+      } catch (e) {
+        console.warn('refreshContractData error:', e);
+      }
+    }
+
+    // ---------- Web3Modal ----------
+    function initWeb3Modal() {
+      const chains = [{
+        chainId: CONFIG.CHAIN_ID,
+        name: CONFIG.CHAIN_NAME,
+        currency: CONFIG.CURRENCY,
+        explorerUrl: CONFIG.EXPLORER,
+        rpcUrl: CONFIG.BSC_RPC
+      }];
+
+      const ethersConfig = defaultConfig({
+        metadata: {
+          name: 'Bullforge',
+          description: 'Bullforge Presale',
+          url: window.location.origin,
+          icons: ['https://walletconnect.com/walletconnect-logo.png']
+        },
+        defaultChainId: CONFIG.CHAIN_ID,
+        rpcUrl: CONFIG.BSC_RPC,
+        projectId: CONFIG.WALLETCONNECT_PROJECT_ID
+      });
+
+      web3Modal = createWeb3Modal({
+        ethersConfig,
+        chains,
+        projectId: CONFIG.WALLETCONNECT_PROJECT_ID,
+        themeMode: 'dark',
+        themeVariables: {
+          '--w3m-accent': '#FFD700'
+        }
+      });
+    }
+
+    async function connectWallet() {
+      try {
+        connectBtn.disabled = true;
+        connectBtn.innerText = 'Connecting...';
+
+        await web3Modal.open();
+
+        walletProvider = await web3Modal.getWalletProvider?.();
+        if (!walletProvider) throw new Error('Wallet provider not found');
+
+        provider = new ethers.providers.Web3Provider(walletProvider);
+        signer = provider.getSigner();
+        userAddress = await signer.getAddress();
+        contract = new ethers.Contract(CONFIG.CONTRACT_ADDRESS, CONTRACT_ABI, signer);
+
+        await updateWalletUIAfterConnect();
+        await refreshContractData();
+        showNotification('Connected', `Wallet ${safeShort(userAddress)} connected`);
+      } catch (e) {
+        resetWalletUI();
+        showNotification('Connection Failed', e?.message || String(e), true);
+      }
+    }
+
+    async function disconnectWallet() {
+      try {
+        if (web3Modal?.disconnect) await web3Modal.disconnect();
+      } catch {}
+
+      provider = null;
+      signer = null;
+      contract = null;
+      walletProvider = null;
+      userAddress = null;
+      resetWalletUI();
+      showNotification('Disconnected', 'Wallet disconnected');
+    }
+
+    // ---------- Actions ----------
+    async function buyTokens() {
+      if (!isUIConnected || !contract) {
+        showNotification('Not Connected', 'Please connect wallet first', true);
+        return;
+      }
+
+      const amount = parseFloat(bnbAmountInput.value || '');
+      if (isNaN(amount) || amount <= 0) {
+        showNotification('Invalid Amount', 'Please enter valid BNB amount', true);
+        return;
+      }
+
+      const network = await provider.getNetwork();
+      if (network.chainId !== CONFIG.CHAIN_ID) {
+        showNotification('Wrong Network', 'Switch to BNB Smart Chain (56)', true);
+        return;
+      }
+
+      let referrer = (referrerInput.value || '').trim();
+      if (!referrer) referrer = ethers.constants.AddressZero;
+      if (referrer !== ethers.constants.AddressZero && !isValidAddress(referrer)) {
+        showNotification('Invalid Referrer', 'Referrer address format is invalid', true);
+        return;
+      }
+      if (userAddress && referrer.toLowerCase() === userAddress.toLowerCase()) {
+        referrer = ethers.constants.AddressZero;
+      }
+
+      const slippage = Math.max(parseFloat(slippageInput.value || '1') / 100, 0);
+      const expected = amount * currentRate;
+      const minOut = Math.floor(expected * (1 - slippage));
+
+      try {
+        buyButton.disabled = true;
+        buyButton.innerText = 'Processing...';
+
+        const tx = await contract.buyTokens(referrer, minOut, {
+          value: ethers.utils.parseEther(amount.toString())
+        });
+        showNotification('Transaction Sent', tx.hash);
+
+        await tx.wait();
+        showNotification('Purchase Success', 'You bought $BULL successfully');
+        bnbAmountInput.value = '';
+        estimateTokens();
+        await refreshContractData();
+      } catch (e) {
+        showNotification('Purchase Failed', e?.data?.message || e?.message || String(e), true);
+      } finally {
+        buyButton.disabled = false;
+        buyButton.innerText = 'Buy $BULL';
+      }
+    }
+
+    async function claimTokens() {
+      if (!isUIConnected || !contract) {
+        showNotification('Not Connected', 'Please connect wallet first', true);
+        return;
+      }
+
+      try {
+        claimButton.disabled = true;
+        claimButton.innerText = 'Claiming...';
+
+        const tx = await contract.claimTokens();
+        showNotification('Claim Submitted', tx.hash);
+        await tx.wait();
+        showNotification('Claim Success', 'Your tokens have been claimed');
+      } catch (e) {
+        showNotification('Claim Failed', e?.data?.message || e?.message || String(e), true);
+      } finally {
+        claimButton.disabled = false;
+        claimButton.innerText = 'Claim Your $BULL Tokens';
+      }
+    }
+
+    // ---------- Navigation ----------
+    function bindNavigation() {
+      document.querySelectorAll('[data-nav]').forEach(el => {
+        el.addEventListener('click', (e) => {
+          const href = el.getAttribute('href') || '';
+          if (href.startsWith('http')) return;
+          e.preventDefault();
+          const target = el.getAttribute('data-nav') || 'home';
+          history.pushState(null, '', `#${target}`);
+          setActivePage(target);
+        });
+      });
+
+      window.addEventListener('hashchange', () => {
+        const route = getRouteFromHash();
+        setActivePage(route.page);
+      });
+    }
+
+    // ---------- Bind events ----------
+    connectBtn?.addEventListener('click', connectWallet);
+    disconnectBtn?.addEventListener('click', disconnectWallet);
+    bnbAmountInput?.addEventListener('input', estimateTokens);
+    slippageInput?.addEventListener('input', estimateTokens);
+    buyButton?.addEventListener('click', buyTokens);
+    claimButton?.addEventListener('click', claimTokens);
+
+    copyBtn2?.addEventListener('click', async () => {
+      try {
+        const txt = referralLink2?.value || '';
+        if (!txt) return;
+        await navigator.clipboard.writeText(txt);
+        showNotification('Copied', 'Referral link copied');
+      } catch {
+        showNotification('Copy Failed', 'Please copy manually', true);
+      }
+    });
+
+    // ---------- Init ----------
+    initWeb3Modal();
+    bindNavigation();
+
+    const routeOnLoad = getRouteFromHash();
+    setActivePage(routeOnLoad.page);
+
+    refreshContractData();
+    setInterval(refreshContractData, 15000);
+    setInterval(updateCountdown, 1000);
+  </script>
+</body>
+</html>
