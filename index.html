@@ -1,366 +1,841 @@
+<!-- =========================
+PART 1 / 3  (HEAD + STYLE)
+========================= -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Bullforge | The Future isn't Just Bullish. It's Bullforge.</title>
+  <title>BullForge | Buy $BFG</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&display=swap" rel="stylesheet">
 
   <style>
-    :root {
-      --gold-primary: #FFD700;
-      --gold-secondary: #FFA500;
-      --dark-bg: #050505;
-      --dark-card: #0F0F0F;
-      --dark-border: #1A1A1A;
-      --text-white: #FFFFFF;
-      --text-gray: #A0A0A0;
-      --text-muted: #666666;
-      --danger: #FF4444;
-      --success: #00C853;
+    :root{
+      --gold:#F5D77A;
+      --gold2:#E9C45C;
+      --bg:#070708;
+      --card:rgba(255,255,255,0.035);
+      --border:rgba(255,255,255,0.09);
+      --text:rgba(255,255,255,0.92);
+      --muted:rgba(255,255,255,0.62);
+      --muted2:rgba(255,255,255,0.45);
+      --danger:#FF4444;
+      --ok:#00C853;
+    }
+    *{margin:0;padding:0;box-sizing:border-box;font-family:'Inter',sans-serif}
+    body{
+      background:
+        radial-gradient(1000px 650px at 50% 0%, rgba(245,215,122,0.10), transparent 55%),
+        radial-gradient(900px 600px at 12% 10%, rgba(255,255,255,0.05), transparent 60%),
+        radial-gradient(900px 600px at 88% 18%, rgba(255,255,255,0.04), transparent 65%),
+        radial-gradient(700px 480px at 50% 120%, rgba(245,215,122,0.06), transparent 55%),
+        var(--bg);
+      color:var(--text);
+      overflow-x:hidden;
+      letter-spacing:-0.01em;
+      line-height:1.55;
+    }
+    html { scroll-padding-top: 96px; }
+
+    .container{max-width:1200px;margin:0 auto;padding:0 20px}
+    .navbar{
+      position:fixed;top:0;left:0;width:100%;z-index:999;
+      padding:14px 0;background:rgba(7,7,8,0.70);
+      backdrop-filter:blur(16px);
+      border-bottom:1px solid rgba(255,255,255,0.06);
+    }
+    .navbar-content{display:flex;justify-content:space-between;align-items:center;gap:14px}
+    .logo{
+      font-size:22px;font-weight:900;color:var(--gold);text-decoration:none;white-space:nowrap;
+      letter-spacing:-0.02em;
+      text-transform:none;
     }
 
-    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
-    html { scroll-behavior: smooth; }
-    body { background-color: var(--dark-bg); color: var(--text-white); line-height: 1.6; overflow-x: hidden; }
-    .container { max-width: 1400px; margin: 0 auto; padding: 0 24px; }
+    .nav-links{display:flex;gap:16px;align-items:center;flex-wrap:wrap}
+    .nav-links a{color:rgba(255,255,255,0.66);text-decoration:none;font-weight:800;font-size:13px;letter-spacing:0.02em}
+    .nav-links a:hover{color:rgba(255,255,255,0.92)}
+    .nav-right{display:flex;gap:10px;align-items:center;flex-wrap:wrap;justify-content:flex-end}
 
-    .navbar {
-      position: fixed; top: 0; left: 0; width: 100%; z-index: 999;
-      padding: 16px 0; background: rgba(5, 5, 5, 0.9);
-      backdrop-filter: blur(10px);
-      border-bottom: 1px solid var(--dark-border);
+    .badge{
+      display:none;padding:6px 10px;border-radius:999px;border:1px solid var(--border);
+      background:rgba(245,215,122,0.08);color:var(--gold);font-weight:900;font-size:12px;white-space:nowrap
     }
-    .navbar-content { display: flex; justify-content: space-between; align-items: center; gap: 16px; }
-    .navbar-logo {
-      font-size: 28px; font-weight: 900; color: var(--gold-primary); letter-spacing: -0.5px;
-      text-decoration: none; white-space: nowrap;
-    }
-    .navbar-logo:hover { opacity: 0.9; }
+    .badge.bad{border-color:var(--danger);color:var(--danger);background:rgba(255,68,68,0.08)}
 
-    .navbar-links { display: flex; gap: 22px; align-items: center; flex-wrap: wrap; justify-content: flex-end; }
-    .navbar-links a {
-      color: var(--text-gray); text-decoration: none; font-weight: 600;
-      transition: color 0.3s ease; white-space: nowrap;
+    .btnTop{
+      padding:10px 16px;background:var(--gold);color:#0b0b0c;border:none;border-radius:999px;
+      font-weight:900;cursor:pointer;transition:.2s;white-space:nowrap
     }
-    .navbar-links a:hover { color: var(--gold-primary); }
-
-    .wallet-container {
-      position: relative;
-      display: flex;
-      gap: 8px;
-      align-items: center;
-      flex-wrap: wrap;
-      justify-content: flex-end;
+    .btnTop:disabled{opacity:.6;cursor:not-allowed}
+    .btnGhost{
+      padding:8px 12px;background:transparent;color:var(--gold);
+      border:1px solid rgba(245,215,122,0.7);border-radius:999px;font-weight:800;font-size:13px;cursor:pointer
     }
 
-    #walletConnectBtn {
-      padding: 10px 24px;
-      background: var(--gold-primary);
-      color: var(--dark-bg);
-      border: none;
-      border-radius: 50px;
-      font-weight: 800;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      white-space: nowrap;
+    .menuBtn{
+      display:none;
+      width:40px;height:40px;border-radius:12px;
+      border:1px solid rgba(255,255,255,0.10);
+      background:rgba(0,0,0,0.18);
+      color:rgba(255,255,255,0.86);
+      font-weight:900;cursor:pointer;
+      align-items:center;justify-content:center;
     }
-    #walletConnectBtn:hover:not(:disabled) { box-shadow: 0 0 24px rgba(255, 215, 0, 0.4); transform: scale(1.03); }
-    #walletConnectBtn:disabled { opacity: 0.6; cursor: not-allowed; transform: none; background: #b89400; }
+    .mobileMenu{
+      display:none;
+      position:fixed;left:12px;right:12px;top:72px;z-index:998;
+      padding:12px;border-radius:16px;
+      background:rgba(7,7,8,0.88);
+      border:1px solid rgba(255,255,255,0.08);
+      backdrop-filter:blur(16px);
+      box-shadow:0 16px 50px rgba(0,0,0,0.55);
+    }
+    .mobileMenu a{
+      display:block;padding:12px 12px;border-radius:12px;
+      color:rgba(255,255,255,0.85);text-decoration:none;font-weight:900;
+      border:1px solid rgba(255,255,255,0.06);
+      background:rgba(255,255,255,0.03);
+    }
+    .mobileMenu a + a{margin-top:10px}
+    .mobileMenu a:hover{border-color:rgba(245,215,122,0.35);color:rgba(245,215,122,0.95)}
+    .mobileMenu.show{display:block}
 
-    #disconnectBtn {
-      padding: 8px 16px;
-      background: transparent;
-      color: var(--gold-primary);
-      border: 1px solid var(--gold-primary);
-      border-radius: 50px;
-      font-weight: 700;
-      font-size: 14px;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      white-space: nowrap;
-    }
-    #disconnectBtn:hover { background: rgba(255, 215, 0, 0.1); }
+    .page{display:none}
+    .page.is-active{display:block}
+    .section{padding-top:108px;padding-bottom:80px}
 
-    #networkBadge {
-      display: none;
-      padding: 6px 12px;
-      border-radius: 999px;
-      border: 1px solid var(--dark-border);
-      background: rgba(255, 215, 0, 0.08);
-      color: var(--gold-primary);
-      font-weight: 800;
-      font-size: 12px;
-      letter-spacing: 0.2px;
-      white-space: nowrap;
+    .glass{
+      background:var(--card);
+      border:1px solid var(--border);
+      border-radius:18px;
+      box-shadow:0 16px 60px rgba(0,0,0,0.45);
+      backdrop-filter:blur(14px);
+      position:relative;
+      overflow:visible;
     }
-    #networkBadge.bad {
-      border-color: var(--danger);
-      color: var(--danger);
-      background: rgba(255, 68, 68, 0.08);
+    .glass::before{
+      content:"";position:absolute;inset:0;pointer-events:none;
+      background:linear-gradient(180deg, rgba(255,255,255,0.10), transparent 35%),
+                 radial-gradient(650px 240px at 20% 0%, rgba(245,215,122,0.12), transparent 60%);
+      opacity:0.55
     }
 
-    .section { padding: 120px 0; position: relative; }
-    .section-header { text-align: center; margin-bottom: 80px; }
-    .section-subtitle { font-size: 14px; text-transform: uppercase; letter-spacing: 2px; color: var(--gold-primary); margin-bottom: 12px; font-weight: 700; }
-    .section-title { font-size: 56px; font-weight: 900; line-height: 1.1; margin-bottom: 16px; }
-    .section-desc { font-size: 18px; color: var(--text-gray); max-width: 700px; margin: 0 auto; }
+    .title{
+      font-size:46px;font-weight:900;line-height:1.08;letter-spacing:-0.03em;
+      background:linear-gradient(180deg, rgba(245,215,122,0.95) 0%, rgba(233,196,92,0.85) 100%);
+      -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+    }
+    .subtitle{margin-top:12px;color:var(--muted);font-size:16px;max-width:860px}
+    .sectionLabel{margin-top:14px;font-size:12px;color:rgba(255,255,255,0.70);font-weight:800;letter-spacing:0.12em;text-transform:uppercase}
 
-    .home-landing {
-      min-height: 100vh;
-      padding-top: 120px;
-      position: relative;
-      overflow: hidden;
-      background: linear-gradient(180deg, #0A0500 0%, var(--dark-bg) 100%);
+    .btn{
+      width:100%;
+      margin-top:12px;
+      padding:16px;border-radius:14px;border:none;
+      background:linear-gradient(180deg, rgba(245,215,122,0.98), rgba(233,196,92,0.92));
+      color:#0b0b0c;font-weight:900;text-transform:uppercase;cursor:pointer;
+      box-shadow:0 26px 70px rgba(0,0,0,0.62), 0 0 0 1px rgba(255,255,255,0.06) inset;
+      transition:.18s;position:relative;overflow:hidden
     }
-    .home-hero-glow {
-      position: absolute; inset: 0;
-      background: radial-gradient(circle at 50% 20%, rgba(255,215,0,.18), transparent 55%);
-      pointer-events: none;
+    .btn:disabled{opacity:.55;cursor:not-allowed}
+    .btn2{
+      width:100%;
+      margin-top:10px;
+      padding:13px;border-radius:14px;
+      background:rgba(245,215,122,0.05);
+      color:rgba(245,215,122,0.9);
+      border:1px solid rgba(245,215,122,0.55);
+      font-weight:900;cursor:pointer
     }
-    .hero-token-title {
-      font-size: 96px;
-      font-weight: 900;
-      line-height: 1;
-      letter-spacing: -2px;
-      background: linear-gradient(180deg, var(--gold-primary) 0%, var(--gold-secondary) 100%);
+
+    .notification{
+      position:fixed;top:88px;right:18px;max-width:420px;
+      padding:16px 18px;background:rgba(15,15,15,0.72);
+      border:1px solid rgba(245,215,122,0.55);
+      border-radius:14px;z-index:9999;
+      box-shadow:0 16px 40px rgba(0,0,0,0.5);
+      transform:translateX(120%);transition:transform .3s ease;
+      backdrop-filter: blur(16px);
+    }
+    .notification.show{transform:translateX(0)}
+    .notification-title{font-weight:900;margin-bottom:6px}
+    .notification-desc{font-size:13px;color:rgba(255,255,255,0.68);word-break:break-word}
+
+    .spinner{display:inline-block;width:18px;height:18px;border:2px solid rgba(255,255,255,0.25);border-radius:50%;border-top-color:var(--gold);animation:spin 1s linear infinite;vertical-align:middle}
+    @keyframes spin{to{transform:rotate(360deg)}}
+
+    /* =============== HOME =============== */
+    .home-landing{position:relative}
+    .home-hero-glow{
+      position:absolute;left:50%;top:0;transform:translateX(-50%);
+      width:980px;height:560px;pointer-events:none;
+      background:
+        radial-gradient(closest-side, rgba(245,215,122,0.13), transparent 70%),
+        radial-gradient(closest-side, rgba(255,255,255,0.06), transparent 72%);
+      opacity:0.9;
+      z-index:0;
+    }
+    .section-header{position:relative;z-index:1;text-align:center}
+    .section-subtitle{
+      font-size:12px;letter-spacing:0.22em;text-transform:uppercase;
+      color:rgba(255,255,255,0.60);font-weight:900
+    }
+
+    /* dynamic shimmer for welcome (bullzilla-ish micro glow) */
+    .welcomeShimmer{
+      display:inline-block;
+      background: linear-gradient(90deg,
+        rgba(255,255,255,0.28) 0%,
+        rgba(245,215,122,0.95) 18%,
+        rgba(255,255,255,0.28) 40%,
+        rgba(255,255,255,0.24) 100%);
+      background-size: 240% 100%;
       -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
       background-clip: text;
-      margin-bottom: 14px;
+      color: transparent;
+      text-shadow: 0 0 30px rgba(245,215,122,0.10);
+      animation: shimmer 2.6s ease-in-out infinite;
+    }
+    @keyframes shimmer{
+      0%{background-position: 0% 50%}
+      100%{background-position: 240% 50%}
     }
 
-    .buy-button {
-      width: 100%;
-      padding: 18px;
-      background: linear-gradient(90deg, var(--gold-secondary) 0%, var(--gold-primary) 100%);
-      color: var(--dark-bg);
-      border: none;
-      border-radius: 12px;
-      font-size: 18px;
-      font-weight: 900;
-      text-transform: uppercase;
-      cursor: pointer;
-      transition: all 0.3s ease;
+    .section-desc{margin-top:10px;color:rgba(255,255,255,0.70);font-size:16px}
+    /* bigger hero token */
+    .hero-token-title{
+      margin-top:10px;
+      font-size:96px;
+      line-height:1;
+      letter-spacing:-0.055em;
+      font-weight:900;
+      background:linear-gradient(180deg, rgba(245,215,122,1) 0%, rgba(233,196,92,0.78) 100%);
+      -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+      text-shadow:0 22px 110px rgba(245,215,122,0.10);
     }
-    .buy-button:hover:not(:disabled) { box-shadow: 0 0 32px rgba(255, 215, 0, 0.4); transform: translateY(-2px); }
-    .buy-button:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+    .buy-button{
+      padding:14px 22px;border-radius:14px;border:none;
+      background:linear-gradient(180deg, rgba(245,215,122,0.98), rgba(233,196,92,0.92));
+      color:#0b0b0c;font-weight:900;text-transform:uppercase;cursor:pointer;
+      box-shadow:0 26px 70px rgba(0,0,0,0.62);
+      width:100%;
+      transition: transform .18s ease, filter .18s ease;
+    }
+    .buy-button:hover{transform: translateY(-2px); filter: brightness(1.04);}
 
-    .btn-secondary {
-      width: 100%;
-      padding: 14px;
-      background: transparent;
-      color: var(--gold-primary);
-      border: 2px solid var(--gold-primary);
-      border-radius: 12px;
-      font-size: 16px;
-      font-weight: 800;
-      cursor: pointer;
-      transition: all 0.3s ease;
+    .section-title{
+      margin-top:10px;
+      font-weight:900;
+      letter-spacing:-0.03em;
+      background:linear-gradient(180deg, rgba(245,215,122,0.95) 0%, rgba(233,196,92,0.85) 100%);
+      -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+    }
+
+    /* =========================
+       DNA (Screenshot-like layout)
+       ========================= */
+    .dna-wrap{
       margin-top: 12px;
-    }
-    .btn-secondary:hover:not(:disabled) { background: rgba(255, 215, 0, 0.1); }
-    .btn-small { width: auto; padding: 10px 20px; font-size: 14px; margin: 5px; }
-
-    /* DNA 单一卡片 */
-    .dna-card {
-      background: var(--dark-card);
-      border: 1px solid var(--dark-border);
-      border-radius: 18px;
-      padding: 34px;
-      max-width: 980px;
-      margin: 0 auto;
-      transition: .3s ease;
-    }
-    .dna-card:hover {
-      border-color: var(--gold-primary);
-      box-shadow: 0 12px 34px rgba(255,215,0,.12);
-      transform: translateY(-6px);
-    }
-    .dna-header {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: baseline;
-      justify-content: space-between;
-      gap: 12px;
-      margin-bottom: 18px;
-    }
-    .dna-title {
-      font-size: 22px;
-      font-weight: 900;
-      color: var(--gold-primary);
-      letter-spacing: .2px;
-    }
-    .dna-note {
-      font-size: 14px;
-      color: var(--text-gray);
-    }
-    .dna-grid {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 14px 22px;
-      margin-top: 12px;
-    }
-    .dna-row {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 10px;
-      padding: 12px 14px;
-      border: 1px solid var(--dark-border);
-      border-radius: 12px;
+      padding: 24px 20px;
+      border-radius: 22px;
+      border: 1px solid rgba(255,255,255,0.10);
       background: rgba(255,255,255,0.02);
-    }
-    .dna-left { display: flex; flex-direction: column; gap: 2px; }
-    .dna-label { font-weight: 800; color: var(--text-white); font-size: 14px; }
-    .dna-desc { font-size: 12px; color: var(--text-gray); }
-    .dna-pct { font-weight: 900; color: var(--gold-primary); font-size: 18px; }
-
-    .roadmap-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 32px; }
-    .roadmap-card { background: var(--dark-card); border: 1px solid var(--dark-border); border-radius: 16px; padding: 32px; transition: .3s ease; }
-    .roadmap-card:hover { border-color: var(--gold-primary); box-shadow: 0 10px 30px rgba(255,215,0,.12); transform: translateY(-6px); }
-    .roadmap-phase { font-size: 13px; text-transform: uppercase; letter-spacing: 1px; color: var(--gold-primary); font-weight: 700; margin-bottom: 12px; }
-    .roadmap-title { font-size: 24px; font-weight: 800; margin-bottom: 20px; }
-    .roadmap-list { list-style: none; }
-    .roadmap-list li { padding: 8px 0; color: var(--text-gray); position: relative; padding-left: 24px; }
-    .roadmap-list li::before { content: "✦"; position: absolute; left: 0; color: var(--gold-primary); }
-
-    /* Buy 页面（hero） */
-    .hero {
-      min-height: 100vh;
-      padding-top: 120px;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-      background: linear-gradient(180deg, #0A0500 0%, var(--dark-bg) 100%);
+      box-shadow: 0 22px 90px rgba(0,0,0,0.65);
       position: relative;
       overflow: hidden;
     }
-    .hero-bg-glow { position: absolute; top: -50%; left: 50%; transform: translateX(-50%); width: 1200px; height: 1200px; background: radial-gradient(circle, rgba(255, 215, 0, 0.15) 0%, transparent 70%); z-index: 0; }
-    .hero-content { position: relative; z-index: 1; max-width: 900px; width: 100%; }
-    .hero-title { font-size: 72px; font-weight: 900; line-height: 1.1; margin-bottom: 16px; background: linear-gradient(180deg, var(--gold-primary) 0%, var(--gold-secondary) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-    .hero-slogan { font-size: 24px; color: var(--text-gray); margin-bottom: 48px; font-weight: 400; }
-
-    /* ✅ 关键修复：防止 .hero 的 display:flex 把未激活页面也显示出来 */
-    .page { display: none !important; }
-    .page.is-active { display: block !important; }
-    .hero.page.is-active { display: flex !important; }
-
-    .presale-stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 32px; width: 100%; }
-    .stat-card { background: var(--dark-card); border: 1px solid var(--dark-border); border-radius: 12px; padding: 20px; text-align: left; }
-    .stat-label { font-size: 13px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px; }
-    .stat-value { font-size: 24px; font-weight: 700; color: var(--gold-primary); }
-
-    .countdown-wrapper { margin: 32px 0; }
-    .countdown-title { font-size: 14px; color: var(--text-gray); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 16px; }
-    .countdown-grid { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
-    .countdown-box { background: var(--dark-card); border: 1px solid var(--gold-primary); border-radius: 12px; min-width: 100px; padding: 16px 8px; }
-    .countdown-number { font-size: 40px; font-weight: 900; color: var(--gold-primary); line-height: 1; }
-    .countdown-text { font-size: 12px; color: var(--text-gray); margin-top: 8px; text-transform: uppercase; }
-
-    .progress-wrapper { width: 100%; margin: 32px 0; }
-    .progress-header { display: flex; justify-content: space-between; margin-bottom: 12px; }
-    .progress-header span { font-size: 14px; color: var(--text-gray); }
-    .progress-bar-container { width: 100%; height: 12px; background: var(--dark-card); border-radius: 100px; overflow: hidden; border: 1px solid var(--dark-border); }
-    .progress-bar-fill { height: 100%; background: linear-gradient(90deg, var(--gold-secondary) 0%, var(--gold-primary) 100%); width: 0%; transition: width 0.8s ease; border-radius: 100px; }
-
-    .buy-form-card { background: var(--dark-card); border: 1px solid var(--dark-border); border-radius: 16px; padding: 32px; max-width: 600px; margin: 0 auto; width: 100%; }
-    .form-input-group { margin-bottom: 16px; }
-    .form-label { display: flex; justify-content: space-between; gap: 10px; margin-bottom: 8px; font-size: 14px; color: var(--text-gray); flex-wrap: wrap; }
-    .form-input { width: 100%; padding: 16px; background: var(--dark-bg); border: 1px solid var(--dark-border); border-radius: 12px; color: var(--text-white); transition: border-color 0.3s ease; font-size: 18px; font-weight: 600; }
-    .form-input:focus { outline: none; border-color: var(--gold-primary); }
-    .token-estimate { text-align: left; font-size: 14px; color: var(--text-gray); margin: 12px 0 24px; }
-
-    .feature-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 32px; }
-    .feature-card { background: var(--dark-card); border: 1px solid var(--dark-border); border-radius: 16px; padding: 40px; transition: all 0.3s ease; }
-    .feature-card:hover { border-color: var(--gold-primary); transform: translateY(-8px); box-shadow: 0 16px 40px rgba(255, 215, 0, 0.1); }
-    .feature-icon { font-size: 48px; margin-bottom: 24px; }
-    .feature-title { font-size: 28px; font-weight: 800; margin-bottom: 16px; color: var(--gold-primary); }
-    .feature-desc { font-size: 16px; color: var(--text-gray); line-height: 1.8; }
-
-    .referral-box { background: var(--dark-bg); border: 1px solid var(--dark-border); border-radius: 16px; padding: 32px; margin-top: 32px; }
-    .referral-link { display: flex; gap: 12px; margin-top: 16px; }
-    .referral-link input { flex: 1; padding: 12px; background: var(--dark-bg); border: 1px solid var(--dark-border); border-radius: 8px; color: var(--text-white); font-family: monospace; }
-
-    .partners-section { padding: 60px 0; background: var(--dark-card); }
-    .partners-grid { display: flex; flex-wrap: wrap; gap: 32px; justify-content: center; align-items: center; }
-    .partner-logo { font-size: 18px; font-weight: 700; color: var(--text-muted); transition: color 0.3s ease; }
-    .partner-logo:hover { color: var(--gold-primary); }
-
-    .footer { padding: 60px 0 30px; border-top: 1px solid var(--dark-border); }
-    .footer-content { display: flex; flex-direction: column; align-items: center; text-align: center; }
-    .footer-logo { font-size: 36px; font-weight: 900; color: var(--gold-primary); margin-bottom: 18px; }
-    .footer-links { display: flex; gap: 22px; margin-bottom: 22px; flex-wrap: wrap; justify-content: center; }
-    .footer-links a { color: var(--text-gray); text-decoration: none; font-weight: 600; transition: color 0.3s ease; }
-    .footer-links a:hover { color: var(--gold-primary); }
-    .footer-contract { font-family: monospace; font-size: 14px; color: var(--text-muted); margin-bottom: 18px; word-break: break-all; }
-
-    .social-row { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; margin-bottom: 18px; }
-    .social-btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      padding: 10px 16px;
-      border-radius: 999px;
-      border: 1px solid var(--dark-border);
-      background: rgba(255,255,255,0.02);
-      color: var(--text-white);
-      text-decoration: none;
+    .dna-wrap::before{
+      content:"";
+      position:absolute; inset:-40px;
+      pointer-events:none;
+      background:
+        radial-gradient(900px 360px at 50% -10%, rgba(245,215,122,0.16), transparent 60%),
+        radial-gradient(700px 260px at 20% 0%, rgba(245,215,122,0.10), transparent 62%),
+        radial-gradient(700px 260px at 80% 0%, rgba(255,255,255,0.06), transparent 65%),
+        linear-gradient(180deg, rgba(255,255,255,0.05), transparent 45%);
+      opacity: 0.95;
+    }
+    .dna-topbar{
+      position: relative;
+      z-index: 1;
+      display:flex;
+      align-items:baseline;
+      justify-content:space-between;
+      gap: 14px;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+    }
+    /* reduced DNA font sizes */
+    .dna-top-left{
+      font-size: 32px;
+      line-height: 1.1;
       font-weight: 900;
-      transition: .25s ease;
-      min-width: 120px;
+      letter-spacing: -0.03em;
+      color: rgba(245,215,122,0.98);
+      text-shadow: 0 18px 80px rgba(245,215,122,0.12);
     }
-    .social-btn:hover {
-      border-color: var(--gold-primary);
-      box-shadow: 0 10px 24px rgba(255,215,0,.10);
-      transform: translateY(-2px);
+    .dna-top-right{
+      font-size: 16px;
+      font-weight: 700;
+      color: rgba(255,255,255,0.60);
+      letter-spacing: -0.01em;
     }
-    .social-dot { width: 8px; height: 8px; border-radius: 999px; background: var(--gold-primary); }
-
-    .footer-copyright { font-size: 14px; color: var(--text-muted); }
-
-    .notification {
-      position: fixed; top: 100px; right: 24px; max-width: 400px;
-      padding: 20px 24px; background: var(--dark-card);
-      border: 1px solid var(--gold-primary);
-      border-radius: 12px; z-index: 9999;
-      box-shadow: 0 16px 40px rgba(0,0,0,0.5);
-      transform: translateX(120%);
-      transition: transform 0.3s ease;
+    .dna-grid2{
+      position: relative;
+      z-index: 1;
+      display:grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 10px;
     }
-    .notification.show { transform: translateX(0); }
-    .notification-title { font-weight: 800; margin-bottom: 8px; }
-    .notification-desc { font-size: 14px; color: var(--text-gray); }
-    .loading-spinner { display: inline-block; width: 20px; height: 20px; border: 2px solid var(--text-muted); border-radius: 50%; border-top-color: var(--gold-primary); animation: spin 1s linear infinite; vertical-align: middle; }
-    @keyframes spin { to { transform: rotate(360deg); } }
+    .dna-item{
+      border-radius: 20px;
+      border: 1px solid rgba(255,255,255,0.08);
+      background: rgba(0,0,0,0.18);
+      box-shadow: 0 18px 60px rgba(0,0,0,0.45);
+      padding: 18px 18px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap: 14px;
+      transition: transform .18s ease, border-color .18s ease, box-shadow .18s ease, filter .18s ease;
+      overflow:hidden;
+      position:relative;
+    }
+    .dna-item::before{
+      content:"";
+      position:absolute; inset:-1px;
+      pointer-events:none;
+      background:
+        radial-gradient(520px 200px at 18% 0%, rgba(245,215,122,0.10), transparent 60%),
+        linear-gradient(180deg, rgba(255,255,255,0.06), transparent 50%);
+      opacity:0.35;
+      transition: opacity .18s ease;
+    }
+    .dna-item:hover{
+      transform: translateY(-5px);
+      border-color: rgba(245,215,122,0.28);
+      box-shadow: 0 28px 92px rgba(0,0,0,0.70);
+      filter: brightness(1.03);
+    }
+    .dna-item:hover::before{opacity:0.7;}
+    .dna-item-left{min-width:0}
+    .dna-item-title{
+      font-size: 20px;
+      font-weight: 900;
+      letter-spacing: -0.02em;
+      color: rgba(255,255,255,0.92);
+    }
+    .dna-item-sub{
+      margin-top: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      color: rgba(255,255,255,0.52);
+      letter-spacing: -0.01em;
+    }
+    .dna-item-pct{
+      font-size: 30px;
+      font-weight: 900;
+      color: rgba(245,215,122,0.98);
+      font-variant-numeric: tabular-nums;
+      text-shadow: 0 18px 90px rgba(245,215,122,0.10);
+      flex-shrink: 0;
+    }
 
-    @media (max-width: 900px) {
-      .navbar-links a:not([data-nav="home"]):not([data-nav="buy"]) { display: none; }
-      .hero-title { font-size: 40px; }
-      .hero-token-title { font-size: 56px; }
-      .hero-slogan { font-size: 18px; }
-      .presale-stats-grid { grid-template-columns: repeat(2, 1fr); }
-      .countdown-grid { gap: 8px; }
-      .countdown-box { min-width: 70px; }
-      .countdown-number { font-size: 28px; }
-      .section-title { font-size: 36px; }
-      .dna-grid { grid-template-columns: 1fr; }
-      .feature-grid, .roadmap-grid { grid-template-columns: 1fr; }
-      .referral-link { flex-direction: column; }
-      .notification { right: 12px; left: 12px; max-width: none; }
-      .wallet-container { gap: 6px; }
-      #walletConnectBtn { padding: 9px 18px; }
-      #disconnectBtn { padding: 7px 14px; }
+    /* Roadmap */
+    .roadmap-grid{
+      margin-top:14px;
+      display:grid;
+      grid-template-columns:repeat(4,minmax(0,1fr));
+      gap:12px;
+    }
+    .roadmap-card{
+      padding:16px;
+      border-radius:18px;
+      border:1px solid rgba(255,255,255,0.10);
+      background:rgba(255,255,255,0.03);
+      box-shadow:0 16px 60px rgba(0,0,0,0.45);
+      position:relative;
+      overflow:hidden;
+      transition: transform .18s ease, border-color .18s ease, box-shadow .18s ease, filter .18s ease;
+      will-change: transform;
+    }
+    .roadmap-card::before{
+      content:"";
+      position:absolute;inset:0;pointer-events:none;
+      background:radial-gradient(520px 200px at 20% 0%, rgba(245,215,122,0.10), transparent 60%);
+      opacity:0.55;
+      transition: opacity .18s ease;
+    }
+    .roadmap-card:hover{
+      transform: translateY(-6px);
+      border-color: rgba(245,215,122,0.35);
+      box-shadow: 0 26px 90px rgba(0,0,0,0.65), 0 0 0 1px rgba(245,215,122,0.10) inset;
+      filter: brightness(1.03);
+    }
+    .roadmap-card:hover::before{opacity:0.85;}
+    .roadmap-phase{position:relative;z-index:1;font-size:12px;letter-spacing:0.18em;text-transform:uppercase;color:rgba(255,255,255,0.60);font-weight:900}
+    .roadmap-title{position:relative;z-index:1;margin-top:8px;font-weight:900;color:rgba(245,215,122,0.95);letter-spacing:-0.02em}
+    .roadmap-list{position:relative;z-index:1;margin-top:10px;color:rgba(255,255,255,0.72);font-size:13px;padding-left:18px}
+    .roadmap-list li{margin-top:8px}
+
+    /* =============== BUY PAGE =============== */
+    .gridTop{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-top:18px}
+    .stat{padding:14px;min-width:0;position:relative;overflow:hidden}
+    .stat::after{
+      content:"";
+      position:absolute;inset:-1px;
+      border-radius:18px;
+      pointer-events:none;
+      background: radial-gradient(420px 140px at 15% 0%, rgba(245,215,122,0.22), transparent 60%),
+                  radial-gradient(420px 140px at 85% 0%, rgba(255,255,255,0.08), transparent 65%);
+      opacity:0.0;
+      transition: opacity .18s ease;
+    }
+    .stat:hover::after{opacity:0.95;}
+    .stat{
+      border-color: rgba(255,255,255,0.10);
+      box-shadow: 0 18px 60px rgba(0,0,0,0.50);
+      transition: transform .18s ease, border-color .18s ease, box-shadow .18s ease;
+    }
+    .stat:hover{
+      transform: translateY(-3px);
+      border-color: rgba(245,215,122,0.28);
+      box-shadow: 0 28px 90px rgba(0,0,0,0.70);
+    }
+    .stat .k{
+      font-size:11px;text-transform:uppercase;letter-spacing:0.14em;color:rgba(255,255,255,0.50);
+      white-space:nowrap;overflow:hidden;text-overflow:ellipsis;line-height:1.2
+    }
+    .stat .v{
+      margin-top:6px;font-size:16px;font-weight:900;color:rgba(245,215,122,0.95);
+      font-variant-numeric:tabular-nums;
+      white-space:nowrap;overflow:hidden;text-overflow:ellipsis;line-height:1.25;padding-bottom:1px;min-width:0
+    }
+
+    .buyLayout{display:grid;grid-template-columns:1.1fr 0.9fr;gap:14px;margin-top:12px;align-items:start}
+    .buyCard{padding:16px}
+    .buyHead{display:flex;justify-content:space-between;gap:10px;align-items:center;flex-wrap:wrap}
+    .liveDot{width:8px;height:8px;border-radius:50%;background:var(--ok);box-shadow:0 0 18px rgba(0,200,83,0.35)}
+    .small{font-size:12px;color:var(--muted)}
+    .pill{
+      padding:6px 10px;border-radius:999px;border:1px solid rgba(245,215,122,0.28);
+      background:rgba(0,0,0,0.18);font-size:12px;font-weight:900;color:rgba(245,215,122,0.92)
+    }
+
+    .row{margin-top:8px;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+    .seg{display:flex;gap:8px;flex-wrap:wrap}
+    .chip{
+      padding:10px 12px;border-radius:14px;
+      border:1px solid rgba(255,255,255,0.10);
+      background:rgba(0,0,0,0.18);
+      color:rgba(255,255,255,0.82);
+      font-weight:900;font-size:13px;cursor:pointer;transition:.18s;
+      user-select:none
+    }
+    .chip.active{
+      border-color:rgba(245,215,122,0.55);
+      background:rgba(245,215,122,0.10);
+      color:rgba(245,215,122,0.95);
+      box-shadow:0 0 24px rgba(245,215,122,0.10);
+    }
+
+    .input{
+      width:100%;padding:14px;border-radius:14px;
+      border:1px solid rgba(255,255,255,0.10);
+      background:rgba(0,0,0,0.22);
+      color:rgba(255,255,255,0.92);
+      font-size:15px;font-weight:800;
+    }
+    .input:focus{outline:none;border-color:rgba(245,215,122,0.45);box-shadow:0 0 0 4px rgba(245,215,122,0.10)}
+
+    .kvBox{
+      margin-top:10px;padding:12px;border-radius:16px;
+      border:1px solid rgba(255,255,255,0.08);
+      background:rgba(0,0,0,0.18);
+    }
+    .kvRow{display:flex;justify-content:space-between;gap:10px;align-items:baseline;flex-wrap:wrap}
+    .kvRow span{font-size:12px;color:rgba(255,255,255,0.62)}
+    .kvRow b{font-size:13px;color:rgba(245,215,122,0.92);font-variant-numeric:tabular-nums}
+    .note{margin-top:8px;font-size:12px;color:rgba(255,255,255,0.52);line-height:1.45;white-space:pre-line}
+
+    .progressWrap{margin-top:12px}
+    .bar{
+      width:100%;height:10px;border-radius:999px;overflow:hidden;
+      background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08)
+    }
+    .fill{
+      height:100%;width:0%;
+      background:linear-gradient(90deg, rgba(233,196,92,0.9), rgba(245,215,122,0.95));
+      transition:width .6s ease
+    }
+    @keyframes progPulse{0%{filter:brightness(1)}50%{filter:brightness(1.18)}100%{filter:brightness(1)}}
+    .fill.near{animation:progPulse 1.05s ease-in-out infinite}
+
+    .dash{padding:16px}
+    .dashTitle{font-weight:900;letter-spacing:-0.02em}
+    .table{margin-top:10px;border-radius:16px;overflow:hidden;border:1px solid rgba(255,255,255,0.08)}
+    .tr{display:grid;grid-template-columns:1.0fr 1.1fr 0.9fr 0.9fr;gap:10px;padding:10px 12px;background:rgba(0,0,0,0.12);align-items:center}
+    .tr.head{background:rgba(255,255,255,0.04);font-size:12px;color:rgba(255,255,255,0.62);font-weight:900;text-transform:uppercase;letter-spacing:0.12em}
+    .td{font-size:12px;color:rgba(255,255,255,0.76);min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+    .td b{color:rgba(245,215,122,0.92);font-variant-numeric:tabular-nums}
+    .empty{padding:14px;color:rgba(255,255,255,0.55);font-size:13px}
+    a.link{color:rgba(245,215,122,0.92);text-decoration:none}
+    a.link:hover{text-decoration:underline}
+
+    .heroGrid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-top:14px}
+    .heroCard{padding:16px;transition: transform .18s ease, border-color .18s ease, box-shadow .18s ease}
+    .heroCard:hover{
+      transform: translateY(-4px);
+      border-color: rgba(245,215,122,0.25);
+      box-shadow: 0 24px 80px rgba(0,0,0,0.65);
+    }
+    .heroCard h3{color:rgba(245,215,122,0.95);font-weight:900;letter-spacing:-0.02em}
+    .heroCard p{margin-top:8px;color:var(--muted);font-size:13px}
+
+    /* Footer */
+    footer{
+      margin-top: 10px;
+      padding: 26px 0;
+      border-top: 1px solid rgba(255,255,255,0.06);
+      background: rgba(7,7,8,0.72);
+      backdrop-filter: blur(14px);
+    }
+    .footerText{
+      text-align:center;
+      color: rgba(255,255,255,0.55);
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+    }
+
+    /* ========== WHITEPAPER (Institutional + Meme) ========== */
+    .wp-head{
+      display:flex;
+      gap:14px;
+      justify-content:space-between;
+      align-items:flex-start;
+      flex-wrap:wrap;
+    }
+    .wp-meta{
+      margin-top:14px;
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+    }
+    .wp-chip{
+      padding:8px 10px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,0.10);
+      background:rgba(0,0,0,0.18);
+      color:rgba(255,255,255,0.70);
+      font-size:12px;
+      font-weight:800;
+    }
+    .wp-chip b{color:rgba(245,215,122,0.92)}
+
+    .wp-actions{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      align-items:center;
+      justify-content:flex-end;
+      min-width:260px;
+    }
+
+    .wp-grid{
+      margin-top:18px;
+      display:grid;
+      grid-template-columns: 1.3fr 0.7fr;
+      gap:14px;
+      align-items:start;
+    }
+
+    .wp-card{padding:22px}
+    .wp-side{padding:18px; position:sticky; top:96px; height:fit-content}
+    .wp-sideTitle{font-weight:900;color:rgba(245,215,122,0.95);letter-spacing:-0.02em}
+    .wp-sideBox{
+      margin-top:10px;
+      padding:12px;
+      border-radius:16px;
+      border:1px solid rgba(255,255,255,0.08);
+      background:rgba(0,0,0,0.14);
+    }
+    .wp-sideK{font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:rgba(255,255,255,0.55);font-weight:900}
+    .wp-sideV{margin-top:6px;color:rgba(255,255,255,0.82);font-weight:900}
+    .wp-sideNote{
+      margin-top:12px;
+      padding:12px;
+      border-radius:16px;
+      border:1px solid rgba(245,215,122,0.22);
+      background:rgba(245,215,122,0.06);
+      color:rgba(255,255,255,0.68);
+      font-size:12px;
+      line-height:1.5;
+    }
+    .wp-sideActions{margin-top:12px;display:grid;gap:10px}
+
+    .wp-toc{
+      padding:14px;
+      border-radius:16px;
+      border:1px solid rgba(255,255,255,0.08);
+      background:rgba(0,0,0,0.14);
+    }
+    .wp-toc-title{
+      font-weight:900;
+      color:rgba(245,215,122,0.95);
+      letter-spacing:-0.02em;
+    }
+    .wp-toc-links{
+      margin-top:10px;
+      display:grid;
+      gap:8px;
+    }
+    .wp-link{
+      text-decoration:none;
+      color:rgba(255,255,255,0.72);
+      font-weight:900;
+      font-size:13px;
+      padding:10px 10px;
+      border-radius:12px;
+      border:1px solid rgba(255,255,255,0.06);
+      background:rgba(255,255,255,0.03);
+    }
+    .wp-link:hover{
+      border-color:rgba(245,215,122,0.28);
+      color:rgba(245,215,122,0.95);
+    }
+
+    .wp-section{margin-top:18px}
+    #whitepaper h2{
+      margin-top:18px;
+      color:rgba(245,215,122,0.95);
+      font-weight:900;
+      letter-spacing:-0.02em;
+      font-size:20px;
+    }
+    #whitepaper p{color:rgba(255,255,255,0.72);margin-top:10px}
+    .wp-muted{color:rgba(255,255,255,0.55)}
+
+    .wp-bullets{
+      margin-top:10px;
+      padding-left:18px;
+      color:rgba(255,255,255,0.72);
+    }
+    .wp-bullets li{margin-top:8px}
+
+    .wp-callout{
+      margin-top:14px;
+      border-radius:18px;
+      border:1px solid rgba(245,215,122,0.25);
+      background:rgba(245,215,122,0.06);
+      padding:14px;
+    }
+    .wp-callout-title{
+      font-weight:900;
+      color:rgba(245,215,122,0.95);
+    }
+    .wp-callout-body{
+      margin-top:8px;
+      color:rgba(255,255,255,0.70);
+      font-size:13px;
+      line-height:1.6;
+    }
+
+    .wp-subgrid{
+      margin-top:12px;
+      display:grid;
+      grid-template-columns: repeat(3,minmax(0,1fr));
+      gap:12px;
+    }
+    .wp-mini{padding:14px;border-radius:18px}
+    .wp-mini-k{font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:rgba(255,255,255,0.52);font-weight:900}
+    .wp-mini-v{margin-top:8px;font-weight:900;color:rgba(245,215,122,0.95);font-size:18px;letter-spacing:-0.02em}
+    .wp-mini-note{margin-top:6px;color:rgba(255,255,255,0.60);font-size:12px}
+
+    .wp-twoCol{
+      margin-top:10px;
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:12px;
+    }
+    .wp-adv{
+      padding:14px;
+      border-radius:18px;
+      border:1px solid rgba(255,255,255,0.08);
+      background:rgba(0,0,0,0.14);
+    }
+    .wp-adv h3{color:rgba(245,215,122,0.95);font-weight:900;letter-spacing:-0.02em}
+    .wp-adv p{margin-top:8px;color:rgba(255,255,255,0.70);font-size:13px}
+
+    .wp-tokenGrid{
+      margin-top:12px;
+      display:grid;
+      grid-template-columns: repeat(3,minmax(0,1fr));
+      gap:12px;
+    }
+    .wp-alloc{padding:14px;border-radius:18px}
+    .wp-alloc-k{font-size:12px;font-weight:900;color:rgba(255,255,255,0.85)}
+    .wp-alloc-v{margin-top:8px;font-size:22px;font-weight:900;color:rgba(245,215,122,0.95)}
+    .wp-alloc-n{margin-top:6px;color:rgba(255,255,255,0.58);font-size:12px}
+
+    .wp-chartWrap{
+      margin-top:14px;
+      border-radius:18px;
+      border:1px solid rgba(255,255,255,0.08);
+      background:rgba(0,0,0,0.14);
+      padding:14px;
+    }
+    .wp-chartHead{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;align-items:baseline}
+    .wp-chartTitle{font-weight:900;color:rgba(245,215,122,0.95);letter-spacing:-0.02em}
+    .wp-chartNote{color:rgba(255,255,255,0.55);font-size:12px}
+    .wp-chart{width:100%;height:auto;display:block;margin-top:10px}
+
+    .wp-donutRow{
+      display:grid;
+      grid-template-columns: 320px 1fr;
+      gap:12px;
+      align-items:center;
+      margin-top:10px;
+    }
+    .wp-donut{width:320px;max-width:100%;height:auto;display:block;margin:0 auto}
+    .wp-legend{display:grid;gap:10px}
+    .wp-legItem{color:rgba(255,255,255,0.72);font-weight:900;font-size:13px;display:flex;align-items:center;gap:10px}
+    .wp-dot{width:10px;height:10px;border-radius:999px;display:inline-block}
+    .wp-dot.d1{background:rgba(245,215,122,0.95);box-shadow:0 0 16px rgba(245,215,122,0.18)}
+    .wp-dot.d2{background:rgba(245,215,122,0.55)}
+    .wp-dot.d3{background:rgba(233,196,92,0.45)}
+    .wp-dot.d4{background:rgba(255,255,255,0.22)}
+    .wp-dot.d5{background:rgba(255,255,255,0.18)}
+    .wp-dot.d6{background:rgba(255,255,255,0.14)}
+
+    .wp-roadGrid{
+      margin-top:12px;
+      display:grid;
+      grid-template-columns: repeat(2,minmax(0,1fr));
+      gap:12px;
+    }
+    .wp-road{padding:14px;border-radius:18px;transition: transform .18s ease, border-color .18s ease, box-shadow .18s ease}
+    .wp-road:hover{
+      transform: translateY(-4px);
+      border-color: rgba(245,215,122,0.28);
+      box-shadow:0 24px 80px rgba(0,0,0,0.65);
+    }
+    .wp-road-phase{font-size:12px;letter-spacing:0.18em;text-transform:uppercase;color:rgba(255,255,255,0.55);font-weight:900}
+    .wp-road-title{margin-top:8px;font-weight:900;color:rgba(245,215,122,0.95);letter-spacing:-0.02em}
+    .wp-road ul{margin-top:10px;padding-left:18px;color:rgba(255,255,255,0.70);font-size:13px}
+    .wp-road li{margin-top:8px}
+    .wp-road-kpi{margin-top:10px;color:rgba(255,255,255,0.62);font-size:12px}
+    .wp-road-kpi b{color:rgba(245,215,122,0.92)}
+
+    .wp-riskGrid{
+      margin-top:12px;
+      display:grid;
+      grid-template-columns: repeat(2,minmax(0,1fr));
+      gap:12px;
+    }
+    .wp-risk{padding:14px;border-radius:18px}
+    .wp-risk-t{font-weight:900;color:rgba(245,215,122,0.95)}
+    .wp-risk-b{margin-top:8px;color:rgba(255,255,255,0.68);font-size:13px}
+
+    /* Whitepaper live grid (stage/rate/trigger) */
+    .wp-liveGrid{
+      margin-top:10px;
+      display:grid;
+      grid-template-columns: repeat(4, minmax(0,1fr));
+      gap:12px;
+    }
+    .wp-live{padding:14px;border-radius:18px}
+    .wp-live-k{
+      font-size:11px;
+      letter-spacing:0.12em;
+      text-transform:uppercase;
+      color:rgba(255,255,255,0.55);
+      font-weight:900;
+    }
+    .wp-live-v{
+      margin-top:8px;
+      font-size:18px;
+      font-weight:900;
+      color:rgba(245,215,122,0.95);
+      letter-spacing:-0.02em;
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
+    .wp-live-n{
+      margin-top:6px;
+      font-size:12px;
+      color:rgba(255,255,255,0.58);
+    }
+
+    /* Responsive */
+    @media (max-width: 1080px){
+      .roadmap-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+      .heroGrid{grid-template-columns:repeat(2,minmax(0,1fr))}
+    }
+    @media (max-width: 980px){
+      .title{font-size:38px}
+      .gridTop{grid-template-columns:repeat(2,minmax(0,1fr))}
+      .buyLayout{grid-template-columns:1fr}
+      .notification{right:10px;left:10px;max-width:none}
+      .nav-links{display:none}
+      .menuBtn{display:flex}
+      .hero-token-title{font-size:72px}
+      .section{padding-top:96px}
+
+      .dna-top-left{font-size: 28px;}
+      .dna-top-right{font-size: 14px;}
+      .dna-grid2{grid-template-columns: 1fr; gap: 12px;}
+      .dna-item-title{font-size: 18px;}
+      .dna-item-sub{font-size: 12px; margin-top: 6px;}
+      .dna-item-pct{font-size: 26px;}
+
+      .wp-grid{grid-template-columns:1fr}
+      .wp-side{position:relative;top:auto}
+      .wp-subgrid{grid-template-columns:1fr}
+      .wp-twoCol{grid-template-columns:1fr}
+      .wp-tokenGrid{grid-template-columns:1fr}
+      .wp-roadGrid{grid-template-columns:1fr}
+      .wp-riskGrid{grid-template-columns:1fr}
+      .wp-donutRow{grid-template-columns:1fr}
+      .wp-actions{width:100%}
+      .wp-liveGrid{grid-template-columns:1fr}
+    }
+    @media (max-width: 520px){
+      .hero-token-title{font-size:60px}
+      .tr{grid-template-columns:1.0fr 1.0fr 0.9fr 0.9fr}
+      .dna-wrap{padding:20px 14px}
+      .dna-item{padding:16px 14px}
+    }
+
+    /* Print (clean PDF output) */
+    @media print{
+      body{background:#fff !important;color:#111 !important}
+      .navbar, .mobileMenu, footer{display:none !important}
+      .glass, .wp-chartWrap, .wp-callout, .wp-toc, .wp-sideBox, .wp-sideNote{
+        box-shadow:none !important;
+        backdrop-filter:none !important;
+      }
+      .page{display:block !important}
+      #whitepaper{display:block !important}
+      .wp-grid{grid-template-columns:1fr !important}
+      .wp-side{display:none !important}
+      .title, .section-title, .hero-token-title{
+        -webkit-text-fill-color:initial !important;
+        color:#111 !important;
+        background:none !important;
+        text-shadow:none !important;
+      }
     }
   </style>
 </head>
-
+<!-- =========================
+PART 2 / 3 (BODY: NAV + HOME + BUY + HOWTOBUY + STAKING + REFERRAL)
+========================= -->
 <body>
   <div id="notification" class="notification">
     <div class="notification-title" id="notificationTitle"></div>
@@ -369,95 +844,107 @@
 
   <nav class="navbar">
     <div class="container navbar-content">
-      <a class="navbar-logo" href="#home" data-nav="home">🐂 BULLFORGE</a>
-      <div class="navbar-links">
+      <a class="logo" href="#home" data-nav="home">BullForge</a>
+
+      <div class="nav-links">
         <a href="#home" data-nav="home">Home</a>
         <a href="#buy" data-nav="buy">Buy Now</a>
         <a href="#howtobuy" data-nav="howtobuy">How to Buy</a>
         <a href="#whitepaper" data-nav="whitepaper">Whitepaper</a>
         <a href="#staking" data-nav="staking">Staking</a>
         <a href="#referral" data-nav="referral">Referral</a>
-        <div class="wallet-container">
-          <span id="networkBadge">BNB</span>
-          <button id="walletConnectBtn">Connect Wallet</button>
-          <button id="disconnectBtn" style="display:none;">Disconnect</button>
-        </div>
+      </div>
+
+      <div class="nav-right">
+        <button class="menuBtn" id="menuBtn">≡</button>
+        <span id="evmBadge" class="badge">EVM</span>
+        <button id="evmConnectBtn" class="btnTop">Connect EVM</button>
+        <button id="evmDisconnectBtn" class="btnGhost" style="display:none;">Disconnect</button>
       </div>
     </div>
   </nav>
+
+  <div class="mobileMenu" id="mobileMenu">
+    <a href="#home" data-nav="home">Home</a>
+    <a href="#buy" data-nav="buy">Buy Now</a>
+    <a href="#howtobuy" data-nav="howtobuy">How to Buy</a>
+    <a href="#whitepaper" data-nav="whitepaper">Whitepaper</a>
+    <a href="#staking" data-nav="staking">Staking</a>
+    <a href="#referral" data-nav="referral">Referral</a>
+  </div>
 
   <!-- HOME -->
   <section class="section page is-active home-landing" id="home" data-page="home">
     <div class="home-hero-glow"></div>
     <div class="container">
       <div class="section-header" style="margin-top:80px;">
-        <div class="section-subtitle">WELCOME TO BULLFORGE</div>
+        <div class="section-subtitle welcomeShimmer">WELCOME TO BULLFORGE</div>
         <h1 class="hero-token-title">$BFG</h1>
         <p class="section-desc">The Future isn't Just Bullish. It's Bullforge.</p>
         <div style="margin-top:30px;">
-          <button class="buy-button" style="max-width:260px;" onclick="location.hash='buy'">Buy Now</button>
+          <button class="buy-button" style="max-width:260px;" onclick="location.hash='#buy'">Buy Now</button>
         </div>
       </div>
 
-      <!-- DNA (单一卡片) -->
-      <div class="section-header" style="margin-bottom:30px;">
+      <!-- DNA -->
+      <div class="section-header" style="margin-bottom:30px;margin-top:70px;">
         <div class="section-subtitle">DNA Allocation</div>
         <h2 class="section-title" style="font-size:42px;">Token DNA</h2>
       </div>
 
-      <div class="dna-card">
-        <div class="dna-header">
-          <div class="dna-title">$BFG Allocation</div>
-          <div class="dna-note">One card. Clean. Readable.</div>
+      <div class="dna-wrap">
+        <div class="dna-topbar">
+          <div class="dna-top-left">$BFG Allocation</div>
+          <div class="dna-top-right">One card. Clean. Readable.</div>
         </div>
 
-        <div class="dna-grid">
-          <div class="dna-row">
-            <div class="dna-left">
-              <div class="dna-label">Presale</div>
-              <div class="dna-desc">Public access distribution</div>
+        <div class="dna-grid2">
+          <div class="dna-item">
+            <div class="dna-item-left">
+              <div class="dna-item-title">Presale</div>
+              <div class="dna-item-sub">Public access distribution</div>
             </div>
-            <div class="dna-pct">35%</div>
+            <div class="dna-item-pct">35%</div>
           </div>
 
-          <div class="dna-row">
-            <div class="dna-left">
-              <div class="dna-label">Staking Rewards</div>
-              <div class="dna-desc">Sustainable yield incentives</div>
+          <div class="dna-item">
+            <div class="dna-item-left">
+              <div class="dna-item-title">Staking Rewards</div>
+              <div class="dna-item-sub">Sustainable yield incentives</div>
             </div>
-            <div class="dna-pct">20%</div>
+            <div class="dna-item-pct">20%</div>
           </div>
 
-          <div class="dna-row">
-            <div class="dna-left">
-              <div class="dna-label">Liquidity</div>
-              <div class="dna-desc">DEX stability and depth</div>
+          <div class="dna-item">
+            <div class="dna-item-left">
+              <div class="dna-item-title">Liquidity</div>
+              <div class="dna-item-sub">DEX stability and depth</div>
             </div>
-            <div class="dna-pct">15%</div>
+            <div class="dna-item-pct">15%</div>
           </div>
 
-          <div class="dna-row">
-            <div class="dna-left">
-              <div class="dna-label">Marketing</div>
-              <div class="dna-desc">Global growth campaigns</div>
+          <div class="dna-item">
+            <div class="dna-item-left">
+              <div class="dna-item-title">Marketing</div>
+              <div class="dna-item-sub">Global growth campaigns</div>
             </div>
-            <div class="dna-pct">10%</div>
+            <div class="dna-item-pct">10%</div>
           </div>
 
-          <div class="dna-row">
-            <div class="dna-left">
-              <div class="dna-label">Ecosystem</div>
-              <div class="dna-desc">Partnerships & utilities</div>
+          <div class="dna-item">
+            <div class="dna-item-left">
+              <div class="dna-item-title">Ecosystem</div>
+              <div class="dna-item-sub">Partnerships & utilities</div>
             </div>
-            <div class="dna-pct">10%</div>
+            <div class="dna-item-pct">10%</div>
           </div>
 
-          <div class="dna-row">
-            <div class="dna-left">
-              <div class="dna-label">Team</div>
-              <div class="dna-desc">Long-term vested allocation</div>
+          <div class="dna-item">
+            <div class="dna-item-left">
+              <div class="dna-item-title">Team</div>
+              <div class="dna-item-sub">Long-term vested allocation</div>
             </div>
-            <div class="dna-pct">10%</div>
+            <div class="dna-item-pct">10%</div>
           </div>
         </div>
       </div>
@@ -509,405 +996,1060 @@
     </div>
   </section>
 
-  <!-- BUY（只有这里有购买框） -->
-  <section class="hero page" data-page="buy" id="buy">
-    <div class="hero-bg-glow"></div>
-    <div class="container hero-content">
-      <h1 class="hero-title">Buy $BFG</h1>
-      <p class="hero-slogan">Forged in the chaos of the blockchain, built to thrive where others fall.</p>
+  <!-- BUY -->
+  <section class="page" id="buy" data-page="buy">
+    <div class="section">
+      <div class="container">
+        <div class="title">Buy $BFG</div>
+        <div class="subtitle">Choose a chain, enter amount, and pay directly in-wallet. No address copy required.</div>
 
-      <div class="presale-stats-grid">
-        <div class="stat-card"><div class="stat-label">Current Price</div><div class="stat-value" id="currentPrice"><span class="loading-spinner"></span></div></div>
-        <div class="stat-card"><div class="stat-label">Total Raised</div><div class="stat-value" id="totalRaised"><span class="loading-spinner"></span></div></div>
-        <div class="stat-card"><div class="stat-label">Current Stage</div><div class="stat-value" id="currentStage"><span class="loading-spinner"></span></div></div>
-        <div class="stat-card"><div class="stat-label">1 BNB =</div><div class="stat-value" id="tokenRate"><span class="loading-spinner"></span></div></div>
-      </div>
-
-      <div class="countdown-wrapper">
-        <div class="countdown-title">PRESALE ENDS IN</div>
-        <div class="countdown-grid">
-          <div class="countdown-box"><div class="countdown-number" id="countdownDays">--</div><div class="countdown-text">Days</div></div>
-          <div class="countdown-box"><div class="countdown-number" id="countdownHours">--</div><div class="countdown-text">Hours</div></div>
-          <div class="countdown-box"><div class="countdown-number" id="countdownMinutes">--</div><div class="countdown-text">Minutes</div></div>
-          <div class="countdown-box"><div class="countdown-number" id="countdownSeconds">--</div><div class="countdown-text">Seconds</div></div>
-        </div>
-      </div>
-
-      <div class="progress-wrapper">
-        <div class="progress-header"><span>Presale Progress</span><span id="progressPercent">0%</span></div>
-        <div class="progress-bar-container"><div class="progress-bar-fill" id="progressBarFill"></div></div>
-      </div>
-
-      <div class="buy-form-card">
-        <div class="form-input-group">
-          <div class="form-label"><span>Amount (BNB)</span><span>Balance: <span id="walletBalance">0.00</span> BNB</span></div>
-          <input type="number" class="form-input" id="bnbAmount" placeholder="0.0" step="0.01" min="0">
+        <div class="gridTop">
+          <div class="stat glass">
+            <div class="k">Total Raised (BSC)</div>
+            <div class="v" id="totalRaised"><span class="spinner"></span></div>
+          </div>
+          <div class="stat glass">
+            <div class="k">Total Raised (USD)</div>
+            <div class="v" id="totalRaisedUsd"><span class="spinner"></span></div>
+          </div>
+          <div class="stat glass">
+            <div class="k">Current Stage</div>
+            <div class="v" id="currentStage"><span class="spinner"></span></div>
+          </div>
+          <div class="stat glass">
+            <div class="k">1 BNB =</div>
+            <div class="v" id="tokenRate"><span class="spinner"></span></div>
+          </div>
         </div>
 
-        <div class="form-input-group">
-          <div class="form-label"><span>Slippage Tolerance (%)</span></div>
-          <input type="number" class="form-input" id="slippage" placeholder="1.0" step="0.1" min="0.1" value="1.0">
+        <div class="buyLayout">
+          <!-- LEFT -->
+          <div class="buyCard glass">
+            <div class="buyHead">
+              <div style="display:flex;gap:10px;align-items:center;">
+                <span class="liveDot"></span>
+                <div>
+                  <div style="font-weight:900;letter-spacing:-0.02em">Payment</div>
+                  <div class="small" id="lastSyncText">Syncing…</div>
+                </div>
+              </div>
+              <div class="pill" id="statusPill"><span class="spinner"></span></div>
+            </div>
+
+            <div class="sectionLabel">Select Crypto</div>
+            <div class="row seg" id="chainSeg">
+              <div class="chip active" data-chain="BSC">BNB (BSC)</div>
+              <div class="chip" data-chain="ETH">ETH</div>
+              <div class="chip" data-chain="SOL">SOL</div>
+              <div class="chip" data-chain="TRON">USDT (TRC20)</div>
+            </div>
+
+            <div class="sectionLabel" id="amountLabel">Enter Amount (BNB)</div>
+            <div class="row" style="width:100%">
+              <input id="payAmount" class="input" type="number" min="0" step="0.0001" placeholder="0.0" />
+            </div>
+
+            <div class="kvBox">
+              <div class="kvRow"><span>Conversion amount (USD)</span><b id="convUsd">--</b></div>
+              <div class="kvRow" style="margin-top:6px;"><span>Total tokens received (est.)</span><b id="tokensOut">--</b></div>
+              <div class="kvRow" style="margin-top:6px;"><span>Token price (USD)</span><b id="tokenUsd">--</b></div>
+              <div class="note" id="estNote">Loading price feeds…</div>
+            </div>
+
+            <!-- Removed slippage UI (as requested) -->
+
+            <div class="sectionLabel">Referrer (BSC only)</div>
+            <div class="row" style="width:100%">
+              <input id="referrerAddress" class="input" type="text" placeholder="0x... (optional)" />
+            </div>
+
+            <div class="small" style="margin-top:10px">
+              EVM: <b id="evmWalletText">Not connected</b>
+              <span style="margin-left:10px">BNB Balance: <b id="walletBalance">0.00</b></span>
+            </div>
+
+            <button class="btn" id="payButton" disabled>Connect Wallet To Pay</button>
+            <button class="btn2" id="claimButton" style="display:none;">Claim Your $BFG Tokens (BSC)</button>
+
+            <div class="progressWrap">
+              <div class="sectionLabel">Stage Urgency</div>
+              <div class="small" id="stageMsg">--</div>
+              <div class="bar" style="margin-top:10px;"><div class="fill" id="progFill"></div></div>
+              <div class="small" style="margin-top:8px" id="progText">--</div>
+            </div>
+          </div>
+
+          <!-- RIGHT -->
+          <div class="dash glass">
+            <div class="dashTitle">Dashboard</div>
+            <div class="small" style="margin-top:6px">
+              EVM wallet: <b id="myWallet">Not connected</b>
+              <span style="margin-left:10px">SOL wallet: <b id="mySolWallet">Not connected</b></span>
+              <span style="margin-left:10px">TRON wallet: <b id="myTronWallet">Not connected</b></span>
+            </div>
+
+            <div class="sectionLabel">Transaction History</div>
+            <div class="table">
+              <div class="tr head">
+                <div>Chain</div><div>Tx Hash</div><div>Paid</div><div>Est. BFG</div>
+              </div>
+              <div id="histBody" class="empty">You don't have any transactions yet.</div>
+            </div>
+
+            <div class="sectionLabel">Referral</div>
+            <div class="glass" style="padding:12px;border-radius:16px">
+              <div class="small">Referral link (EVM wallet)</div>
+              <div style="margin-top:8px;display:flex;gap:10px;align-items:center;flex-wrap:wrap">
+                <div id="refLink" class="td" style="flex:1;min-width:260px">Connect wallet to generate…</div>
+                <button class="btn2" id="copyRefBtn" style="width:auto;min-width:120px">Copy</button>
+              </div>
+            </div>
+
+            <div class="note" style="margin-top:12px">
+              Notes:
+              - BSC payments buy through the presale contract.
+              - ETH/SOL/USDT(TRC20) payments are tracked here after you confirm in-wallet.
+              - Tokens are distributed after presale ends (manual distribution).
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW TO BUY -->
+  <section class="page" id="howtobuy" data-page="howtobuy">
+    <div class="section">
+      <div class="container">
+        <div class="title">How to Buy</div>
+        <div class="subtitle">Pick your chain, connect the right wallet, enter amount, and confirm payment.</div>
+
+        <div class="heroGrid">
+          <div class="heroCard glass">
+            <h3>BNB (BSC)</h3>
+            <p>Connect EVM wallet on BSC and pay via the presale contract.</p>
+          </div>
+          <div class="heroCard glass">
+            <h3>ETH</h3>
+            <p>Connect EVM wallet on Ethereum and send ETH in-wallet with one click.</p>
+          </div>
+          <div class="heroCard glass">
+            <h3>SOL</h3>
+            <p>Connect a Solana wallet in-browser (window.solana). Click Pay and confirm transfer in the wallet.</p>
+          </div>
+          <div class="heroCard glass">
+            <h3>USDT (TRC20)</h3>
+            <p>Use TronLink (tronWeb). Click Pay and confirm USDT transfer. Do NOT send TRX.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STAKING -->
+  <section class="page" id="staking" data-page="staking">
+    <div class="section">
+      <div class="container">
+        <div class="title">Staking</div>
+        <div class="subtitle">Staking can be enabled after presale ends and staking contract is live.</div>
+
+        <div class="glass" style="padding:18px;margin-top:14px">
+          <div style="font-weight:900;color:rgba(245,215,122,0.95)">Coming Soon</div>
+          <div class="note" style="margin-top:8px">When your staking contract is ready, we can plug it into this page.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- REFERRAL -->
+  <section class="page" id="referral" data-page="referral">
+    <div class="section">
+      <div class="container">
+        <div class="title">Referral</div>
+        <div class="subtitle">Connect your EVM wallet to generate a referral link.</div>
+
+        <div class="glass" style="padding:18px;margin-top:14px">
+          <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
+            <div style="flex:1;min-width:260px" id="refLink2">Connect wallet to generate…</div>
+            <button class="btn2" id="copyRefBtn2" style="width:auto;min-width:120px">Copy</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+<!-- =========================
+PART 3 / 3 (WHITEPAPER + FOOTER + SCRIPT)
+========================= -->
+
+  <!-- WHITEPAPER (Institutional + Meme Narrative + Charts + PDF Export + PinkLock) -->
+  <section class="page" id="whitepaper" data-page="whitepaper">
+    <div class="section">
+      <div class="container">
+        <div class="wp-head">
+          <div>
+            <div class="title">BullForge Whitepaper</div>
+            <div class="subtitle">
+              Institutional-grade thesis + Meme-native distribution design — engineered to forge “Bullzilla” scale social momentum,
+              with transparent tokenomics and measurable execution milestones.
+            </div>
+
+            <div class="wp-meta">
+              <div class="wp-chip">Version: <b>2026.02</b></div>
+              <div class="wp-chip">Ticker: <b>$BFG</b></div>
+              <div class="wp-chip">Primary Network: <b>BSC</b></div>
+              <div class="wp-chip">Narrative: <b>Bullzilla</b></div>
+            </div>
+          </div>
+
+          <div class="wp-actions">
+            <button class="btn2" id="wpPrintBtn" type="button">Print / Save as PDF</button>
+            <button class="btn" id="wpPdfBtn" type="button">Download Whitepaper PDF</button>
+          </div>
         </div>
 
-        <div class="form-input-group">
-          <div class="form-label"><span>Referrer Address (Optional)</span></div>
-          <input type="text" class="form-input" id="referrerAddress" placeholder="0x...">
+        <div class="wp-grid">
+          <div class="glass wp-card">
+            <div class="wp-toc">
+              <div class="wp-toc-title">Contents</div>
+              <div class="wp-toc-links">
+                <a href="#wp-exec" class="wp-link">01 — Executive Summary</a>
+                <a href="#wp-thesis" class="wp-link">02 — Investment Thesis</a>
+                <a href="#wp-market" class="wp-link">03 — Market Context</a>
+                <a href="#wp-edge" class="wp-link">04 — Competitive Advantage</a>
+                <a href="#wp-token" class="wp-link">05 — Tokenomics & Allocation</a>
+                <a href="#wp-utility" class="wp-link">06 — Utility & Value Accrual</a>
+                <a href="#wp-growth" class="wp-link">07 — Go-To-Market</a>
+                <a href="#wp-roadmap" class="wp-link">08 — Roadmap & KPIs</a>
+                <a href="#wp-risk" class="wp-link">09 — Risks & Mitigations</a>
+                <a href="#wp-disclaimer" class="wp-link">10 — Disclaimer</a>
+              </div>
+            </div>
+
+            <div class="wp-section" id="wp-exec">
+              <h2>01 — Executive Summary</h2>
+              <p>
+                BullForge ($BFG) is designed as a <b>meme-native distribution engine</b> paired with <b>institutional-grade execution discipline</b>.
+                In the attention economy, “community velocity” is the moat. BullForge manufactures velocity through staged incentives,
+                measurable milestones, and on-chain transparency — anchored by the meme identity: <b>“Bullzilla is forged, not wished.”</b>
+              </p>
+
+              <div class="wp-callout">
+                <div class="wp-callout-title">Bullzilla Narrative (Meme Layer, VC Framed)</div>
+                <div class="wp-callout-body">
+                  Meme is treated as <b>distribution infrastructure</b>:
+                  viral hooks → community loops → liquidity depth → utility expansion.
+                  The Bullzilla layer is the catalyst; token engineering + KPI execution anchor credibility.
+                </div>
+              </div>
+            </div>
+
+            <div class="wp-section" id="wp-thesis">
+              <h2>02 — Investment Thesis</h2>
+              <ul class="wp-bullets">
+                <li><b>Attention → Liquidity → Utility</b>: Memes acquire attention; liquidity monetizes attention; utility sustains liquidity.</li>
+                <li><b>Incentive alignment</b>: staking allocation + community-first distribution supports long-term holding and retention.</li>
+                <li><b>Multi-rail accessibility</b>: BSC execution; ETH/SOL/TRON distribution rails for broader reach.</li>
+                <li><b>Measurable milestones</b>: roadmap tied to KPIs (community, liquidity, retention, cadence).</li>
+              </ul>
+            </div>
+
+            <div class="wp-section" id="wp-market">
+              <h2>03 — Market Context</h2>
+              <p>
+                Meme tokens compete in an “attention market”. Winners combine virality, frictionless acquisition,
+                liquidity credibility, and retention loops. BullForge targets the intersection of <b>meme virality</b> and
+                <b>structured execution</b>.
+              </p>
+
+              <div class="wp-subgrid">
+                <div class="wp-mini glass">
+                  <div class="wp-mini-k">What wins</div>
+                  <div class="wp-mini-v">Retention Loops</div>
+                  <div class="wp-mini-note">Staking + referral + milestones</div>
+                </div>
+                <div class="wp-mini glass">
+                  <div class="wp-mini-k">What fails</div>
+                  <div class="wp-mini-v">One-shot Hype</div>
+                  <div class="wp-mini-note">No cadence, no trust, no loop</div>
+                </div>
+                <div class="wp-mini glass">
+                  <div class="wp-mini-k">BullForge bet</div>
+                  <div class="wp-mini-v">Hype → System</div>
+                  <div class="wp-mini-note">Narrative + KPI execution</div>
+                </div>
+              </div>
+
+              <div class="wp-chartWrap">
+                <div class="wp-chartHead">
+                  <div class="wp-chartTitle">Market Execution Model (Conceptual)</div>
+                  <div class="wp-chartNote">Illustrative funnel: attention converts into durable value via loops.</div>
+                </div>
+
+                <svg class="wp-chart" viewBox="0 0 900 240" role="img" aria-label="Attention to Value funnel chart">
+                  <g opacity="0.18">
+                    <path d="M60 40H860" stroke="white" stroke-width="1"/>
+                    <path d="M60 90H860" stroke="white" stroke-width="1"/>
+                    <path d="M60 140H860" stroke="white" stroke-width="1"/>
+                    <path d="M60 190H860" stroke="white" stroke-width="1"/>
+                  </g>
+
+                  <defs>
+                    <linearGradient id="wpGold" x1="0" x2="1">
+                      <stop offset="0" stop-color="rgba(245,215,122,0.95)"/>
+                      <stop offset="1" stop-color="rgba(233,196,92,0.85)"/>
+                    </linearGradient>
+                    <filter id="wpGlow" x="-20%" y="-40%" width="140%" height="220%">
+                      <feGaussianBlur stdDeviation="6" result="blur"/>
+                      <feColorMatrix in="blur" type="matrix"
+                        values="1 0 0 0 0
+                                0 0.9 0 0 0
+                                0 0 0.3 0 0
+                                0 0 0 0.9 0" result="glow"/>
+                      <feMerge>
+                        <feMergeNode in="glow"/>
+                        <feMergeNode in="SourceGraphic"/>
+                      </feMerge>
+                    </filter>
+                  </defs>
+
+                  <g transform="translate(60,20)">
+                    <text x="0" y="20" fill="rgba(255,255,255,0.65)" font-size="12" font-weight="800" letter-spacing="0.12em">ATTENTION</text>
+                    <text x="250" y="20" fill="rgba(255,255,255,0.65)" font-size="12" font-weight="800" letter-spacing="0.12em">ACQUISITION</text>
+                    <text x="500" y="20" fill="rgba(255,255,255,0.65)" font-size="12" font-weight="800" letter-spacing="0.12em">LIQUIDITY</text>
+                    <text x="710" y="20" fill="rgba(255,255,255,0.65)" font-size="12" font-weight="800" letter-spacing="0.12em">RETENTION</text>
+
+                    <rect x="0"   y="50" width="200" height="110" rx="18" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.10)"/>
+                    <rect x="230" y="62" width="200" height="86"  rx="18" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.10)"/>
+                    <rect x="460" y="70" width="200" height="70"  rx="18" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.10)"/>
+                    <rect x="690" y="78" width="150" height="54"  rx="18" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.10)"/>
+
+                    <rect x="8"   y="58" width="184" height="94" rx="16" fill="url(#wpGold)" opacity="0.22" filter="url(#wpGlow)"/>
+                    <rect x="238" y="70" width="184" height="70" rx="16" fill="url(#wpGold)" opacity="0.20" filter="url(#wpGlow)"/>
+                    <rect x="468" y="78" width="184" height="54" rx="16" fill="url(#wpGold)" opacity="0.18" filter="url(#wpGlow)"/>
+                    <rect x="698" y="86" width="134" height="38" rx="16" fill="url(#wpGold)" opacity="0.16" filter="url(#wpGlow)"/>
+
+                    <text x="18"  y="112" fill="rgba(255,255,255,0.88)" font-size="14" font-weight="900">Meme Hook</text>
+                    <text x="248" y="112" fill="rgba(255,255,255,0.88)" font-size="14" font-weight="900">Frictionless Buy</text>
+                    <text x="478" y="112" fill="rgba(255,255,255,0.88)" font-size="14" font-weight="900">Depth + Trust</text>
+                    <text x="708" y="112" fill="rgba(255,255,255,0.88)" font-size="14" font-weight="900">Staking Loops</text>
+
+                    <path d="M205 105H225" stroke="rgba(245,215,122,0.75)" stroke-width="3" stroke-linecap="round"/>
+                    <path d="M435 105H455" stroke="rgba(245,215,122,0.65)" stroke-width="3" stroke-linecap="round"/>
+                    <path d="M665 105H685" stroke="rgba(245,215,122,0.55)" stroke-width="3" stroke-linecap="round"/>
+                  </g>
+                </svg>
+              </div>
+            </div>
+
+            <div class="wp-section" id="wp-edge">
+              <h2>04 — Competitive Advantage</h2>
+              <div class="wp-twoCol">
+                <div class="wp-adv">
+                  <h3>Distribution Engine</h3>
+                  <p>
+                    Bullzilla creative cadence + referral loops + staged incentives.
+                    We optimize for <b>community velocity</b> and <b>liquidity credibility</b>, not short-lived noise.
+                  </p>
+                </div>
+                <div class="wp-adv">
+                  <h3>Execution Discipline</h3>
+                  <p>
+                    Transparent allocation, measurable KPIs, and an operational shipping cadence.
+                    The goal is to behave like a <b>product organization</b> with meme-level reach.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div class="wp-section" id="wp-token">
+              <h2>05 — Tokenomics & Allocation</h2>
+
+              <p>
+                Allocation is designed to balance <b>community distribution</b>, <b>long-term incentives</b>, and <b>liquidity credibility</b>.
+                Liquidity is injected <b>after presale ends</b> and locked for <b>24 months</b> to strengthen market confidence.
+                Presale pricing follows an <b>on-chain 23-stage</b> progression as defined by the contract.
+              </p>
+
+              <div class="wp-callout" style="margin-top:12px">
+                <div class="wp-callout-title">Liquidity Plan (Post-Presale)</div>
+                <div class="wp-callout-body">
+                  <b>Liquidity is deployed after the presale ends</b> and then <b>locked for 2 years</b>.
+                  This is designed to improve credibility, support sustained depth, and align with a long-term “Bullzilla” narrative.
+                </div>
+              </div>
+
+              <div class="wp-chartWrap" style="margin-top:12px">
+                <div class="wp-chartHead">
+                  <div class="wp-chartTitle">Liquidity Lock (PinkLock)</div>
+                  <div class="wp-chartNote">Disclosure module (investor-grade).</div>
+                </div>
+
+                <div class="wp-liveGrid">
+                  <div class="wp-live glass">
+                    <div class="wp-live-k">Locker Provider</div>
+                    <div class="wp-live-v">PinkLock</div>
+                    <div class="wp-live-n">3rd-party LP locking service</div>
+                  </div>
+
+                  <div class="wp-live glass">
+                    <div class="wp-live-k">Lock Duration</div>
+                    <div class="wp-live-v">24 Months</div>
+                    <div class="wp-live-n">Planned lock window</div>
+                  </div>
+
+                  <div class="wp-live glass">
+                    <div class="wp-live-k">Lock Tx / URL</div>
+                    <div class="wp-live-v" id="wpPinkLink">TBD</div>
+                    <div class="wp-live-n">Update after lock is executed</div>
+                  </div>
+
+                  <div class="wp-live glass">
+                    <div class="wp-live-k">Unlock Date</div>
+                    <div class="wp-live-v" id="wpUnlockDate">TBD</div>
+                    <div class="wp-live-n">Calculated after lock confirmation</div>
+                  </div>
+                </div>
+
+                <div class="wp-muted" style="margin-top:10px;font-size:12px;line-height:1.55">
+                  Once PinkLock is created, replace <b>TBD</b> with your PinkLock URL and unlock date.
+                  This section is designed for VC-style diligence and public transparency.
+                </div>
+              </div>
+
+              <div class="wp-chartWrap" style="margin-top:12px">
+                <div class="wp-chartHead">
+                  <div class="wp-chartTitle">Presale Stages (On-chain)</div>
+                  <div class="wp-chartNote">Live values pulled from contract where available.</div>
+                </div>
+
+                <div class="wp-liveGrid">
+                  <div class="wp-live glass">
+                    <div class="wp-live-k">Total Stages</div>
+                    <div class="wp-live-v" id="wpStagesTotal">23</div>
+                    <div class="wp-live-n">Defined by contract design</div>
+                  </div>
+
+                  <div class="wp-live glass">
+                    <div class="wp-live-k">Current Stage</div>
+                    <div class="wp-live-v" id="wpStageNow">--</div>
+                    <div class="wp-live-n">Live from contract</div>
+                  </div>
+
+                  <div class="wp-live glass">
+                    <div class="wp-live-k">1 BNB ≈</div>
+                    <div class="wp-live-v" id="wpRateNow">--</div>
+                    <div class="wp-live-n">Current on-chain rate</div>
+                  </div>
+
+                  <div class="wp-live glass">
+                    <div class="wp-live-k">Next Stage Trigger</div>
+                    <div class="wp-live-v" id="wpNextTrigger">--</div>
+                    <div class="wp-live-n">Progress based on contract logic</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="wp-tokenGrid">
+                <div class="wp-alloc glass">
+                  <div class="wp-alloc-k">Presale</div>
+                  <div class="wp-alloc-v">35%</div>
+                  <div class="wp-alloc-n">Public access distribution</div>
+                </div>
+                <div class="wp-alloc glass">
+                  <div class="wp-alloc-k">Staking Rewards</div>
+                  <div class="wp-alloc-v">20%</div>
+                  <div class="wp-alloc-n">Long-term holder incentives</div>
+                </div>
+                <div class="wp-alloc glass">
+                  <div class="wp-alloc-k">Liquidity</div>
+                  <div class="wp-alloc-v">15%</div>
+                  <div class="wp-alloc-n">DEX stability and depth</div>
+                </div>
+                <div class="wp-alloc glass">
+                  <div class="wp-alloc-k">Marketing</div>
+                  <div class="wp-alloc-v">10%</div>
+                  <div class="wp-alloc-n">Global campaigns + partnerships</div>
+                </div>
+                <div class="wp-alloc glass">
+                  <div class="wp-alloc-k">Ecosystem</div>
+                  <div class="wp-alloc-v">10%</div>
+                  <div class="wp-alloc-n">Utilities + integrations</div>
+                </div>
+                <div class="wp-alloc glass">
+                  <div class="wp-alloc-k">Team</div>
+                  <div class="wp-alloc-v">10%</div>
+                  <div class="wp-alloc-n">Vested long-term alignment</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="wp-section" id="wp-utility">
+              <h2>06 — Utility & Value Accrual</h2>
+              <ul class="wp-bullets">
+                <li><b>Staking</b>: rewards long-term holding, reduces circulating sell pressure.</li>
+                <li><b>Referral loops</b>: incentivizes organic distribution and community acquisition.</li>
+                <li><b>Ecosystem integrations</b>: partnerships and utility surfaces that increase “reason to hold.”</li>
+              </ul>
+            </div>
+
+            <div class="wp-section" id="wp-growth">
+              <h2>07 — Go-To-Market</h2>
+              <p>
+                Two-layer strategy:
+                <b>Meme layer</b> (Bullzilla content velocity) + <b>Operational layer</b> (KPI-driven shipping and transparency).
+              </p>
+            </div>
+
+            <div class="wp-section" id="wp-roadmap">
+              <h2>08 — Roadmap & KPIs</h2>
+
+              <div class="wp-roadGrid">
+                <div class="wp-road glass">
+                  <div class="wp-road-phase">Phase 01</div>
+                  <div class="wp-road-title">Ignition</div>
+                  <ul>
+                    <li>Brand launch & community bootstrap</li>
+                    <li>Smart contract deployment</li>
+                    <li>Security review & test rounds</li>
+                  </ul>
+                  <div class="wp-road-kpi">KPI: <b>10k community</b> + <b>cadence established</b></div>
+                </div>
+
+                <div class="wp-road glass">
+                  <div class="wp-road-phase">Phase 02</div>
+                  <div class="wp-road-title">Presale Forge</div>
+                  <ul>
+                    <li>Multi-stage presale goes live</li>
+                    <li>Referral engine enabled</li>
+                    <li>Cross-channel awareness campaign</li>
+                  </ul>
+                  <div class="wp-road-kpi">KPI: <b>on-chain traction</b> + <b>retention loop</b></div>
+                </div>
+
+                <div class="wp-road glass">
+                  <div class="wp-road-phase">Phase 03</div>
+                  <div class="wp-road-title">Expansion</div>
+                  <ul>
+                    <li>Claim portal opens</li>
+                    <li>DEX liquidity deployment</li>
+                    <li>Tracking listings rollout</li>
+                  </ul>
+                  <div class="wp-road-kpi">KPI: <b>liquidity depth</b> + <b>market credibility</b></div>
+                </div>
+
+                <div class="wp-road glass">
+                  <div class="wp-road-phase">Phase 04</div>
+                  <div class="wp-road-title">Dominance</div>
+                  <ul>
+                    <li>Staking launch</li>
+                    <li>Utility integrations</li>
+                    <li>CEX strategy + partnerships</li>
+                  </ul>
+                  <div class="wp-road-kpi">KPI: <b>stickiness</b> + <b>ecosystem reach</b></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="wp-section" id="wp-risk">
+              <h2>09 — Risks & Mitigations</h2>
+              <div class="wp-riskGrid">
+                <div class="wp-risk glass">
+                  <div class="wp-risk-t">Market Volatility</div>
+                  <div class="wp-risk-b">Mitigation: staged incentives + transparent communications + retention mechanisms.</div>
+                </div>
+                <div class="wp-risk glass">
+                  <div class="wp-risk-t">Narrative Saturation</div>
+                  <div class="wp-risk-b">Mitigation: Bullzilla creative cadence + utility milestones that refresh reasons to hold.</div>
+                </div>
+                <div class="wp-risk glass">
+                  <div class="wp-risk-t">Liquidity Risks</div>
+                  <div class="wp-risk-b">Mitigation: post-presale LP injection + PinkLock 2-year lock disclosure.</div>
+                </div>
+                <div class="wp-risk glass">
+                  <div class="wp-risk-t">Operational Execution</div>
+                  <div class="wp-risk-b">Mitigation: KPI framework + roadmap accountability + staged release planning.</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="wp-section" id="wp-disclaimer">
+              <h2>10 — Disclaimer</h2>
+              <p class="wp-muted">
+                Cryptocurrency investments involve risk, including loss of principal. This document is for informational purposes only
+                and does not constitute financial advice, investment solicitation, or an offer to sell securities. Always conduct your own research (DYOR).
+              </p>
+            </div>
+          </div>
+
+          <div class="glass wp-side">
+            <div class="wp-sideTitle">Investor Snapshot</div>
+
+            <div class="wp-sideBox">
+              <div class="wp-sideK">Thesis</div>
+              <div class="wp-sideV">Meme distribution + execution discipline</div>
+            </div>
+
+            <div class="wp-sideBox">
+              <div class="wp-sideK">Moat</div>
+              <div class="wp-sideV">Velocity loops + liquidity credibility</div>
+            </div>
+
+            <div class="wp-sideBox">
+              <div class="wp-sideK">Liquidity</div>
+              <div class="wp-sideV">Post-presale injection + PinkLock 24-month lock</div>
+            </div>
+
+            <div class="wp-sideNote">
+              Tip: Use “Download Whitepaper PDF” to share a clean investor-ready version (no navbar, no distractions).
+            </div>
+
+            <div class="wp-sideActions">
+              <button class="btn2" type="button" onclick="location.hash='#buy'">Go to Buy</button>
+              <button class="btn2" type="button" onclick="window.scrollTo({top:0,behavior:'smooth'})">Back to Top</button>
+            </div>
+          </div>
         </div>
 
-        <div class="token-estimate" id="tokenEstimate">Enter BNB amount to see estimated $BFG tokens</div>
-        <button class="buy-button" id="buyButton" disabled>Connect Wallet To Buy</button>
-        <button class="btn-secondary" id="claimButton" style="display:none;">Claim Your $BFG Tokens</button>
       </div>
     </div>
   </section>
 
-  <section class="section page" id="howtobuy" data-page="howtobuy">
+  <footer>
     <div class="container">
-      <div class="section-header">
-        <div class="section-subtitle">How to Buy</div>
-        <h2 class="section-title">Buy $BFG in Minutes</h2>
-      </div>
-      <div class="feature-grid">
-        <div class="feature-card"><div class="feature-icon">1️⃣</div><h3 class="feature-title">Get a Wallet</h3><p class="feature-desc">Use MetaMask / Trust Wallet and ensure BNB Smart Chain support.</p></div>
-        <div class="feature-card"><div class="feature-icon">2️⃣</div><h3 class="feature-title">Fund with BNB</h3><p class="feature-desc">Send BNB to your wallet address (Chain ID 56).</p></div>
-        <div class="feature-card"><div class="feature-icon">3️⃣</div><h3 class="feature-title">Connect & Buy</h3><p class="feature-desc">Click Buy Now, connect wallet, enter BNB amount, confirm transaction.</p></div>
-      </div>
-    </div>
-  </section>
-
-  <section class="section page" id="whitepaper" data-page="whitepaper">
-    <div class="container">
-      <div class="section-header"><div class="section-subtitle">Whitepaper</div><h2 class="section-title">Bullforge Whitepaper</h2></div>
-      <div class="buy-form-card" style="max-width: 900px;">
-        <p style="color: var(--text-gray); margin-bottom: 16px;">Replace the button link with your official whitepaper URL.</p>
-        <a href="#" target="_blank" rel="noreferrer"><button class="buy-button" style="max-width:320px;">Open Whitepaper</button></a>
-      </div>
-    </div>
-  </section>
-
-  <section class="section page" id="staking" data-page="staking">
-    <div class="container">
-      <div class="section-header"><div class="section-subtitle">Staking</div><h2 class="section-title">HODL Forge</h2></div>
-      <div class="buy-form-card" style="max-width: 800px;">
-        <h3 style="margin-bottom: 16px; color: var(--gold-primary);">70% APY (After Presale)</h3>
-        <p style="color: var(--text-gray);">Staking UI can be enabled once staking contract is live.</p>
-      </div>
-    </div>
-  </section>
-
-  <section class="section page" id="referral" data-page="referral">
-    <div class="container">
-      <div class="section-header"><div class="section-subtitle">Referral</div><h2 class="section-title">Forge-To-Earn</h2></div>
-      <div class="referral-box" style="display:block; max-width: 900px; margin: 0 auto;">
-        <h3 style="margin-bottom: 16px; color: var(--gold-primary);">Your Referral Link</h3>
-        <p style="color: var(--text-gray); margin-bottom: 16px;">Connect wallet to generate your personal referral link.</p>
-        <div class="referral-link">
-          <input type="text" id="referralLink2" readonly value="Connect wallet to generate..." />
-          <button class="btn-small btn-secondary" id="copyReferralBtn2">Copy Link</button>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="partners-section">
-    <div class="container">
-      <div class="section-header"><div class="section-subtitle">Powered By</div></div>
-      <div class="partners-grid">
-        <div class="partner-logo">BNB Chain</div>
-        <div class="partner-logo">MetaMask</div>
-        <div class="partner-logo">Trust Wallet</div>
-        <div class="partner-logo">BscScan</div>
-        <div class="partner-logo">PancakeSwap</div>
-      </div>
-    </div>
-  </section>
-
-  <footer class="footer">
-    <div class="container footer-content">
-      <div class="footer-logo">🐂 BULLFORGE</div>
-
-      <div class="social-row">
-        <!-- TODO: 换成你的 X 链接 -->
-        <a class="social-btn" href="https://x.com/" target="_blank" rel="noreferrer">
-          <span class="social-dot"></span> X
-        </a>
-        <!-- TODO: 换成你的 TG 链接 -->
-        <a class="social-btn" href="https://t.me/" target="_blank" rel="noreferrer">
-          <span class="social-dot"></span> TG
-        </a>
-      </div>
-
-      <div class="footer-links">
-        <a href="#home" data-nav="home">Home</a>
-        <a href="#buy" data-nav="buy">Buy Now</a>
-        <a href="#howtobuy" data-nav="howtobuy">How to Buy</a>
-        <a href="#whitepaper" data-nav="whitepaper">Whitepaper</a>
-        <a href="#staking" data-nav="staking">Staking</a>
-        <a href="#referral" data-nav="referral">Referral</a>
-      </div>
-
-      <div class="footer-contract">Contract Address: 0x16D6c1a692AaC51a3821bA2903115d4600649F07</div>
-      <div class="footer-copyright">© 2026 Bullforge. All rights reserved.</div>
+      <div class="footerText">© 2026 Bullforge. All rights reserved.</div>
     </div>
   </footer>
 
   <script type="module">
     import { ethers } from 'https://esm.sh/ethers@5.7.2';
     import { createWeb3Modal, defaultConfig } from 'https://esm.sh/@web3modal/ethers5@4.1.2';
+    import { Connection, PublicKey, SystemProgram, Transaction, LAMPORTS_PER_SOL } from 'https://esm.sh/@solana/web3.js@1.95.4';
 
+    // =========================
+    // CONFIG
+    // =========================
     const CONFIG = {
-      // TODO: 如需更换，改这里
+      TOKEN_SYMBOL: "BFG",
+
       CONTRACT_ADDRESS: "0x16D6c1a692AaC51a3821bA2903115d4600649F07",
-      // TODO: 如需更换，改这里
+      BSC_RPC: "https://bsc-dataseed.binance.org/",
+      BSC_CHAIN_ID: 56,
+      BSC_EXPLORER: "https://bscscan.com",
+
       WALLETCONNECT_PROJECT_ID: "fe819ed06d9e5489f764fc7b1dae1c4e",
 
-      BSC_RPC: "https://bsc-dataseed.binance.org/",
-      CHAIN_ID: 56,
-      CHAIN_NAME: "BNB Smart Chain",
-      CURRENCY: "BNB",
-      EXPLORER: "https://bscscan.com",
-      TOKEN_SYMBOL: "BFG"
+      ETH_RECEIVE: "0xA616911194eca5aD6E858a2aCFAC2cDaDC8f04B1",
+      SOL_RECEIVE: "AKEpSih1iMbW2m3xqTw2ZZHLByhvbscKVAkuS2R1fs3Y",
+      TRON_RECEIVE: "TEDfNwh3D9AwvTbX32BVZP1Gdfph1cWPhd",
+
+      SOL_RPC: "https://api.mainnet-beta.solana.com",
+      TRON_USDT_CONTRACT: "TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t",
+
+      // Whitepaper disclosure placeholders for PinkLock
+      PINKLOCK_URL: "",       // e.g. "https://www.pinksale.finance/pinklock/..."
+      PINKLOCK_UNLOCK_DATE: "" // e.g. "2028-02-20"
     };
 
     const CONTRACT_ABI = [
       "function totalRaised() view returns (uint256)",
-      "function currentStage() view returns (uint256)",
-      "function stageEndTime() view returns (uint256)",
-      "function getCurrentPrice() view returns (uint256)",
-      "function getRate() view returns (uint256)",
-      "function hardCap() view returns (uint256)",
+      "function currentPriceStage() view returns (uint88)",
+      "function currentRate() view returns (uint256)",
+      "function lastPriceIncreaseRaised() view returns (uint256)",
+      "function presaleActive() view returns (bool)",
+      "function presaleEnded() view returns (bool)",
       "function buyTokens(address _referrer, uint256 _minTokensOut) payable",
       "function claimTokens() external"
     ];
 
-    // ---------- Elements ----------
-    const notif = document.getElementById('notification');
-    const notifTitle = document.getElementById('notificationTitle');
-    const notifDesc = document.getElementById('notificationDesc');
+    const PRICE_INCREASE_THRESHOLD_BNB = 333;
+    const LS_HISTORY_KEY = "bfg_purchase_history_v3";
 
-    const connectBtn = document.getElementById('walletConnectBtn');
-    const disconnectBtn = document.getElementById('disconnectBtn');
-    const networkBadge = document.getElementById('networkBadge');
+    // =========================
+    // DOM
+    // =========================
+    const $ = (id) => document.getElementById(id);
 
-    const bnbAmountInput = document.getElementById('bnbAmount');
-    const slippageInput = document.getElementById('slippage');
-    const referrerInput = document.getElementById('referrerAddress');
-    const tokenEstimate = document.getElementById('tokenEstimate');
-    const walletBalanceSpan = document.getElementById('walletBalance');
+    const notif = $("notification");
+    const notifTitle = $("notificationTitle");
+    const notifDesc = $("notificationDesc");
 
-    const currentPriceSpan = document.getElementById('currentPrice');
-    const totalRaisedSpan = document.getElementById('totalRaised');
-    const currentStageSpan = document.getElementById('currentStage');
-    const tokenRateSpan = document.getElementById('tokenRate');
+    const menuBtn = $("menuBtn");
+    const mobileMenu = $("mobileMenu");
 
-    const progressPercent = document.getElementById('progressPercent');
-    const progressBarFill = document.getElementById('progressBarFill');
+    const evmBadge = $("evmBadge");
+    const evmConnectBtn = $("evmConnectBtn");
+    const evmDisconnectBtn = $("evmDisconnectBtn");
 
-    const buyButton = document.getElementById('buyButton');
-    const claimButton = document.getElementById('claimButton');
+    const totalRaisedEl = $("totalRaised");
+    const totalRaisedUsdEl = $("totalRaisedUsd");
+    const stageEl = $("currentStage");
+    const tokenRateEl = $("tokenRate");
 
-    const daysSpan = document.getElementById('countdownDays');
-    const hoursSpan = document.getElementById('countdownHours');
-    const minutesSpan = document.getElementById('countdownMinutes');
-    const secondsSpan = document.getElementById('countdownSeconds');
+    const lastSyncText = $("lastSyncText");
+    const statusPill = $("statusPill");
 
-    const referralLink2 = document.getElementById('referralLink2');
-    const copyBtn2 = document.getElementById('copyReferralBtn2');
+    const chainSeg = $("chainSeg");
+    const amountLabel = $("amountLabel");
+    const payAmount = $("payAmount");
+    const convUsd = $("convUsd");
+    const tokensOut = $("tokensOut");
+    const tokenUsdEl = $("tokenUsd");
+    const estNote = $("estNote");
 
-    // ---------- State ----------
-    let provider = null;
-    let signer = null;
-    let contract = null;
-    let userAddress = null;
-    let web3Modal = null;
-    let walletProvider = null;
+    // removed slippage input
+    const referrerInput = $("referrerAddress");
+    const walletBalanceEl = $("walletBalance");
+    const evmWalletText = $("evmWalletText");
 
-    let currentRate = 0;
-    let totalRaisedBNB = 0;
-    let hardcapBNB = 2000;
-    let stageEndTimestamp = 0;
-    let isUIConnected = false;
+    const payButton = $("payButton");
+    const claimButton = $("claimButton");
 
-    // ---------- Utils ----------
-    function showNotification(title, desc, isError = false) {
-      if (!notif) return;
-      notifTitle.innerText = title;
-      notifDesc.innerText = desc || '';
-      notif.style.borderColor = isError ? 'var(--danger)' : 'var(--gold-primary)';
-      notif.classList.add('show');
-      setTimeout(() => notif.classList.remove('show'), 4200);
+    const progFill = $("progFill");
+    const progText = $("progText");
+    const stageMsg = $("stageMsg");
+
+    const myWallet = $("myWallet");
+    const mySolWallet = $("mySolWallet");
+    const myTronWallet = $("myTronWallet");
+
+    const refLink = $("refLink");
+    const refLink2 = $("refLink2");
+    const copyRefBtn = $("copyRefBtn");
+    const copyRefBtn2 = $("copyRefBtn2");
+    const histBody = $("histBody");
+
+    // Whitepaper live elements
+    const wpPinkLink = $("wpPinkLink");
+    const wpUnlockDate = $("wpUnlockDate");
+
+    // =========================
+    // ROUTER
+    // =========================
+    function closeMobileMenu() {
+      if (mobileMenu) mobileMenu.classList.remove("show");
     }
-
-    function safeShort(addr) {
-      if (!addr || addr.length < 10) return addr || '';
-      return `${addr.slice(0, 6)}...${addr.slice(-4)}`;
-    }
-
     function setActivePage(pageName) {
       const target = pageName || 'home';
       document.querySelectorAll('.page').forEach(p => {
         p.classList.toggle('is-active', p.getAttribute('data-page') === target);
       });
+      closeMobileMenu();
       window.scrollTo({ top: 0, behavior: 'smooth' });
+      if (target === 'buy') refreshAll();
+      if (target === 'whitepaper') updateWhitepaperLive();
     }
-
     function getRouteFromHash() {
       const raw = (location.hash || '').replace('#', '').trim();
-      return { page: raw || 'home' };
+      return raw || 'home';
+    }
+    function bindNav() {
+      document.querySelectorAll('[data-nav]').forEach(el => {
+        el.addEventListener('click', (e) => {
+          e.preventDefault();
+          const t = el.getAttribute('data-nav');
+          history.pushState(null, '', `#${t}`);
+          setActivePage(t);
+        });
+      });
+      window.addEventListener('hashchange', () => setActivePage(getRouteFromHash()));
+    }
+
+    // =========================
+    // HELPERS
+    // =========================
+    function showNotification(title, desc = "", isError = false) {
+      notifTitle.innerText = title;
+      notifDesc.innerText = desc;
+      notif.style.borderColor = isError ? 'var(--danger)' : 'rgba(245,215,122,0.55)';
+      notif.classList.add("show");
+      setTimeout(() => notif.classList.remove("show"), 4200);
+    }
+
+    function safeShort(addr) {
+      if (!addr) return "—";
+      if (addr.length <= 12) return addr;
+      return `${addr.slice(0, 6)}...${addr.slice(-4)}`;
+    }
+
+    function fmtBNB(x) {
+      if (!isFinite(x)) return "--";
+      return x.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + " BNB";
+    }
+
+    function fmtUSD0(x) {
+      if (!isFinite(x)) return "--";
+      return "$" + x.toLocaleString(undefined, { maximumFractionDigits: 0 });
+    }
+
+    function fmtUSD8(x) {
+      if (!isFinite(x)) return "--";
+      return "$" + x.toFixed(8);
+    }
+
+    function parseTokensPerBNB(rateRaw) {
+      return parseFloat(ethers.utils.formatUnits(rateRaw, 18));
     }
 
     function isValidAddress(addr) {
       try { return ethers.utils.isAddress(addr); } catch { return false; }
     }
 
-    function estimateTokens() {
-      if (!tokenEstimate) return;
-      const val = parseFloat(bnbAmountInput?.value || '');
-      if (isNaN(val) || val <= 0 || !currentRate) {
-        tokenEstimate.innerText = `Enter BNB amount to see estimated $${CONFIG.TOKEN_SYMBOL} tokens`;
-        return;
-      }
-      const est = val * currentRate;
-      tokenEstimate.innerText = `You will receive approx. ${est.toFixed(2)} $${CONFIG.TOKEN_SYMBOL}`;
+    function shortHash(h) {
+      if (!h) return "—";
+      return h.length > 14 ? `${h.slice(0, 8)}…${h.slice(-6)}` : h;
     }
 
-    function updateCountdown() {
-      if (!daysSpan) return;
-      if (!stageEndTimestamp || stageEndTimestamp <= 0) {
-        daysSpan.innerText = '--';
-        hoursSpan.innerText = '--';
-        minutesSpan.innerText = '--';
-        secondsSpan.innerText = '--';
-        return;
-      }
-
-      const now = Math.floor(Date.now() / 1000);
-      const diff = stageEndTimestamp - now;
-
-      if (diff <= 0) {
-        daysSpan.innerText = '00';
-        hoursSpan.innerText = '00';
-        minutesSpan.innerText = '00';
-        secondsSpan.innerText = '00';
-        return;
-      }
-
-      const d = Math.floor(diff / 86400);
-      const h = Math.floor((diff % 86400) / 3600);
-      const m = Math.floor((diff % 3600) / 60);
-      const s = diff % 60;
-
-      daysSpan.innerText = String(d).padStart(2, '0');
-      hoursSpan.innerText = String(h).padStart(2, '0');
-      minutesSpan.innerText = String(m).padStart(2, '0');
-      secondsSpan.innerText = String(s).padStart(2, '0');
-    }
-
-    async function updateWalletUIAfterConnect() {
-      if (!userAddress) return;
-      connectBtn.innerText = safeShort(userAddress);
-      connectBtn.disabled = true;
-      disconnectBtn.style.display = 'inline-block';
-      buyButton.disabled = false;
-      buyButton.innerText = `Buy $${CONFIG.TOKEN_SYMBOL}`;
-      claimButton.style.display = 'block';
-      claimButton.innerText = `Claim Your $${CONFIG.TOKEN_SYMBOL} Tokens`;
-      isUIConnected = true;
-
-      if (referralLink2) referralLink2.value = `${window.location.origin}?ref=${userAddress}`;
-
+    // =========================
+    // HISTORY
+    // =========================
+    function loadHistory() {
       try {
-        const net = await provider.getNetwork();
-        networkBadge.style.display = 'inline-block';
-        if (net.chainId !== CONFIG.CHAIN_ID) {
-          networkBadge.classList.add('bad');
-          networkBadge.innerText = `Wrong Net (${net.chainId})`;
-          showNotification("Wrong Network", "Please switch to BNB Smart Chain (56)", true);
-        } else {
-          networkBadge.classList.remove('bad');
-          networkBadge.innerText = 'BNB (56)';
-        }
-      } catch {}
+        const raw = localStorage.getItem(LS_HISTORY_KEY);
+        const arr = raw ? JSON.parse(raw) : [];
+        return Array.isArray(arr) ? arr : [];
+      } catch {
+        return [];
+      }
     }
 
-    function resetWalletUI() {
-      connectBtn.disabled = false;
-      connectBtn.innerText = 'Connect Wallet';
-      disconnectBtn.style.display = 'none';
-      networkBadge.style.display = 'none';
-      networkBadge.classList.remove('bad');
-      buyButton.disabled = true;
-      buyButton.innerText = 'Connect Wallet To Buy';
-      claimButton.style.display = 'none';
-      walletBalanceSpan.innerText = '0.00';
-      if (referralLink2) referralLink2.value = 'Connect wallet to generate...';
-      isUIConnected = false;
-      if (tokenEstimate) tokenEstimate.innerText = `Enter BNB amount to see estimated $${CONFIG.TOKEN_SYMBOL} tokens`;
+    function saveHistory(arr) {
+      localStorage.setItem(LS_HISTORY_KEY, JSON.stringify(arr.slice(0, 250)));
+    }
+
+    function addHistoryItem(item) {
+      const arr = loadHistory();
+      arr.unshift(item);
+      saveHistory(arr);
+      renderHistory();
+    }
+
+    function renderHistory() {
+      const arr = loadHistory();
+      if (!arr.length) {
+        histBody.className = "empty";
+        histBody.innerText = "You don't have any transactions yet.";
+        return;
+      }
+      histBody.className = "";
+      histBody.innerHTML = arr.map(x => {
+        const explorer = x.explorer || "";
+        const txCell = explorer
+          ? `<a class="td" href="${explorer}" target="_blank" rel="noreferrer" style="color:rgba(245,215,122,0.92);text-decoration:none" title="${x.tx}">${shortHash(x.tx)}</a>`
+          : `<div class="td" title="${x.tx}">${shortHash(x.tx)}</div>`;
+
+        return `
+          <div class="tr">
+            <div class="td"><b>${x.chain}</b></div>
+            ${txCell}
+            <div class="td">${x.paid}</div>
+            <div class="td"><b>${x.bfg}</b></div>
+          </div>
+        `;
+      }).join("");
+    }
+
+    // =========================
+    // LIVE DATA
+    // =========================
+    let totalRaisedBNB = 0;
+    let lastRaisedBNB = 0;
+    let stage = 0;
+    let tokensPerBNB = 0;
+    let presaleActive = false;
+    let presaleEnded = false;
+
+    let pricesUSD = { bnb:null, eth:null, sol:null };
+    let lastPricesFetch = 0;
+
+    async function fetchPricesUSD() {
+      if (Date.now() - lastPricesFetch < 60_000 && pricesUSD.bnb) return pricesUSD;
+
+      const url = "https://api.coingecko.com/api/v3/simple/price?ids=binancecoin,ethereum,solana&vs_currencies=usd";
+      const res = await fetch(url, { cache: "no-store" });
+      if (!res.ok) throw new Error("Price feed failed");
+      const data = await res.json();
+
+      pricesUSD = {
+        bnb: Number(data?.binancecoin?.usd || 0) || null,
+        eth: Number(data?.ethereum?.usd || 0) || null,
+        sol: Number(data?.solana?.usd || 0) || null
+      };
+      lastPricesFetch = Date.now();
+      return pricesUSD;
+    }
+
+    function tokenUsdPrice() {
+      if (!pricesUSD.bnb || !tokensPerBNB) return null;
+      return pricesUSD.bnb / tokensPerBNB;
     }
 
     async function refreshContractData() {
-      try {
-        const readProvider = new ethers.providers.JsonRpcProvider(CONFIG.BSC_RPC);
-        const readContract = new ethers.Contract(CONFIG.CONTRACT_ADDRESS, CONTRACT_ABI, readProvider);
+      const readProvider = new ethers.providers.JsonRpcProvider(CONFIG.BSC_RPC);
+      const readContract = new ethers.Contract(CONFIG.CONTRACT_ADDRESS, CONTRACT_ABI, readProvider);
 
-        const raisedWei = await readContract.totalRaised().catch(() => null);
-        totalRaisedBNB = raisedWei ? parseFloat(ethers.utils.formatEther(raisedWei)) : 0;
-        if (totalRaisedSpan) totalRaisedSpan.innerText = `${totalRaisedBNB.toFixed(2)} BNB`;
+      const [raisedWei, stageRaw, rateRaw, lastRaisedWei, active, ended] = await Promise.all([
+        readContract.totalRaised(),
+        readContract.currentPriceStage().catch(() => 0),
+        readContract.currentRate(),
+        readContract.lastPriceIncreaseRaised().catch(() => 0),
+        readContract.presaleActive().catch(() => false),
+        readContract.presaleEnded().catch(() => false)
+      ]);
 
-        const stage = await readContract.currentStage().catch(() => 1);
-        if (currentStageSpan) currentStageSpan.innerText = String(stage || 1);
-
-        const rateRaw = await readContract.getRate().catch(() => null);
-        currentRate = rateRaw ? parseFloat(ethers.utils.formatEther(rateRaw)) : 1000;
-        if (tokenRateSpan) tokenRateSpan.innerText = `${currentRate.toFixed(0)} $${CONFIG.TOKEN_SYMBOL}`;
-
-        const priceRaw = await readContract.getCurrentPrice().catch(() => null);
-        if (currentPriceSpan) {
-          if (priceRaw) currentPriceSpan.innerText = `${parseFloat(ethers.utils.formatEther(priceRaw)).toFixed(8)} BNB`;
-          else currentPriceSpan.innerText = `${(1 / Math.max(currentRate, 1)).toFixed(8)} BNB`;
-        }
-
-        const endTime = await readContract.stageEndTime().catch(() => null);
-        stageEndTimestamp = endTime ? endTime.toNumber() : Math.floor(Date.now() / 1000) + 72 * 3600;
-        updateCountdown();
-
-        const hardCapRaw = await readContract.hardCap().catch(() => null);
-        if (hardCapRaw) hardcapBNB = parseFloat(ethers.utils.formatEther(hardCapRaw));
-
-        let p = (totalRaisedBNB / hardcapBNB) * 100;
-        if (!isFinite(p) || p < 0) p = 0;
-        if (p > 100) p = 100;
-        if (progressPercent) progressPercent.innerText = `${p.toFixed(1)}%`;
-        if (progressBarFill) progressBarFill.style.width = `${p}%`;
-
-        if (isUIConnected && provider && userAddress) {
-          const bal = await provider.getBalance(userAddress).catch(() => null);
-          if (bal) walletBalanceSpan.innerText = parseFloat(ethers.utils.formatEther(bal)).toFixed(4);
-        }
-
-        estimateTokens();
-      } catch (e) {
-        console.warn('refreshContractData error:', e);
-      }
+      totalRaisedBNB = parseFloat(ethers.utils.formatEther(raisedWei));
+      stage = Number(stageRaw.toString());
+      tokensPerBNB = parseTokensPerBNB(rateRaw);
+      lastRaisedBNB = parseFloat(ethers.utils.formatEther(lastRaisedWei));
+      presaleActive = !!active;
+      presaleEnded = !!ended;
     }
 
+    function renderTopStats() {
+      totalRaisedEl.innerText = fmtBNB(totalRaisedBNB);
+      const usd = (pricesUSD.bnb && isFinite(totalRaisedBNB)) ? totalRaisedBNB * pricesUSD.bnb : NaN;
+      totalRaisedUsdEl.innerText = isFinite(usd) ? fmtUSD0(usd) : "--";
+      stageEl.innerText = String(stage);
+      tokenRateEl.innerText = tokensPerBNB ? `${Math.floor(tokensPerBNB).toLocaleString()} BFG` : "--";
+
+      if (presaleEnded) statusPill.innerText = "PRESALE ENDED";
+      else if (presaleActive) statusPill.innerText = `LIVE • STAGE ${stage}`;
+      else statusPill.innerText = "NOT STARTED";
+    }
+
+    function renderUrgency() {
+      const delta = Math.max(totalRaisedBNB - lastRaisedBNB, 0);
+      const p = Math.max(Math.min(delta / PRICE_INCREASE_THRESHOLD_BNB, 1), 0);
+      const remain = Math.max(PRICE_INCREASE_THRESHOLD_BNB - delta, 0);
+
+      progFill.style.width = (p * 100).toFixed(1) + "%";
+      if (p >= 0.85) progFill.classList.add("near");
+      else progFill.classList.remove("near");
+
+      progText.innerText = `${(p * 100).toFixed(1)}% • ${remain.toFixed(2)} BNB to next stage trigger.`;
+
+      const nextRate = tokensPerBNB ? Math.floor(tokensPerBNB * 0.9) : null;
+      if (presaleEnded) stageMsg.innerText = "Presale ended on-chain.";
+      else if (!presaleActive) stageMsg.innerText = "Waiting for presale activation on-chain.";
+      else stageMsg.innerText = nextRate
+        ? `Stage ${stage} is live. Next stage may reduce tokens per BNB by ~10% (estimate: ~${nextRate.toLocaleString()} BFG/BNB).`
+        : `Stage ${stage} is live.`;
+    }
+
+    // =========================
+    // WHITEPAPER LIVE
+    // =========================
+    function updateWhitepaperLive() {
+      const elStage = document.getElementById("wpStageNow");
+      const elRate  = document.getElementById("wpRateNow");
+      const elNext  = document.getElementById("wpNextTrigger");
+
+      if (elStage) elStage.innerText = (stage !== null && stage !== undefined) ? String(stage) : "--";
+      if (elRate)  elRate.innerText  = tokensPerBNB ? `${Math.floor(tokensPerBNB).toLocaleString()} BFG` : "--";
+
+      const delta = Math.max((totalRaisedBNB || 0) - (lastRaisedBNB || 0), 0);
+      const remain = Math.max(PRICE_INCREASE_THRESHOLD_BNB - delta, 0);
+      const p = Math.max(Math.min(delta / PRICE_INCREASE_THRESHOLD_BNB, 1), 0);
+
+      if (elNext) {
+        if (presaleEnded) elNext.innerText = "Presale ended";
+        else if (!presaleActive) elNext.innerText = "Not active";
+        else elNext.innerText = `${(p*100).toFixed(1)}% • ${remain.toFixed(2)} BNB remaining`;
+      }
+
+      // PinkLock disclosures
+      if (wpPinkLink) wpPinkLink.innerText = CONFIG.PINKLOCK_URL ? "View Lock" : "TBD";
+      if (wpPinkLink && CONFIG.PINKLOCK_URL) {
+        wpPinkLink.innerHTML = `<a class="link" href="${CONFIG.PINKLOCK_URL}" target="_blank" rel="noreferrer">View Lock</a>`;
+      }
+      if (wpUnlockDate) wpUnlockDate.innerText = CONFIG.PINKLOCK_UNLOCK_DATE || "TBD";
+    }
+
+    // =========================
+    // CHAIN SELECT + ESTIMATES
+    // =========================
+    let selectedChain = "BSC";
+
+    function setSelectedChain(chain) {
+      selectedChain = chain;
+      [...chainSeg.querySelectorAll(".chip")].forEach(el => {
+        el.classList.toggle("active", el.dataset.chain === chain);
+      });
+
+      if (chain === "BSC") amountLabel.innerText = "Enter Amount (BNB)";
+      if (chain === "ETH") amountLabel.innerText = "Enter Amount (ETH)";
+      if (chain === "SOL") amountLabel.innerText = "Enter Amount (SOL)";
+      if (chain === "TRON") amountLabel.innerText = "Enter Amount (USDT - TRC20)";
+
+      updatePayButtonState();
+      updateEstimates();
+    }
+
+    async function updateEstimates() {
+      const amt = parseFloat(payAmount.value || "0");
+      if (!amt || amt <= 0) {
+        convUsd.innerText = "--";
+        tokensOut.innerText = "--";
+        estNote.innerText = "Enter an amount to see a live estimate.";
+        return;
+      }
+
+      try { await fetchPricesUSD(); }
+      catch {
+        estNote.innerText = "Price feed unavailable. Please open via a local HTTP server.";
+        return;
+      }
+
+      const tUsd = tokenUsdPrice();
+      if (!tUsd) {
+        estNote.innerText = "Loading on-chain pricing reference…";
+        return;
+      }
+
+      let payUsd = null;
+      if (selectedChain === "BSC") payUsd = pricesUSD.bnb ? (amt * pricesUSD.bnb) : null;
+      if (selectedChain === "ETH") payUsd = pricesUSD.eth ? (amt * pricesUSD.eth) : null;
+      if (selectedChain === "SOL") payUsd = pricesUSD.sol ? (amt * pricesUSD.sol) : null;
+      if (selectedChain === "TRON") payUsd = amt;
+
+      if (!payUsd) {
+        estNote.innerText = "Loading market price for selected chain…";
+        return;
+      }
+
+      const out = payUsd / tUsd;
+      convUsd.innerText = fmtUSD0(payUsd);
+      tokensOut.innerText = out.toLocaleString(undefined, { maximumFractionDigits: 2 }) + " BFG";
+      tokenUsdEl.innerText = fmtUSD8(tUsd);
+
+      const nextTokensPerBNB = tokensPerBNB ? Math.floor(tokensPerBNB * 0.9) : null;
+      estNote.innerText =
+        `Pricing reference: BSC on-chain rate. Current: 1 BNB ≈ ${Math.floor(tokensPerBNB).toLocaleString()} BFG. ` +
+        (nextTokensPerBNB ? `Next stage estimate: ~${nextTokensPerBNB.toLocaleString()} BFG/BNB.` : "");
+    }
+
+    // =========================
+    // EVM CONNECT (BSC + ETH)
+    // =========================
+    let web3Modal = null;
+    let evmProvider = null;
+    let evmSigner = null;
+    let evmAddress = null;
+    let presaleContract = null;
+
     function initWeb3Modal() {
-      const chains = [{
-        chainId: CONFIG.CHAIN_ID,
-        name: CONFIG.CHAIN_NAME,
-        currency: CONFIG.CURRENCY,
-        explorerUrl: CONFIG.EXPLORER,
-        rpcUrl: CONFIG.BSC_RPC
-      }];
+      const chains = [
+        { chainId: 1, name: "Ethereum", currency: "ETH", explorerUrl: "https://etherscan.io", rpcUrl: "https://rpc.ankr.com/eth" },
+        { chainId: CONFIG.BSC_CHAIN_ID, name: "BNB Smart Chain", currency: "BNB", explorerUrl: CONFIG.BSC_EXPLORER, rpcUrl: CONFIG.BSC_RPC }
+      ];
 
       const ethersConfig = defaultConfig({
         metadata: {
-          name: 'Bullforge',
-          description: 'Bullforge Presale',
+          name: 'BullForge',
+          description: 'BullForge Multi-chain Buy',
           url: window.location.origin,
           icons: ['https://walletconnect.com/walletconnect-logo.png']
         },
-        defaultChainId: CONFIG.CHAIN_ID,
+        defaultChainId: CONFIG.BSC_CHAIN_ID,
         rpcUrl: CONFIG.BSC_RPC,
         projectId: CONFIG.WALLETCONNECT_PROJECT_ID
       });
@@ -917,146 +2059,493 @@
         chains,
         projectId: CONFIG.WALLETCONNECT_PROJECT_ID,
         themeMode: 'dark',
-        themeVariables: { '--w3m-accent': '#FFD700' }
+        themeVariables: { '--w3m-accent': '#F5D77A' }
       });
     }
 
-    async function connectWallet() {
+    async function connectEVM() {
       try {
-        connectBtn.disabled = true;
-        connectBtn.innerText = 'Connecting...';
+        evmConnectBtn.disabled = true;
+        evmConnectBtn.innerText = "Connecting…";
 
         await web3Modal.open();
+        const walletProvider = await web3Modal.getWalletProvider?.();
+        if (!walletProvider) throw new Error("Wallet provider not found");
 
-        walletProvider = await web3Modal.getWalletProvider?.();
-        if (!walletProvider) throw new Error('Wallet provider not found');
+        evmProvider = new ethers.providers.Web3Provider(walletProvider);
+        evmSigner = evmProvider.getSigner();
+        evmAddress = await evmSigner.getAddress();
 
-        provider = new ethers.providers.Web3Provider(walletProvider);
-        signer = provider.getSigner();
-        userAddress = await signer.getAddress();
-        contract = new ethers.Contract(CONFIG.CONTRACT_ADDRESS, CONTRACT_ABI, signer);
+        presaleContract = new ethers.Contract(CONFIG.CONTRACT_ADDRESS, CONTRACT_ABI, evmSigner);
 
-        await updateWalletUIAfterConnect();
-        await refreshContractData();
-        showNotification('Connected', `Wallet ${safeShort(userAddress)} connected`);
+        evmConnectBtn.innerText = safeShort(evmAddress);
+        evmDisconnectBtn.style.display = "inline-block";
+
+        evmBadge.style.display = "inline-block";
+        const net = await evmProvider.getNetwork();
+        evmBadge.classList.toggle("bad", ![1, CONFIG.BSC_CHAIN_ID].includes(net.chainId));
+        evmBadge.innerText = `EVM • ${net.chainId}`;
+
+        myWallet.innerText = safeShort(evmAddress);
+        evmWalletText.innerText = safeShort(evmAddress);
+
+        const rl = `${window.location.origin}${window.location.pathname}?ref=${evmAddress}`;
+        if (refLink) refLink.innerText = rl;
+        if (refLink2) refLink2.innerText = rl;
+
+        await updateBalances();
+        updatePayButtonState();
+        showNotification("Connected", `EVM wallet ${safeShort(evmAddress)} connected.`);
       } catch (e) {
-        resetWalletUI();
-        showNotification('Connection Failed', e?.message || String(e), true);
+        showNotification("Connection Failed", e?.message || String(e), true);
+      } finally {
+        evmConnectBtn.disabled = false;
+        if (!evmAddress) evmConnectBtn.innerText = "Connect EVM";
       }
     }
 
-    async function disconnectWallet() {
+    async function disconnectEVM() {
       try { if (web3Modal?.disconnect) await web3Modal.disconnect(); } catch {}
-      provider = null; signer = null; contract = null; walletProvider = null; userAddress = null;
-      resetWalletUI();
-      showNotification('Disconnected', 'Wallet disconnected');
+      evmProvider = null; evmSigner = null; evmAddress = null; presaleContract = null;
+
+      evmConnectBtn.innerText = "Connect EVM";
+      evmDisconnectBtn.style.display = "none";
+      evmBadge.style.display = "none";
+      myWallet.innerText = "Not connected";
+      evmWalletText.innerText = "Not connected";
+      walletBalanceEl.innerText = "0.00";
+      if (refLink) refLink.innerText = "Connect wallet to generate…";
+      if (refLink2) refLink2.innerText = "Connect wallet to generate…";
+
+      updatePayButtonState();
+      showNotification("Disconnected", "EVM wallet disconnected.");
     }
 
-    async function buyTokens() {
-      if (!isUIConnected || !contract) return showNotification('Not Connected', 'Please connect wallet first', true);
+    async function updateBalances() {
+      try {
+        if (!evmProvider || !evmAddress) return;
+        const net = await evmProvider.getNetwork();
+        if (net.chainId === CONFIG.BSC_CHAIN_ID) {
+          const bal = await evmProvider.getBalance(evmAddress);
+          walletBalanceEl.innerText = parseFloat(ethers.utils.formatEther(bal)).toFixed(4);
+        } else {
+          walletBalanceEl.innerText = "—";
+        }
+      } catch {}
+    }
 
-      const amount = parseFloat(bnbAmountInput.value || '');
-      if (isNaN(amount) || amount <= 0) return showNotification('Invalid Amount', 'Please enter valid BNB amount', true);
+    function updatePayButtonState() {
+      if (!payButton) return;
 
-      const network = await provider.getNetwork();
-      if (network.chainId !== CONFIG.CHAIN_ID) return showNotification('Wrong Network', 'Switch to BNB Smart Chain (56)', true);
-
-      let referrer = (referrerInput.value || '').trim();
-      if (!referrer) referrer = ethers.constants.AddressZero;
-      if (referrer !== ethers.constants.AddressZero && !isValidAddress(referrer)) {
-        return showNotification('Invalid Referrer', 'Referrer address format is invalid', true);
+      if (selectedChain === "BSC" || selectedChain === "ETH") {
+        const ok = !!evmSigner;
+        payButton.disabled = !ok;
+        payButton.innerText = ok ? `Pay with ${selectedChain}` : "Connect Wallet To Pay";
+      } else if (selectedChain === "SOL") {
+        const ok = !!window.solana; // not phantom-only
+        payButton.disabled = false;
+        payButton.innerText = ok ? "Pay with SOL" : "Pay with SOL (Install Solana Wallet)";
+      } else if (selectedChain === "TRON") {
+        const ok = !!window.tronWeb?.ready;
+        payButton.disabled = false;
+        payButton.innerText = ok ? "Pay with USDT (TRC20)" : "Pay with USDT (Install TronLink)";
       }
-      if (userAddress && referrer.toLowerCase() === userAddress.toLowerCase()) referrer = ethers.constants.AddressZero;
+    }
 
-      const slippage = Math.max(parseFloat(slippageInput.value || '1') / 100, 0);
-      const expected = amount * currentRate;
-      const minOut = Math.floor(expected * (1 - slippage));
+    // =========================
+    // PAY FLOWS
+    // =========================
+    async function payBSC() {
+      if (!presaleContract || !evmProvider) return showNotification("Not Connected", "Connect your EVM wallet first.", true);
+
+      const amt = parseFloat(payAmount.value || "0");
+      if (!amt || amt <= 0) return showNotification("Invalid Amount", "Enter a valid BNB amount.", true);
+
+      const net = await evmProvider.getNetwork();
+      if (net.chainId !== CONFIG.BSC_CHAIN_ID) {
+        return showNotification("Wrong Network", "Switch your EVM wallet to BNB Smart Chain (56).", true);
+      }
+
+      // Slippage removed as requested: set minOut = 0
+      const minOut = ethers.constants.Zero;
+
+      let ref = (referrerInput.value || "").trim();
+      if (!ref) ref = ethers.constants.AddressZero;
+      if (ref !== ethers.constants.AddressZero && !isValidAddress(ref)) {
+        return showNotification("Invalid Referrer", "Referrer address is invalid.", true);
+      }
+      if (evmAddress && ref.toLowerCase() === evmAddress.toLowerCase()) ref = ethers.constants.AddressZero;
 
       try {
-        buyButton.disabled = true;
-        buyButton.innerText = 'Processing...';
+        payButton.disabled = true;
+        payButton.innerText = "Processing…";
 
-        const tx = await contract.buyTokens(referrer, minOut, { value: ethers.utils.parseEther(amount.toString()) });
-        showNotification('Transaction Sent', tx.hash);
-
+        const tx = await presaleContract.buyTokens(ref, minOut, { value: ethers.utils.parseEther(String(amt)) });
+        showNotification("Transaction Sent", tx.hash);
         await tx.wait();
-        showNotification('Purchase Success', `You bought $${CONFIG.TOKEN_SYMBOL} successfully`);
-        bnbAmountInput.value = '';
-        estimateTokens();
-        await refreshContractData();
+        showNotification("Payment Confirmed", "BSC purchase confirmed on-chain.");
+
+        const tUsd = tokenUsdPrice();
+        const estBfg = (tUsd && pricesUSD.bnb) ? ((amt * pricesUSD.bnb) / tUsd) : (amt * tokensPerBNB);
+
+        addHistoryItem({
+          ts: Date.now(),
+          chain: "BSC",
+          tx: tx.hash,
+          explorer: `${CONFIG.BSC_EXPLORER}/tx/${tx.hash}`,
+          paid: `${amt} BNB`,
+          bfg: estBfg ? estBfg.toLocaleString(undefined, { maximumFractionDigits: 2 }) : "--"
+        });
+
+        await refreshAll();
+        await updateBalances();
       } catch (e) {
-        showNotification('Purchase Failed', e?.data?.message || e?.message || String(e), true);
+        showNotification("Payment Failed", e?.data?.message || e?.message || String(e), true);
       } finally {
-        buyButton.disabled = false;
-        buyButton.innerText = `Buy $${CONFIG.TOKEN_SYMBOL}`;
+        payButton.disabled = false;
+        updatePayButtonState();
       }
     }
 
-    async function claimTokens() {
-      if (!isUIConnected || !contract) return showNotification('Not Connected', 'Please connect wallet first', true);
+    async function payETH() {
+      if (!evmSigner || !evmProvider) return showNotification("Not Connected", "Connect your EVM wallet first.", true);
+
+      const amt = parseFloat(payAmount.value || "0");
+      if (!amt || amt <= 0) return showNotification("Invalid Amount", "Enter a valid ETH amount.", true);
+
+      const net = await evmProvider.getNetwork();
+      if (net.chainId !== 1) {
+        return showNotification("Wrong Network", "Switch your EVM wallet to Ethereum Mainnet (1).", true);
+      }
+
+      try {
+        payButton.disabled = true;
+        payButton.innerText = "Processing…";
+
+        const tx = await evmSigner.sendTransaction({
+          to: CONFIG.ETH_RECEIVE,
+          value: ethers.utils.parseEther(String(amt))
+        });
+
+        showNotification("Transaction Sent", tx.hash);
+        await tx.wait();
+        showNotification("Payment Confirmed", "ETH payment confirmed.");
+
+        const tUsd = tokenUsdPrice();
+        const payUsd = pricesUSD.eth ? (amt * pricesUSD.eth) : null;
+        const estBfg = (tUsd && payUsd) ? (payUsd / tUsd) : null;
+
+        addHistoryItem({
+          ts: Date.now(),
+          chain: "ETH",
+          tx: tx.hash,
+          explorer: `https://etherscan.io/tx/${tx.hash}`,
+          paid: `${amt} ETH`,
+          bfg: estBfg ? estBfg.toLocaleString(undefined, { maximumFractionDigits: 2 }) : "--"
+        });
+
+      } catch (e) {
+        showNotification("Payment Failed", e?.data?.message || e?.message || String(e), true);
+      } finally {
+        payButton.disabled = false;
+        updatePayButtonState();
+      }
+    }
+
+    async function paySOL() {
+      const amt = parseFloat(payAmount.value || "0");
+      if (!amt || amt <= 0) return showNotification("Invalid Amount", "Enter a valid SOL amount.", true);
+
+      if (!window.solana) {
+        return showNotification("Wallet Required", "Please install a Solana wallet that injects window.solana (mobile/desktop).", true);
+      }
+
+      try {
+        payButton.disabled = true;
+        payButton.innerText = "Opening Solana wallet…";
+
+        const solana = window.solana;
+        const conn = new Connection(CONFIG.SOL_RPC, "confirmed");
+
+        if (!solana.isConnected) await solana.connect();
+        const fromPubkey = solana.publicKey;
+        mySolWallet.innerText = safeShort(fromPubkey?.toString() || "");
+
+        const toPubkey = new PublicKey(CONFIG.SOL_RECEIVE);
+        const lamports = Math.round(amt * LAMPORTS_PER_SOL);
+
+        const tx = new Transaction().add(
+          SystemProgram.transfer({ fromPubkey, toPubkey, lamports })
+        );
+        tx.feePayer = fromPubkey;
+        const { blockhash } = await conn.getLatestBlockhash("finalized");
+        tx.recentBlockhash = blockhash;
+
+        const signed = await solana.signTransaction(tx);
+        const sig = await conn.sendRawTransaction(signed.serialize(), { skipPreflight: false });
+
+        showNotification("Transaction Sent", sig);
+        await conn.confirmTransaction(sig, "confirmed");
+        showNotification("Payment Confirmed", "SOL payment confirmed.");
+
+        const tUsd = tokenUsdPrice();
+        const payUsd = pricesUSD.sol ? (amt * pricesUSD.sol) : null;
+        const estBfg = (tUsd && payUsd) ? (payUsd / tUsd) : null;
+
+        addHistoryItem({
+          ts: Date.now(),
+          chain: "SOL",
+          tx: sig,
+          explorer: `https://solscan.io/tx/${sig}`,
+          paid: `${amt} SOL`,
+          bfg: estBfg ? estBfg.toLocaleString(undefined, { maximumFractionDigits: 2 }) : "--"
+        });
+
+      } catch (e) {
+        showNotification("Payment Failed", e?.message || String(e), true);
+      } finally {
+        payButton.disabled = false;
+        updatePayButtonState();
+      }
+    }
+
+    async function payTRON_USDT() {
+      const amt = parseFloat(payAmount.value || "0");
+      if (!amt || amt <= 0) return showNotification("Invalid Amount", "Enter a valid USDT amount.", true);
+
+      if (!window.tronWeb || !window.tronWeb.ready) {
+        return showNotification("Wallet Required", "Please install TronLink to pay with USDT (TRC20).", true);
+      }
+
+      try {
+        payButton.disabled = true;
+        payButton.innerText = "Opening TronLink…";
+
+        const tronWeb = window.tronWeb;
+        const from = tronWeb.defaultAddress?.base58;
+        myTronWallet.innerText = safeShort(from || "");
+
+        const amountSun = Math.round(amt * 1_000_000); // 6 decimals
+        const usdt = await tronWeb.contract().at(CONFIG.TRON_USDT_CONTRACT);
+        const txid = await usdt.transfer(CONFIG.TRON_RECEIVE, amountSun).send({ feeLimit: 30_000_000 });
+
+        showNotification("Transaction Sent", txid);
+        showNotification("Payment Submitted", "USDT transfer submitted. It will appear on-chain shortly.");
+
+        const tUsd = tokenUsdPrice();
+        const payUsd = amt;
+        const estBfg = (tUsd && payUsd) ? (payUsd / tUsd) : null;
+
+        addHistoryItem({
+          ts: Date.now(),
+          chain: "TRON (USDT)",
+          tx: txid,
+          explorer: `https://tronscan.org/#/transaction/${txid}`,
+          paid: `${amt} USDT (TRC20)`,
+          bfg: estBfg ? estBfg.toLocaleString(undefined, { maximumFractionDigits: 2 }) : "--"
+        });
+
+      } catch (e) {
+        showNotification("Payment Failed", e?.message || String(e), true);
+      } finally {
+        payButton.disabled = false;
+        updatePayButtonState();
+      }
+    }
+
+    async function claimBSC() {
+      if (!presaleContract || !evmProvider) return showNotification("Not Connected", "Connect your EVM wallet first.", true);
+      const net = await evmProvider.getNetwork();
+      if (net.chainId !== CONFIG.BSC_CHAIN_ID) return showNotification("Wrong Network", "Switch to BSC to claim.", true);
 
       try {
         claimButton.disabled = true;
-        claimButton.innerText = 'Claiming...';
-
-        const tx = await contract.claimTokens();
-        showNotification('Claim Submitted', tx.hash);
-
+        claimButton.innerText = "Claiming…";
+        const tx = await presaleContract.claimTokens();
+        showNotification("Claim Sent", tx.hash);
         await tx.wait();
-        showNotification('Claim Success', 'Your tokens have been claimed');
+        showNotification("Claim Success", "Tokens claimed.");
       } catch (e) {
-        showNotification('Claim Failed', e?.data?.message || e?.message || String(e), true);
+        showNotification("Claim Failed", e?.data?.message || e?.message || String(e), true);
       } finally {
         claimButton.disabled = false;
-        claimButton.innerText = `Claim Your $${CONFIG.TOKEN_SYMBOL} Tokens`;
+        claimButton.innerText = "Claim Your $BFG Tokens (BSC)";
       }
     }
 
-    function bindNavigation() {
-      document.querySelectorAll('[data-nav]').forEach(el => {
-        el.addEventListener('click', (e) => {
-          const href = el.getAttribute('href') || '';
-          if (href.startsWith('http')) return;
-          e.preventDefault();
-          const target = el.getAttribute('data-nav') || 'home';
-          history.pushState(null, '', `#${target}`);
-          setActivePage(target);
-        });
-      });
+    async function onPay() {
+      if (selectedChain === "BSC") return payBSC();
+      if (selectedChain === "ETH") return payETH();
+      if (selectedChain === "SOL") return paySOL();
+      if (selectedChain === "TRON") return payTRON_USDT();
+    }
 
-      window.addEventListener('hashchange', () => {
-        const route = getRouteFromHash();
-        setActivePage(route.page);
+    async function copyText(txt) {
+      try {
+        await navigator.clipboard.writeText(txt);
+        showNotification("Copied", "Copied to clipboard.");
+      } catch {
+        showNotification("Copy Failed", "Please copy manually.", true);
+      }
+    }
+
+    async function refreshAll() {
+      const t0 = Date.now();
+      try {
+        await Promise.all([refreshContractData(), fetchPricesUSD()]);
+        renderTopStats();
+        renderUrgency();
+        updateEstimates();
+        updateWhitepaperLive();
+        const ms = Date.now() - t0;
+        if (lastSyncText) lastSyncText.innerText = `LIVE • synced (${ms}ms)`;
+      } catch {
+        if (lastSyncText) lastSyncText.innerText = "Sync failed";
+      }
+
+      if (claimButton) {
+        if (presaleEnded) claimButton.style.display = "block";
+        else claimButton.style.display = "none";
+      }
+    }
+
+    // =========================
+    // WHITEPAPER: PDF EXPORT + smooth anchor
+    // =========================
+    function wpScrollTo(id) {
+      const el = document.querySelector(id);
+      if (!el) return;
+      history.pushState(null, '', '#whitepaper');
+      setActivePage('whitepaper');
+      setTimeout(() => el.scrollIntoView({ behavior: 'smooth', block: 'start' }), 50);
+    }
+
+    document.querySelectorAll('#whitepaper .wp-link').forEach(a => {
+      a.addEventListener('click', (e) => {
+        const href = a.getAttribute('href');
+        if (!href || !href.startsWith('#wp-')) return;
+        e.preventDefault();
+        wpScrollTo(href);
+      });
+    });
+
+    const wpPrintBtn = document.getElementById('wpPrintBtn');
+    if (wpPrintBtn) {
+      wpPrintBtn.addEventListener('click', () => {
+        history.pushState(null, '', '#whitepaper');
+        setActivePage('whitepaper');
+        setTimeout(() => window.print(), 80);
       });
     }
 
-    connectBtn?.addEventListener('click', connectWallet);
-    disconnectBtn?.addEventListener('click', disconnectWallet);
-    bnbAmountInput?.addEventListener('input', estimateTokens);
-    slippageInput?.addEventListener('input', estimateTokens);
-    buyButton?.addEventListener('click', buyTokens);
-    claimButton?.addEventListener('click', claimTokens);
+    function downloadWhitepaperPDF() {
+      history.pushState(null, '', '#whitepaper');
+      setActivePage('whitepaper');
 
-    copyBtn2?.addEventListener('click', async () => {
-      try {
-        const txt = referralLink2?.value || '';
-        if (!txt) return;
-        await navigator.clipboard.writeText(txt);
-        showNotification('Copied', 'Referral link copied');
-      } catch {
-        showNotification('Copy Failed', 'Please copy manually', true);
+      const wp = document.querySelector('#whitepaper .container');
+      if (!wp) return;
+
+      const styleText = Array.from(document.querySelectorAll('style'))
+        .map(s => s.innerHTML || '')
+        .join('\n');
+
+      const html = `
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>BullForge Whitepaper (PDF)</title>
+  <style>${styleText}</style>
+</head>
+<body>
+  <section id="whitepaper" class="page is-active">
+    <div class="section" style="padding-top:18px">
+      ${wp.innerHTML}
+    </div>
+  </section>
+
+  <script>
+    window.addEventListener('load', () => {
+      try{
+        const btns = document.querySelectorAll('#wpPdfBtn, #wpPrintBtn');
+        btns.forEach(b => b && b.remove());
+      }catch(e){}
+      setTimeout(() => window.print(), 120);
+    });
+  <\/script>
+</body>
+</html>`;
+
+      const w = window.open('', '_blank');
+      if (!w) return alert('Popup blocked. Please allow popups to download PDF.');
+      w.document.open();
+      w.document.write(html);
+      w.document.close();
+    }
+
+    const wpPdfBtn = document.getElementById('wpPdfBtn');
+    if (wpPdfBtn) wpPdfBtn.addEventListener('click', downloadWhitepaperPDF);
+
+    window.addEventListener('hashchange', () => {
+      const h = (location.hash || '').trim();
+      if (h.startsWith('#wp-')) {
+        setActivePage('whitepaper');
+        setTimeout(() => {
+          const el = document.querySelector(h);
+          if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }, 60);
       }
     });
 
+    // =========================
+    // EVENTS + INIT
+    // =========================
+    bindNav();
+
+    menuBtn.addEventListener("click", () => {
+      mobileMenu.classList.toggle("show");
+    });
+    document.addEventListener("click", (e) => {
+      if (!mobileMenu.classList.contains("show")) return;
+      const inside = mobileMenu.contains(e.target) || menuBtn.contains(e.target);
+      if (!inside) mobileMenu.classList.remove("show");
+    });
+
+    chainSeg.addEventListener("click", (e) => {
+      const t = e.target?.closest?.(".chip");
+      if (!t) return;
+      setSelectedChain(t.dataset.chain);
+    });
+
+    payAmount.addEventListener("input", updateEstimates);
+
+    evmConnectBtn.addEventListener("click", connectEVM);
+    evmDisconnectBtn.addEventListener("click", disconnectEVM);
+
+    payButton.addEventListener("click", onPay);
+    claimButton.addEventListener("click", claimBSC);
+
+    copyRefBtn.addEventListener("click", () => copyText(refLink?.innerText || ""));
+    copyRefBtn2.addEventListener("click", () => copyText(refLink2?.innerText || ""));
+
     initWeb3Modal();
-    bindNavigation();
+    renderHistory();
+    setSelectedChain("BSC");
+    setActivePage(getRouteFromHash());
 
-    const routeOnLoad = getRouteFromHash();
-    setActivePage(routeOnLoad.page);
+    refreshAll();
+    setInterval(refreshAll, 15000);
 
-    refreshContractData();
-    setInterval(refreshContractData, 15000);
-    setInterval(updateCountdown, 1000);
+    setInterval(() => {
+      updatePayButtonState();
+      if (window.solana?.publicKey) {
+        mySolWallet.innerText = safeShort(window.solana.publicKey.toString());
+      }
+      if (window.tronWeb?.ready && window.tronWeb.defaultAddress?.base58) {
+        myTronWallet.innerText = safeShort(window.tronWeb.defaultAddress.base58);
+      }
+    }, 2000);
   </script>
 </body>
 </html>
