@@ -1,6 +1,3 @@
-<!-- =========================
-PART 1 / 3  (HEAD + STYLE)
-========================= -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -24,23 +21,32 @@ PART 1 / 3  (HEAD + STYLE)
       --muted2:rgba(255,255,255,0.45);
       --danger:#FF4444;
       --ok:#00C853;
+
+      --shadow: 0 16px 60px rgba(0,0,0,0.45);
+      --shadow2: 0 26px 90px rgba(0,0,0,0.65);
+      --radius: 18px;
     }
+
     *{margin:0;padding:0;box-sizing:border-box;font-family:'Inter',sans-serif}
+
+    html { scroll-padding-top: 96px; }
+
     body{
       background:
-        radial-gradient(1000px 650px at 50% 0%, rgba(245,215,122,0.10), transparent 55%),
-        radial-gradient(900px 600px at 12% 10%, rgba(255,255,255,0.05), transparent 60%),
-        radial-gradient(900px 600px at 88% 18%, rgba(255,255,255,0.04), transparent 65%),
-        radial-gradient(700px 480px at 50% 120%, rgba(245,215,122,0.06), transparent 55%),
+        radial-gradient(1100px 720px at 50% 0%, rgba(245,215,122,0.12), transparent 58%),
+        radial-gradient(900px 600px at 10% 10%, rgba(255,255,255,0.05), transparent 60%),
+        radial-gradient(900px 600px at 90% 18%, rgba(255,255,255,0.04), transparent 65%),
+        radial-gradient(700px 480px at 50% 120%, rgba(245,215,122,0.07), transparent 55%),
         var(--bg);
       color:var(--text);
       overflow-x:hidden;
       letter-spacing:-0.01em;
       line-height:1.55;
     }
-    html { scroll-padding-top: 96px; }
 
     .container{max-width:1200px;margin:0 auto;padding:0 20px}
+
+    /* NAVBAR */
     .navbar{
       position:fixed;top:0;left:0;width:100%;z-index:999;
       padding:14px 0;background:rgba(7,7,8,0.70);
@@ -53,7 +59,6 @@ PART 1 / 3  (HEAD + STYLE)
       letter-spacing:-0.02em;
       text-transform:none;
     }
-
     .nav-links{display:flex;gap:16px;align-items:center;flex-wrap:wrap}
     .nav-links a{color:rgba(255,255,255,0.66);text-decoration:none;font-weight:800;font-size:13px;letter-spacing:0.02em}
     .nav-links a:hover{color:rgba(255,255,255,0.92)}
@@ -75,6 +80,7 @@ PART 1 / 3  (HEAD + STYLE)
       border:1px solid rgba(245,215,122,0.7);border-radius:999px;font-weight:800;font-size:13px;cursor:pointer
     }
 
+    /* Mobile menu */
     .menuBtn{
       display:none;
       width:40px;height:40px;border-radius:12px;
@@ -103,15 +109,17 @@ PART 1 / 3  (HEAD + STYLE)
     .mobileMenu a:hover{border-color:rgba(245,215,122,0.35);color:rgba(245,215,122,0.95)}
     .mobileMenu.show{display:block}
 
+    /* Pages */
     .page{display:none}
     .page.is-active{display:block}
     .section{padding-top:108px;padding-bottom:80px}
 
+    /* Glass base */
     .glass{
       background:var(--card);
       border:1px solid var(--border);
-      border-radius:18px;
-      box-shadow:0 16px 60px rgba(0,0,0,0.45);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
       backdrop-filter:blur(14px);
       position:relative;
       overflow:visible;
@@ -123,6 +131,7 @@ PART 1 / 3  (HEAD + STYLE)
       opacity:0.55
     }
 
+    /* Shared headings */
     .title{
       font-size:46px;font-weight:900;line-height:1.08;letter-spacing:-0.03em;
       background:linear-gradient(180deg, rgba(245,215,122,0.95) 0%, rgba(233,196,92,0.85) 100%);
@@ -131,6 +140,7 @@ PART 1 / 3  (HEAD + STYLE)
     .subtitle{margin-top:12px;color:var(--muted);font-size:16px;max-width:860px}
     .sectionLabel{margin-top:14px;font-size:12px;color:rgba(255,255,255,0.70);font-weight:800;letter-spacing:0.12em;text-transform:uppercase}
 
+    /* Buttons */
     .btn{
       width:100%;
       margin-top:12px;
@@ -151,6 +161,7 @@ PART 1 / 3  (HEAD + STYLE)
       font-weight:900;cursor:pointer
     }
 
+    /* Notification */
     .notification{
       position:fixed;top:88px;right:18px;max-width:420px;
       padding:16px 18px;background:rgba(15,15,15,0.72);
@@ -166,38 +177,82 @@ PART 1 / 3  (HEAD + STYLE)
 
     .spinner{display:inline-block;width:18px;height:18px;border:2px solid rgba(255,255,255,0.25);border-radius:50%;border-top-color:var(--gold);animation:spin 1s linear infinite;vertical-align:middle}
     @keyframes spin{to{transform:rotate(360deg)}}
-
-    /* =============== HOME =============== */
+    /* =============== HOME (Bullzilla/VC Upgrade) =============== */
     .home-landing{position:relative}
+
+    /* stronger hero glow */
     .home-hero-glow{
-      position:absolute;left:50%;top:0;transform:translateX(-50%);
+      position:absolute;left:50%;top:-40px;transform:translateX(-50%);
       width:980px;height:560px;pointer-events:none;
       background:
-        radial-gradient(closest-side, rgba(245,215,122,0.13), transparent 70%),
-        radial-gradient(closest-side, rgba(255,255,255,0.06), transparent 72%);
-      opacity:0.9;
+        radial-gradient(closest-side, rgba(245,215,122,0.16), transparent 72%),
+        radial-gradient(closest-side, rgba(255,255,255,0.06), transparent 76%);
+      opacity:0.95;
       z-index:0;
+      filter: blur(0px);
     }
+
+    /* subtle animated noise overlay */
+    .noise{
+      position:absolute;inset:0;pointer-events:none;z-index:0;
+      opacity:0.06;
+      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)' opacity='.6'/%3E%3C/svg%3E");
+      mix-blend-mode: overlay;
+    }
+
+    /* big ghost background word */
+    .hero-ghostWord{
+      position:absolute;left:50%;top:88px;transform:translateX(-50%);
+      font-weight:900;letter-spacing:-0.06em;
+      font-size:160px;line-height:1;
+      color:rgba(255,255,255,0.035);
+      white-space:nowrap;
+      z-index:0;
+      pointer-events:none;
+      text-transform:uppercase;
+      filter: blur(0px);
+    }
+
+    /* floating particles (pure CSS) */
+    .particles{
+      position:absolute;inset:0;pointer-events:none;z-index:0;
+      overflow:hidden;
+    }
+    .pDot{
+      position:absolute;border-radius:999px;
+      background:radial-gradient(circle, rgba(245,215,122,0.85), rgba(245,215,122,0));
+      opacity:0.20;
+      filter: blur(0px);
+      animation: floatUp linear infinite;
+    }
+    @keyframes floatUp{
+      from{ transform: translateY(60px); opacity:0.0;}
+      15%{opacity:0.20;}
+      70%{opacity:0.12;}
+      to{ transform: translateY(-220px); opacity:0.0;}
+    }
+
     .section-header{position:relative;z-index:1;text-align:center}
     .section-subtitle{
       font-size:12px;letter-spacing:0.22em;text-transform:uppercase;
       color:rgba(255,255,255,0.60);font-weight:900
     }
 
-    /* dynamic shimmer for welcome (bullzilla-ish micro glow) */
+    /* welcome shimmer - upgraded */
     .welcomeShimmer{
       display:inline-block;
       background: linear-gradient(90deg,
-        rgba(255,255,255,0.28) 0%,
+        rgba(255,255,255,0.22) 0%,
         rgba(245,215,122,0.95) 18%,
-        rgba(255,255,255,0.28) 40%,
-        rgba(255,255,255,0.24) 100%);
+        rgba(255,255,255,0.25) 40%,
+        rgba(255,255,255,0.18) 100%);
       background-size: 240% 100%;
       -webkit-background-clip: text;
       background-clip: text;
       color: transparent;
-      text-shadow: 0 0 30px rgba(245,215,122,0.10);
+      text-shadow: 0 0 34px rgba(245,215,122,0.10);
       animation: shimmer 2.6s ease-in-out infinite;
+      position:relative;
     }
     @keyframes shimmer{
       0%{background-position: 0% 50%}
@@ -205,17 +260,19 @@ PART 1 / 3  (HEAD + STYLE)
     }
 
     .section-desc{margin-top:10px;color:rgba(255,255,255,0.70);font-size:16px}
-    /* bigger hero token */
+
+    /* make token title more "grand" */
     .hero-token-title{
-      margin-top:10px;
-      font-size:96px;
+      margin-top:12px;
+      font-size:104px;
       line-height:1;
-      letter-spacing:-0.055em;
+      letter-spacing:-0.06em;
       font-weight:900;
-      background:linear-gradient(180deg, rgba(245,215,122,1) 0%, rgba(233,196,92,0.78) 100%);
+      background:linear-gradient(180deg, rgba(245,215,122,1) 0%, rgba(233,196,92,0.76) 100%);
       -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
-      text-shadow:0 22px 110px rgba(245,215,122,0.10);
+      text-shadow:0 28px 110px rgba(245,215,122,0.10);
     }
+
     .buy-button{
       padding:14px 22px;border-radius:14px;border:none;
       background:linear-gradient(180deg, rgba(245,215,122,0.98), rgba(233,196,92,0.92));
@@ -234,8 +291,99 @@ PART 1 / 3  (HEAD + STYLE)
       -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
     }
 
+    /* Mini Live Stats on home */
+    .miniStats{
+      margin-top:26px;
+      display:grid;
+      grid-template-columns:repeat(4,minmax(0,1fr));
+      gap:12px;
+      position:relative;
+      z-index:1;
+    }
+    .miniStat{
+      padding:14px 14px;
+      border-radius:18px;
+      border:1px solid rgba(255,255,255,0.10);
+      background:rgba(255,255,255,0.03);
+      box-shadow:0 18px 60px rgba(0,0,0,0.50);
+      position:relative;
+      overflow:hidden;
+    }
+    .miniStat::before{
+      content:"";position:absolute;inset:-1px;pointer-events:none;border-radius:18px;
+      background:
+        radial-gradient(420px 140px at 20% 0%, rgba(245,215,122,0.20), transparent 60%),
+        radial-gradient(420px 140px at 85% 0%, rgba(255,255,255,0.08), transparent 65%);
+      opacity:0.30;
+    }
+    .miniStat .k{
+      font-size:11px;text-transform:uppercase;letter-spacing:0.14em;
+      color:rgba(255,255,255,0.50);
+      white-space:nowrap;overflow:hidden;text-overflow:ellipsis;line-height:1.2
+    }
+    .miniStat .v{
+      margin-top:6px;font-size:16px;font-weight:900;
+      color:rgba(245,215,122,0.95);
+      font-variant-numeric:tabular-nums;
+      white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+    }
+
+    /* Why BullForge */
+    .whyGrid{
+      margin-top:18px;
+      display:grid;
+      grid-template-columns:repeat(4,minmax(0,1fr));
+      gap:12px;
+    }
+    .whyCard{
+      padding:16px;
+      border-radius:18px;
+      border:1px solid rgba(255,255,255,0.10);
+      background:rgba(255,255,255,0.03);
+      box-shadow:var(--shadow);
+      transition: transform .18s ease, border-color .18s ease, box-shadow .18s ease, filter .18s ease;
+      position:relative;
+      overflow:hidden;
+      min-height:130px;
+    }
+    .whyCard::before{
+      content:"";position:absolute;inset:0;pointer-events:none;
+      background:radial-gradient(520px 220px at 20% 0%, rgba(245,215,122,0.11), transparent 62%);
+      opacity:0.55;
+      transition:opacity .18s ease;
+    }
+    .whyCard:hover{
+      transform: translateY(-5px);
+      border-color: rgba(245,215,122,0.28);
+      box-shadow:var(--shadow2);
+      filter: brightness(1.03);
+    }
+    .whyCard:hover::before{opacity:0.85;}
+    .whyIcon{
+      width:38px;height:38px;border-radius:14px;
+      display:flex;align-items:center;justify-content:center;
+      background:rgba(245,215,122,0.10);
+      border:1px solid rgba(245,215,122,0.28);
+      color:rgba(245,215,122,0.95);
+      font-weight:900;
+    }
+    .whyCard h3{
+      margin-top:12px;
+      color:rgba(245,215,122,0.95);
+      font-weight:900;
+      letter-spacing:-0.02em;
+      font-size:16px;
+      position:relative;z-index:1;
+    }
+    .whyCard p{
+      margin-top:8px;
+      color:rgba(255,255,255,0.68);
+      font-size:13px;
+      position:relative;z-index:1;
+    }
+
     /* =========================
-       DNA (Screenshot-like layout)
+       DNA (Screenshot layout + font smaller)
        ========================= */
     .dna-wrap{
       margin-top: 12px;
@@ -268,9 +416,8 @@ PART 1 / 3  (HEAD + STYLE)
       margin-bottom: 16px;
       flex-wrap: wrap;
     }
-    /* reduced DNA font sizes */
     .dna-top-left{
-      font-size: 32px;
+      font-size: 34px;   /* smaller */
       line-height: 1.1;
       font-weight: 900;
       letter-spacing: -0.03em;
@@ -278,7 +425,7 @@ PART 1 / 3  (HEAD + STYLE)
       text-shadow: 0 18px 80px rgba(245,215,122,0.12);
     }
     .dna-top-right{
-      font-size: 16px;
+      font-size: 16px;  /* smaller */
       font-weight: 700;
       color: rgba(255,255,255,0.60);
       letter-spacing: -0.01em;
@@ -288,7 +435,7 @@ PART 1 / 3  (HEAD + STYLE)
       z-index: 1;
       display:grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 14px;
+      gap: 16px;
       margin-top: 10px;
     }
     .dna-item{
@@ -300,10 +447,18 @@ PART 1 / 3  (HEAD + STYLE)
       display:flex;
       align-items:center;
       justify-content:space-between;
-      gap: 14px;
+      gap: 16px;
       transition: transform .18s ease, border-color .18s ease, box-shadow .18s ease, filter .18s ease;
       overflow:hidden;
       position:relative;
+    }
+    /* left accent line */
+    .dna-item::after{
+      content:"";
+      position:absolute;left:12px;top:16px;bottom:16px;width:2px;border-radius:999px;
+      background:linear-gradient(180deg, rgba(245,215,122,0.0), rgba(245,215,122,0.55), rgba(245,215,122,0.0));
+      opacity:0.55;
+      pointer-events:none;
     }
     .dna-item::before{
       content:"";
@@ -312,7 +467,7 @@ PART 1 / 3  (HEAD + STYLE)
       background:
         radial-gradient(520px 200px at 18% 0%, rgba(245,215,122,0.10), transparent 60%),
         linear-gradient(180deg, rgba(255,255,255,0.06), transparent 50%);
-      opacity:0.35;
+      opacity:0.30;
       transition: opacity .18s ease;
     }
     .dna-item:hover{
@@ -322,30 +477,32 @@ PART 1 / 3  (HEAD + STYLE)
       filter: brightness(1.03);
     }
     .dna-item:hover::before{opacity:0.7;}
-    .dna-item-left{min-width:0}
+    .dna-item-left{min-width:0;padding-left:10px}
     .dna-item-title{
-      font-size: 20px;
+      font-size: 18px;  /* smaller */
       font-weight: 900;
       letter-spacing: -0.02em;
       color: rgba(255,255,255,0.92);
     }
     .dna-item-sub{
-      margin-top: 8px;
-      font-size: 13px;
+      margin-top: 6px;
+      font-size: 13px;  /* smaller */
       font-weight: 600;
       color: rgba(255,255,255,0.52);
       letter-spacing: -0.01em;
     }
     .dna-item-pct{
-      font-size: 30px;
+      font-size: 30px; /* smaller */
       font-weight: 900;
       color: rgba(245,215,122,0.98);
       font-variant-numeric: tabular-nums;
       text-shadow: 0 18px 90px rgba(245,215,122,0.10);
       flex-shrink: 0;
+      transition: transform .18s ease;
     }
+    .dna-item:hover .dna-item-pct{transform: scale(1.04);}
 
-    /* Roadmap */
+    /* Roadmap - enhanced hover */
     .roadmap-grid{
       margin-top:14px;
       display:grid;
@@ -363,20 +520,28 @@ PART 1 / 3  (HEAD + STYLE)
       transition: transform .18s ease, border-color .18s ease, box-shadow .18s ease, filter .18s ease;
       will-change: transform;
     }
+    /* bottom evolution line */
+    .roadmap-card::after{
+      content:"";
+      position:absolute;left:16px;right:16px;bottom:14px;height:2px;border-radius:999px;
+      background:linear-gradient(90deg, rgba(245,215,122,0.0), rgba(245,215,122,0.45), rgba(245,215,122,0.0));
+      opacity:0.55;
+      pointer-events:none;
+    }
     .roadmap-card::before{
       content:"";
       position:absolute;inset:0;pointer-events:none;
-      background:radial-gradient(520px 200px at 20% 0%, rgba(245,215,122,0.10), transparent 60%);
+      background:radial-gradient(520px 200px at 20% 0%, rgba(245,215,122,0.12), transparent 60%);
       opacity:0.55;
       transition: opacity .18s ease;
     }
     .roadmap-card:hover{
-      transform: translateY(-6px);
+      transform: translateY(-7px);
       border-color: rgba(245,215,122,0.35);
-      box-shadow: 0 26px 90px rgba(0,0,0,0.65), 0 0 0 1px rgba(245,215,122,0.10) inset;
+      box-shadow: 0 28px 95px rgba(0,0,0,0.68), 0 0 0 1px rgba(245,215,122,0.10) inset;
       filter: brightness(1.03);
     }
-    .roadmap-card:hover::before{opacity:0.85;}
+    .roadmap-card:hover::before{opacity:0.90;}
     .roadmap-phase{position:relative;z-index:1;font-size:12px;letter-spacing:0.18em;text-transform:uppercase;color:rgba(255,255,255,0.60);font-weight:900}
     .roadmap-title{position:relative;z-index:1;margin-top:8px;font-weight:900;color:rgba(245,215,122,0.95);letter-spacing:-0.02em}
     .roadmap-list{position:relative;z-index:1;margin-top:10px;color:rgba(255,255,255,0.72);font-size:13px;padding-left:18px}
@@ -385,6 +550,8 @@ PART 1 / 3  (HEAD + STYLE)
     /* =============== BUY PAGE =============== */
     .gridTop{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-top:18px}
     .stat{padding:14px;min-width:0;position:relative;overflow:hidden}
+
+    /* glow border */
     .stat::after{
       content:"";
       position:absolute;inset:-1px;
@@ -486,6 +653,7 @@ PART 1 / 3  (HEAD + STYLE)
     a.link{color:rgba(245,215,122,0.92);text-decoration:none}
     a.link:hover{text-decoration:underline}
 
+    /* Other pages simple cards */
     .heroGrid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-top:14px}
     .heroCard{padding:16px;transition: transform .18s ease, border-color .18s ease, box-shadow .18s ease}
     .heroCard:hover{
@@ -512,270 +680,13 @@ PART 1 / 3  (HEAD + STYLE)
       letter-spacing: 0.02em;
     }
 
-    /* ========== WHITEPAPER (Institutional + Meme) ========== */
-    .wp-head{
-      display:flex;
-      gap:14px;
-      justify-content:space-between;
-      align-items:flex-start;
-      flex-wrap:wrap;
-    }
-    .wp-meta{
-      margin-top:14px;
-      display:flex;
-      flex-wrap:wrap;
-      gap:10px;
-    }
-    .wp-chip{
-      padding:8px 10px;
-      border-radius:999px;
-      border:1px solid rgba(255,255,255,0.10);
-      background:rgba(0,0,0,0.18);
-      color:rgba(255,255,255,0.70);
-      font-size:12px;
-      font-weight:800;
-    }
-    .wp-chip b{color:rgba(245,215,122,0.92)}
-
-    .wp-actions{
-      display:flex;
-      gap:10px;
-      flex-wrap:wrap;
-      align-items:center;
-      justify-content:flex-end;
-      min-width:260px;
-    }
-
-    .wp-grid{
-      margin-top:18px;
-      display:grid;
-      grid-template-columns: 1.3fr 0.7fr;
-      gap:14px;
-      align-items:start;
-    }
-
-    .wp-card{padding:22px}
-    .wp-side{padding:18px; position:sticky; top:96px; height:fit-content}
-    .wp-sideTitle{font-weight:900;color:rgba(245,215,122,0.95);letter-spacing:-0.02em}
-    .wp-sideBox{
-      margin-top:10px;
-      padding:12px;
-      border-radius:16px;
-      border:1px solid rgba(255,255,255,0.08);
-      background:rgba(0,0,0,0.14);
-    }
-    .wp-sideK{font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:rgba(255,255,255,0.55);font-weight:900}
-    .wp-sideV{margin-top:6px;color:rgba(255,255,255,0.82);font-weight:900}
-    .wp-sideNote{
-      margin-top:12px;
-      padding:12px;
-      border-radius:16px;
-      border:1px solid rgba(245,215,122,0.22);
-      background:rgba(245,215,122,0.06);
-      color:rgba(255,255,255,0.68);
-      font-size:12px;
-      line-height:1.5;
-    }
-    .wp-sideActions{margin-top:12px;display:grid;gap:10px}
-
-    .wp-toc{
-      padding:14px;
-      border-radius:16px;
-      border:1px solid rgba(255,255,255,0.08);
-      background:rgba(0,0,0,0.14);
-    }
-    .wp-toc-title{
-      font-weight:900;
-      color:rgba(245,215,122,0.95);
-      letter-spacing:-0.02em;
-    }
-    .wp-toc-links{
-      margin-top:10px;
-      display:grid;
-      gap:8px;
-    }
-    .wp-link{
-      text-decoration:none;
-      color:rgba(255,255,255,0.72);
-      font-weight:900;
-      font-size:13px;
-      padding:10px 10px;
-      border-radius:12px;
-      border:1px solid rgba(255,255,255,0.06);
-      background:rgba(255,255,255,0.03);
-    }
-    .wp-link:hover{
-      border-color:rgba(245,215,122,0.28);
-      color:rgba(245,215,122,0.95);
-    }
-
-    .wp-section{margin-top:18px}
-    #whitepaper h2{
-      margin-top:18px;
-      color:rgba(245,215,122,0.95);
-      font-weight:900;
-      letter-spacing:-0.02em;
-      font-size:20px;
-    }
-    #whitepaper p{color:rgba(255,255,255,0.72);margin-top:10px}
-    .wp-muted{color:rgba(255,255,255,0.55)}
-
-    .wp-bullets{
-      margin-top:10px;
-      padding-left:18px;
-      color:rgba(255,255,255,0.72);
-    }
-    .wp-bullets li{margin-top:8px}
-
-    .wp-callout{
-      margin-top:14px;
-      border-radius:18px;
-      border:1px solid rgba(245,215,122,0.25);
-      background:rgba(245,215,122,0.06);
-      padding:14px;
-    }
-    .wp-callout-title{
-      font-weight:900;
-      color:rgba(245,215,122,0.95);
-    }
-    .wp-callout-body{
-      margin-top:8px;
-      color:rgba(255,255,255,0.70);
-      font-size:13px;
-      line-height:1.6;
-    }
-
-    .wp-subgrid{
-      margin-top:12px;
-      display:grid;
-      grid-template-columns: repeat(3,minmax(0,1fr));
-      gap:12px;
-    }
-    .wp-mini{padding:14px;border-radius:18px}
-    .wp-mini-k{font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:rgba(255,255,255,0.52);font-weight:900}
-    .wp-mini-v{margin-top:8px;font-weight:900;color:rgba(245,215,122,0.95);font-size:18px;letter-spacing:-0.02em}
-    .wp-mini-note{margin-top:6px;color:rgba(255,255,255,0.60);font-size:12px}
-
-    .wp-twoCol{
-      margin-top:10px;
-      display:grid;
-      grid-template-columns: 1fr 1fr;
-      gap:12px;
-    }
-    .wp-adv{
-      padding:14px;
-      border-radius:18px;
-      border:1px solid rgba(255,255,255,0.08);
-      background:rgba(0,0,0,0.14);
-    }
-    .wp-adv h3{color:rgba(245,215,122,0.95);font-weight:900;letter-spacing:-0.02em}
-    .wp-adv p{margin-top:8px;color:rgba(255,255,255,0.70);font-size:13px}
-
-    .wp-tokenGrid{
-      margin-top:12px;
-      display:grid;
-      grid-template-columns: repeat(3,minmax(0,1fr));
-      gap:12px;
-    }
-    .wp-alloc{padding:14px;border-radius:18px}
-    .wp-alloc-k{font-size:12px;font-weight:900;color:rgba(255,255,255,0.85)}
-    .wp-alloc-v{margin-top:8px;font-size:22px;font-weight:900;color:rgba(245,215,122,0.95)}
-    .wp-alloc-n{margin-top:6px;color:rgba(255,255,255,0.58);font-size:12px}
-
-    .wp-chartWrap{
-      margin-top:14px;
-      border-radius:18px;
-      border:1px solid rgba(255,255,255,0.08);
-      background:rgba(0,0,0,0.14);
-      padding:14px;
-    }
-    .wp-chartHead{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;align-items:baseline}
-    .wp-chartTitle{font-weight:900;color:rgba(245,215,122,0.95);letter-spacing:-0.02em}
-    .wp-chartNote{color:rgba(255,255,255,0.55);font-size:12px}
-    .wp-chart{width:100%;height:auto;display:block;margin-top:10px}
-
-    .wp-donutRow{
-      display:grid;
-      grid-template-columns: 320px 1fr;
-      gap:12px;
-      align-items:center;
-      margin-top:10px;
-    }
-    .wp-donut{width:320px;max-width:100%;height:auto;display:block;margin:0 auto}
-    .wp-legend{display:grid;gap:10px}
-    .wp-legItem{color:rgba(255,255,255,0.72);font-weight:900;font-size:13px;display:flex;align-items:center;gap:10px}
-    .wp-dot{width:10px;height:10px;border-radius:999px;display:inline-block}
-    .wp-dot.d1{background:rgba(245,215,122,0.95);box-shadow:0 0 16px rgba(245,215,122,0.18)}
-    .wp-dot.d2{background:rgba(245,215,122,0.55)}
-    .wp-dot.d3{background:rgba(233,196,92,0.45)}
-    .wp-dot.d4{background:rgba(255,255,255,0.22)}
-    .wp-dot.d5{background:rgba(255,255,255,0.18)}
-    .wp-dot.d6{background:rgba(255,255,255,0.14)}
-
-    .wp-roadGrid{
-      margin-top:12px;
-      display:grid;
-      grid-template-columns: repeat(2,minmax(0,1fr));
-      gap:12px;
-    }
-    .wp-road{padding:14px;border-radius:18px;transition: transform .18s ease, border-color .18s ease, box-shadow .18s ease}
-    .wp-road:hover{
-      transform: translateY(-4px);
-      border-color: rgba(245,215,122,0.28);
-      box-shadow:0 24px 80px rgba(0,0,0,0.65);
-    }
-    .wp-road-phase{font-size:12px;letter-spacing:0.18em;text-transform:uppercase;color:rgba(255,255,255,0.55);font-weight:900}
-    .wp-road-title{margin-top:8px;font-weight:900;color:rgba(245,215,122,0.95);letter-spacing:-0.02em}
-    .wp-road ul{margin-top:10px;padding-left:18px;color:rgba(255,255,255,0.70);font-size:13px}
-    .wp-road li{margin-top:8px}
-    .wp-road-kpi{margin-top:10px;color:rgba(255,255,255,0.62);font-size:12px}
-    .wp-road-kpi b{color:rgba(245,215,122,0.92)}
-
-    .wp-riskGrid{
-      margin-top:12px;
-      display:grid;
-      grid-template-columns: repeat(2,minmax(0,1fr));
-      gap:12px;
-    }
-    .wp-risk{padding:14px;border-radius:18px}
-    .wp-risk-t{font-weight:900;color:rgba(245,215,122,0.95)}
-    .wp-risk-b{margin-top:8px;color:rgba(255,255,255,0.68);font-size:13px}
-
-    /* Whitepaper live grid (stage/rate/trigger) */
-    .wp-liveGrid{
-      margin-top:10px;
-      display:grid;
-      grid-template-columns: repeat(4, minmax(0,1fr));
-      gap:12px;
-    }
-    .wp-live{padding:14px;border-radius:18px}
-    .wp-live-k{
-      font-size:11px;
-      letter-spacing:0.12em;
-      text-transform:uppercase;
-      color:rgba(255,255,255,0.55);
-      font-weight:900;
-    }
-    .wp-live-v{
-      margin-top:8px;
-      font-size:18px;
-      font-weight:900;
-      color:rgba(245,215,122,0.95);
-      letter-spacing:-0.02em;
-      white-space:nowrap;
-      overflow:hidden;
-      text-overflow:ellipsis;
-    }
-    .wp-live-n{
-      margin-top:6px;
-      font-size:12px;
-      color:rgba(255,255,255,0.58);
-    }
-
     /* Responsive */
     @media (max-width: 1080px){
       .roadmap-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
       .heroGrid{grid-template-columns:repeat(2,minmax(0,1fr))}
+      .whyGrid{grid-template-columns:repeat(2,minmax(0,1fr))}
+      .miniStats{grid-template-columns:repeat(2,minmax(0,1fr))}
+      .hero-ghostWord{font-size:120px}
     }
     @media (max-width: 980px){
       .title{font-size:38px}
@@ -784,58 +695,30 @@ PART 1 / 3  (HEAD + STYLE)
       .notification{right:10px;left:10px;max-width:none}
       .nav-links{display:none}
       .menuBtn{display:flex}
-      .hero-token-title{font-size:72px}
       .section{padding-top:96px}
 
+      .hero-token-title{font-size:76px}
+      .hero-ghostWord{font-size:96px;top:92px}
+
+      /* DNA mobile */
       .dna-top-left{font-size: 28px;}
       .dna-top-right{font-size: 14px;}
-      .dna-grid2{grid-template-columns: 1fr; gap: 12px;}
-      .dna-item-title{font-size: 18px;}
+      .dna-grid2{grid-template-columns: 1fr; gap: 14px;}
+      .dna-item-title{font-size: 16px;}
       .dna-item-sub{font-size: 12px; margin-top: 6px;}
       .dna-item-pct{font-size: 26px;}
-
-      .wp-grid{grid-template-columns:1fr}
-      .wp-side{position:relative;top:auto}
-      .wp-subgrid{grid-template-columns:1fr}
-      .wp-twoCol{grid-template-columns:1fr}
-      .wp-tokenGrid{grid-template-columns:1fr}
-      .wp-roadGrid{grid-template-columns:1fr}
-      .wp-riskGrid{grid-template-columns:1fr}
-      .wp-donutRow{grid-template-columns:1fr}
-      .wp-actions{width:100%}
-      .wp-liveGrid{grid-template-columns:1fr}
     }
     @media (max-width: 520px){
-      .hero-token-title{font-size:60px}
+      .hero-token-title{font-size:62px}
+      .hero-ghostWord{font-size:76px}
       .tr{grid-template-columns:1.0fr 1.0fr 0.9fr 0.9fr}
       .dna-wrap{padding:20px 14px}
       .dna-item{padding:16px 14px}
-    }
-
-    /* Print (clean PDF output) */
-    @media print{
-      body{background:#fff !important;color:#111 !important}
-      .navbar, .mobileMenu, footer{display:none !important}
-      .glass, .wp-chartWrap, .wp-callout, .wp-toc, .wp-sideBox, .wp-sideNote{
-        box-shadow:none !important;
-        backdrop-filter:none !important;
-      }
-      .page{display:block !important}
-      #whitepaper{display:block !important}
-      .wp-grid{grid-template-columns:1fr !important}
-      .wp-side{display:none !important}
-      .title, .section-title, .hero-token-title{
-        -webkit-text-fill-color:initial !important;
-        color:#111 !important;
-        background:none !important;
-        text-shadow:none !important;
-      }
+      .whyGrid{grid-template-columns:1fr}
+      .miniStats{grid-template-columns:1fr}
     }
   </style>
 </head>
-<!-- =========================
-PART 2 / 3 (BODY: NAV + HOME + BUY + HOWTOBUY + STAKING + REFERRAL)
-========================= -->
 <body>
   <div id="notification" class="notification">
     <div class="notification-title" id="notificationTitle"></div>
@@ -876,13 +759,81 @@ PART 2 / 3 (BODY: NAV + HOME + BUY + HOWTOBUY + STAKING + REFERRAL)
   <!-- HOME -->
   <section class="section page is-active home-landing" id="home" data-page="home">
     <div class="home-hero-glow"></div>
+    <div class="noise"></div>
+
+    <!-- ghost background word -->
+    <div class="hero-ghostWord">BULLFORGE</div>
+
+    <!-- particles -->
+    <div class="particles" aria-hidden="true">
+      <span class="pDot" style="left:8%; top:66%; width:120px; height:120px; animation-duration:10s; animation-delay:0s;"></span>
+      <span class="pDot" style="left:22%; top:72%; width:90px; height:90px; animation-duration:12s; animation-delay:1s;"></span>
+      <span class="pDot" style="left:38%; top:70%; width:140px; height:140px; animation-duration:13s; animation-delay:0.6s;"></span>
+      <span class="pDot" style="left:54%; top:74%; width:100px; height:100px; animation-duration:11s; animation-delay:1.2s;"></span>
+      <span class="pDot" style="left:70%; top:68%; width:160px; height:160px; animation-duration:14s; animation-delay:0.2s;"></span>
+      <span class="pDot" style="left:86%; top:73%; width:110px; height:110px; animation-duration:12.5s; animation-delay:1.6s;"></span>
+    </div>
+
     <div class="container">
       <div class="section-header" style="margin-top:80px;">
         <div class="section-subtitle welcomeShimmer">WELCOME TO BULLFORGE</div>
         <h1 class="hero-token-title">$BFG</h1>
-        <p class="section-desc">The Future isn't Just Bullish. It's Bullforge.</p>
+        <p class="section-desc">The Future isn't Just Bullish. It's BullForge.</p>
+
         <div style="margin-top:30px;">
           <button class="buy-button" style="max-width:260px;" onclick="location.hash='#buy'">Buy Now</button>
+        </div>
+
+        <!-- Mini Live Stats (driven by Buy page data) -->
+        <div class="miniStats" style="margin-top:26px;">
+          <div class="miniStat">
+            <div class="k">Total Raised</div>
+            <div class="v" id="homeRaised"><span class="spinner"></span></div>
+          </div>
+          <div class="miniStat">
+            <div class="k">Current Stage</div>
+            <div class="v" id="homeStage"><span class="spinner"></span></div>
+          </div>
+          <div class="miniStat">
+            <div class="k">1 BNB ≈</div>
+            <div class="v" id="homeRate"><span class="spinner"></span></div>
+          </div>
+          <div class="miniStat">
+            <div class="k">Liquidity Lock</div>
+            <div class="v" id="homeLock">2 Years • PinkLock</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- WHY -->
+      <div class="section-header" style="margin-top:70px;margin-bottom:16px;">
+        <div class="section-subtitle">Why BullForge</div>
+        <h2 class="section-title" style="font-size:42px;">Built For Bulls. Structured For VCs.</h2>
+        <p class="section-desc" style="max-width:860px;margin-left:auto;margin-right:auto;">
+          Meme energy with disciplined execution — 23-stage presale, post-presale liquidity injection, and a two-year lock via PinkLock.
+        </p>
+      </div>
+
+      <div class="whyGrid">
+        <div class="whyCard">
+          <div class="whyIcon">🔒</div>
+          <h3>Liquidity Locked</h3>
+          <p>Liquidity is injected after presale ends and locked for 2 years via PinkLock for confidence and stability.</p>
+        </div>
+        <div class="whyCard">
+          <div class="whyIcon">📈</div>
+          <h3>23-Stage Growth</h3>
+          <p>Pricing evolves across 23 stages as defined in the contract — rewarding early conviction and fueling momentum.</p>
+        </div>
+        <div class="whyCard">
+          <div class="whyIcon">⚡</div>
+          <h3>Multi-Chain Access</h3>
+          <p>Buy via BSC/ETH and track SOL/TRON in-wallet payments — designed for global accessibility.</p>
+        </div>
+        <div class="whyCard">
+          <div class="whyIcon">🔥</div>
+          <h3>Meme + Execution</h3>
+          <p>Bullzilla-grade narrative with a clean investor-facing framework — community first, but built to scale.</p>
         </div>
       </div>
 
@@ -918,7 +869,7 @@ PART 2 / 3 (BODY: NAV + HOME + BUY + HOWTOBUY + STAKING + REFERRAL)
           <div class="dna-item">
             <div class="dna-item-left">
               <div class="dna-item-title">Liquidity</div>
-              <div class="dna-item-sub">DEX stability and depth</div>
+              <div class="dna-item-sub">Injected post-presale + locked</div>
             </div>
             <div class="dna-item-pct">15%</div>
           </div>
@@ -934,7 +885,7 @@ PART 2 / 3 (BODY: NAV + HOME + BUY + HOWTOBUY + STAKING + REFERRAL)
           <div class="dna-item">
             <div class="dna-item-left">
               <div class="dna-item-title">Ecosystem</div>
-              <div class="dna-item-sub">Partnerships & utilities</div>
+              <div class="dna-item-sub">Utilities & partnerships</div>
             </div>
             <div class="dna-item-pct">10%</div>
           </div>
@@ -969,7 +920,7 @@ PART 2 / 3 (BODY: NAV + HOME + BUY + HOWTOBUY + STAKING + REFERRAL)
           <div class="roadmap-phase">Phase 02</div>
           <div class="roadmap-title">Presale Forge</div>
           <ul class="roadmap-list">
-            <li>Multi-stage presale goes live</li>
+            <li>23-stage presale goes live</li>
             <li>Referral engine enabled</li>
             <li>Cross-channel awareness campaign</li>
           </ul>
@@ -979,8 +930,8 @@ PART 2 / 3 (BODY: NAV + HOME + BUY + HOWTOBUY + STAKING + REFERRAL)
           <div class="roadmap-title">Expansion</div>
           <ul class="roadmap-list">
             <li>Claim portal opens</li>
-            <li>DEX liquidity deployment</li>
-            <li>Tracking listings rollout</li>
+            <li>Liquidity injection post-presale</li>
+            <li>Liquidity locked via PinkLock (2 years)</li>
           </ul>
         </div>
         <div class="roadmap-card">
@@ -1056,7 +1007,7 @@ PART 2 / 3 (BODY: NAV + HOME + BUY + HOWTOBUY + STAKING + REFERRAL)
               <div class="note" id="estNote">Loading price feeds…</div>
             </div>
 
-            <!-- Removed slippage UI (as requested) -->
+            <!-- ✅ Slippage UI removed -->
 
             <div class="sectionLabel">Referrer (BSC only)</div>
             <div class="row" style="width:100%">
@@ -1127,19 +1078,55 @@ PART 2 / 3 (BODY: NAV + HOME + BUY + HOWTOBUY + STAKING + REFERRAL)
         <div class="heroGrid">
           <div class="heroCard glass">
             <h3>BNB (BSC)</h3>
-            <p>Connect EVM wallet on BSC and pay via the presale contract.</p>
+            <p>Connect an EVM wallet on BSC and pay via the presale contract. Referrer is optional.</p>
           </div>
           <div class="heroCard glass">
             <h3>ETH</h3>
-            <p>Connect EVM wallet on Ethereum and send ETH in-wallet with one click.</p>
+            <p>Connect an EVM wallet on Ethereum and send ETH in-wallet with one click.</p>
           </div>
           <div class="heroCard glass">
             <h3>SOL</h3>
-            <p>Connect a Solana wallet in-browser (window.solana). Click Pay and confirm transfer in the wallet.</p>
+            <p>Connect a Solana wallet (browser/mobile). Click Pay and confirm the transfer inside your wallet.</p>
           </div>
           <div class="heroCard glass">
             <h3>USDT (TRC20)</h3>
-            <p>Use TronLink (tronWeb). Click Pay and confirm USDT transfer. Do NOT send TRX.</p>
+            <p>Connect a Tron wallet (e.g., TronLink). Click Pay and confirm USDT transfer. Do NOT send TRX.</p>
+          </div>
+        </div>
+
+        <div class="glass" style="padding:18px;margin-top:14px">
+          <div style="font-weight:900;color:rgba(245,215,122,0.95)">Liquidity & Lock</div>
+          <div class="note" style="margin-top:8px">
+            Liquidity is injected after presale ends and locked for 2 years via PinkLock.
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHITEPAPER -->
+  <section class="page" id="whitepaper" data-page="whitepaper">
+    <div class="section">
+      <div class="container">
+        <div class="title">Whitepaper</div>
+        <div class="subtitle">You can replace this placeholder with your real whitepaper URL or embed an internal viewer later.</div>
+
+        <div class="glass" style="padding:18px;margin-top:14px">
+          <div style="font-weight:900;color:rgba(245,215,122,0.95)">Whitepaper Link</div>
+          <div class="note" style="margin-top:8px">
+            When your PDF is ready, set the URL in the button below (or we can embed a full PDF viewer).
+          </div>
+          <div style="margin-top:12px;max-width:260px">
+            <button class="btn" onclick="window.open('#','_blank')">Open Whitepaper</button>
+          </div>
+        </div>
+
+        <div class="glass" style="padding:18px;margin-top:14px">
+          <div style="font-weight:900;color:rgba(245,215,122,0.95)">Investor Summary (Preview)</div>
+          <div class="note" style="margin-top:10px">
+            BullForge combines meme narrative momentum with a structured presale framework (23 stages) and post-presale liquidity injection + a 2-year PinkLock.
+            <br><br>
+            Next: if you want, I can generate a full investor-grade whitepaper page (with charts + PDF export button) and embed it directly here.
           </div>
         </div>
       </div>
@@ -1155,7 +1142,9 @@ PART 2 / 3 (BODY: NAV + HOME + BUY + HOWTOBUY + STAKING + REFERRAL)
 
         <div class="glass" style="padding:18px;margin-top:14px">
           <div style="font-weight:900;color:rgba(245,215,122,0.95)">Coming Soon</div>
-          <div class="note" style="margin-top:8px">When your staking contract is ready, we can plug it into this page.</div>
+          <div class="note" style="margin-top:8px">
+            When your staking contract is ready, we can plug it into this page.
+          </div>
         </div>
       </div>
     </div>
@@ -1174,442 +1163,13 @@ PART 2 / 3 (BODY: NAV + HOME + BUY + HOWTOBUY + STAKING + REFERRAL)
             <button class="btn2" id="copyRefBtn2" style="width:auto;min-width:120px">Copy</button>
           </div>
         </div>
-      </div>
-    </div>
-  </section>
-<!-- =========================
-PART 3 / 3 (WHITEPAPER + FOOTER + SCRIPT)
-========================= -->
 
-  <!-- WHITEPAPER (Institutional + Meme Narrative + Charts + PDF Export + PinkLock) -->
-  <section class="page" id="whitepaper" data-page="whitepaper">
-    <div class="section">
-      <div class="container">
-        <div class="wp-head">
-          <div>
-            <div class="title">BullForge Whitepaper</div>
-            <div class="subtitle">
-              Institutional-grade thesis + Meme-native distribution design — engineered to forge “Bullzilla” scale social momentum,
-              with transparent tokenomics and measurable execution milestones.
-            </div>
-
-            <div class="wp-meta">
-              <div class="wp-chip">Version: <b>2026.02</b></div>
-              <div class="wp-chip">Ticker: <b>$BFG</b></div>
-              <div class="wp-chip">Primary Network: <b>BSC</b></div>
-              <div class="wp-chip">Narrative: <b>Bullzilla</b></div>
-            </div>
-          </div>
-
-          <div class="wp-actions">
-            <button class="btn2" id="wpPrintBtn" type="button">Print / Save as PDF</button>
-            <button class="btn" id="wpPdfBtn" type="button">Download Whitepaper PDF</button>
+        <div class="glass" style="padding:18px;margin-top:14px">
+          <div style="font-weight:900;color:rgba(245,215,122,0.95)">Notes</div>
+          <div class="note" style="margin-top:8px">
+            Referral applies to BSC contract purchases. If a referrer is missing or invalid, the contract will treat it as no referrer.
           </div>
         </div>
-
-        <div class="wp-grid">
-          <div class="glass wp-card">
-            <div class="wp-toc">
-              <div class="wp-toc-title">Contents</div>
-              <div class="wp-toc-links">
-                <a href="#wp-exec" class="wp-link">01 — Executive Summary</a>
-                <a href="#wp-thesis" class="wp-link">02 — Investment Thesis</a>
-                <a href="#wp-market" class="wp-link">03 — Market Context</a>
-                <a href="#wp-edge" class="wp-link">04 — Competitive Advantage</a>
-                <a href="#wp-token" class="wp-link">05 — Tokenomics & Allocation</a>
-                <a href="#wp-utility" class="wp-link">06 — Utility & Value Accrual</a>
-                <a href="#wp-growth" class="wp-link">07 — Go-To-Market</a>
-                <a href="#wp-roadmap" class="wp-link">08 — Roadmap & KPIs</a>
-                <a href="#wp-risk" class="wp-link">09 — Risks & Mitigations</a>
-                <a href="#wp-disclaimer" class="wp-link">10 — Disclaimer</a>
-              </div>
-            </div>
-
-            <div class="wp-section" id="wp-exec">
-              <h2>01 — Executive Summary</h2>
-              <p>
-                BullForge ($BFG) is designed as a <b>meme-native distribution engine</b> paired with <b>institutional-grade execution discipline</b>.
-                In the attention economy, “community velocity” is the moat. BullForge manufactures velocity through staged incentives,
-                measurable milestones, and on-chain transparency — anchored by the meme identity: <b>“Bullzilla is forged, not wished.”</b>
-              </p>
-
-              <div class="wp-callout">
-                <div class="wp-callout-title">Bullzilla Narrative (Meme Layer, VC Framed)</div>
-                <div class="wp-callout-body">
-                  Meme is treated as <b>distribution infrastructure</b>:
-                  viral hooks → community loops → liquidity depth → utility expansion.
-                  The Bullzilla layer is the catalyst; token engineering + KPI execution anchor credibility.
-                </div>
-              </div>
-            </div>
-
-            <div class="wp-section" id="wp-thesis">
-              <h2>02 — Investment Thesis</h2>
-              <ul class="wp-bullets">
-                <li><b>Attention → Liquidity → Utility</b>: Memes acquire attention; liquidity monetizes attention; utility sustains liquidity.</li>
-                <li><b>Incentive alignment</b>: staking allocation + community-first distribution supports long-term holding and retention.</li>
-                <li><b>Multi-rail accessibility</b>: BSC execution; ETH/SOL/TRON distribution rails for broader reach.</li>
-                <li><b>Measurable milestones</b>: roadmap tied to KPIs (community, liquidity, retention, cadence).</li>
-              </ul>
-            </div>
-
-            <div class="wp-section" id="wp-market">
-              <h2>03 — Market Context</h2>
-              <p>
-                Meme tokens compete in an “attention market”. Winners combine virality, frictionless acquisition,
-                liquidity credibility, and retention loops. BullForge targets the intersection of <b>meme virality</b> and
-                <b>structured execution</b>.
-              </p>
-
-              <div class="wp-subgrid">
-                <div class="wp-mini glass">
-                  <div class="wp-mini-k">What wins</div>
-                  <div class="wp-mini-v">Retention Loops</div>
-                  <div class="wp-mini-note">Staking + referral + milestones</div>
-                </div>
-                <div class="wp-mini glass">
-                  <div class="wp-mini-k">What fails</div>
-                  <div class="wp-mini-v">One-shot Hype</div>
-                  <div class="wp-mini-note">No cadence, no trust, no loop</div>
-                </div>
-                <div class="wp-mini glass">
-                  <div class="wp-mini-k">BullForge bet</div>
-                  <div class="wp-mini-v">Hype → System</div>
-                  <div class="wp-mini-note">Narrative + KPI execution</div>
-                </div>
-              </div>
-
-              <div class="wp-chartWrap">
-                <div class="wp-chartHead">
-                  <div class="wp-chartTitle">Market Execution Model (Conceptual)</div>
-                  <div class="wp-chartNote">Illustrative funnel: attention converts into durable value via loops.</div>
-                </div>
-
-                <svg class="wp-chart" viewBox="0 0 900 240" role="img" aria-label="Attention to Value funnel chart">
-                  <g opacity="0.18">
-                    <path d="M60 40H860" stroke="white" stroke-width="1"/>
-                    <path d="M60 90H860" stroke="white" stroke-width="1"/>
-                    <path d="M60 140H860" stroke="white" stroke-width="1"/>
-                    <path d="M60 190H860" stroke="white" stroke-width="1"/>
-                  </g>
-
-                  <defs>
-                    <linearGradient id="wpGold" x1="0" x2="1">
-                      <stop offset="0" stop-color="rgba(245,215,122,0.95)"/>
-                      <stop offset="1" stop-color="rgba(233,196,92,0.85)"/>
-                    </linearGradient>
-                    <filter id="wpGlow" x="-20%" y="-40%" width="140%" height="220%">
-                      <feGaussianBlur stdDeviation="6" result="blur"/>
-                      <feColorMatrix in="blur" type="matrix"
-                        values="1 0 0 0 0
-                                0 0.9 0 0 0
-                                0 0 0.3 0 0
-                                0 0 0 0.9 0" result="glow"/>
-                      <feMerge>
-                        <feMergeNode in="glow"/>
-                        <feMergeNode in="SourceGraphic"/>
-                      </feMerge>
-                    </filter>
-                  </defs>
-
-                  <g transform="translate(60,20)">
-                    <text x="0" y="20" fill="rgba(255,255,255,0.65)" font-size="12" font-weight="800" letter-spacing="0.12em">ATTENTION</text>
-                    <text x="250" y="20" fill="rgba(255,255,255,0.65)" font-size="12" font-weight="800" letter-spacing="0.12em">ACQUISITION</text>
-                    <text x="500" y="20" fill="rgba(255,255,255,0.65)" font-size="12" font-weight="800" letter-spacing="0.12em">LIQUIDITY</text>
-                    <text x="710" y="20" fill="rgba(255,255,255,0.65)" font-size="12" font-weight="800" letter-spacing="0.12em">RETENTION</text>
-
-                    <rect x="0"   y="50" width="200" height="110" rx="18" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.10)"/>
-                    <rect x="230" y="62" width="200" height="86"  rx="18" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.10)"/>
-                    <rect x="460" y="70" width="200" height="70"  rx="18" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.10)"/>
-                    <rect x="690" y="78" width="150" height="54"  rx="18" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.10)"/>
-
-                    <rect x="8"   y="58" width="184" height="94" rx="16" fill="url(#wpGold)" opacity="0.22" filter="url(#wpGlow)"/>
-                    <rect x="238" y="70" width="184" height="70" rx="16" fill="url(#wpGold)" opacity="0.20" filter="url(#wpGlow)"/>
-                    <rect x="468" y="78" width="184" height="54" rx="16" fill="url(#wpGold)" opacity="0.18" filter="url(#wpGlow)"/>
-                    <rect x="698" y="86" width="134" height="38" rx="16" fill="url(#wpGold)" opacity="0.16" filter="url(#wpGlow)"/>
-
-                    <text x="18"  y="112" fill="rgba(255,255,255,0.88)" font-size="14" font-weight="900">Meme Hook</text>
-                    <text x="248" y="112" fill="rgba(255,255,255,0.88)" font-size="14" font-weight="900">Frictionless Buy</text>
-                    <text x="478" y="112" fill="rgba(255,255,255,0.88)" font-size="14" font-weight="900">Depth + Trust</text>
-                    <text x="708" y="112" fill="rgba(255,255,255,0.88)" font-size="14" font-weight="900">Staking Loops</text>
-
-                    <path d="M205 105H225" stroke="rgba(245,215,122,0.75)" stroke-width="3" stroke-linecap="round"/>
-                    <path d="M435 105H455" stroke="rgba(245,215,122,0.65)" stroke-width="3" stroke-linecap="round"/>
-                    <path d="M665 105H685" stroke="rgba(245,215,122,0.55)" stroke-width="3" stroke-linecap="round"/>
-                  </g>
-                </svg>
-              </div>
-            </div>
-
-            <div class="wp-section" id="wp-edge">
-              <h2>04 — Competitive Advantage</h2>
-              <div class="wp-twoCol">
-                <div class="wp-adv">
-                  <h3>Distribution Engine</h3>
-                  <p>
-                    Bullzilla creative cadence + referral loops + staged incentives.
-                    We optimize for <b>community velocity</b> and <b>liquidity credibility</b>, not short-lived noise.
-                  </p>
-                </div>
-                <div class="wp-adv">
-                  <h3>Execution Discipline</h3>
-                  <p>
-                    Transparent allocation, measurable KPIs, and an operational shipping cadence.
-                    The goal is to behave like a <b>product organization</b> with meme-level reach.
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            <div class="wp-section" id="wp-token">
-              <h2>05 — Tokenomics & Allocation</h2>
-
-              <p>
-                Allocation is designed to balance <b>community distribution</b>, <b>long-term incentives</b>, and <b>liquidity credibility</b>.
-                Liquidity is injected <b>after presale ends</b> and locked for <b>24 months</b> to strengthen market confidence.
-                Presale pricing follows an <b>on-chain 23-stage</b> progression as defined by the contract.
-              </p>
-
-              <div class="wp-callout" style="margin-top:12px">
-                <div class="wp-callout-title">Liquidity Plan (Post-Presale)</div>
-                <div class="wp-callout-body">
-                  <b>Liquidity is deployed after the presale ends</b> and then <b>locked for 2 years</b>.
-                  This is designed to improve credibility, support sustained depth, and align with a long-term “Bullzilla” narrative.
-                </div>
-              </div>
-
-              <div class="wp-chartWrap" style="margin-top:12px">
-                <div class="wp-chartHead">
-                  <div class="wp-chartTitle">Liquidity Lock (PinkLock)</div>
-                  <div class="wp-chartNote">Disclosure module (investor-grade).</div>
-                </div>
-
-                <div class="wp-liveGrid">
-                  <div class="wp-live glass">
-                    <div class="wp-live-k">Locker Provider</div>
-                    <div class="wp-live-v">PinkLock</div>
-                    <div class="wp-live-n">3rd-party LP locking service</div>
-                  </div>
-
-                  <div class="wp-live glass">
-                    <div class="wp-live-k">Lock Duration</div>
-                    <div class="wp-live-v">24 Months</div>
-                    <div class="wp-live-n">Planned lock window</div>
-                  </div>
-
-                  <div class="wp-live glass">
-                    <div class="wp-live-k">Lock Tx / URL</div>
-                    <div class="wp-live-v" id="wpPinkLink">TBD</div>
-                    <div class="wp-live-n">Update after lock is executed</div>
-                  </div>
-
-                  <div class="wp-live glass">
-                    <div class="wp-live-k">Unlock Date</div>
-                    <div class="wp-live-v" id="wpUnlockDate">TBD</div>
-                    <div class="wp-live-n">Calculated after lock confirmation</div>
-                  </div>
-                </div>
-
-                <div class="wp-muted" style="margin-top:10px;font-size:12px;line-height:1.55">
-                  Once PinkLock is created, replace <b>TBD</b> with your PinkLock URL and unlock date.
-                  This section is designed for VC-style diligence and public transparency.
-                </div>
-              </div>
-
-              <div class="wp-chartWrap" style="margin-top:12px">
-                <div class="wp-chartHead">
-                  <div class="wp-chartTitle">Presale Stages (On-chain)</div>
-                  <div class="wp-chartNote">Live values pulled from contract where available.</div>
-                </div>
-
-                <div class="wp-liveGrid">
-                  <div class="wp-live glass">
-                    <div class="wp-live-k">Total Stages</div>
-                    <div class="wp-live-v" id="wpStagesTotal">23</div>
-                    <div class="wp-live-n">Defined by contract design</div>
-                  </div>
-
-                  <div class="wp-live glass">
-                    <div class="wp-live-k">Current Stage</div>
-                    <div class="wp-live-v" id="wpStageNow">--</div>
-                    <div class="wp-live-n">Live from contract</div>
-                  </div>
-
-                  <div class="wp-live glass">
-                    <div class="wp-live-k">1 BNB ≈</div>
-                    <div class="wp-live-v" id="wpRateNow">--</div>
-                    <div class="wp-live-n">Current on-chain rate</div>
-                  </div>
-
-                  <div class="wp-live glass">
-                    <div class="wp-live-k">Next Stage Trigger</div>
-                    <div class="wp-live-v" id="wpNextTrigger">--</div>
-                    <div class="wp-live-n">Progress based on contract logic</div>
-                  </div>
-                </div>
-              </div>
-
-              <div class="wp-tokenGrid">
-                <div class="wp-alloc glass">
-                  <div class="wp-alloc-k">Presale</div>
-                  <div class="wp-alloc-v">35%</div>
-                  <div class="wp-alloc-n">Public access distribution</div>
-                </div>
-                <div class="wp-alloc glass">
-                  <div class="wp-alloc-k">Staking Rewards</div>
-                  <div class="wp-alloc-v">20%</div>
-                  <div class="wp-alloc-n">Long-term holder incentives</div>
-                </div>
-                <div class="wp-alloc glass">
-                  <div class="wp-alloc-k">Liquidity</div>
-                  <div class="wp-alloc-v">15%</div>
-                  <div class="wp-alloc-n">DEX stability and depth</div>
-                </div>
-                <div class="wp-alloc glass">
-                  <div class="wp-alloc-k">Marketing</div>
-                  <div class="wp-alloc-v">10%</div>
-                  <div class="wp-alloc-n">Global campaigns + partnerships</div>
-                </div>
-                <div class="wp-alloc glass">
-                  <div class="wp-alloc-k">Ecosystem</div>
-                  <div class="wp-alloc-v">10%</div>
-                  <div class="wp-alloc-n">Utilities + integrations</div>
-                </div>
-                <div class="wp-alloc glass">
-                  <div class="wp-alloc-k">Team</div>
-                  <div class="wp-alloc-v">10%</div>
-                  <div class="wp-alloc-n">Vested long-term alignment</div>
-                </div>
-              </div>
-            </div>
-
-            <div class="wp-section" id="wp-utility">
-              <h2>06 — Utility & Value Accrual</h2>
-              <ul class="wp-bullets">
-                <li><b>Staking</b>: rewards long-term holding, reduces circulating sell pressure.</li>
-                <li><b>Referral loops</b>: incentivizes organic distribution and community acquisition.</li>
-                <li><b>Ecosystem integrations</b>: partnerships and utility surfaces that increase “reason to hold.”</li>
-              </ul>
-            </div>
-
-            <div class="wp-section" id="wp-growth">
-              <h2>07 — Go-To-Market</h2>
-              <p>
-                Two-layer strategy:
-                <b>Meme layer</b> (Bullzilla content velocity) + <b>Operational layer</b> (KPI-driven shipping and transparency).
-              </p>
-            </div>
-
-            <div class="wp-section" id="wp-roadmap">
-              <h2>08 — Roadmap & KPIs</h2>
-
-              <div class="wp-roadGrid">
-                <div class="wp-road glass">
-                  <div class="wp-road-phase">Phase 01</div>
-                  <div class="wp-road-title">Ignition</div>
-                  <ul>
-                    <li>Brand launch & community bootstrap</li>
-                    <li>Smart contract deployment</li>
-                    <li>Security review & test rounds</li>
-                  </ul>
-                  <div class="wp-road-kpi">KPI: <b>10k community</b> + <b>cadence established</b></div>
-                </div>
-
-                <div class="wp-road glass">
-                  <div class="wp-road-phase">Phase 02</div>
-                  <div class="wp-road-title">Presale Forge</div>
-                  <ul>
-                    <li>Multi-stage presale goes live</li>
-                    <li>Referral engine enabled</li>
-                    <li>Cross-channel awareness campaign</li>
-                  </ul>
-                  <div class="wp-road-kpi">KPI: <b>on-chain traction</b> + <b>retention loop</b></div>
-                </div>
-
-                <div class="wp-road glass">
-                  <div class="wp-road-phase">Phase 03</div>
-                  <div class="wp-road-title">Expansion</div>
-                  <ul>
-                    <li>Claim portal opens</li>
-                    <li>DEX liquidity deployment</li>
-                    <li>Tracking listings rollout</li>
-                  </ul>
-                  <div class="wp-road-kpi">KPI: <b>liquidity depth</b> + <b>market credibility</b></div>
-                </div>
-
-                <div class="wp-road glass">
-                  <div class="wp-road-phase">Phase 04</div>
-                  <div class="wp-road-title">Dominance</div>
-                  <ul>
-                    <li>Staking launch</li>
-                    <li>Utility integrations</li>
-                    <li>CEX strategy + partnerships</li>
-                  </ul>
-                  <div class="wp-road-kpi">KPI: <b>stickiness</b> + <b>ecosystem reach</b></div>
-                </div>
-              </div>
-            </div>
-
-            <div class="wp-section" id="wp-risk">
-              <h2>09 — Risks & Mitigations</h2>
-              <div class="wp-riskGrid">
-                <div class="wp-risk glass">
-                  <div class="wp-risk-t">Market Volatility</div>
-                  <div class="wp-risk-b">Mitigation: staged incentives + transparent communications + retention mechanisms.</div>
-                </div>
-                <div class="wp-risk glass">
-                  <div class="wp-risk-t">Narrative Saturation</div>
-                  <div class="wp-risk-b">Mitigation: Bullzilla creative cadence + utility milestones that refresh reasons to hold.</div>
-                </div>
-                <div class="wp-risk glass">
-                  <div class="wp-risk-t">Liquidity Risks</div>
-                  <div class="wp-risk-b">Mitigation: post-presale LP injection + PinkLock 2-year lock disclosure.</div>
-                </div>
-                <div class="wp-risk glass">
-                  <div class="wp-risk-t">Operational Execution</div>
-                  <div class="wp-risk-b">Mitigation: KPI framework + roadmap accountability + staged release planning.</div>
-                </div>
-              </div>
-            </div>
-
-            <div class="wp-section" id="wp-disclaimer">
-              <h2>10 — Disclaimer</h2>
-              <p class="wp-muted">
-                Cryptocurrency investments involve risk, including loss of principal. This document is for informational purposes only
-                and does not constitute financial advice, investment solicitation, or an offer to sell securities. Always conduct your own research (DYOR).
-              </p>
-            </div>
-          </div>
-
-          <div class="glass wp-side">
-            <div class="wp-sideTitle">Investor Snapshot</div>
-
-            <div class="wp-sideBox">
-              <div class="wp-sideK">Thesis</div>
-              <div class="wp-sideV">Meme distribution + execution discipline</div>
-            </div>
-
-            <div class="wp-sideBox">
-              <div class="wp-sideK">Moat</div>
-              <div class="wp-sideV">Velocity loops + liquidity credibility</div>
-            </div>
-
-            <div class="wp-sideBox">
-              <div class="wp-sideK">Liquidity</div>
-              <div class="wp-sideV">Post-presale injection + PinkLock 24-month lock</div>
-            </div>
-
-            <div class="wp-sideNote">
-              Tip: Use “Download Whitepaper PDF” to share a clean investor-ready version (no navbar, no distractions).
-            </div>
-
-            <div class="wp-sideActions">
-              <button class="btn2" type="button" onclick="location.hash='#buy'">Go to Buy</button>
-              <button class="btn2" type="button" onclick="window.scrollTo({top:0,behavior:'smooth'})">Back to Top</button>
-            </div>
-          </div>
-        </div>
-
       </div>
     </div>
   </section>
@@ -1631,23 +1191,25 @@ PART 3 / 3 (WHITEPAPER + FOOTER + SCRIPT)
     const CONFIG = {
       TOKEN_SYMBOL: "BFG",
 
+      // BSC presale contract
       CONTRACT_ADDRESS: "0x16D6c1a692AaC51a3821bA2903115d4600649F07",
       BSC_RPC: "https://bsc-dataseed.binance.org/",
       BSC_CHAIN_ID: 56,
       BSC_EXPLORER: "https://bscscan.com",
 
+      // EVM (WalletConnect)
       WALLETCONNECT_PROJECT_ID: "fe819ed06d9e5489f764fc7b1dae1c4e",
 
+      // Receive addresses
       ETH_RECEIVE: "0xA616911194eca5aD6E858a2aCFAC2cDaDC8f04B1",
       SOL_RECEIVE: "AKEpSih1iMbW2m3xqTw2ZZHLByhvbscKVAkuS2R1fs3Y",
       TRON_RECEIVE: "TEDfNwh3D9AwvTbX32BVZP1Gdfph1cWPhd",
 
+      // Solana
       SOL_RPC: "https://api.mainnet-beta.solana.com",
-      TRON_USDT_CONTRACT: "TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t",
 
-      // Whitepaper disclosure placeholders for PinkLock
-      PINKLOCK_URL: "",       // e.g. "https://www.pinksale.finance/pinklock/..."
-      PINKLOCK_UNLOCK_DATE: "" // e.g. "2028-02-20"
+      // TRON USDT TRC20 contract (mainnet)
+      TRON_USDT_CONTRACT: "TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t"
     };
 
     const CONTRACT_ABI = [
@@ -1685,6 +1247,11 @@ PART 3 / 3 (WHITEPAPER + FOOTER + SCRIPT)
     const stageEl = $("currentStage");
     const tokenRateEl = $("tokenRate");
 
+    // Home mini stats
+    const homeRaised = $("homeRaised");
+    const homeStage = $("homeStage");
+    const homeRate = $("homeRate");
+
     const lastSyncText = $("lastSyncText");
     const statusPill = $("statusPill");
 
@@ -1696,7 +1263,6 @@ PART 3 / 3 (WHITEPAPER + FOOTER + SCRIPT)
     const tokenUsdEl = $("tokenUsd");
     const estNote = $("estNote");
 
-    // removed slippage input
     const referrerInput = $("referrerAddress");
     const walletBalanceEl = $("walletBalance");
     const evmWalletText = $("evmWalletText");
@@ -1718,10 +1284,6 @@ PART 3 / 3 (WHITEPAPER + FOOTER + SCRIPT)
     const copyRefBtn2 = $("copyRefBtn2");
     const histBody = $("histBody");
 
-    // Whitepaper live elements
-    const wpPinkLink = $("wpPinkLink");
-    const wpUnlockDate = $("wpUnlockDate");
-
     // =========================
     // ROUTER
     // =========================
@@ -1736,7 +1298,6 @@ PART 3 / 3 (WHITEPAPER + FOOTER + SCRIPT)
       closeMobileMenu();
       window.scrollTo({ top: 0, behavior: 'smooth' });
       if (target === 'buy') refreshAll();
-      if (target === 'whitepaper') updateWhitepaperLive();
     }
     function getRouteFromHash() {
       const raw = (location.hash || '').replace('#', '').trim();
@@ -1799,6 +1360,22 @@ PART 3 / 3 (WHITEPAPER + FOOTER + SCRIPT)
       return h.length > 14 ? `${h.slice(0, 8)}…${h.slice(-6)}` : h;
     }
 
+    // ✅ EVM auto chain switch helper
+    async function ensureEvmChain(chainIdHex, addParams) {
+      const wp = await web3Modal?.getWalletProvider?.();
+      if (!wp?.request) throw new Error("Wallet provider not found");
+
+      try {
+        await wp.request({ method: "wallet_switchEthereumChain", params: [{ chainId: chainIdHex }] });
+      } catch (e) {
+        if (e?.code === 4902 && addParams) {
+          await wp.request({ method: "wallet_addEthereumChain", params: [addParams] });
+        } else {
+          throw e;
+        }
+      }
+    }
+
     // =========================
     // HISTORY
     // =========================
@@ -1823,6 +1400,16 @@ PART 3 / 3 (WHITEPAPER + FOOTER + SCRIPT)
       renderHistory();
     }
 
+    function updateHistoryStatus(tx, status) {
+      const arr = loadHistory();
+      const i = arr.findIndex(x => x.tx === tx);
+      if (i >= 0) {
+        arr[i].status = status;
+        saveHistory(arr);
+        renderHistory();
+      }
+    }
+
     function renderHistory() {
       const arr = loadHistory();
       if (!arr.length) {
@@ -1837,11 +1424,14 @@ PART 3 / 3 (WHITEPAPER + FOOTER + SCRIPT)
           ? `<a class="td" href="${explorer}" target="_blank" rel="noreferrer" style="color:rgba(245,215,122,0.92);text-decoration:none" title="${x.tx}">${shortHash(x.tx)}</a>`
           : `<div class="td" title="${x.tx}">${shortHash(x.tx)}</div>`;
 
+        const status = (x.status || "confirmed").toLowerCase();
+        const statusIcon = status === "confirmed" ? "✅" : status === "failed" ? "❌" : "⏳";
+
         return `
           <div class="tr">
             <div class="td"><b>${x.chain}</b></div>
             ${txCell}
-            <div class="td">${x.paid}</div>
+            <div class="td">${x.paid} ${statusIcon}</div>
             <div class="td"><b>${x.bfg}</b></div>
           </div>
         `;
@@ -1911,6 +1501,11 @@ PART 3 / 3 (WHITEPAPER + FOOTER + SCRIPT)
       stageEl.innerText = String(stage);
       tokenRateEl.innerText = tokensPerBNB ? `${Math.floor(tokensPerBNB).toLocaleString()} BFG` : "--";
 
+      // Home mini stats
+      if (homeRaised) homeRaised.innerText = fmtBNB(totalRaisedBNB);
+      if (homeStage) homeStage.innerText = String(stage);
+      if (homeRate) homeRate.innerText = tokensPerBNB ? `${Math.floor(tokensPerBNB).toLocaleString()} BFG` : "--";
+
       if (presaleEnded) statusPill.innerText = "PRESALE ENDED";
       else if (presaleActive) statusPill.innerText = `LIVE • STAGE ${stage}`;
       else statusPill.innerText = "NOT STARTED";
@@ -1933,35 +1528,6 @@ PART 3 / 3 (WHITEPAPER + FOOTER + SCRIPT)
       else stageMsg.innerText = nextRate
         ? `Stage ${stage} is live. Next stage may reduce tokens per BNB by ~10% (estimate: ~${nextRate.toLocaleString()} BFG/BNB).`
         : `Stage ${stage} is live.`;
-    }
-
-    // =========================
-    // WHITEPAPER LIVE
-    // =========================
-    function updateWhitepaperLive() {
-      const elStage = document.getElementById("wpStageNow");
-      const elRate  = document.getElementById("wpRateNow");
-      const elNext  = document.getElementById("wpNextTrigger");
-
-      if (elStage) elStage.innerText = (stage !== null && stage !== undefined) ? String(stage) : "--";
-      if (elRate)  elRate.innerText  = tokensPerBNB ? `${Math.floor(tokensPerBNB).toLocaleString()} BFG` : "--";
-
-      const delta = Math.max((totalRaisedBNB || 0) - (lastRaisedBNB || 0), 0);
-      const remain = Math.max(PRICE_INCREASE_THRESHOLD_BNB - delta, 0);
-      const p = Math.max(Math.min(delta / PRICE_INCREASE_THRESHOLD_BNB, 1), 0);
-
-      if (elNext) {
-        if (presaleEnded) elNext.innerText = "Presale ended";
-        else if (!presaleActive) elNext.innerText = "Not active";
-        else elNext.innerText = `${(p*100).toFixed(1)}% • ${remain.toFixed(2)} BNB remaining`;
-      }
-
-      // PinkLock disclosures
-      if (wpPinkLink) wpPinkLink.innerText = CONFIG.PINKLOCK_URL ? "View Lock" : "TBD";
-      if (wpPinkLink && CONFIG.PINKLOCK_URL) {
-        wpPinkLink.innerHTML = `<a class="link" href="${CONFIG.PINKLOCK_URL}" target="_blank" rel="noreferrer">View Lock</a>`;
-      }
-      if (wpUnlockDate) wpUnlockDate.innerText = CONFIG.PINKLOCK_UNLOCK_DATE || "TBD";
     }
 
     // =========================
@@ -1995,7 +1561,7 @@ PART 3 / 3 (WHITEPAPER + FOOTER + SCRIPT)
 
       try { await fetchPricesUSD(); }
       catch {
-        estNote.innerText = "Price feed unavailable. Please open via a local HTTP server.";
+        estNote.innerText = "Price feed unavailable (rate estimate only). You can still pay via wallet.";
         return;
       }
 
@@ -2142,13 +1708,13 @@ PART 3 / 3 (WHITEPAPER + FOOTER + SCRIPT)
         payButton.disabled = !ok;
         payButton.innerText = ok ? `Pay with ${selectedChain}` : "Connect Wallet To Pay";
       } else if (selectedChain === "SOL") {
-        const ok = !!window.solana; // not phantom-only
+        const hasWallet = !!window.solana;
         payButton.disabled = false;
-        payButton.innerText = ok ? "Pay with SOL" : "Pay with SOL (Install Solana Wallet)";
+        payButton.innerText = hasWallet ? "Connect Wallet & Pay (SOL)" : "Pay with SOL (Install Wallet)";
       } else if (selectedChain === "TRON") {
-        const ok = !!window.tronWeb?.ready;
+        const hasWallet = !!window.tronWeb;
         payButton.disabled = false;
-        payButton.innerText = ok ? "Pay with USDT (TRC20)" : "Pay with USDT (Install TronLink)";
+        payButton.innerText = hasWallet ? "Connect Wallet & Pay (USDT TRC20)" : "Pay with USDT (Install Wallet)";
       }
     }
 
@@ -2161,12 +1727,6 @@ PART 3 / 3 (WHITEPAPER + FOOTER + SCRIPT)
       const amt = parseFloat(payAmount.value || "0");
       if (!amt || amt <= 0) return showNotification("Invalid Amount", "Enter a valid BNB amount.", true);
 
-      const net = await evmProvider.getNetwork();
-      if (net.chainId !== CONFIG.BSC_CHAIN_ID) {
-        return showNotification("Wrong Network", "Switch your EVM wallet to BNB Smart Chain (56).", true);
-      }
-
-      // Slippage removed as requested: set minOut = 0
       const minOut = ethers.constants.Zero;
 
       let ref = (referrerInput.value || "").trim();
@@ -2178,12 +1738,20 @@ PART 3 / 3 (WHITEPAPER + FOOTER + SCRIPT)
 
       try {
         payButton.disabled = true;
+        payButton.innerText = "Switching Network…";
+
+        await ensureEvmChain("0x38", {
+          chainId: "0x38",
+          chainName: "BNB Smart Chain",
+          nativeCurrency: { name: "BNB", symbol: "BNB", decimals: 18 },
+          rpcUrls: [CONFIG.BSC_RPC],
+          blockExplorerUrls: [CONFIG.BSC_EXPLORER]
+        });
+
         payButton.innerText = "Processing…";
 
         const tx = await presaleContract.buyTokens(ref, minOut, { value: ethers.utils.parseEther(String(amt)) });
         showNotification("Transaction Sent", tx.hash);
-        await tx.wait();
-        showNotification("Payment Confirmed", "BSC purchase confirmed on-chain.");
 
         const tUsd = tokenUsdPrice();
         const estBfg = (tUsd && pricesUSD.bnb) ? ((amt * pricesUSD.bnb) / tUsd) : (amt * tokensPerBNB);
@@ -2194,8 +1762,14 @@ PART 3 / 3 (WHITEPAPER + FOOTER + SCRIPT)
           tx: tx.hash,
           explorer: `${CONFIG.BSC_EXPLORER}/tx/${tx.hash}`,
           paid: `${amt} BNB`,
-          bfg: estBfg ? estBfg.toLocaleString(undefined, { maximumFractionDigits: 2 }) : "--"
+          bfg: estBfg ? estBfg.toLocaleString(undefined, { maximumFractionDigits: 2 }) : "--",
+          status: "pending"
         });
+
+        await tx.wait();
+
+        updateHistoryStatus(tx.hash, "confirmed");
+        showNotification("Payment Confirmed", "BSC purchase confirmed on-chain.");
 
         await refreshAll();
         await updateBalances();
@@ -2213,13 +1787,12 @@ PART 3 / 3 (WHITEPAPER + FOOTER + SCRIPT)
       const amt = parseFloat(payAmount.value || "0");
       if (!amt || amt <= 0) return showNotification("Invalid Amount", "Enter a valid ETH amount.", true);
 
-      const net = await evmProvider.getNetwork();
-      if (net.chainId !== 1) {
-        return showNotification("Wrong Network", "Switch your EVM wallet to Ethereum Mainnet (1).", true);
-      }
-
       try {
         payButton.disabled = true;
+        payButton.innerText = "Switching Network…";
+
+        await ensureEvmChain("0x1");
+
         payButton.innerText = "Processing…";
 
         const tx = await evmSigner.sendTransaction({
@@ -2228,8 +1801,6 @@ PART 3 / 3 (WHITEPAPER + FOOTER + SCRIPT)
         });
 
         showNotification("Transaction Sent", tx.hash);
-        await tx.wait();
-        showNotification("Payment Confirmed", "ETH payment confirmed.");
 
         const tUsd = tokenUsdPrice();
         const payUsd = pricesUSD.eth ? (amt * pricesUSD.eth) : null;
@@ -2241,11 +1812,17 @@ PART 3 / 3 (WHITEPAPER + FOOTER + SCRIPT)
           tx: tx.hash,
           explorer: `https://etherscan.io/tx/${tx.hash}`,
           paid: `${amt} ETH`,
-          bfg: estBfg ? estBfg.toLocaleString(undefined, { maximumFractionDigits: 2 }) : "--"
+          bfg: estBfg ? estBfg.toLocaleString(undefined, { maximumFractionDigits: 2 }) : "--",
+          status: "pending"
         });
 
+        await tx.wait();
+
+        updateHistoryStatus(tx.hash, "confirmed");
+        showNotification("Payment Confirmed", "ETH payment confirmed.");
       } catch (e) {
-        showNotification("Payment Failed", e?.data?.message || e?.message || String(e), true);
+        const msg = e?.data?.message || e?.message || String(e);
+        showNotification("Payment Failed", msg, true);
       } finally {
         payButton.disabled = false;
         updatePayButtonState();
@@ -2257,12 +1834,14 @@ PART 3 / 3 (WHITEPAPER + FOOTER + SCRIPT)
       if (!amt || amt <= 0) return showNotification("Invalid Amount", "Enter a valid SOL amount.", true);
 
       if (!window.solana) {
-        return showNotification("Wallet Required", "Please install a Solana wallet that injects window.solana (mobile/desktop).", true);
+        return showNotification("Wallet Required", "Please install a Solana wallet (Phantom/Solflare/Backpack) to pay with SOL.", true);
       }
+
+      let signature = null;
 
       try {
         payButton.disabled = true;
-        payButton.innerText = "Opening Solana wallet…";
+        payButton.innerText = "Opening Wallet…";
 
         const solana = window.solana;
         const conn = new Connection(CONFIG.SOL_RPC, "confirmed");
@@ -2277,16 +1856,22 @@ PART 3 / 3 (WHITEPAPER + FOOTER + SCRIPT)
         const tx = new Transaction().add(
           SystemProgram.transfer({ fromPubkey, toPubkey, lamports })
         );
+
         tx.feePayer = fromPubkey;
         const { blockhash } = await conn.getLatestBlockhash("finalized");
         tx.recentBlockhash = blockhash;
 
-        const signed = await solana.signTransaction(tx);
-        const sig = await conn.sendRawTransaction(signed.serialize(), { skipPreflight: false });
+        payButton.innerText = "Confirm in Wallet…";
 
-        showNotification("Transaction Sent", sig);
-        await conn.confirmTransaction(sig, "confirmed");
-        showNotification("Payment Confirmed", "SOL payment confirmed.");
+        if (solana.signAndSendTransaction) {
+          const res = await solana.signAndSendTransaction(tx);
+          signature = res?.signature || res;
+        } else {
+          const signed = await solana.signTransaction(tx);
+          signature = await conn.sendRawTransaction(signed.serialize(), { skipPreflight: false });
+        }
+
+        showNotification("Transaction Sent", String(signature));
 
         const tUsd = tokenUsdPrice();
         const payUsd = pricesUSD.sol ? (amt * pricesUSD.sol) : null;
@@ -2295,14 +1880,20 @@ PART 3 / 3 (WHITEPAPER + FOOTER + SCRIPT)
         addHistoryItem({
           ts: Date.now(),
           chain: "SOL",
-          tx: sig,
-          explorer: `https://solscan.io/tx/${sig}`,
+          tx: String(signature),
+          explorer: `https://solscan.io/tx/${signature}`,
           paid: `${amt} SOL`,
-          bfg: estBfg ? estBfg.toLocaleString(undefined, { maximumFractionDigits: 2 }) : "--"
+          bfg: estBfg ? estBfg.toLocaleString(undefined, { maximumFractionDigits: 2 }) : "--",
+          status: "pending"
         });
 
+        await conn.confirmTransaction(String(signature), "confirmed");
+
+        updateHistoryStatus(String(signature), "confirmed");
+        showNotification("Payment Confirmed", "SOL payment confirmed.");
       } catch (e) {
         showNotification("Payment Failed", e?.message || String(e), true);
+        if (signature) updateHistoryStatus(String(signature), "failed");
       } finally {
         payButton.disabled = false;
         updatePayButtonState();
@@ -2313,40 +1904,62 @@ PART 3 / 3 (WHITEPAPER + FOOTER + SCRIPT)
       const amt = parseFloat(payAmount.value || "0");
       if (!amt || amt <= 0) return showNotification("Invalid Amount", "Enter a valid USDT amount.", true);
 
+      try {
+        if (window.tronLink?.request) {
+          await window.tronLink.request({ method: "tron_requestAccounts" });
+        }
+      } catch {}
+
       if (!window.tronWeb || !window.tronWeb.ready) {
-        return showNotification("Wallet Required", "Please install TronLink to pay with USDT (TRC20).", true);
+        return showNotification("Wallet Required", "Please connect TronLink to pay with USDT (TRC20).", true);
       }
+
+      let txid = null;
 
       try {
         payButton.disabled = true;
-        payButton.innerText = "Opening TronLink…";
+        payButton.innerText = "Checking Wallet…";
 
         const tronWeb = window.tronWeb;
         const from = tronWeb.defaultAddress?.base58;
         myTronWallet.innerText = safeShort(from || "");
 
-        const amountSun = Math.round(amt * 1_000_000); // 6 decimals
-        const usdt = await tronWeb.contract().at(CONFIG.TRON_USDT_CONTRACT);
-        const txid = await usdt.transfer(CONFIG.TRON_RECEIVE, amountSun).send({ feeLimit: 30_000_000 });
+        if (!from) return showNotification("Not Connected", "Open TronLink and connect this site.", true);
 
-        showNotification("Transaction Sent", txid);
-        showNotification("Payment Submitted", "USDT transfer submitted. It will appear on-chain shortly.");
+        try {
+          const trxBalSun = await tronWeb.trx.getBalance(from);
+          if (trxBalSun < 2_000_000) {
+            showNotification("提示", "TRX 余额偏低。TRC20 转账需要带宽/能量，建议至少留 2 TRX。", false);
+          }
+        } catch {}
+
+        payButton.innerText = "Confirm in Wallet…";
+
+        const amountSun = Math.round(amt * 1_000_000);
+        const usdt = await tronWeb.contract().at(CONFIG.TRON_USDT_CONTRACT);
+        txid = await usdt.transfer(CONFIG.TRON_RECEIVE, amountSun).send({ feeLimit: 30_000_000 });
+
+        showNotification("Transaction Sent", String(txid));
+        showNotification("Submitted", "USDT transfer submitted. It may take a bit to confirm on-chain.");
 
         const tUsd = tokenUsdPrice();
-        const payUsd = amt;
-        const estBfg = (tUsd && payUsd) ? (payUsd / tUsd) : null;
+        const estBfg = (tUsd && amt) ? (amt / tUsd) : null;
 
         addHistoryItem({
           ts: Date.now(),
           chain: "TRON (USDT)",
-          tx: txid,
+          tx: String(txid),
           explorer: `https://tronscan.org/#/transaction/${txid}`,
           paid: `${amt} USDT (TRC20)`,
-          bfg: estBfg ? estBfg.toLocaleString(undefined, { maximumFractionDigits: 2 }) : "--"
+          bfg: estBfg ? estBfg.toLocaleString(undefined, { maximumFractionDigits: 2 }) : "--",
+          status: "pending"
         });
 
+        // Note: keeping pending without polling on Tron in pure front-end.
       } catch (e) {
-        showNotification("Payment Failed", e?.message || String(e), true);
+        const msg = e?.message || String(e);
+        showNotification("Payment Failed", msg, true);
+        if (txid) updateHistoryStatus(String(txid), "failed");
       } finally {
         payButton.disabled = false;
         updatePayButtonState();
@@ -2355,11 +1968,18 @@ PART 3 / 3 (WHITEPAPER + FOOTER + SCRIPT)
 
     async function claimBSC() {
       if (!presaleContract || !evmProvider) return showNotification("Not Connected", "Connect your EVM wallet first.", true);
-      const net = await evmProvider.getNetwork();
-      if (net.chainId !== CONFIG.BSC_CHAIN_ID) return showNotification("Wrong Network", "Switch to BSC to claim.", true);
 
       try {
         claimButton.disabled = true;
+        claimButton.innerText = "Switching Network…";
+        await ensureEvmChain("0x38", {
+          chainId: "0x38",
+          chainName: "BNB Smart Chain",
+          nativeCurrency: { name: "BNB", symbol: "BNB", decimals: 18 },
+          rpcUrls: [CONFIG.BSC_RPC],
+          blockExplorerUrls: [CONFIG.BSC_EXPLORER]
+        });
+
         claimButton.innerText = "Claiming…";
         const tx = await presaleContract.claimTokens();
         showNotification("Claim Sent", tx.hash);
@@ -2396,7 +2016,6 @@ PART 3 / 3 (WHITEPAPER + FOOTER + SCRIPT)
         renderTopStats();
         renderUrgency();
         updateEstimates();
-        updateWhitepaperLive();
         const ms = Date.now() - t0;
         if (lastSyncText) lastSyncText.innerText = `LIVE • synced (${ms}ms)`;
       } catch {
@@ -2410,96 +2029,7 @@ PART 3 / 3 (WHITEPAPER + FOOTER + SCRIPT)
     }
 
     // =========================
-    // WHITEPAPER: PDF EXPORT + smooth anchor
-    // =========================
-    function wpScrollTo(id) {
-      const el = document.querySelector(id);
-      if (!el) return;
-      history.pushState(null, '', '#whitepaper');
-      setActivePage('whitepaper');
-      setTimeout(() => el.scrollIntoView({ behavior: 'smooth', block: 'start' }), 50);
-    }
-
-    document.querySelectorAll('#whitepaper .wp-link').forEach(a => {
-      a.addEventListener('click', (e) => {
-        const href = a.getAttribute('href');
-        if (!href || !href.startsWith('#wp-')) return;
-        e.preventDefault();
-        wpScrollTo(href);
-      });
-    });
-
-    const wpPrintBtn = document.getElementById('wpPrintBtn');
-    if (wpPrintBtn) {
-      wpPrintBtn.addEventListener('click', () => {
-        history.pushState(null, '', '#whitepaper');
-        setActivePage('whitepaper');
-        setTimeout(() => window.print(), 80);
-      });
-    }
-
-    function downloadWhitepaperPDF() {
-      history.pushState(null, '', '#whitepaper');
-      setActivePage('whitepaper');
-
-      const wp = document.querySelector('#whitepaper .container');
-      if (!wp) return;
-
-      const styleText = Array.from(document.querySelectorAll('style'))
-        .map(s => s.innerHTML || '')
-        .join('\n');
-
-      const html = `
-<!doctype html>
-<html>
-<head>
-  <meta charset="utf-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <title>BullForge Whitepaper (PDF)</title>
-  <style>${styleText}</style>
-</head>
-<body>
-  <section id="whitepaper" class="page is-active">
-    <div class="section" style="padding-top:18px">
-      ${wp.innerHTML}
-    </div>
-  </section>
-
-  <script>
-    window.addEventListener('load', () => {
-      try{
-        const btns = document.querySelectorAll('#wpPdfBtn, #wpPrintBtn');
-        btns.forEach(b => b && b.remove());
-      }catch(e){}
-      setTimeout(() => window.print(), 120);
-    });
-  <\/script>
-</body>
-</html>`;
-
-      const w = window.open('', '_blank');
-      if (!w) return alert('Popup blocked. Please allow popups to download PDF.');
-      w.document.open();
-      w.document.write(html);
-      w.document.close();
-    }
-
-    const wpPdfBtn = document.getElementById('wpPdfBtn');
-    if (wpPdfBtn) wpPdfBtn.addEventListener('click', downloadWhitepaperPDF);
-
-    window.addEventListener('hashchange', () => {
-      const h = (location.hash || '').trim();
-      if (h.startsWith('#wp-')) {
-        setActivePage('whitepaper');
-        setTimeout(() => {
-          const el = document.querySelector(h);
-          if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }, 60);
-      }
-    });
-
-    // =========================
-    // EVENTS + INIT
+    // EVENTS
     // =========================
     bindNav();
 
@@ -2529,6 +2059,7 @@ PART 3 / 3 (WHITEPAPER + FOOTER + SCRIPT)
     copyRefBtn.addEventListener("click", () => copyText(refLink?.innerText || ""));
     copyRefBtn2.addEventListener("click", () => copyText(refLink2?.innerText || ""));
 
+    // init
     initWeb3Modal();
     renderHistory();
     setSelectedChain("BSC");
@@ -2537,6 +2068,7 @@ PART 3 / 3 (WHITEPAPER + FOOTER + SCRIPT)
     refreshAll();
     setInterval(refreshAll, 15000);
 
+    // wallet indicators (keep light)
     setInterval(() => {
       updatePayButtonState();
       if (window.solana?.publicKey) {
