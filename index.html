@@ -1,389 +1,1127 @@
-```html
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>BullForge Presale - Multi-Chain</title>
+  <title>BullForge | Buy $BFG</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+
   <style>
     :root{
-      --bg:#050505;
-      --bg2:#0d0d0f;
-      --card:#0f1115;
-      --card2:#12141a;
-      --line:rgba(245,215,122,0.25);
-      --line2:rgba(255,255,255,0.08);
       --gold:#F5D77A;
-      --gold2:#d7b55e;
-      --text:#f5f5f5;
-      --muted:#a9adb8;
-      --danger:#ff6b6b;
-      --ok:#6dffb3;
-    }
-    *{box-sizing:border-box}
-    html,body{margin:0;padding:0;background:
-      radial-gradient(1200px 700px at 10% -10%,rgba(245,215,122,0.08),transparent),
-      radial-gradient(900px 600px at 90% -10%,rgba(245,215,122,0.05),transparent),
-      linear-gradient(180deg,#060607,#090a0d 48%,#070709);
-      color:var(--text);
-      font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+      --gold2:#E9C45C;
+      --bg:#070708;
+      --card:rgba(255,255,255,0.035);
+      --border:rgba(255,255,255,0.09);
+      --text:rgba(255,255,255,0.92);
+      --muted:rgba(255,255,255,0.62);
+      --muted2:rgba(255,255,255,0.45);
+      --danger:#FF4444;
+      --ok:#00C853;
+
+      --shadow: 0 16px 60px rgba(0,0,0,0.45);
+      --shadow2: 0 26px 90px rgba(0,0,0,0.65);
+      --radius: 18px;
     }
 
-    .wrap{max-width:1120px;margin:0 auto;padding:18px 16px 44px}
-    .topbar{
-      position:sticky; top:0; z-index:50;
-      backdrop-filter: blur(8px);
-      background:rgba(6,6,8,0.72);
-      border-bottom:1px solid var(--line2);
-    }
-    .topbar-in{max-width:1120px;margin:0 auto;padding:12px 16px;display:flex;align-items:center;justify-content:space-between;gap:12px}
-    .brand{display:flex;align-items:center;gap:10px;font-weight:800;letter-spacing:.2px}
-    .logo{
-      width:34px;height:34px;border-radius:10px;
+    *{margin:0;padding:0;box-sizing:border-box;font-family:'Inter',sans-serif}
+
+    html { scroll-padding-top: 96px; }
+
+    body{
       background:
-        linear-gradient(135deg,rgba(245,215,122,.35),rgba(245,215,122,.08)),
-        #111;
-      border:1px solid var(--line);
-      display:grid;place-items:center;font-size:14px;color:var(--gold);
-      box-shadow:0 6px 24px rgba(245,215,122,.12), inset 0 0 0 1px rgba(255,255,255,.04);
+        radial-gradient(1100px 720px at 50% 0%, rgba(245,215,122,0.12), transparent 58%),
+        radial-gradient(900px 600px at 10% 10%, rgba(255,255,255,0.05), transparent 60%),
+        radial-gradient(900px 600px at 90% 18%, rgba(255,255,255,0.04), transparent 65%),
+        radial-gradient(700px 480px at 50% 120%, rgba(245,215,122,0.07), transparent 55%),
+        var(--bg);
+      color:var(--text);
+      overflow-x:hidden;
+      letter-spacing:-0.01em;
+      line-height:1.55;
     }
-    .nav{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
-    .nav a{
-      text-decoration:none;color:#ddd;padding:8px 11px;border-radius:10px;
-      border:1px solid transparent;font-size:14px;
+
+    .container{max-width:1200px;margin:0 auto;padding:0 20px}
+
+    .navbar{
+      position:fixed;top:0;left:0;width:100%;z-index:999;
+      padding:14px 0;background:rgba(7,7,8,0.70);
+      backdrop-filter:blur(16px);
+      border-bottom:1px solid rgba(255,255,255,0.06);
     }
-    .nav a:hover{border-color:var(--line2);background:rgba(255,255,255,.03)}
+    .navbar-content{display:flex;justify-content:space-between;align-items:center;gap:14px}
+    .logo{
+      font-size:22px;font-weight:900;color:var(--gold);text-decoration:none;white-space:nowrap;
+      letter-spacing:-0.02em;
+      text-transform:none;
+    }
+    .nav-links{display:flex;gap:16px;align-items:center;flex-wrap:wrap}
+    .nav-links a{color:rgba(255,255,255,0.66);text-decoration:none;font-weight:800;font-size:13px;letter-spacing:0.02em}
+    .nav-links a:hover{color:rgba(255,255,255,0.92)}
+    .nav-right{display:flex;gap:10px;align-items:center;flex-wrap:wrap;justify-content:flex-end}
+
     .badge{
-      border:1px solid var(--line);
-      color:var(--gold);
-      padding:8px 12px;border-radius:999px;font-size:12px;font-weight:700;
-      background:rgba(245,215,122,0.08);
+      display:none;padding:6px 10px;border-radius:999px;border:1px solid var(--border);
+      background:rgba(245,215,122,0.08);color:var(--gold);font-weight:900;font-size:12px;white-space:nowrap
     }
-    .badge.bad{border-color:rgba(255,107,107,.45);color:#ff9b9b;background:rgba(255,107,107,.08)}
-    .btn, .btn2{
-      border:none;cursor:pointer;border-radius:12px;padding:10px 14px;font-weight:700
+    .badge.bad{border-color:var(--danger);color:var(--danger);background:rgba(255,68,68,0.08)}
+
+    .btnTop{
+      padding:10px 16px;background:var(--gold);color:#0b0b0c;border:none;border-radius:999px;
+      font-weight:900;cursor:pointer;transition:.2s;white-space:nowrap
     }
-    .btn{
-      background:linear-gradient(180deg,#f7de91,#d9b768);
-      color:#19150a; box-shadow:0 8px 24px rgba(245,215,122,.24);
-    }
-    .btn:hover{filter:brightness(1.03)}
-    .btn:disabled{opacity:.58;cursor:not-allowed}
-    .btn2{
-      background:#181b22;color:#e9ecf2;border:1px solid var(--line2);
-    }
-    .btn2:hover{background:#1d2129}
-    .menu-btn{
-      display:none;border:1px solid var(--line2);background:#151821;color:#fff;border-radius:10px;padding:8px 10px;font-weight:700
+    .btnTop:disabled{opacity:.6;cursor:not-allowed}
+    .btnGhost{
+      padding:8px 12px;background:transparent;color:var(--gold);
+      border:1px solid rgba(245,215,122,0.7);border-radius:999px;font-weight:800;font-size:13px;cursor:pointer
     }
 
-    .mobile-nav{
-      display:none;position:absolute;left:16px;right:16px;top:64px;
-      background:#111319;border:1px solid var(--line2);border-radius:14px;padding:10px;
-      box-shadow:0 12px 32px rgba(0,0,0,.45)
+    .menuBtn{
+      display:none;
+      width:40px;height:40px;border-radius:12px;
+      border:1px solid rgba(255,255,255,0.10);
+      background:rgba(0,0,0,0.18);
+      color:rgba(255,255,255,0.86);
+      font-weight:900;cursor:pointer;
+      align-items:center;justify-content:center;
     }
-    .mobile-nav a{display:block;padding:10px;border-radius:10px;color:#ddd;text-decoration:none}
-    .mobile-nav a:hover{background:rgba(255,255,255,.04)}
-
-    .hero{
-      margin-top:16px;
-      display:grid;grid-template-columns:1.1fr .9fr;gap:14px;
+    .mobileMenu{
+      display:none;
+      position:fixed;left:12px;right:12px;top:72px;z-index:998;
+      padding:12px;border-radius:16px;
+      background:rgba(7,7,8,0.88);
+      border:1px solid rgba(255,255,255,0.08);
+      backdrop-filter:blur(16px);
+      box-shadow:0 16px 50px rgba(0,0,0,0.55);
     }
-    .card{
-      background:linear-gradient(180deg,var(--card),var(--card2));
-      border:1px solid var(--line2);
-      border-radius:18px;padding:16px;
-      box-shadow:0 10px 28px rgba(0,0,0,.28), inset 0 1px 0 rgba(255,255,255,.03);
+    .mobileMenu a{
+      display:block;padding:12px 12px;border-radius:12px;
+      color:rgba(255,255,255,0.85);text-decoration:none;font-weight:900;
+      border:1px solid rgba(255,255,255,0.06);
+      background:rgba(255,255,255,0.03);
     }
-    .headline{
-      font-size:40px;line-height:1.04;margin:2px 0 10px;font-weight:900;
-      letter-spacing:-.7px;
-      background:linear-gradient(180deg,#fff,#d8dbe4);
-      -webkit-background-clip:text;background-clip:text;color:transparent;
-    }
-    .sub{color:var(--muted);font-size:15px;line-height:1.6;margin:0 0 14px}
-    .hero-cta{display:flex;gap:10px;flex-wrap:wrap}
-    .stats{
-      display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:14px
-    }
-    .stat{
-      border:1px solid var(--line2);background:rgba(255,255,255,.02);
-      border-radius:12px;padding:10px
-    }
-    .stat .k{font-size:12px;color:#9fa4b0}
-    .stat .v{font-size:18px;font-weight:800;margin-top:2px}
-
-    .section-title{
-      margin:18px 0 10px;font-size:13px;font-weight:800;color:#c7ccda;letter-spacing:.6px
-    }
-
-    .buy-grid{display:grid;grid-template-columns:1fr .9fr;gap:14px}
-    .field{margin:10px 0}
-    label{display:block;font-size:12px;color:#b5bbc9;margin-bottom:6px;font-weight:700}
-    input{
-      width:100%;padding:12px 12px;border-radius:12px;background:#0f1218;color:#f2f4f7;
-      border:1px solid #242936;outline:none;
-    }
-    input:focus{border-color:rgba(245,215,122,.55);box-shadow:0 0 0 3px rgba(245,215,122,.12)}
-    .row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
-    .small{font-size:12px;color:#97a0b3}
-
-    .chains{display:flex;gap:8px;flex-wrap:wrap}
-    .chip{
-      padding:9px 12px;border-radius:999px;border:1px solid #2a2f3d;background:#121621;
-      font-size:12px;font-weight:800;color:#d8dce7;cursor:pointer;
-    }
-    .chip.active{border-color:var(--line);color:#1a1408;background:linear-gradient(180deg,#f8df93,#d8b766)}
-    .chip:hover{filter:brightness(1.04)}
-
-    .big{
-      width:100%;padding:13px 14px;border-radius:14px;font-weight:900;letter-spacing:.2px;
-      margin-top:8px
-    }
-
-    .divider{height:1px;background:var(--line2);margin:12px 0}
-    .kv{display:flex;justify-content:space-between;gap:10px;margin:7px 0;font-size:14px}
-    .kv .k{color:#a4abbb}
-    .kv .v{font-weight:800}
-    .muted{color:#9da5b7;font-size:12px}
-
-    .progress{
-      height:14px;border-radius:999px;background:#0d1016;border:1px solid #222836;overflow:hidden
-    }
-    .progress > i{
-      display:block;height:100%;width:0%;
-      background:linear-gradient(90deg,#ffd56c,#f5d77a,#e7b74d);
-      box-shadow:0 0 18px rgba(245,215,122,.35);
-      transition:width .4s ease;
-    }
-    .progress > i.near{
-      animation:pulse 1.1s infinite ease-in-out;
-      filter:saturate(1.1);
-    }
-    @keyframes pulse{
-      0%,100%{opacity:.92}
-      50%{opacity:.62}
-    }
-
-    .table{
-      width:100%;border:1px solid var(--line2);border-radius:14px;overflow:hidden;margin-top:10px
-    }
-    .tr{display:grid;grid-template-columns:120px 1fr 160px 160px}
-    .th,.td{padding:10px 12px;border-bottom:1px solid #1f2431;font-size:13px}
-    .th{font-weight:800;background:#121622;color:#c9ceda}
-    .td{color:#e7ebf4}
-    .tr:last-child .td{border-bottom:none}
-    .empty{padding:18px;color:#95a0b4;text-align:center}
-
-    .notice{
-      position:fixed;right:18px;bottom:18px;z-index:100;
-      width:min(420px,calc(100vw - 30px));background:#11141c;border:1px solid var(--line);
-      border-radius:14px;padding:12px 13px;display:none
-    }
-    .notice.show{display:block}
-    .notice h4{margin:0 0 4px;font-size:14px}
-    .notice p{margin:0;color:#b3bac9;font-size:13px;word-break:break-word}
-
-    .foot{
-      color:#7f899b;font-size:12px;text-align:center;margin-top:20px;line-height:1.6
-    }
+    .mobileMenu a + a{margin-top:10px}
+    .mobileMenu a:hover{border-color:rgba(245,215,122,0.35);color:rgba(245,215,122,0.95)}
+    .mobileMenu.show{display:block}
 
     .page{display:none}
     .page.is-active{display:block}
+    .section{padding-top:108px;padding-bottom:80px}
 
-    @media (max-width:980px){
-      .hero,.buy-grid{grid-template-columns:1fr}
-      .headline{font-size:32px}
-      .stats{grid-template-columns:1fr 1fr}
-      .nav{display:none}
-      .menu-btn{display:inline-block}
-      .mobile-nav.show{display:block}
+    .glass{
+      background:var(--card);
+      border:1px solid var(--border);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      backdrop-filter:blur(14px);
+      position:relative;
+      overflow:visible;
     }
-    @media (max-width:560px){
-      .stats{grid-template-columns:1fr}
-      .tr{grid-template-columns:95px 1fr 120px 120px}
-      .th,.td{padding:9px 8px;font-size:12px}
-      .topbar-in{padding:10px 12px}
-      .wrap{padding:12px}
+    .glass::before{
+      content:"";position:absolute;inset:0;pointer-events:none;
+      background:linear-gradient(180deg, rgba(255,255,255,0.10), transparent 35%),
+                 radial-gradient(650px 240px at 20% 0%, rgba(245,215,122,0.12), transparent 60%);
+      opacity:0.55
+    }
+
+    .title{
+      font-size:46px;font-weight:900;line-height:1.08;letter-spacing:-0.03em;
+      background:linear-gradient(180deg, rgba(245,215,122,0.95) 0%, rgba(233,196,92,0.85) 100%);
+      -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+    }
+    .subtitle{margin-top:12px;color:var(--muted);font-size:16px;max-width:860px}
+    .sectionLabel{margin-top:14px;font-size:12px;color:rgba(255,255,255,0.70);font-weight:800;letter-spacing:0.12em;text-transform:uppercase}
+
+    .btn{
+      width:100%;
+      margin-top:12px;
+      padding:16px;border-radius:14px;border:none;
+      background:linear-gradient(180deg, rgba(245,215,122,0.98), rgba(233,196,92,0.92));
+      color:#0b0b0c;font-weight:900;text-transform:uppercase;cursor:pointer;
+      box-shadow:0 26px 70px rgba(0,0,0,0.62), 0 0 0 1px rgba(255,255,255,0.06) inset;
+      transition:.18s;position:relative;overflow:hidden
+    }
+    .btn:disabled{opacity:.55;cursor:not-allowed}
+    .btn2{
+      width:100%;
+      margin-top:10px;
+      padding:13px;border-radius:14px;
+      background:rgba(245,215,122,0.05);
+      color:rgba(245,215,122,0.9);
+      border:1px solid rgba(245,215,122,0.55);
+      font-weight:900;cursor:pointer
+    }
+
+    .notification{
+      position:fixed;top:88px;right:18px;max-width:420px;
+      padding:16px 18px;background:rgba(15,15,15,0.72);
+      border:1px solid rgba(245,215,122,0.55);
+      border-radius:14px;z-index:9999;
+      box-shadow:0 16px 40px rgba(0,0,0,0.5);
+      transform:translateX(120%);transition:transform .3s ease;
+      backdrop-filter: blur(16px);
+    }
+    .notification.show{transform:translateX(0)}
+    .notification-title{font-weight:900;margin-bottom:6px}
+    .notification-desc{font-size:13px;color:rgba(255,255,255,0.68);word-break:break-word}
+
+    .spinner{display:inline-block;width:18px;height:18px;border:2px solid rgba(255,255,255,0.25);border-radius:50%;border-top-color:var(--gold);animation:spin 1s linear infinite;vertical-align:middle}
+    @keyframes spin{to{transform:rotate(360deg)}}
+
+    .home-landing{position:relative}
+    .home-hero-glow{
+      position:absolute;left:50%;top:-40px;transform:translateX(-50%);
+      width:980px;height:560px;pointer-events:none;
+      background:
+        radial-gradient(closest-side, rgba(245,215,122,0.16), transparent 72%),
+        radial-gradient(closest-side, rgba(255,255,255,0.06), transparent 76%);
+      opacity:0.95;
+      z-index:0;
+      filter: blur(0px);
+    }
+    .noise{
+      position:absolute;inset:0;pointer-events:none;z-index:0;
+      opacity:0.06;
+      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)' opacity='.6'/%3E%3C/svg%3E");
+      mix-blend-mode: overlay;
+    }
+    .hero-ghostWord{
+      position:absolute;left:50%;top:88px;transform:translateX(-50%);
+      font-weight:900;letter-spacing:-0.06em;
+      font-size:160px;line-height:1;
+      color:rgba(255,255,255,0.035);
+      white-space:nowrap;
+      z-index:0;
+      pointer-events:none;
+      text-transform:uppercase;
+      filter: blur(0px);
+    }
+    .particles{
+      position:absolute;inset:0;pointer-events:none;z-index:0;
+      overflow:hidden;
+    }
+    .pDot{
+      position:absolute;border-radius:999px;
+      background:radial-gradient(circle, rgba(245,215,122,0.85), rgba(245,215,122,0));
+      opacity:0.20;
+      filter: blur(0px);
+      animation: floatUp linear infinite;
+    }
+    @keyframes floatUp{
+      from{ transform: translateY(60px); opacity:0.0;}
+      15%{opacity:0.20;}
+      70%{opacity:0.12;}
+      to{ transform: translateY(-220px); opacity:0.0;}
+    }
+
+    .section-header{position:relative;z-index:1;text-align:center}
+    .section-subtitle{
+      font-size:12px;letter-spacing:0.22em;text-transform:uppercase;
+      color:rgba(255,255,255,0.60);font-weight:900
+    }
+
+    .welcomeShimmer{
+      display:inline-block;
+      background: linear-gradient(90deg,
+        rgba(255,255,255,0.22) 0%,
+        rgba(245,215,122,0.95) 18%,
+        rgba(255,255,255,0.25) 40%,
+        rgba(255,255,255,0.18) 100%);
+      background-size: 240% 100%;
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      text-shadow: 0 0 34px rgba(245,215,122,0.10);
+      animation: shimmer 2.6s ease-in-out infinite;
+      position:relative;
+    }
+    @keyframes shimmer{
+      0%{background-position: 0% 50%}
+      100%{background-position: 240% 50%}
+    }
+
+    .section-desc{margin-top:10px;color:rgba(255,255,255,0.70);font-size:16px}
+    .hero-token-title{
+      margin-top:12px;
+      font-size:104px;
+      line-height:1;
+      letter-spacing:-0.06em;
+      font-weight:900;
+      background:linear-gradient(180deg, rgba(245,215,122,1) 0%, rgba(233,196,92,0.76) 100%);
+      -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+      text-shadow:0 28px 110px rgba(245,215,122,0.10);
+    }
+
+    .buy-button{
+      padding:14px 22px;border-radius:14px;border:none;
+      background:linear-gradient(180deg, rgba(245,215,122,0.98), rgba(233,196,92,0.92));
+      color:#0b0b0c;font-weight:900;text-transform:uppercase;cursor:pointer;
+      box-shadow:0 26px 70px rgba(0,0,0,0.62);
+      width:100%;
+      transition: transform .18s ease, filter .18s ease;
+    }
+    .buy-button:hover{transform: translateY(-2px); filter: brightness(1.04);}
+    .section-title{
+      margin-top:10px;
+      font-weight:900;
+      letter-spacing:-0.03em;
+      background:linear-gradient(180deg, rgba(245,215,122,0.95) 0%, rgba(233,196,92,0.85) 100%);
+      -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+    }
+
+    .miniStats{
+      margin-top:26px;
+      display:grid;
+      grid-template-columns:repeat(4,minmax(0,1fr));
+      gap:12px;
+      position:relative;
+      z-index:1;
+    }
+    .miniStat{
+      padding:14px 14px;
+      border-radius:18px;
+      border:1px solid rgba(255,255,255,0.10);
+      background:rgba(255,255,255,0.03);
+      box-shadow:0 18px 60px rgba(0,0,0,0.50);
+      position:relative;
+      overflow:hidden;
+    }
+    .miniStat::before{
+      content:"";position:absolute;inset:-1px;pointer-events:none;border-radius:18px;
+      background:
+        radial-gradient(420px 140px at 20% 0%, rgba(245,215,122,0.20), transparent 60%),
+        radial-gradient(420px 140px at 85% 0%, rgba(255,255,255,0.08), transparent 65%);
+      opacity:0.30;
+    }
+    .miniStat .k{
+      font-size:11px;text-transform:uppercase;letter-spacing:0.14em;
+      color:rgba(255,255,255,0.50);
+      white-space:nowrap;overflow:hidden;text-overflow:ellipsis;line-height:1.2
+    }
+    .miniStat .v{
+      margin-top:6px;font-size:16px;font-weight:900;
+      color:rgba(245,215,122,0.95);
+      font-variant-numeric:tabular-nums;
+      white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+    }
+
+    .whyGrid{
+      margin-top:18px;
+      display:grid;
+      grid-template-columns:repeat(4,minmax(0,1fr));
+      gap:12px;
+    }
+    .whyCard{
+      padding:16px;
+      border-radius:18px;
+      border:1px solid rgba(255,255,255,0.10);
+      background:rgba(255,255,255,0.03);
+      box-shadow:var(--shadow);
+      transition: transform .18s ease, border-color .18s ease, box-shadow .18s ease, filter .18s ease;
+      position:relative;
+      overflow:hidden;
+      min-height:130px;
+    }
+    .whyCard::before{
+      content:"";position:absolute;inset:0;pointer-events:none;
+      background:radial-gradient(520px 220px at 20% 0%, rgba(245,215,122,0.11), transparent 62%);
+      opacity:0.55;
+      transition:opacity .18s ease;
+    }
+    .whyCard:hover{
+      transform: translateY(-5px);
+      border-color: rgba(245,215,122,0.28);
+      box-shadow:var(--shadow2);
+      filter: brightness(1.03);
+    }
+    .whyCard:hover::before{opacity:0.85;}
+    .whyIcon{
+      width:38px;height:38px;border-radius:14px;
+      display:flex;align-items:center;justify-content:center;
+      background:rgba(245,215,122,0.10);
+      border:1px solid rgba(245,215,122,0.28);
+      color:rgba(245,215,122,0.95);
+      font-weight:900;
+    }
+    .whyCard h3{
+      margin-top:12px;
+      color:rgba(245,215,122,0.95);
+      font-weight:900;
+      letter-spacing:-0.02em;
+      font-size:16px;
+      position:relative;z-index:1;
+    }
+    .whyCard p{
+      margin-top:8px;
+      color:rgba(255,255,255,0.68);
+      font-size:13px;
+      position:relative;z-index:1;
+    }
+
+    .dna-wrap{
+      margin-top: 12px;
+      padding: 24px 20px;
+      border-radius: 22px;
+      border: 1px solid rgba(255,255,255,0.10);
+      background: rgba(255,255,255,0.02);
+      box-shadow: 0 22px 90px rgba(0,0,0,0.65);
+      position: relative;
+      overflow: hidden;
+    }
+    .dna-wrap::before{
+      content:"";
+      position:absolute; inset:-40px;
+      pointer-events:none;
+      background:
+        radial-gradient(900px 360px at 50% -10%, rgba(245,215,122,0.16), transparent 60%),
+        radial-gradient(700px 260px at 20% 0%, rgba(245,215,122,0.10), transparent 62%),
+        radial-gradient(700px 260px at 80% 0%, rgba(255,255,255,0.06), transparent 65%),
+        linear-gradient(180deg, rgba(255,255,255,0.05), transparent 45%);
+      opacity: 0.95;
+    }
+    .dna-topbar{
+      position: relative;
+      z-index: 1;
+      display:flex;
+      align-items:baseline;
+      justify-content:space-between;
+      gap: 14px;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+    }
+    .dna-top-left{
+      font-size: 34px;
+      line-height: 1.1;
+      font-weight: 900;
+      letter-spacing: -0.03em;
+      color: rgba(245,215,122,0.98);
+      text-shadow: 0 18px 80px rgba(245,215,122,0.12);
+    }
+    .dna-top-right{
+      font-size: 16px;
+      font-weight: 700;
+      color: rgba(255,255,255,0.60);
+      letter-spacing: -0.01em;
+    }
+    .dna-grid2{
+      position: relative;
+      z-index: 1;
+      display:grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+      margin-top: 10px;
+    }
+    .dna-item{
+      border-radius: 20px;
+      border: 1px solid rgba(255,255,255,0.08);
+      background: rgba(0,0,0,0.18);
+      box-shadow: 0 18px 60px rgba(0,0,0,0.45);
+      padding: 18px 18px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap: 16px;
+      transition: transform .18s ease, border-color .18s ease, box-shadow .18s ease, filter .18s ease;
+      overflow:hidden;
+      position:relative;
+    }
+    .dna-item::after{
+      content:"";
+      position:absolute;left:12px;top:16px;bottom:16px;width:2px;border-radius:999px;
+      background:linear-gradient(180deg, rgba(245,215,122,0.0), rgba(245,215,122,0.55), rgba(245,215,122,0.0));
+      opacity:0.55;
+      pointer-events:none;
+    }
+    .dna-item::before{
+      content:"";
+      position:absolute; inset:-1px;
+      pointer-events:none;
+      background:
+        radial-gradient(520px 200px at 18% 0%, rgba(245,215,122,0.10), transparent 60%),
+        linear-gradient(180deg, rgba(255,255,255,0.06), transparent 50%);
+      opacity:0.30;
+      transition: opacity .18s ease;
+    }
+    .dna-item:hover{
+      transform: translateY(-5px);
+      border-color: rgba(245,215,122,0.28);
+      box-shadow: 0 28px 92px rgba(0,0,0,0.70);
+      filter: brightness(1.03);
+    }
+    .dna-item:hover::before{opacity:0.7;}
+    .dna-item-left{min-width:0;padding-left:10px}
+    .dna-item-title{
+      font-size: 18px;
+      font-weight: 900;
+      letter-spacing: -0.02em;
+      color: rgba(255,255,255,0.92);
+    }
+    .dna-item-sub{
+      margin-top: 6px;
+      font-size: 13px;
+      font-weight: 600;
+      color: rgba(255,255,255,0.52);
+      letter-spacing: -0.01em;
+    }
+    .dna-item-pct{
+      font-size: 30px;
+      font-weight: 900;
+      color: rgba(245,215,122,0.98);
+      font-variant-numeric: tabular-nums;
+      text-shadow: 0 18px 90px rgba(245,215,122,0.10);
+      flex-shrink: 0;
+      transition: transform .18s ease;
+    }
+    .dna-item:hover .dna-item-pct{transform: scale(1.04);}
+
+    .roadmap-grid{
+      margin-top:14px;
+      display:grid;
+      grid-template-columns:repeat(4,minmax(0,1fr));
+      gap:12px;
+    }
+    .roadmap-card{
+      padding:16px;
+      border-radius:18px;
+      border:1px solid rgba(255,255,255,0.10);
+      background:rgba(255,255,255,0.03);
+      box-shadow:0 16px 60px rgba(0,0,0,0.45);
+      position:relative;
+      overflow:hidden;
+      transition: transform .18s ease, border-color .18s ease, box-shadow .18s ease, filter .18s ease;
+      will-change: transform;
+    }
+    .roadmap-card::after{
+      content:"";
+      position:absolute;left:16px;right:16px;bottom:14px;height:2px;border-radius:999px;
+      background:linear-gradient(90deg, rgba(245,215,122,0.0), rgba(245,215,122,0.45), rgba(245,215,122,0.0));
+      opacity:0.55;
+      pointer-events:none;
+    }
+    .roadmap-card::before{
+      content:"";
+      position:absolute;inset:0;pointer-events:none;
+      background:radial-gradient(520px 200px at 20% 0%, rgba(245,215,122,0.12), transparent 60%);
+      opacity:0.55;
+      transition: opacity .18s ease;
+    }
+    .roadmap-card:hover{
+      transform: translateY(-7px);
+      border-color: rgba(245,215,122,0.35);
+      box-shadow: 0 28px 95px rgba(0,0,0,0.68), 0 0 0 1px rgba(245,215,122,0.10) inset;
+      filter: brightness(1.03);
+    }
+    .roadmap-card:hover::before{opacity:0.90;}
+    .roadmap-phase{position:relative;z-index:1;font-size:12px;letter-spacing:0.18em;text-transform:uppercase;color:rgba(255,255,255,0.60);font-weight:900}
+    .roadmap-title{position:relative;z-index:1;margin-top:8px;font-weight:900;color:rgba(245,215,122,0.95);letter-spacing:-0.02em}
+    .roadmap-list{position:relative;z-index:1;margin-top:10px;color:rgba(255,255,255,0.72);font-size:13px;padding-left:18px}
+    .roadmap-list li{margin-top:8px}
+
+    .gridTop{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-top:18px}
+    .stat{padding:14px;min-width:0;position:relative;overflow:hidden}
+    .stat::after{
+      content:"";
+      position:absolute;inset:-1px;
+      border-radius:18px;
+      pointer-events:none;
+      background: radial-gradient(420px 140px at 15% 0%, rgba(245,215,122,0.22), transparent 60%),
+                  radial-gradient(420px 140px at 85% 0%, rgba(255,255,255,0.08), transparent 65%);
+      opacity:0.0;
+      transition: opacity .18s ease;
+    }
+    .stat:hover::after{opacity:0.95;}
+    .stat{
+      border-color: rgba(255,255,255,0.10);
+      box-shadow: 0 18px 60px rgba(0,0,0,0.50);
+      transition: transform .18s ease, border-color .18s ease, box-shadow .18s ease;
+    }
+    .stat:hover{
+      transform: translateY(-3px);
+      border-color: rgba(245,215,122,0.28);
+      box-shadow: 0 28px 90px rgba(0,0,0,0.70);
+    }
+    .stat .k{
+      font-size:11px;text-transform:uppercase;letter-spacing:0.14em;color:rgba(255,255,255,0.50);
+      white-space:nowrap;overflow:hidden;text-overflow:ellipsis;line-height:1.2
+    }
+    .stat .v{
+      margin-top:6px;font-size:16px;font-weight:900;color:rgba(245,215,122,0.95);
+      font-variant-numeric:tabular-nums;
+      white-space:nowrap;overflow:hidden;text-overflow:ellipsis;line-height:1.25;padding-bottom:1px;min-width:0
+    }
+
+    .buyLayout{display:grid;grid-template-columns:1.1fr 0.9fr;gap:14px;margin-top:12px;align-items:start}
+    .buyCard{padding:16px}
+    .buyHead{display:flex;justify-content:space-between;gap:10px;align-items:center;flex-wrap:wrap}
+    .liveDot{width:8px;height:8px;border-radius:50%;background:var(--ok);box-shadow:0 0 18px rgba(0,200,83,0.35)}
+    .small{font-size:12px;color:var(--muted)}
+    .pill{
+      padding:6px 10px;border-radius:999px;border:1px solid rgba(245,215,122,0.28);
+      background:rgba(0,0,0,0.18);font-size:12px;font-weight:900;color:rgba(245,215,122,0.92)
+    }
+
+    .row{margin-top:8px;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+    .seg{display:flex;gap:8px;flex-wrap:wrap}
+    .chip{
+      padding:10px 12px;border-radius:14px;
+      border:1px solid rgba(255,255,255,0.10);
+      background:rgba(0,0,0,0.18);
+      color:rgba(255,255,255,0.82);
+      font-weight:900;font-size:13px;cursor:pointer;transition:.18s;
+      user-select:none
+    }
+    .chip.active{
+      border-color:rgba(245,215,122,0.55);
+      background:rgba(245,215,122,0.10);
+      color:rgba(245,215,122,0.95);
+      box-shadow:0 0 24px rgba(245,215,122,0.10);
+    }
+
+    .input{
+      width:100%;padding:14px;border-radius:14px;
+      border:1px solid rgba(255,255,255,0.10);
+      background:rgba(0,0,0,0.22);
+      color:rgba(255,255,255,0.92);
+      font-size:15px;font-weight:800;
+    }
+    .input:focus{outline:none;border-color:rgba(245,215,122,0.45);box-shadow:0 0 0 4px rgba(245,215,122,0.10)}
+
+    .kvBox{
+      margin-top:10px;padding:12px;border-radius:16px;
+      border:1px solid rgba(255,255,255,0.08);
+      background:rgba(0,0,0,0.18);
+    }
+    .kvRow{display:flex;justify-content:space-between;gap:10px;align-items:baseline;flex-wrap:wrap}
+    .kvRow span{font-size:12px;color:rgba(255,255,255,0.62)}
+    .kvRow b{font-size:13px;color:rgba(245,215,122,0.92);font-variant-numeric:tabular-nums}
+    .note{margin-top:8px;font-size:12px;color:rgba(255,255,255,0.52);line-height:1.45;white-space:pre-line}
+
+    .progressWrap{margin-top:12px}
+    .bar{
+      width:100%;height:10px;border-radius:999px;overflow:hidden;
+      background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08)
+    }
+    .fill{
+      height:100%;width:0%;
+      background:linear-gradient(90deg, rgba(233,196,92,0.9), rgba(245,215,122,0.95));
+      transition:width .6s ease
+    }
+    @keyframes progPulse{0%{filter:brightness(1)}50%{filter:brightness(1.18)}100%{filter:brightness(1)}}
+    .fill.near{animation:progPulse 1.05s ease-in-out infinite}
+
+    .dash{padding:16px}
+    .dashTitle{font-weight:900;letter-spacing:-0.02em}
+    .table{margin-top:10px;border-radius:16px;overflow:hidden;border:1px solid rgba(255,255,255,0.08)}
+    .tr{display:grid;grid-template-columns:1.0fr 1.1fr 0.9fr 0.9fr;gap:10px;padding:10px 12px;background:rgba(0,0,0,0.12);align-items:center}
+    .tr.head{background:rgba(255,255,255,0.04);font-size:12px;color:rgba(255,255,255,0.62);font-weight:900;text-transform:uppercase;letter-spacing:0.12em}
+    .td{font-size:12px;color:rgba(255,255,255,0.76);min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+    .td b{color:rgba(245,215,122,0.92);font-variant-numeric:tabular-nums}
+    .empty{padding:14px;color:rgba(255,255,255,0.55);font-size:13px}
+    a.link{color:rgba(245,215,122,0.92);text-decoration:none}
+    a.link:hover{text-decoration:underline}
+
+    .heroGrid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-top:14px}
+    .heroCard{padding:16px;transition: transform .18s ease, border-color .18s ease, box-shadow .18s ease}
+    .heroCard:hover{
+      transform: translateY(-4px);
+      border-color: rgba(245,215,122,0.25);
+      box-shadow: 0 24px 80px rgba(0,0,0,0.65);
+    }
+    .heroCard h3{color:rgba(245,215,122,0.95);font-weight:900;letter-spacing:-0.02em}
+    .heroCard p{margin-top:8px;color:var(--muted);font-size:13px}
+
+    footer{
+      margin-top: 10px;
+      padding: 26px 0;
+      border-top: 1px solid rgba(255,255,255,0.06);
+      background: rgba(7,7,8,0.72);
+      backdrop-filter: blur(14px);
+    }
+    .footerText{
+      text-align:center;
+      color: rgba(255,255,255,0.55);
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+    }
+
+    @media (max-width: 1080px){
+      .roadmap-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+      .heroGrid{grid-template-columns:repeat(2,minmax(0,1fr))}
+      .whyGrid{grid-template-columns:repeat(2,minmax(0,1fr))}
+      .miniStats{grid-template-columns:repeat(2,minmax(0,1fr))}
+      .hero-ghostWord{font-size:120px}
+    }
+    @media (max-width: 980px){
+      .title{font-size:38px}
+      .gridTop{grid-template-columns:repeat(2,minmax(0,1fr))}
+      .buyLayout{grid-template-columns:1fr}
+      .notification{right:10px;left:10px;max-width:none}
+      .nav-links{display:none}
+      .menuBtn{display:flex}
+      .section{padding-top:96px}
+
+      .hero-token-title{font-size:76px}
+      .hero-ghostWord{font-size:96px;top:92px}
+
+      .dna-top-left{font-size: 28px;}
+      .dna-top-right{font-size: 14px;}
+      .dna-grid2{grid-template-columns: 1fr; gap: 14px;}
+      .dna-item-title{font-size: 16px;}
+      .dna-item-sub{font-size: 12px; margin-top: 6px;}
+      .dna-item-pct{font-size: 26px;}
+    }
+    @media (max-width: 520px){
+      .hero-token-title{font-size:62px}
+      .hero-ghostWord{font-size:76px}
+      .tr{grid-template-columns:1.0fr 1.0fr 0.9fr 0.9fr}
+      .dna-wrap{padding:20px 14px}
+      .dna-item{padding:16px 14px}
+      .whyGrid{grid-template-columns:1fr}
+      .miniStats{grid-template-columns:1fr}
     }
   </style>
 </head>
 <body>
-  <header class="topbar">
-    <div class="topbar-in">
-      <div class="brand">
-        <div class="logo">BFG</div>
-        <div>BullForge Presale</div>
-      </div>
-
-      <nav class="nav">
-        <a href="#home" data-nav="home">Home</a>
-        <a href="#buy" data-nav="buy">Buy</a>
-        <a href="#referrals" data-nav="referrals">Referrals</a>
-        <a href="#history" data-nav="history">History</a>
-      </nav>
-
-      <div class="row">
-        <span id="evmBadge" class="badge" style="display:none">EVM</span>
-        <button id="evmConnectBtn" class="btn">Connect EVM</button>
-        <button id="evmDisconnectBtn" class="btn2" style="display:none">Disconnect</button>
-        <button id="menuBtn" class="menu-btn">Menu</button>
-      </div>
-    </div>
-    <div id="mobileMenu" class="mobile-nav">
-      <a href="#home" data-nav="home">Home</a>
-      <a href="#buy" data-nav="buy">Buy</a>
-      <a href="#referrals" data-nav="referrals">Referrals</a>
-      <a href="#history" data-nav="history">History</a>
-    </div>
-  </header>
-
-  <main class="wrap">
-    <!-- HOME -->
-    <section class="page is-active" data-page="home">
-      <div class="hero">
-        <div class="card">
-          <div class="badge" id="statusPill">LIVE</div>
-          <h1 class="headline">Buy $BFG Across BSC / ETH / SOL / TRON</h1>
-          <p class="sub">
-            Fast multi-chain checkout experience with live on-chain BSC rate reference.
-            Stage increases may reduce token output — secure your allocation early.
-          </p>
-          <div class="hero-cta">
-            <a href="#buy" data-nav="buy"><button class="btn">Buy Now</button></a>
-            <a href="#referrals" data-nav="referrals"><button class="btn2">Referral Program</button></a>
-          </div>
-
-          <div class="stats">
-            <div class="stat">
-              <div class="k">Total Raised</div>
-              <div class="v" id="homeRaised">--</div>
-            </div>
-            <div class="stat">
-              <div class="k">Current Stage</div>
-              <div class="v" id="homeStage">--</div>
-            </div>
-            <div class="stat">
-              <div class="k">Rate (BFG / BNB)</div>
-              <div class="v" id="homeRate">--</div>
-            </div>
-          </div>
-        </div>
-
-        <div class="card">
-          <div class="section-title">LIVE PRESALE SNAPSHOT</div>
-          <div class="kv"><span class="k">Raised</span><span class="v" id="totalRaised">--</span></div>
-          <div class="kv"><span class="k">Raised (USD)</span><span class="v" id="totalRaisedUsd">--</span></div>
-          <div class="kv"><span class="k">Current Stage</span><span class="v" id="currentStage">--</span></div>
-          <div class="kv"><span class="k">Current Rate</span><span class="v" id="tokenRate">--</span></div>
-          <div class="divider"></div>
-          <div class="small" id="lastSyncText">LIVE • syncing…</div>
-        </div>
-      </div>
-    </section>
-
-    <!-- BUY -->
-    <section class="page" data-page="buy">
-      <div class="section-title">BUY TOKENS</div>
-      <div class="buy-grid">
-        <div class="card">
-          <label>Select Payment Chain</label>
-          <div id="chainSeg" class="chains">
-            <button class="chip active" data-chain="BSC">BSC</button>
-            <button class="chip" data-chain="ETH">ETH</button>
-            <button class="chip" data-chain="SOL">SOL</button>
-            <button class="chip" data-chain="TRON">TRON (USDT)</button>
-          </div>
-
-          <div class="field">
-            <label id="amountLabel">Enter Amount (BNB)</label>
-            <input id="payAmount" type="number" min="0" step="any" placeholder="0.0" />
-          </div>
-
-          <div class="field">
-            <label>Referrer Address (optional, EVM format)</label>
-            <input id="referrerAddress" placeholder="0x..." />
-          </div>
-
-          <div class="divider"></div>
-          <div class="kv"><span class="k">Approx. Value</span><span id="convUsd" class="v">--</span></div>
-          <div class="kv"><span class="k">Estimated You Receive</span><span id="tokensOut" class="v">--</span></div>
-          <div class="kv"><span class="k">Token Price (USD)</span><span id="tokenUsd" class="v">--</span></div>
-          <div class="muted" id="estNote">Enter an amount to see a live estimate.</div>
-
-          <button id="payButton" class="btn big">Connect EVM To Pay</button>
-          <button id="claimButton" class="btn2 big" style="display:none">Claim Your $BFG Tokens (BSC)</button>
-        </div>
-
-        <div class="card">
-          <div class="section-title">STAGE URGENCY</div>
-          <div class="progress"><i id="progFill"></i></div>
-          <div class="small" id="progText">--</div>
-          <div class="muted" id="stageMsg" style="margin-top:8px">--</div>
-
-          <div class="divider"></div>
-          <div class="section-title">CONNECTED WALLETS</div>
-          <div class="kv"><span class="k">EVM</span><span class="v" id="myWallet">Not connected</span></div>
-          <div class="kv"><span class="k">SOL</span><span class="v" id="mySolWallet">Not connected</span></div>
-          <div class="kv"><span class="k">TRON</span><span class="v" id="myTronWallet">Not connected</span></div>
-
-          <div class="divider"></div>
-          <div class="section-title">BSC WALLET STATUS</div>
-          <div class="kv"><span class="k">Address</span><span class="v" id="evmWalletText">Not connected</span></div>
-          <div class="kv"><span class="k">BNB Balance</span><span class="v"><span id="walletBalance">0.00</span> BNB</span></div>
-        </div>
-      </div>
-    </section>
-
-    <!-- REFERRALS -->
-    <section class="page" data-page="referrals">
-      <div class="section-title">REFERRAL LINKS</div>
-      <div class="card">
-        <div class="muted">Connect EVM wallet to generate your referral links.</div>
-        <div class="field">
-          <label>Main Link</label>
-          <input id="refLink" readonly value="Connect wallet to generate…" />
-        </div>
-        <button id="copyRefBtn" class="btn2">Copy Main Link</button>
-
-        <div class="divider"></div>
-
-        <div class="field">
-          <label>Backup Link</label>
-          <input id="refLink2" readonly value="Connect wallet to generate…" />
-        </div>
-        <button id="copyRefBtn2" class="btn2">Copy Backup Link</button>
-      </div>
-    </section>
-
-    <!-- HISTORY -->
-    <section class="page" data-page="history">
-      <div class="section-title">YOUR LOCAL TRANSACTION HISTORY</div>
-      <div class="card">
-        <div class="table">
-          <div class="tr">
-            <div class="th">Chain</div>
-            <div class="th">Tx</div>
-            <div class="th">Paid</div>
-            <div class="th">BFG (Est.)</div>
-          </div>
-          <div id="histBody" class="empty">You don't have any transactions yet.</div>
-        </div>
-        <div class="muted" style="margin-top:8px">
-          History is stored in your browser localStorage only.
-        </div>
-      </div>
-    </section>
-
-    <div class="foot">
-      BullForge interface demo • Always verify official contract and recipient addresses before sending funds.
-    </div>
-  </main>
-
-  <div id="notification" class="notice">
-    <h4 id="notificationTitle">Notice</h4>
-    <p id="notificationDesc"></p>
+  <div id="notification" class="notification">
+    <div class="notification-title" id="notificationTitle"></div>
+    <div class="notification-desc" id="notificationDesc"></div>
   </div>
+
+  <nav class="navbar">
+    <div class="container navbar-content">
+      <a class="logo" href="#home" data-nav="home">BullForge</a>
+
+      <div class="nav-links">
+        <a href="#home" data-nav="home">Home</a>
+        <a href="#buy" data-nav="buy">Buy Now</a>
+        <a href="#howtobuy" data-nav="howtobuy">How to Buy</a>
+        <a href="#whitepaper" data-nav="whitepaper">Whitepaper</a>
+        <a href="#staking" data-nav="staking">Staking</a>
+        <a href="#referral" data-nav="referral">Referral</a>
+      </div>
+
+      <div class="nav-right">
+        <button class="menuBtn" id="menuBtn">≡</button>
+        <span id="evmBadge" class="badge">EVM</span>
+        <button id="evmConnectBtn" class="btnTop">Connect EVM</button>
+        <button id="evmDisconnectBtn" class="btnGhost" style="display:none;">Disconnect</button>
+      </div>
+    </div>
+  </nav>
+
+  <div class="mobileMenu" id="mobileMenu">
+    <a href="#home" data-nav="home">Home</a>
+    <a href="#buy" data-nav="buy">Buy Now</a>
+    <a href="#howtobuy" data-nav="howtobuy">How to Buy</a>
+    <a href="#whitepaper" data-nav="whitepaper">Whitepaper</a>
+    <a href="#staking" data-nav="staking">Staking</a>
+    <a href="#referral" data-nav="referral">Referral</a>
+  </div>
+
+  <section class="section page is-active home-landing" id="home" data-page="home">
+    <div class="home-hero-glow"></div>
+    <div class="noise"></div>
+    <div class="hero-ghostWord">BULLFORGE</div>
+    <div class="particles" aria-hidden="true">
+      <span class="pDot" style="left:8%; top:66%; width:120px; height:120px; animation-duration:10s; animation-delay:0s;"></span>
+      <span class="pDot" style="left:22%; top:72%; width:90px; height:90px; animation-duration:12s; animation-delay:1s;"></span>
+      <span class="pDot" style="left:38%; top:70%; width:140px; height:140px; animation-duration:13s; animation-delay:0.6s;"></span>
+      <span class="pDot" style="left:54%; top:74%; width:100px; height:100px; animation-duration:11s; animation-delay:1.2s;"></span>
+      <span class="pDot" style="left:70%; top:68%; width:160px; height:160px; animation-duration:14s; animation-delay:0.2s;"></span>
+      <span class="pDot" style="left:86%; top:73%; width:110px; height:110px; animation-duration:12.5s; animation-delay:1.6s;"></span>
+    </div>
+
+    <div class="container">
+      <div class="section-header" style="margin-top:80px;">
+        <div class="section-subtitle welcomeShimmer">WELCOME TO BULLFORGE</div>
+        <h1 class="hero-token-title">$BFG</h1>
+        <p class="section-desc">The Future isn't Just Bullish. It's BullForge.</p>
+
+        <div style="margin-top:30px;">
+          <button class="buy-button" style="max-width:260px;" onclick="location.hash='#buy'">Buy Now</button>
+        </div>
+
+        <div class="miniStats" style="margin-top:26px;">
+          <div class="miniStat">
+            <div class="k">Total Raised</div>
+            <div class="v" id="homeRaised"><span class="spinner"></span></div>
+          </div>
+          <div class="miniStat">
+            <div class="k">Current Stage</div>
+            <div class="v" id="homeStage"><span class="spinner"></span></div>
+          </div>
+          <div class="miniStat">
+            <div class="k">1 BNB ≈</div>
+            <div class="v" id="homeRate"><span class="spinner"></span></div>
+          </div>
+          <div class="miniStat">
+            <div class="k">Liquidity Lock</div>
+            <div class="v" id="homeLock">2 Years • PinkLock</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="section-header" style="margin-top:70px;margin-bottom:16px;">
+        <div class="section-subtitle">Why BullForge</div>
+        <h2 class="section-title" style="font-size:42px;">Built For Bulls. Structured For VCs.</h2>
+        <p class="section-desc" style="max-width:860px;margin-left:auto;margin-right:auto;">
+          Meme energy with disciplined execution — 23-stage presale, post-presale liquidity injection, and a two-year lock via PinkLock.
+        </p>
+      </div>
+
+      <div class="whyGrid">
+        <div class="whyCard">
+          <div class="whyIcon">🔒</div>
+          <h3>Liquidity Locked</h3>
+          <p>Liquidity is injected after presale ends and locked for 2 years via PinkLock for confidence and stability.</p>
+        </div>
+        <div class="whyCard">
+          <div class="whyIcon">📈</div>
+          <h3>23-Stage Growth</h3>
+          <p>Pricing evolves across 23 stages as defined in the contract — rewarding early conviction and fueling momentum.</p>
+        </div>
+        <div class="whyCard">
+          <div class="whyIcon">⚡</div>
+          <h3>Multi-Chain Access</h3>
+          <p>Buy via BSC/ETH and track SOL/TRON in-wallet payments — designed for global accessibility.</p>
+        </div>
+        <div class="whyCard">
+          <div class="whyIcon">🔥</div>
+          <h3>Meme + Execution</h3>
+          <p>Bullzilla-grade narrative with a clean investor-facing framework — community first, but built to scale.</p>
+        </div>
+      </div>
+
+      <div class="section-header" style="margin-bottom:30px;margin-top:70px;">
+        <div class="section-subtitle">DNA Allocation</div>
+        <h2 class="section-title" style="font-size:42px;">Token DNA</h2>
+      </div>
+
+      <div class="dna-wrap">
+        <div class="dna-topbar">
+          <div class="dna-top-left">$BFG Allocation</div>
+          <div class="dna-top-right">One card. Clean. Readable.</div>
+        </div>
+
+        <div class="dna-grid2">
+          <div class="dna-item">
+            <div class="dna-item-left">
+              <div class="dna-item-title">Presale</div>
+              <div class="dna-item-sub">Public access distribution</div>
+            </div>
+            <div class="dna-item-pct">35%</div>
+          </div>
+          <div class="dna-item">
+            <div class="dna-item-left">
+              <div class="dna-item-title">Staking Rewards</div>
+              <div class="dna-item-sub">Sustainable yield incentives</div>
+            </div>
+            <div class="dna-item-pct">20%</div>
+          </div>
+          <div class="dna-item">
+            <div class="dna-item-left">
+              <div class="dna-item-title">Liquidity</div>
+              <div class="dna-item-sub">Injected post-presale + locked</div>
+            </div>
+            <div class="dna-item-pct">15%</div>
+          </div>
+          <div class="dna-item">
+            <div class="dna-item-left">
+              <div class="dna-item-title">Marketing</div>
+              <div class="dna-item-sub">Global growth campaigns</div>
+            </div>
+            <div class="dna-item-pct">10%</div>
+          </div>
+          <div class="dna-item">
+            <div class="dna-item-left">
+              <div class="dna-item-title">Ecosystem</div>
+              <div class="dna-item-sub">Utilities & partnerships</div>
+            </div>
+            <div class="dna-item-pct">10%</div>
+          </div>
+          <div class="dna-item">
+            <div class="dna-item-left">
+              <div class="dna-item-title">Team</div>
+              <div class="dna-item-sub">Long-term vested allocation</div>
+            </div>
+            <div class="dna-item-pct">10%</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="section-header" style="margin-top:80px;">
+        <div class="section-subtitle">Roadmap</div>
+        <h2 class="section-title" style="font-size:42px;">Forge Evolution</h2>
+      </div>
+
+      <div class="roadmap-grid">
+        <div class="roadmap-card">
+          <div class="roadmap-phase">Phase 01</div>
+          <div class="roadmap-title">Ignition</div>
+          <ul class="roadmap-list">
+            <li>Brand launch & community bootstrap</li>
+            <li>Smart contract deployment</li>
+            <li>Security review & test rounds</li>
+          </ul>
+        </div>
+        <div class="roadmap-card">
+          <div class="roadmap-phase">Phase 02</div>
+          <div class="roadmap-title">Presale Forge</div>
+          <ul class="roadmap-list">
+            <li>23-stage presale goes live</li>
+            <li>Referral engine enabled</li>
+            <li>Cross-channel awareness campaign</li>
+          </ul>
+        </div>
+        <div class="roadmap-card">
+          <div class="roadmap-phase">Phase 03</div>
+          <div class="roadmap-title">Expansion</div>
+          <ul class="roadmap-list">
+            <li>Claim portal opens</li>
+            <li>Liquidity injection post-presale</li>
+            <li>Liquidity locked via PinkLock (2 years)</li>
+          </ul>
+        </div>
+        <div class="roadmap-card">
+          <div class="roadmap-phase">Phase 04</div>
+          <div class="roadmap-title">Dominance</div>
+          <ul class="roadmap-list">
+            <li>Staking launch</li>
+            <li>Utility integrations</li>
+            <li>CEX strategy + partnerships</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="page" id="buy" data-page="buy">
+    <div class="section">
+      <div class="container">
+        <div class="title">Buy $BFG</div>
+        <div class="subtitle">Choose a chain, enter amount, and pay directly in-wallet. No address copy required.</div>
+
+        <div class="gridTop">
+          <div class="stat glass">
+            <div class="k">Total Raised (BSC)</div>
+            <div class="v" id="totalRaised"><span class="spinner"></span></div>
+          </div>
+          <div class="stat glass">
+            <div class="k">Total Raised (USD)</div>
+            <div class="v" id="totalRaisedUsd"><span class="spinner"></span></div>
+          </div>
+          <div class="stat glass">
+            <div class="k">Current Stage</div>
+            <div class="v" id="currentStage"><span class="spinner"></span></div>
+          </div>
+          <div class="stat glass">
+            <div class="k">1 BNB =</div>
+            <div class="v" id="tokenRate"><span class="spinner"></span></div>
+          </div>
+        </div>
+
+        <div class="buyLayout">
+          <div class="buyCard glass">
+            <div class="buyHead">
+              <div style="display:flex;gap:10px;align-items:center;">
+                <span class="liveDot"></span>
+                <div>
+                  <div style="font-weight:900;letter-spacing:-0.02em">Payment</div>
+                  <div class="small" id="lastSyncText">Syncing…</div>
+                </div>
+              </div>
+              <div class="pill" id="statusPill"><span class="spinner"></span></div>
+            </div>
+
+            <div class="sectionLabel">Select Crypto</div>
+            <div class="row seg" id="chainSeg">
+              <div class="chip active" data-chain="BSC">BNB (BSC)</div>
+              <div class="chip" data-chain="ETH">ETH</div>
+              <div class="chip" data-chain="SOL">SOL</div>
+              <div class="chip" data-chain="TRON">USDT (TRC20)</div>
+            </div>
+
+            <div class="sectionLabel" id="amountLabel">Enter Amount (BNB)</div>
+            <div class="row" style="width:100%">
+              <input id="payAmount" class="input" type="number" min="0" step="0.0001" placeholder="0.0" />
+            </div>
+
+            <div class="kvBox">
+              <div class="kvRow"><span>Conversion amount (USD)</span><b id="convUsd">--</b></div>
+              <div class="kvRow" style="margin-top:6px;"><span>Total tokens received (est.)</span><b id="tokensOut">--</b></div>
+              <div class="kvRow" style="margin-top:6px;"><span>Token price (USD)</span><b id="tokenUsd">--</b></div>
+              <div class="note" id="estNote">Loading price feeds…</div>
+            </div>
+
+            <div class="sectionLabel">Referrer (BSC only)</div>
+            <div class="row" style="width:100%">
+              <input id="referrerAddress" class="input" type="text" placeholder="0x... (optional)" />
+            </div>
+
+            <div class="small" style="margin-top:10px">
+              EVM: <b id="evmWalletText">Not connected</b>
+              <span style="margin-left:10px">BNB Balance: <b id="walletBalance">0.00</b></span>
+            </div>
+
+            <button class="btn" id="payButton" disabled>Connect Wallet To Pay</button>
+            <button class="btn2" id="claimButton" style="display:none;">Claim Your $BFG Tokens (BSC)</button>
+
+            <div class="progressWrap">
+              <div class="sectionLabel">Stage Urgency</div>
+              <div class="small" id="stageMsg">--</div>
+              <div class="bar" style="margin-top:10px;"><div class="fill" id="progFill"></div></div>
+              <div class="small" style="margin-top:8px" id="progText">--</div>
+            </div>
+          </div>
+
+          <div class="dash glass">
+            <div class="dashTitle">Dashboard</div>
+            <div class="small" style="margin-top:6px">
+              EVM wallet: <b id="myWallet">Not connected</b>
+              <span style="margin-left:10px">SOL wallet: <b id="mySolWallet">Not connected</b></span>
+              <span style="margin-left:10px">TRON wallet: <b id="myTronWallet">Not connected</b></span>
+            </div>
+
+            <div class="sectionLabel">Transaction History</div>
+            <div class="table">
+              <div class="tr head">
+                <div>Chain</div><div>Tx Hash</div><div>Paid</div><div>Est. BFG</div>
+              </div>
+              <div id="histBody" class="empty">You don't have any transactions yet.</div>
+            </div>
+
+            <div class="sectionLabel">Referral</div>
+            <div class="glass" style="padding:12px;border-radius:16px">
+              <div class="small">Referral link (EVM wallet)</div>
+              <div style="margin-top:8px;display:flex;gap:10px;align-items:center;flex-wrap:wrap">
+                <div id="refLink" class="td" style="flex:1;min-width:260px">Connect wallet to generate…</div>
+                <button class="btn2" id="copyRefBtn" style="width:auto;min-width:120px">Copy</button>
+              </div>
+            </div>
+
+            <div class="note" style="margin-top:12px">
+              Notes:
+              - BSC payments buy through the presale contract.
+              - ETH/SOL/USDT(TRC20) payments are tracked here after you confirm in-wallet.
+              - Tokens are distributed after presale ends (manual distribution).
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="page" id="howtobuy" data-page="howtobuy">
+    <div class="section">
+      <div class="container">
+        <div class="title">How to Buy</div>
+        <div class="subtitle">Pick your chain, connect the right wallet, enter amount, and confirm payment.</div>
+
+        <div class="heroGrid">
+          <div class="heroCard glass">
+            <h3>BNB (BSC)</h3>
+            <p>Connect an EVM wallet on BSC and pay via the presale contract. Referrer is optional.</p>
+          </div>
+          <div class="heroCard glass">
+            <h3>ETH</h3>
+            <p>Connect an EVM wallet on Ethereum and send ETH in-wallet with one click.</p>
+          </div>
+          <div class="heroCard glass">
+            <h3>SOL</h3>
+            <p>Connect a Solana wallet (browser/mobile). Click Pay and confirm the transfer inside your wallet.</p>
+          </div>
+          <div class="heroCard glass">
+            <h3>USDT (TRC20)</h3>
+            <p>Connect a Tron wallet (e.g., TronLink). Click Pay and confirm USDT transfer. Do NOT send TRX.</p>
+          </div>
+        </div>
+
+        <div class="glass" style="padding:18px;margin-top:14px">
+          <div style="font-weight:900;color:rgba(245,215,122,0.95)">Liquidity & Lock</div>
+          <div class="note" style="margin-top:8px">
+            Liquidity is injected after presale ends and locked for 2 years via PinkLock.
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="page" id="whitepaper" data-page="whitepaper">
+    <div class="section">
+      <div class="container">
+        <div class="title">Whitepaper</div>
+        <div class="subtitle">You can replace this placeholder with your real whitepaper URL or embed an internal viewer later.</div>
+
+        <div class="glass" style="padding:18px;margin-top:14px">
+          <div style="font-weight:900;color:rgba(245,215,122,0.95)">Whitepaper Link</div>
+          <div class="note" style="margin-top:8px">
+            When your PDF is ready, set the URL in the button below (or we can embed a full PDF viewer).
+          </div>
+          <div style="margin-top:12px;max-width:260px">
+            <button class="btn" onclick="window.open('#','_blank')">Open Whitepaper</button>
+          </div>
+        </div>
+
+        <div class="glass" style="padding:18px;margin-top:14px">
+          <div style="font-weight:900;color:rgba(245,215,122,0.95)">Investor Summary (Preview)</div>
+          <div class="note" style="margin-top:10px">
+            BullForge combines meme narrative momentum with a structured presale framework (23 stages) and post-presale liquidity injection + a 2-year PinkLock.
+            <br><br>
+            Next: if you want, I can generate a full investor-grade whitepaper page (with charts + PDF export button) and embed it directly here.
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="page" id="staking" data-page="staking">
+    <div class="section">
+      <div class="container">
+        <div class="title">Staking</div>
+        <div class="subtitle">Staking can be enabled after presale ends and staking contract is live.</div>
+
+        <div class="glass" style="padding:18px;margin-top:14px">
+          <div style="font-weight:900;color:rgba(245,215,122,0.95)">Coming Soon</div>
+          <div class="note" style="margin-top:8px">
+            When your staking contract is ready, we can plug it into this page.
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="page" id="referral" data-page="referral">
+    <div class="section">
+      <div class="container">
+        <div class="title">Referral</div>
+        <div class="subtitle">Connect your EVM wallet to generate a referral link.</div>
+
+        <div class="glass" style="padding:18px;margin-top:14px">
+          <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
+            <div style="flex:1;min-width:260px" id="refLink2">Connect wallet to generate…</div>
+            <button class="btn2" id="copyRefBtn2" style="width:auto;min-width:120px">Copy</button>
+          </div>
+        </div>
+
+        <div class="glass" style="padding:18px;margin-top:14px">
+          <div style="font-weight:900;color:rgba(245,215,122,0.95)">Notes</div>
+          <div class="note" style="margin-top:8px">
+            Referral applies to BSC contract purchases. If a referrer is missing or invalid, the contract will treat it as no referrer.
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      <div class="footerText">© 2026 Bullforge. All rights reserved.</div>
+    </div>
+  </footer>
 
   <script type="module">
     import { ethers } from 'https://esm.sh/ethers@5.7.2';
@@ -419,327 +1157,828 @@
     const LS_HISTORY_KEY = "bfg_purchase_history_v3";
     const $ = (id) => document.getElementById(id);
 
-    const notif = $("notification"), notifTitle = $("notificationTitle"), notifDesc = $("notificationDesc");
-    const menuBtn = $("menuBtn"), mobileMenu = $("mobileMenu");
-    const evmBadge = $("evmBadge"), evmConnectBtn = $("evmConnectBtn"), evmDisconnectBtn = $("evmDisconnectBtn");
-    const totalRaisedEl = $("totalRaised"), totalRaisedUsdEl = $("totalRaisedUsd"), stageEl = $("currentStage"), tokenRateEl = $("tokenRate");
-    const homeRaised = $("homeRaised"), homeStage = $("homeStage"), homeRate = $("homeRate");
-    const lastSyncText = $("lastSyncText"), statusPill = $("statusPill");
-    const chainSeg = $("chainSeg"), amountLabel = $("amountLabel"), payAmount = $("payAmount");
-    const convUsd = $("convUsd"), tokensOut = $("tokensOut"), tokenUsdEl = $("tokenUsd"), estNote = $("estNote");
-    const referrerInput = $("referrerAddress"), walletBalanceEl = $("walletBalance"), evmWalletText = $("evmWalletText");
-    const payButton = $("payButton"), claimButton = $("claimButton");
-    const progFill = $("progFill"), progText = $("progText"), stageMsg = $("stageMsg");
-    const myWallet = $("myWallet"), mySolWallet = $("mySolWallet"), myTronWallet = $("myTronWallet");
-    const refLink = $("refLink"), refLink2 = $("refLink2"), copyRefBtn = $("copyRefBtn"), copyRefBtn2 = $("copyRefBtn2"), histBody = $("histBody");
+    const notif = $("notification");
+    const notifTitle = $("notificationTitle");
+    const notifDesc = $("notificationDesc");
+    const menuBtn = $("menuBtn");
+    const mobileMenu = $("mobileMenu");
+    const evmBadge = $("evmBadge");
+    const evmConnectBtn = $("evmConnectBtn");
+    const evmDisconnectBtn = $("evmDisconnectBtn");
+    const totalRaisedEl = $("totalRaised");
+    const totalRaisedUsdEl = $("totalRaisedUsd");
+    const stageEl = $("currentStage");
+    const tokenRateEl = $("tokenRate");
+    const homeRaised = $("homeRaised");
+    const homeStage = $("homeStage");
+    const homeRate = $("homeRate");
+    const lastSyncText = $("lastSyncText");
+    const statusPill = $("statusPill");
+    const chainSeg = $("chainSeg");
+    const amountLabel = $("amountLabel");
+    const payAmount = $("payAmount");
+    const convUsd = $("convUsd");
+    const tokensOut = $("tokensOut");
+    const tokenUsdEl = $("tokenUsd");
+    const estNote = $("estNote");
+    const referrerInput = $("referrerAddress");
+    const walletBalanceEl = $("walletBalance");
+    const evmWalletText = $("evmWalletText");
+    const payButton = $("payButton");
+    const claimButton = $("claimButton");
+    const progFill = $("progFill");
+    const progText = $("progText");
+    const stageMsg = $("stageMsg");
+    const myWallet = $("myWallet");
+    const mySolWallet = $("mySolWallet");
+    const myTronWallet = $("myTronWallet");
+    const refLink = $("refLink");
+    const refLink2 = $("refLink2");
+    const copyRefBtn = $("copyRefBtn");
+    const copyRefBtn2 = $("copyRefBtn2");
+    const histBody = $("histBody");
 
-    let tronConnectBtn = null;
-    function mountTronConnectBtn() {
-      if (!chainSeg || tronConnectBtn) return;
-      tronConnectBtn = document.createElement("button");
-      tronConnectBtn.className = "btn2";
-      tronConnectBtn.style.marginTop = "10px";
-      tronConnectBtn.style.display = "none";
-      tronConnectBtn.textContent = "Connect TRON (TronLink)";
-      chainSeg.parentElement?.appendChild(tronConnectBtn);
-      tronConnectBtn.addEventListener("click", connectTronWallet);
+    function closeMobileMenu() {
+      if (mobileMenu) mobileMenu.classList.remove("show");
     }
-
-    function closeMobileMenu(){ mobileMenu?.classList.remove("show"); }
-    function setActivePage(pageName){
-      const t = pageName || "home";
-      document.querySelectorAll(".page").forEach(p => p.classList.toggle("is-active", p.getAttribute("data-page")===t));
-      closeMobileMenu(); window.scrollTo({top:0,behavior:"smooth"}); if(t==="buy") refreshAll();
-    }
-    function getRouteFromHash(){ const raw=(location.hash||"").replace("#","").trim(); return raw||"home"; }
-    function bindNav(){
-      document.querySelectorAll("[data-nav]").forEach(el=>{
-        el.addEventListener("click",(e)=>{ e.preventDefault(); const t=el.getAttribute("data-nav"); history.pushState(null,"",`#${t}`); setActivePage(t); });
+    function setActivePage(pageName) {
+      const target = pageName || 'home';
+      document.querySelectorAll('.page').forEach(p => {
+        p.classList.toggle('is-active', p.getAttribute('data-page') === target);
       });
-      window.addEventListener("hashchange",()=>setActivePage(getRouteFromHash()));
+      closeMobileMenu();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      if (target === 'buy') refreshAll();
     }
-
-    function showNotification(title, desc="", isError=false){
-      notifTitle.innerText=title; notifDesc.innerText=desc;
-      notif.style.borderColor = isError ? "var(--danger)" : "rgba(245,215,122,0.55)";
-      notif.classList.add("show"); setTimeout(()=>notif.classList.remove("show"),4200);
+    function getRouteFromHash() {
+      const raw = (location.hash || '').replace('#', '').trim();
+      return raw || 'home';
     }
-    const safeShort = (a)=>!a?"—":(a.length<=12?a:`${a.slice(0,6)}...${a.slice(-4)}`);
-    const fmtBNB = (x)=>isFinite(x)?`${x.toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:2})} BNB`:"--";
-    const fmtUSD0 = (x)=>isFinite(x)?`$${x.toLocaleString(undefined,{maximumFractionDigits:0})}`:"--";
-    const fmtUSD8 = (x)=>isFinite(x)?`$${x.toFixed(8)}`:"--";
-    const parseTokensPerBNB = (r)=>parseFloat(ethers.utils.formatUnits(r,18));
-    const isValidAddress = (a)=>{ try{return ethers.utils.isAddress(a);}catch{return false;} };
-    const shortHash = (h)=>!h?"—":(h.length>14?`${h.slice(0,8)}…${h.slice(-6)}`:h);
-
-    async function ensureEvmChain(chainIdHex, addParams){
-      const wp = await web3Modal?.getWalletProvider?.(); if(!wp?.request) throw new Error("Wallet provider not found");
-      try{ await wp.request({method:"wallet_switchEthereumChain",params:[{chainId:chainIdHex}]});}
-      catch(e){ if(e?.code===4902 && addParams) await wp.request({method:"wallet_addEthereumChain",params:[addParams]}); else throw e; }
-    }
-
-    function loadHistory(){ try{ const raw=localStorage.getItem(LS_HISTORY_KEY); const arr=raw?JSON.parse(raw):[]; return Array.isArray(arr)?arr:[];}catch{return[];} }
-    function saveHistory(arr){ localStorage.setItem(LS_HISTORY_KEY, JSON.stringify(arr.slice(0,250))); }
-    function addHistoryItem(item){ const arr=loadHistory(); arr.unshift(item); saveHistory(arr); renderHistory(); }
-    function updateHistoryStatus(tx,status){ const arr=loadHistory(); const i=arr.findIndex(x=>x.tx===tx); if(i>=0){arr[i].status=status; saveHistory(arr); renderHistory();} }
-    function renderHistory(){
-      const arr=loadHistory();
-      if(!arr.length){ histBody.className="empty"; histBody.innerText="You don't have any transactions yet."; return; }
-      histBody.className="";
-      histBody.innerHTML = arr.map(x=>{
-        const explorer=x.explorer||"";
-        const txCell = explorer
-          ? `<a class="td" href="${explorer}" target="_blank" rel="noreferrer" style="color:rgba(245,215,122,0.92);text-decoration:none" title="${x.tx}">${shortHash(x.tx)}</a>`
-          : `<div class="td" title="${x.tx}">${shortHash(x.tx)}</div>`;
-        const status=(x.status||"confirmed").toLowerCase();
-        const icon=status==="confirmed"?"✅":status==="failed"?"❌":"⏳";
-        return `<div class="tr"><div class="td"><b>${x.chain}</b></div>${txCell}<div class="td">${x.paid} ${icon}</div><div class="td"><b>${x.bfg}</b></div></div>`;
-      }).join("");
-    }
-
-    let totalRaisedBNB=0,lastRaisedBNB=0,stage=0,tokensPerBNB=0,presaleActive=false,presaleEnded=false;
-    let pricesUSD={bnb:null,eth:null,sol:null},lastPricesFetch=0;
-
-    async function fetchPricesUSD(){
-      if(Date.now()-lastPricesFetch<60000 && pricesUSD.bnb) return pricesUSD;
-      const res=await fetch("https://api.coingecko.com/api/v3/simple/price?ids=binancecoin,ethereum,solana&vs_currencies=usd",{cache:"no-store"});
-      if(!res.ok) throw new Error("Price feed failed");
-      const d=await res.json();
-      pricesUSD={bnb:Number(d?.binancecoin?.usd||0)||null,eth:Number(d?.ethereum?.usd||0)||null,sol:Number(d?.solana?.usd||0)||null};
-      lastPricesFetch=Date.now(); return pricesUSD;
-    }
-    const tokenUsdPrice = ()=> (pricesUSD.bnb && tokensPerBNB) ? (pricesUSD.bnb/tokensPerBNB) : null;
-
-    async function refreshContractData(){
-      const p=new ethers.providers.JsonRpcProvider(CONFIG.BSC_RPC);
-      const c=new ethers.Contract(CONFIG.CONTRACT_ADDRESS,CONTRACT_ABI,p);
-      const [raisedWei,stageRaw,rateRaw,lastRaisedWei,active,ended] = await Promise.all([
-        c.totalRaised(), c.currentPriceStage().catch(()=>0), c.currentRate(), c.lastPriceIncreaseRaised().catch(()=>0),
-        c.presaleActive().catch(()=>false), c.presaleEnded().catch(()=>false)
-      ]);
-      totalRaisedBNB=parseFloat(ethers.utils.formatEther(raisedWei));
-      stage=Number(stageRaw.toString());
-      tokensPerBNB=parseTokensPerBNB(rateRaw);
-      lastRaisedBNB=parseFloat(ethers.utils.formatEther(lastRaisedWei));
-      presaleActive=!!active; presaleEnded=!!ended;
-    }
-
-    function renderTopStats(){
-      totalRaisedEl.innerText=fmtBNB(totalRaisedBNB);
-      const usd=(pricesUSD.bnb&&isFinite(totalRaisedBNB))?totalRaisedBNB*pricesUSD.bnb:NaN;
-      totalRaisedUsdEl.innerText=isFinite(usd)?fmtUSD0(usd):"--";
-      stageEl.innerText=String(stage);
-      tokenRateEl.innerText=tokensPerBNB?`${Math.floor(tokensPerBNB).toLocaleString()} BFG`:"--";
-      homeRaised.innerText=fmtBNB(totalRaisedBNB); homeStage.innerText=String(stage);
-      homeRate.innerText=tokensPerBNB?`${Math.floor(tokensPerBNB).toLocaleString()} BFG`:"--";
-      statusPill.innerText = presaleEnded ? "PRESALE ENDED" : (presaleActive ? `LIVE • STAGE ${stage}` : "NOT STARTED");
-    }
-
-    function renderUrgency(){
-      const delta=Math.max(totalRaisedBNB-lastRaisedBNB,0);
-      const p=Math.max(Math.min(delta/PRICE_INCREASE_THRESHOLD_BNB,1),0);
-      const remain=Math.max(PRICE_INCREASE_THRESHOLD_BNB-delta,0);
-      progFill.style.width=(p*100).toFixed(1)+"%";
-      progFill.classList.toggle("near",p>=0.85);
-      progText.innerText=`${(p*100).toFixed(1)}% • ${remain.toFixed(2)} BNB to next stage trigger.`;
-      const next=tokensPerBNB?Math.floor(tokensPerBNB*0.9):null;
-      stageMsg.innerText = presaleEnded ? "Presale ended on-chain." :
-        (!presaleActive ? "Waiting for presale activation on-chain." :
-        (next ? `Stage ${stage} is live. Next stage may reduce tokens per BNB by ~10% (estimate: ~${next.toLocaleString()} BFG/BNB).` : `Stage ${stage} is live.`));
-    }
-
-    let selectedChain="BSC";
-    function setSelectedChain(chain){
-      selectedChain=chain;
-      [...chainSeg.querySelectorAll(".chip")].forEach(el=>el.classList.toggle("active",el.dataset.chain===chain));
-      if(chain==="BSC") amountLabel.innerText="Enter Amount (BNB)";
-      if(chain==="ETH") amountLabel.innerText="Enter Amount (ETH)";
-      if(chain==="SOL") amountLabel.innerText="Enter Amount (SOL)";
-      if(chain==="TRON") amountLabel.innerText="Enter Amount (USDT - TRC20)";
-      if(tronConnectBtn) tronConnectBtn.style.display = chain==="TRON" ? "block":"none";
-      updatePayButtonState(); updateEstimates();
-    }
-
-    async function updateEstimates(){
-      const amt=parseFloat(payAmount.value||"0");
-      if(!amt||amt<=0){convUsd.innerText="--";tokensOut.innerText="--";estNote.innerText="Enter an amount to see a live estimate.";return;}
-      try{await fetchPricesUSD();}catch{estNote.innerText="Price feed unavailable (rate estimate only).";return;}
-      const tUsd=tokenUsdPrice(); if(!tUsd){estNote.innerText="Loading on-chain pricing reference…";return;}
-      let payUsd=null;
-      if(selectedChain==="BSC") payUsd=pricesUSD.bnb?amt*pricesUSD.bnb:null;
-      if(selectedChain==="ETH") payUsd=pricesUSD.eth?amt*pricesUSD.eth:null;
-      if(selectedChain==="SOL") payUsd=pricesUSD.sol?amt*pricesUSD.sol:null;
-      if(selectedChain==="TRON") payUsd=amt;
-      if(!payUsd){estNote.innerText="Loading market price for selected chain…";return;}
-      const out=payUsd/tUsd;
-      convUsd.innerText=fmtUSD0(payUsd);
-      tokensOut.innerText=out.toLocaleString(undefined,{maximumFractionDigits:2})+" BFG";
-      tokenUsdEl.innerText=fmtUSD8(tUsd);
-      const next=tokensPerBNB?Math.floor(tokensPerBNB*0.9):null;
-      estNote.innerText=`Pricing reference: BSC on-chain rate. Current: 1 BNB ≈ ${Math.floor(tokensPerBNB).toLocaleString()} BFG. ${next?`Next stage estimate: ~${next.toLocaleString()} BFG/BNB.`:""}`;
-    }
-
-    let web3Modal=null,evmProvider=null,evmSigner=null,evmAddress=null,presaleContract=null;
-
-    async function connectTronWallet(){
-      try{
-        if(!window.tronWeb){showNotification("Wallet Required","请先安装 TronLink 扩展或使用支持 TronLink 的内置浏览器。",true);return;}
-        if(window.tronLink?.request) await window.tronLink.request({method:"tron_requestAccounts"});
-        if(!window.tronWeb.ready || !window.tronWeb.defaultAddress?.base58){showNotification("TRON 未连接","请打开 TronLink 并授权当前站点。",true);return;}
-        const a=window.tronWeb.defaultAddress.base58; myTronWallet.innerText=safeShort(a);
-        showNotification("TRON Connected",`Tron wallet ${safeShort(a)} connected.`); updatePayButtonState();
-      }catch(e){showNotification("TRON Connect Failed",e?.message||String(e),true);}
-    }
-
-    function initWeb3Modal(){
-      const chains=[
-        { chainId:1,name:"Ethereum",currency:"ETH",explorerUrl:"https://etherscan.io",rpcUrl:"https://rpc.ankr.com/eth" },
-        { chainId:CONFIG.BSC_CHAIN_ID,name:"BNB Smart Chain",currency:"BNB",explorerUrl:CONFIG.BSC_EXPLORER,rpcUrl:CONFIG.BSC_RPC }
-      ];
-      const ethersConfig=defaultConfig({
-        metadata:{name:"BullForge",description:"BullForge Multi-chain Buy",url:window.location.origin,icons:["https://walletconnect.com/walletconnect-logo.png"]},
-        defaultChainId:CONFIG.BSC_CHAIN_ID,rpcUrl:CONFIG.BSC_RPC,projectId:CONFIG.WALLETCONNECT_PROJECT_ID
+    function bindNav() {
+      document.querySelectorAll('[data-nav]').forEach(el => {
+        el.addEventListener('click', (e) => {
+          e.preventDefault();
+          const t = el.getAttribute('data-nav');
+          history.pushState(null, '', `#${t}`);
+          setActivePage(t);
+        });
       });
-      web3Modal=createWeb3Modal({ethersConfig,chains,projectId:CONFIG.WALLETCONNECT_PROJECT_ID,themeMode:"dark",themeVariables:{"--w3m-accent":"#F5D77A"}});
+      window.addEventListener('hashchange', () => setActivePage(getRouteFromHash()));
     }
 
-    async function connectEVM(){
-      try{
-        evmConnectBtn.disabled=true; evmConnectBtn.innerText="Connecting…";
-        await web3Modal.open();
-        const wp=await web3Modal.getWalletProvider?.(); if(!wp) throw new Error("Wallet provider not found");
-        evmProvider=new ethers.providers.Web3Provider(wp); evmSigner=evmProvider.getSigner(); evmAddress=await evmSigner.getAddress();
-        presaleContract=new ethers.Contract(CONFIG.CONTRACT_ADDRESS,CONTRACT_ABI,evmSigner);
-        evmConnectBtn.innerText=safeShort(evmAddress); evmDisconnectBtn.style.display="inline-block"; evmBadge.style.display="inline-block";
-        const net=await evmProvider.getNetwork(); evmBadge.classList.toggle("bad",![1,CONFIG.BSC_CHAIN_ID].includes(net.chainId)); evmBadge.innerText=`EVM • ${net.chainId}`;
-        myWallet.innerText=safeShort(evmAddress); evmWalletText.innerText=safeShort(evmAddress);
-        const rl=`${window.location.origin}${window.location.pathname}?ref=${evmAddress}`; refLink.value=rl; refLink2.value=rl;
-        await updateBalances(); updatePayButtonState(); showNotification("Connected",`EVM wallet ${safeShort(evmAddress)} connected.`);
-      }catch(e){showNotification("Connection Failed",e?.message||String(e),true);}
-      finally{evmConnectBtn.disabled=false; if(!evmAddress) evmConnectBtn.innerText="Connect EVM";}
+    function showNotification(title, desc = "", isError = false) {
+      notifTitle.innerText = title;
+      notifDesc.innerText = desc;
+      notif.style.borderColor = isError ? 'var(--danger)' : 'rgba(245,215,122,0.55)';
+      notif.classList.add("show");
+      setTimeout(() => notif.classList.remove("show"), 4200);
     }
 
-    async function disconnectEVM(){
-      try{ if(web3Modal?.disconnect) await web3Modal.disconnect(); }catch{}
-      evmProvider=null;evmSigner=null;evmAddress=null;presaleContract=null;
-      evmConnectBtn.innerText="Connect EVM";evmDisconnectBtn.style.display="none";evmBadge.style.display="none";
-      myWallet.innerText="Not connected";evmWalletText.innerText="Not connected";walletBalanceEl.innerText="0.00";
-      refLink.value="Connect wallet to generate…"; refLink2.value="Connect wallet to generate…";
-      updatePayButtonState(); showNotification("Disconnected","EVM wallet disconnected.");
+    function safeShort(addr) {
+      if (!addr) return "—";
+      if (addr.length <= 12) return addr;
+      return `${addr.slice(0, 6)}...${addr.slice(-4)}`;
     }
 
-    async function updateBalances(){
-      try{
-        if(!evmProvider||!evmAddress) return;
-        const net=await evmProvider.getNetwork();
-        if(net.chainId===CONFIG.BSC_CHAIN_ID){
-          const bal=await evmProvider.getBalance(evmAddress);
-          walletBalanceEl.innerText=parseFloat(ethers.utils.formatEther(bal)).toFixed(4);
-        } else walletBalanceEl.innerText="—";
-      }catch{}
+    function fmtBNB(x) {
+      if (!isFinite(x)) return "--";
+      return x.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + " BNB";
+    }
+    function fmtUSD0(x) {
+      if (!isFinite(x)) return "--";
+      return "$" + x.toLocaleString(undefined, { maximumFractionDigits: 0 });
+    }
+    function fmtUSD8(x) {
+      if (!isFinite(x)) return "--";
+      return "$" + x.toFixed(8);
     }
 
-    function updatePayButtonState(){
-      if(selectedChain==="BSC"||selectedChain==="ETH"){ const ok=!!evmSigner; payButton.disabled=!ok; payButton.innerText=ok?`Pay with ${selectedChain}`:"Connect EVM To Pay"; return; }
-      if(selectedChain==="SOL"){ const ok=!!window.solana; payButton.disabled=!ok; payButton.innerText=ok?"Connect Wallet & Pay (SOL)":"Install Phantom/Solflare"; return; }
-      if(selectedChain==="TRON"){
-        const has=!!window.tronWeb, con=!!(window.tronWeb?.ready&&window.tronWeb?.defaultAddress?.base58);
-        payButton.disabled=!has; payButton.innerText=!has?"Install TronLink":(!con?"Connect TronLink First":"Pay with USDT (TRC20)");
+    function parseTokensPerBNB(rateRaw) {
+      return parseFloat(ethers.utils.formatUnits(rateRaw, 18));
+    }
+
+    function isValidAddress(addr) {
+      try { return ethers.utils.isAddress(addr); } catch { return false; }
+    }
+
+    function shortHash(h) {
+      if (!h) return "—";
+      return h.length > 14 ? `${h.slice(0, 8)}…${h.slice(-6)}` : h;
+    }
+
+    async function ensureEvmChain(chainIdHex, addParams) {
+      const wp = await web3Modal?.getWalletProvider?.();
+      if (!wp?.request) throw new Error("Wallet provider not found");
+
+      try {
+        await wp.request({ method: "wallet_switchEthereumChain", params: [{ chainId: chainIdHex }] });
+      } catch (e) {
+        if (e?.code === 4902 && addParams) {
+          await wp.request({ method: "wallet_addEthereumChain", params: [addParams] });
+        } else {
+          throw e;
+        }
       }
     }
 
-    async function payBSC(){ /* same as above logic */ try{
-      if(!presaleContract||!evmProvider) return showNotification("Not Connected","Connect your EVM wallet first.",true);
-      const amt=parseFloat(payAmount.value||"0"); if(!amt||amt<=0) return showNotification("Invalid Amount","Enter a valid BNB amount.",true);
-      let ref=(referrerInput.value||"").trim(); if(!ref) ref=ethers.constants.AddressZero;
-      if(ref!==ethers.constants.AddressZero && !isValidAddress(ref)) return showNotification("Invalid Referrer","Referrer address is invalid.",true);
-      if(evmAddress && ref.toLowerCase()===evmAddress.toLowerCase()) ref=ethers.constants.AddressZero;
-      payButton.disabled=true; payButton.innerText="Switching Network…";
-      await ensureEvmChain("0x38",{chainId:"0x38",chainName:"BNB Smart Chain",nativeCurrency:{name:"BNB",symbol:"BNB",decimals:18},rpcUrls:[CONFIG.BSC_RPC],blockExplorerUrls:[CONFIG.BSC_EXPLORER]});
-      payButton.innerText="Processing…";
-      const tx=await presaleContract.buyTokens(ref,ethers.constants.Zero,{value:ethers.utils.parseEther(String(amt))});
-      showNotification("Transaction Sent",tx.hash);
-      const tUsd=tokenUsdPrice(), est=(tUsd&&pricesUSD.bnb)?((amt*pricesUSD.bnb)/tUsd):(amt*tokensPerBNB);
-      addHistoryItem({ts:Date.now(),chain:"BSC",tx:tx.hash,explorer:`${CONFIG.BSC_EXPLORER}/tx/${tx.hash}`,paid:`${amt} BNB`,bfg:est?est.toLocaleString(undefined,{maximumFractionDigits:2}):"--",status:"pending"});
-      await tx.wait(); updateHistoryStatus(tx.hash,"confirmed"); showNotification("Payment Confirmed","BSC purchase confirmed on-chain."); await refreshAll(); await updateBalances();
-    }catch(e){showNotification("Payment Failed",e?.data?.message||e?.message||String(e),true);} finally{payButton.disabled=false;updatePayButtonState();}}
-
-    async function payETH(){ try{
-      if(!evmSigner||!evmProvider) return showNotification("Not Connected","Connect your EVM wallet first.",true);
-      const amt=parseFloat(payAmount.value||"0"); if(!amt||amt<=0) return showNotification("Invalid Amount","Enter a valid ETH amount.",true);
-      payButton.disabled=true; payButton.innerText="Switching Network…"; await ensureEvmChain("0x1"); payButton.innerText="Processing…";
-      const tx=await evmSigner.sendTransaction({to:CONFIG.ETH_RECEIVE,value:ethers.utils.parseEther(String(amt))});
-      showNotification("Transaction Sent",tx.hash);
-      const tUsd=tokenUsdPrice(), pu=pricesUSD.eth?(amt*pricesUSD.eth):null, est=(tUsd&&pu)?(pu/tUsd):null;
-      addHistoryItem({ts:Date.now(),chain:"ETH",tx:tx.hash,explorer:`https://etherscan.io/tx/${tx.hash}`,paid:`${amt} ETH`,bfg:est?est.toLocaleString(undefined,{maximumFractionDigits:2}):"--",status:"pending"});
-      await tx.wait(); updateHistoryStatus(tx.hash,"confirmed"); showNotification("Payment Confirmed","ETH payment confirmed.");
-    }catch(e){showNotification("Payment Failed",e?.data?.message||e?.message||String(e),true);} finally{payButton.disabled=false;updatePayButtonState();}}
-
-    async function paySOL(){ try{
-      const amt=parseFloat(payAmount.value||"0"); if(!amt||amt<=0) return showNotification("Invalid Amount","Enter a valid SOL amount.",true);
-      if(!window.solana) return showNotification("Wallet Required","Please install a Solana wallet.",true);
-      payButton.disabled=true; payButton.innerText="Opening Wallet…";
-      const solana=window.solana, conn=new Connection(CONFIG.SOL_RPC,"confirmed"); if(!solana.isConnected) await solana.connect();
-      const from=solana.publicKey; mySolWallet.innerText=safeShort(from?.toString()||"");
-      const tx=new Transaction().add(SystemProgram.transfer({fromPubkey:from,toPubkey:new PublicKey(CONFIG.SOL_RECEIVE),lamports:Math.round(amt*LAMPORTS_PER_SOL)}));
-      tx.feePayer=from; tx.recentBlockhash=(await conn.getLatestBlockhash("finalized")).blockhash; payButton.innerText="Confirm in Wallet…";
-      let sig; if(solana.signAndSendTransaction){ const r=await solana.signAndSendTransaction(tx); sig=r?.signature||r; } else { const s=await solana.signTransaction(tx); sig=await conn.sendRawTransaction(s.serialize());}
-      showNotification("Transaction Sent",String(sig));
-      const tUsd=tokenUsdPrice(), pu=pricesUSD.sol?(amt*pricesUSD.sol):null, est=(tUsd&&pu)?(pu/tUsd):null;
-      addHistoryItem({ts:Date.now(),chain:"SOL",tx:String(sig),explorer:`https://solscan.io/tx/${sig}`,paid:`${amt} SOL`,bfg:est?est.toLocaleString(undefined,{maximumFractionDigits:2}):"--",status:"pending"});
-      await conn.confirmTransaction(String(sig),"confirmed"); updateHistoryStatus(String(sig),"confirmed"); showNotification("Payment Confirmed","SOL payment confirmed.");
-    }catch(e){showNotification("Payment Failed",e?.message||String(e),true);} finally{payButton.disabled=false;updatePayButtonState();}}
-
-    async function payTRON_USDT(){ try{
-      const amt=parseFloat(payAmount.value||"0"); if(!amt||amt<=0) return showNotification("Invalid Amount","Enter a valid USDT amount.",true);
-      await connectTronWallet(); if(!window.tronWeb?.ready) return;
-      payButton.disabled=true; payButton.innerText="Checking Wallet…";
-      const tw=window.tronWeb, from=tw.defaultAddress?.base58; myTronWallet.innerText=safeShort(from||"");
-      if(!from) return showNotification("Not Connected","Open TronLink and connect this site.",true);
-      const usdt=await tw.contract().at(CONFIG.TRON_USDT_CONTRACT);
-      payButton.innerText="Confirm in Wallet…";
-      const txid=await usdt.transfer(CONFIG.TRON_RECEIVE,Math.round(amt*1_000_000)).send({feeLimit:30000000});
-      showNotification("Transaction Sent",String(txid));
-      const tUsd=tokenUsdPrice(), est=(tUsd&&amt)?(amt/tUsd):null;
-      addHistoryItem({ts:Date.now(),chain:"TRON (USDT)",tx:String(txid),explorer:`https://tronscan.org/#/transaction/${txid}`,paid:`${amt} USDT (TRC20)`,bfg:est?est.toLocaleString(undefined,{maximumFractionDigits:2}):"--",status:"pending"});
-    }catch(e){showNotification("Payment Failed",e?.message||String(e),true);} finally{payButton.disabled=false;updatePayButtonState();}}
-
-    async function claimBSC(){
-      try{
-        if(!presaleContract||!evmProvider) return showNotification("Not Connected","Connect your EVM wallet first.",true);
-        claimButton.disabled=true; claimButton.innerText="Switching Network…";
-        await ensureEvmChain("0x38",{chainId:"0x38",chainName:"BNB Smart Chain",nativeCurrency:{name:"BNB",symbol:"BNB",decimals:18},rpcUrls:[CONFIG.BSC_RPC],blockExplorerUrls:[CONFIG.BSC_EXPLORER]});
-        claimButton.innerText="Claiming…"; const tx=await presaleContract.claimTokens(); showNotification("Claim Sent",tx.hash); await tx.wait(); showNotification("Claim Success","Tokens claimed.");
-      }catch(e){showNotification("Claim Failed",e?.data?.message||e?.message||String(e),true);}
-      finally{claimButton.disabled=false;claimButton.innerText="Claim Your $BFG Tokens (BSC)";}
+    function loadHistory() {
+      try {
+        const raw = localStorage.getItem(LS_HISTORY_KEY);
+        const arr = raw ? JSON.parse(raw) : [];
+        return Array.isArray(arr) ? arr : [];
+      } catch { return []; }
+    }
+    function saveHistory(arr) {
+      localStorage.setItem(LS_HISTORY_KEY, JSON.stringify(arr.slice(0, 250)));
+    }
+    function addHistoryItem(item) {
+      const arr = loadHistory();
+      arr.unshift(item);
+      saveHistory(arr);
+      renderHistory();
+    }
+    function updateHistoryStatus(tx, status) {
+      const arr = loadHistory();
+      const i = arr.findIndex(x => x.tx === tx);
+      if (i >= 0) {
+        arr[i].status = status;
+        saveHistory(arr);
+        renderHistory();
+      }
+    }
+    function renderHistory() {
+      const arr = loadHistory();
+      if (!arr.length) {
+        histBody.className = "empty";
+        histBody.innerText = "You don't have any transactions yet.";
+        return;
+      }
+      histBody.className = "";
+      histBody.innerHTML = arr.map(x => {
+        const explorer = x.explorer || "";
+        const txCell = explorer
+          ? `<a class="td" href="${explorer}" target="_blank" rel="noreferrer" style="color:rgba(245,215,122,0.92);text-decoration:none" title="${x.tx}">${shortHash(x.tx)}</a>`
+          : `<div class="td" title="${x.tx}">${shortHash(x.tx)}</div>`;
+        const status = (x.status || "confirmed").toLowerCase();
+        const statusIcon = status === "confirmed" ? "✅" : status === "failed" ? "❌" : "⏳";
+        return `
+          <div class="tr">
+            <div class="td"><b>${x.chain}</b></div>
+            ${txCell}
+            <div class="td">${x.paid} ${statusIcon}</div>
+            <div class="td"><b>${x.bfg}</b></div>
+          </div>
+        `;
+      }).join("");
     }
 
-    async function onPay(){ if(selectedChain==="BSC") return payBSC(); if(selectedChain==="ETH") return payETH(); if(selectedChain==="SOL") return paySOL(); if(selectedChain==="TRON") return payTRON_USDT(); }
-    async function copyText(txt){ try{await navigator.clipboard.writeText(txt);showNotification("Copied","Copied to clipboard.");}catch{showNotification("Copy Failed","Please copy manually.",true);} }
+    let totalRaisedBNB = 0;
+    let lastRaisedBNB = 0;
+    let stage = 0;
+    let tokensPerBNB = 0;
+    let presaleActive = false;
+    let presaleEnded = false;
+    let pricesUSD = { bnb:null, eth:null, sol:null };
+    let lastPricesFetch = 0;
 
-    async function refreshAll(){
-      const t0=Date.now();
-      try{
-        await Promise.all([refreshContractData(),fetchPricesUSD()]); renderTopStats(); renderUrgency(); updateEstimates();
-        lastSyncText.innerText=`LIVE • synced (${Date.now()-t0}ms)`;
-      }catch{ lastSyncText.innerText="Sync failed"; }
-      claimButton.style.display = presaleEnded ? "block" : "none";
+    async function fetchPricesUSD() {
+      if (Date.now() - lastPricesFetch < 60_000 && pricesUSD.bnb) return pricesUSD;
+      const url = "https://api.coingecko.com/api/v3/simple/price?ids=binancecoin,ethereum,solana&vs_currencies=usd";
+      const res = await fetch(url, { cache: "no-store" });
+      if (!res.ok) throw new Error("Price feed failed");
+      const data = await res.json();
+
+      pricesUSD = {
+        bnb: Number(data?.binancecoin?.usd || 0) || null,
+        eth: Number(data?.ethereum?.usd || 0) || null,
+        sol: Number(data?.solana?.usd || 0) || null
+      };
+      lastPricesFetch = Date.now();
+      return pricesUSD;
+    }
+
+    function tokenUsdPrice() {
+      if (!pricesUSD.bnb || !tokensPerBNB) return null;
+      return pricesUSD.bnb / tokensPerBNB;
+    }
+
+    async function refreshContractData() {
+      const readProvider = new ethers.providers.JsonRpcProvider(CONFIG.BSC_RPC);
+      const readContract = new ethers.Contract(CONFIG.CONTRACT_ADDRESS, CONTRACT_ABI, readProvider);
+
+      const [raisedWei, stageRaw, rateRaw, lastRaisedWei, active, ended] = await Promise.all([
+        readContract.totalRaised(),
+        readContract.currentPriceStage().catch(() => 0),
+        readContract.currentRate(),
+        readContract.lastPriceIncreaseRaised().catch(() => 0),
+        readContract.presaleActive().catch(() => false),
+        readContract.presaleEnded().catch(() => false)
+      ]);
+
+      totalRaisedBNB = parseFloat(ethers.utils.formatEther(raisedWei));
+      stage = Number(stageRaw.toString());
+      tokensPerBNB = parseTokensPerBNB(rateRaw);
+      lastRaisedBNB = parseFloat(ethers.utils.formatEther(lastRaisedWei));
+      presaleActive = !!active;
+      presaleEnded = !!ended;
+    }
+
+    function renderTopStats() {
+      totalRaisedEl.innerText = fmtBNB(totalRaisedBNB);
+      const usd = (pricesUSD.bnb && isFinite(totalRaisedBNB)) ? totalRaisedBNB * pricesUSD.bnb : NaN;
+      totalRaisedUsdEl.innerText = isFinite(usd) ? fmtUSD0(usd) : "--";
+      stageEl.innerText = String(stage);
+      tokenRateEl.innerText = tokensPerBNB ? `${Math.floor(tokensPerBNB).toLocaleString()} BFG` : "--";
+
+      if (homeRaised) homeRaised.innerText = fmtBNB(totalRaisedBNB);
+      if (homeStage) homeStage.innerText = String(stage);
+      if (homeRate) homeRate.innerText = tokensPerBNB ? `${Math.floor(tokensPerBNB).toLocaleString()} BFG` : "--";
+
+      if (presaleEnded) statusPill.innerText = "PRESALE ENDED";
+      else if (presaleActive) statusPill.innerText = `LIVE • STAGE ${stage}`;
+      else statusPill.innerText = "NOT STARTED";
+    }
+
+    function renderUrgency() {
+      const delta = Math.max(totalRaisedBNB - lastRaisedBNB, 0);
+      const p = Math.max(Math.min(delta / PRICE_INCREASE_THRESHOLD_BNB, 1), 0);
+      const remain = Math.max(PRICE_INCREASE_THRESHOLD_BNB - delta, 0);
+
+      progFill.style.width = (p * 100).toFixed(1) + "%";
+      if (p >= 0.85) progFill.classList.add("near");
+      else progFill.classList.remove("near");
+      progText.innerText = `${(p * 100).toFixed(1)}% • ${remain.toFixed(2)} BNB to next stage trigger.`;
+
+      const nextRate = tokensPerBNB ? Math.floor(tokensPerBNB * 0.9) : null;
+      if (presaleEnded) stageMsg.innerText = "Presale ended on-chain.";
+      else if (!presaleActive) stageMsg.innerText = "Waiting for presale activation on-chain.";
+      else stageMsg.innerText = nextRate
+        ? `Stage ${stage} is live. Next stage may reduce tokens per BNB by ~10% (estimate: ~${nextRate.toLocaleString()} BFG/BNB).`
+        : `Stage ${stage} is live.`;
+    }
+
+    let selectedChain = "BSC";
+    function setSelectedChain(chain) {
+      selectedChain = chain;
+      [...chainSeg.querySelectorAll(".chip")].forEach(el => {
+        el.classList.toggle("active", el.dataset.chain === chain);
+      });
+
+      if (chain === "BSC") amountLabel.innerText = "Enter Amount (BNB)";
+      if (chain === "ETH") amountLabel.innerText = "Enter Amount (ETH)";
+      if (chain === "SOL") amountLabel.innerText = "Enter Amount (SOL)";
+      if (chain === "TRON") amountLabel.innerText = "Enter Amount (USDT - TRC20)";
+
       updatePayButtonState();
+      updateEstimates();
+    }
+
+    async function updateEstimates() {
+      const amt = parseFloat(payAmount.value || "0");
+      if (!amt || amt <= 0) {
+        convUsd.innerText = "--";
+        tokensOut.innerText = "--";
+        estNote.innerText = "Enter an amount to see a live estimate.";
+        return;
+      }
+
+      try { await fetchPricesUSD(); }
+      catch {
+        estNote.innerText = "Price feed unavailable (rate estimate only). You can still pay via wallet.";
+        return;
+      }
+
+      const tUsd = tokenUsdPrice();
+      if (!tUsd) {
+        estNote.innerText = "Loading on-chain pricing reference…";
+        return;
+      }
+
+      let payUsd = null;
+      if (selectedChain === "BSC") payUsd = pricesUSD.bnb ? (amt * pricesUSD.bnb) : null;
+      if (selectedChain === "ETH") payUsd = pricesUSD.eth ? (amt * pricesUSD.eth) : null;
+      if (selectedChain === "SOL") payUsd = pricesUSD.sol ? (amt * pricesUSD.sol) : null;
+      if (selectedChain === "TRON") payUsd = amt;
+
+      if (!payUsd) {
+        estNote.innerText = "Loading market price for selected chain…";
+        return;
+      }
+
+      const out = payUsd / tUsd;
+      convUsd.innerText = fmtUSD0(payUsd);
+      tokensOut.innerText = out.toLocaleString(undefined, { maximumFractionDigits: 2 }) + " BFG";
+      tokenUsdEl.innerText = fmtUSD8(tUsd);
+
+      const nextTokensPerBNB = tokensPerBNB ? Math.floor(tokensPerBNB * 0.9) : null;
+      let note = `Pricing reference: BSC on-chain rate. Current: 1 BNB ≈ ${Math.floor(tokensPerBNB).toLocaleString()} BFG. `;
+      if (nextTokensPerBNB) note += `Next stage estimate: ~${nextTokensPerBNB.toLocaleString()} BFG/BNB.`;
+      if (selectedChain === "TRON") {
+        note += `\nTRON payment requires TronLink (TRON Mainnet). EVM connection is not used for TRON.`;
+      }
+      estNote.innerText = note;
+    }
+
+    let web3Modal = null;
+    let evmProvider = null;
+    let evmSigner = null;
+    let evmAddress = null;
+    let presaleContract = null;
+
+    function initWeb3Modal() {
+      const chains = [
+        { chainId: 1, name: "Ethereum", currency: "ETH", explorerUrl: "https://etherscan.io", rpcUrl: "https://rpc.ankr.com/eth" },
+        { chainId: CONFIG.BSC_CHAIN_ID, name: "BNB Smart Chain", currency: "BNB", explorerUrl: CONFIG.BSC_EXPLORER, rpcUrl: CONFIG.BSC_RPC }
+      ];
+
+      const ethersConfig = defaultConfig({
+        metadata: {
+          name: 'BullForge',
+          description: 'BullForge Multi-chain Buy',
+          url: window.location.origin,
+          icons: ['https://walletconnect.com/walletconnect-logo.png']
+        },
+        defaultChainId: CONFIG.BSC_CHAIN_ID,
+        rpcUrl: CONFIG.BSC_RPC,
+        projectId: CONFIG.WALLETCONNECT_PROJECT_ID
+      });
+
+      web3Modal = createWeb3Modal({
+        ethersConfig,
+        chains,
+        projectId: CONFIG.WALLETCONNECT_PROJECT_ID,
+        themeMode: 'dark',
+        themeVariables: { '--w3m-accent': '#F5D77A' }
+      });
+    }
+
+    async function connectEVM() {
+      try {
+        evmConnectBtn.disabled = true;
+        evmConnectBtn.innerText = "Connecting…";
+
+        await web3Modal.open();
+        const walletProvider = await web3Modal.getWalletProvider?.();
+        if (!walletProvider) throw new Error("Wallet provider not found");
+
+        evmProvider = new ethers.providers.Web3Provider(walletProvider);
+        evmSigner = evmProvider.getSigner();
+        evmAddress = await evmSigner.getAddress();
+        presaleContract = new ethers.Contract(CONFIG.CONTRACT_ADDRESS, CONTRACT_ABI, evmSigner);
+
+        evmConnectBtn.innerText = safeShort(evmAddress);
+        evmDisconnectBtn.style.display = "inline-block";
+
+        evmBadge.style.display = "inline-block";
+        const net = await evmProvider.getNetwork();
+        evmBadge.classList.toggle("bad", ![1, CONFIG.BSC_CHAIN_ID].includes(net.chainId));
+        evmBadge.innerText = `EVM • ${net.chainId}`;
+
+        myWallet.innerText = safeShort(evmAddress);
+        evmWalletText.innerText = safeShort(evmAddress);
+
+        const rl = `${window.location.origin}${window.location.pathname}?ref=${evmAddress}`;
+        if (refLink) refLink.innerText = rl;
+        if (refLink2) refLink2.innerText = rl;
+
+        await updateBalances();
+        updatePayButtonState();
+        showNotification("Connected", `EVM wallet ${safeShort(evmAddress)} connected.`);
+      } catch (e) {
+        showNotification("Connection Failed", e?.message || String(e), true);
+      } finally {
+        evmConnectBtn.disabled = false;
+        if (!evmAddress) evmConnectBtn.innerText = "Connect EVM";
+      }
+    }
+
+    async function disconnectEVM() {
+      try { if (web3Modal?.disconnect) await web3Modal.disconnect(); } catch {}
+      evmProvider = null; evmSigner = null; evmAddress = null; presaleContract = null;
+
+      evmConnectBtn.innerText = "Connect EVM";
+      evmDisconnectBtn.style.display = "none";
+      evmBadge.style.display = "none";
+      myWallet.innerText = "Not connected";
+      evmWalletText.innerText = "Not connected";
+      walletBalanceEl.innerText = "0.00";
+      if (refLink) refLink.innerText = "Connect wallet to generate…";
+      if (refLink2) refLink2.innerText = "Connect wallet to generate…";
+
+      updatePayButtonState();
+      showNotification("Disconnected", "EVM wallet disconnected.");
+    }
+
+    async function updateBalances() {
+      try {
+        if (!evmProvider || !evmAddress) return;
+        const net = await evmProvider.getNetwork();
+        if (net.chainId === CONFIG.BSC_CHAIN_ID) {
+          const bal = await evmProvider.getBalance(evmAddress);
+          walletBalanceEl.innerText = parseFloat(ethers.utils.formatEther(bal)).toFixed(4);
+        } else {
+          walletBalanceEl.innerText = "—";
+        }
+      } catch {}
+    }
+
+    function updatePayButtonState() {
+      if (!payButton) return;
+
+      if (selectedChain === "BSC" || selectedChain === "ETH") {
+        const ok = !!evmSigner;
+        payButton.disabled = !ok;
+        payButton.innerText = ok ? `Pay with ${selectedChain}` : "Connect Wallet To Pay";
+      } else if (selectedChain === "SOL") {
+        const hasWallet = !!window.solana;
+        payButton.disabled = false;
+        payButton.innerText = hasWallet ? "Connect Wallet & Pay (SOL)" : "Pay with SOL (Install Wallet)";
+      } else if (selectedChain === "TRON") {
+        const hasWallet = !!window.tronWeb || !!window.tronLink;
+        const ready = !!window.tronWeb?.ready;
+        payButton.disabled = false;
+        if (!hasWallet) payButton.innerText = "Install TronLink";
+        else if (!ready) payButton.innerText = "Connect TronLink & Pay";
+        else payButton.innerText = "Pay with USDT (TRC20)";
+      }
+    }
+
+    async function payBSC() {
+      if (!presaleContract || !evmProvider) return showNotification("Not Connected", "Connect your EVM wallet first.", true);
+
+      const amt = parseFloat(payAmount.value || "0");
+      if (!amt || amt <= 0) return showNotification("Invalid Amount", "Enter a valid BNB amount.", true);
+
+      const minOut = ethers.constants.Zero;
+      let ref = (referrerInput.value || "").trim();
+      if (!ref) ref = ethers.constants.AddressZero;
+      if (ref !== ethers.constants.AddressZero && !isValidAddress(ref)) {
+        return showNotification("Invalid Referrer", "Referrer address is invalid.", true);
+      }
+      if (evmAddress && ref.toLowerCase() === evmAddress.toLowerCase()) ref = ethers.constants.AddressZero;
+
+      try {
+        payButton.disabled = true;
+        payButton.innerText = "Switching Network…";
+
+        await ensureEvmChain("0x38", {
+          chainId: "0x38",
+          chainName: "BNB Smart Chain",
+          nativeCurrency: { name: "BNB", symbol: "BNB", decimals: 18 },
+          rpcUrls: [CONFIG.BSC_RPC],
+          blockExplorerUrls: [CONFIG.BSC_EXPLORER]
+        });
+
+        payButton.innerText = "Processing…";
+
+        const tx = await presaleContract.buyTokens(ref, minOut, { value: ethers.utils.parseEther(String(amt)) });
+        showNotification("Transaction Sent", tx.hash);
+
+        const tUsd = tokenUsdPrice();
+        const estBfg = (tUsd && pricesUSD.bnb) ? ((amt * pricesUSD.bnb) / tUsd) : (amt * tokensPerBNB);
+
+        addHistoryItem({
+          ts: Date.now(),
+          chain: "BSC",
+          tx: tx.hash,
+          explorer: `${CONFIG.BSC_EXPLORER}/tx/${tx.hash}`,
+          paid: `${amt} BNB`,
+          bfg: estBfg ? estBfg.toLocaleString(undefined, { maximumFractionDigits: 2 }) : "--",
+          status: "pending"
+        });
+
+        await tx.wait();
+        updateHistoryStatus(tx.hash, "confirmed");
+        showNotification("Payment Confirmed", "BSC purchase confirmed on-chain.");
+
+        await refreshAll();
+        await updateBalances();
+      } catch (e) {
+        showNotification("Payment Failed", e?.data?.message || e?.message || String(e), true);
+      } finally {
+        payButton.disabled = false;
+        updatePayButtonState();
+      }
+    }
+
+    async function payETH() {
+      if (!evmSigner || !evmProvider) return showNotification("Not Connected", "Connect your EVM wallet first.", true);
+
+      const amt = parseFloat(payAmount.value || "0");
+      if (!amt || amt <= 0) return showNotification("Invalid Amount", "Enter a valid ETH amount.", true);
+
+      try {
+        payButton.disabled = true;
+        payButton.innerText = "Switching Network…";
+        await ensureEvmChain("0x1");
+        payButton.innerText = "Processing…";
+
+        const tx = await evmSigner.sendTransaction({
+          to: CONFIG.ETH_RECEIVE,
+          value: ethers.utils.parseEther(String(amt))
+        });
+
+        showNotification("Transaction Sent", tx.hash);
+
+        const tUsd = tokenUsdPrice();
+        const payUsd = pricesUSD.eth ? (amt * pricesUSD.eth) : null;
+        const estBfg = (tUsd && payUsd) ? (payUsd / tUsd) : null;
+
+        addHistoryItem({
+          ts: Date.now(),
+          chain: "ETH",
+          tx: tx.hash,
+          explorer: `https://etherscan.io/tx/${tx.hash}`,
+          paid: `${amt} ETH`,
+          bfg: estBfg ? estBfg.toLocaleString(undefined, { maximumFractionDigits: 2 }) : "--",
+          status: "pending"
+        });
+
+        await tx.wait();
+        updateHistoryStatus(tx.hash, "confirmed");
+        showNotification("Payment Confirmed", "ETH payment confirmed.");
+      } catch (e) {
+        showNotification("Payment Failed", e?.data?.message || e?.message || String(e), true);
+      } finally {
+        payButton.disabled = false;
+        updatePayButtonState();
+      }
+    }
+
+    async function paySOL() {
+      const amt = parseFloat(payAmount.value || "0");
+      if (!amt || amt <= 0) return showNotification("Invalid Amount", "Enter a valid SOL amount.", true);
+
+      if (!window.solana) {
+        return showNotification("Wallet Required", "Please install a Solana wallet (Phantom/Solflare/Backpack) to pay with SOL.", true);
+      }
+
+      let signature = null;
+
+      try {
+        payButton.disabled = true;
+        payButton.innerText = "Opening Wallet…";
+
+        const solana = window.solana;
+        const conn = new Connection(CONFIG.SOL_RPC, "confirmed");
+
+        if (!solana.isConnected) await solana.connect();
+        const fromPubkey = solana.publicKey;
+        mySolWallet.innerText = safeShort(fromPubkey?.toString() || "");
+
+        const toPubkey = new PublicKey(CONFIG.SOL_RECEIVE);
+        const lamports = Math.round(amt * LAMPORTS_PER_SOL);
+
+        const tx = new Transaction().add(
+          SystemProgram.transfer({ fromPubkey, toPubkey, lamports })
+        );
+
+        tx.feePayer = fromPubkey;
+        const { blockhash } = await conn.getLatestBlockhash("finalized");
+        tx.recentBlockhash = blockhash;
+
+        payButton.innerText = "Confirm in Wallet…";
+
+        if (solana.signAndSendTransaction) {
+          const res = await solana.signAndSendTransaction(tx);
+          signature = res?.signature || res;
+        } else {
+          const signed = await solana.signTransaction(tx);
+          signature = await conn.sendRawTransaction(signed.serialize(), { skipPreflight: false });
+        }
+
+        showNotification("Transaction Sent", String(signature));
+
+        const tUsd = tokenUsdPrice();
+        const payUsd = pricesUSD.sol ? (amt * pricesUSD.sol) : null;
+        const estBfg = (tUsd && payUsd) ? (payUsd / tUsd) : null;
+
+        addHistoryItem({
+          ts: Date.now(),
+          chain: "SOL",
+          tx: String(signature),
+          explorer: `https://solscan.io/tx/${signature}`,
+          paid: `${amt} SOL`,
+          bfg: estBfg ? estBfg.toLocaleString(undefined, { maximumFractionDigits: 2 }) : "--",
+          status: "pending"
+        });
+
+        await conn.confirmTransaction(String(signature), "confirmed");
+        updateHistoryStatus(String(signature), "confirmed");
+        showNotification("Payment Confirmed", "SOL payment confirmed.");
+      } catch (e) {
+        showNotification("Payment Failed", e?.message || String(e), true);
+        if (signature) updateHistoryStatus(String(signature), "failed");
+      } finally {
+        payButton.disabled = false;
+        updatePayButtonState();
+      }
+    }
+
+    async function waitTronTxConfirm(tronWeb, txid, maxTries = 25, delayMs = 3000) {
+      for (let i = 0; i < maxTries; i++) {
+        try {
+          const info = await tronWeb.trx.getTransactionInfo(txid);
+          if (info && Object.keys(info).length > 0) {
+            if (info.receipt && info.receipt.result === "SUCCESS") return "confirmed";
+            if (info.receipt && info.receipt.result && info.receipt.result !== "SUCCESS") return "failed";
+          }
+        } catch {}
+        await new Promise(r => setTimeout(r, delayMs));
+      }
+      return "pending";
+    }
+
+    async function payTRON_USDT() {
+      const amt = parseFloat(payAmount.value || "0");
+      if (!amt || amt <= 0) return showNotification("Invalid Amount", "Enter a valid USDT amount.", true);
+
+      if (!window.tronLink && !window.tronWeb) {
+        return showNotification("Wallet Required", "Please install TronLink extension to pay with USDT (TRC20).", true);
+      }
+
+      let txid = null;
+
+      try {
+        payButton.disabled = true;
+        payButton.innerText = "Connecting TronLink…";
+
+        if (window.tronLink?.request) {
+          await window.tronLink.request({ method: "tron_requestAccounts" });
+        }
+
+        const tronWeb = window.tronWeb;
+        if (!tronWeb || !tronWeb.ready) {
+          return showNotification("Wallet Not Ready", "Open TronLink, unlock it, and switch to TRON Mainnet.", true);
+        }
+
+        const from = tronWeb.defaultAddress?.base58;
+        if (!from) {
+          return showNotification("Not Connected", "Open TronLink and connect this site.", true);
+        }
+        myTronWallet.innerText = safeShort(from);
+
+        try {
+          const node = tronWeb.fullNode?.host || "";
+          if (!/trongrid|mainnet|tronstack/i.test(node)) {
+            return showNotification("Wrong Network", "Please switch TronLink to TRON Mainnet.", true);
+          }
+        } catch {}
+
+        try {
+          const trxBalSun = await tronWeb.trx.getBalance(from);
+          if (trxBalSun < 2_000_000) {
+            showNotification("TRX Low", "TRC20 transfer needs bandwidth/energy. Keep at least ~2 TRX in wallet.", false);
+          }
+        } catch {}
+
+        payButton.innerText = "Confirm in Wallet…";
+
+        const amountSun = Math.round(amt * 1_000_000);
+        const usdt = await tronWeb.contract().at(CONFIG.TRON_USDT_CONTRACT);
+        txid = await usdt.transfer(CONFIG.TRON_RECEIVE, amountSun).send({ feeLimit: 30_000_000 });
+
+        showNotification("Transaction Sent", String(txid));
+
+        const tUsd = tokenUsdPrice();
+        const estBfg = (tUsd && amt) ? (amt / tUsd) : null;
+
+        addHistoryItem({
+          ts: Date.now(),
+          chain: "TRON (USDT)",
+          tx: String(txid),
+          explorer: `https://tronscan.org/#/transaction/${txid}`,
+          paid: `${amt} USDT (TRC20)`,
+          bfg: estBfg ? estBfg.toLocaleString(undefined, { maximumFractionDigits: 2 }) : "--",
+          status: "pending"
+        });
+
+        payButton.innerText = "Waiting Confirmation…";
+        const st = await waitTronTxConfirm(tronWeb, String(txid), 25, 3000);
+
+        if (st === "confirmed") {
+          updateHistoryStatus(String(txid), "confirmed");
+          showNotification("Payment Confirmed", "USDT(TRC20) payment confirmed on-chain.");
+        } else if (st === "failed") {
+          updateHistoryStatus(String(txid), "failed");
+          showNotification("Payment Failed", "Transaction failed on-chain.", true);
+        } else {
+          showNotification("Pending", "Transaction submitted. Confirmation may take longer, check TronScan.", false);
+        }
+      } catch (e) {
+        const msg = e?.message || String(e);
+        showNotification("Payment Failed", msg, true);
+        if (txid) updateHistoryStatus(String(txid), "failed");
+      } finally {
+        payButton.disabled = false;
+        updatePayButtonState();
+      }
+    }
+
+    async function claimBSC() {
+      if (!presaleContract || !evmProvider) return showNotification("Not Connected", "Connect your EVM wallet first.", true);
+
+      try {
+        claimButton.disabled = true;
+        claimButton.innerText = "Switching Network…";
+        await ensureEvmChain("0x38", {
+          chainId: "0x38",
+          chainName: "BNB Smart Chain",
+          nativeCurrency: { name: "BNB", symbol: "BNB", decimals: 18 },
+          rpcUrls: [CONFIG.BSC_RPC],
+          blockExplorerUrls: [CONFIG.BSC_EXPLORER]
+        });
+
+        claimButton.innerText = "Claiming…";
+        const tx = await presaleContract.claimTokens();
+        showNotification("Claim Sent", tx.hash);
+        await tx.wait();
+        showNotification("Claim Success", "Tokens claimed.");
+      } catch (e) {
+        showNotification("Claim Failed", e?.data?.message || e?.message || String(e), true);
+      } finally {
+        claimButton.disabled = false;
+        claimButton.innerText = "Claim Your $BFG Tokens (BSC)";
+      }
+    }
+
+    async function onPay() {
+      if (selectedChain === "BSC") return payBSC();
+      if (selectedChain === "ETH") return payETH();
+      if (selectedChain === "SOL") return paySOL();
+      if (selectedChain === "TRON") return payTRON_USDT();
+    }
+
+    async function copyText(txt) {
+      try {
+        await navigator.clipboard.writeText(txt);
+        showNotification("Copied", "Copied to clipboard.");
+      } catch {
+        showNotification("Copy Failed", "Please copy manually.", true);
+      }
+    }
+
+    async function refreshAll() {
+      const t0 = Date.now();
+      try {
+        await Promise.all([refreshContractData(), fetchPricesUSD()]);
+        renderTopStats();
+        renderUrgency();
+        updateEstimates();
+        const ms = Date.now() - t0;
+        if (lastSyncText) lastSyncText.innerText = `LIVE • synced (${ms}ms)`;
+      } catch {
+        if (lastSyncText) lastSyncText.innerText = "Sync failed";
+      }
+
+      if (claimButton) {
+        if (presaleEnded) claimButton.style.display = "block";
+        else claimButton.style.display = "none";
+      }
     }
 
     bindNav();
-    menuBtn.addEventListener("click",()=>mobileMenu.classList.toggle("show"));
-    document.addEventListener("click",(e)=>{ if(!mobileMenu.classList.contains("show"))return; const inside=mobileMenu.contains(e.target)||menuBtn.contains(e.target); if(!inside) mobileMenu.classList.remove("show"); });
-    chainSeg.addEventListener("click",(e)=>{ const t=e.target?.closest?.(".chip"); if(!t)return; setSelectedChain(t.dataset.chain); });
-    payAmount.addEventListener("input",updateEstimates);
-    evmConnectBtn.addEventListener("click",connectEVM); evmDisconnectBtn.addEventListener("click",disconnectEVM);
-    payButton.addEventListener("click",onPay); claimButton.addEventListener("click",claimBSC);
-    copyRefBtn.addEventListener("click",()=>copyText(refLink.value||"")); copyRefBtn2.addEventListener("click",()=>copyText(refLink2.value||""));
 
-    initWeb3Modal(); mountTronConnectBtn(); renderHistory(); setSelectedChain("BSC"); setActivePage(getRouteFromHash());
-    refreshAll(); setInterval(refreshAll,15000);
-    setInterval(()=>{ updatePayButtonState(); if(window.solana?.publicKey) mySolWallet.innerText=safeShort(window.solana.publicKey.toString()); if(window.tronWeb?.ready&&window.tronWeb.defaultAddress?.base58) myTronWallet.innerText=safeShort(window.tronWeb.defaultAddress.base58); },2000);
+    menuBtn.addEventListener("click", () => {
+      mobileMenu.classList.toggle("show");
+    });
+    document.addEventListener("click", (e) => {
+      if (!mobileMenu.classList.contains("show")) return;
+      const inside = mobileMenu.contains(e.target) || menuBtn.contains(e.target);
+      if (!inside) mobileMenu.classList.remove("show");
+    });
+
+    chainSeg.addEventListener("click", (e) => {
+      const t = e.target?.closest?.(".chip");
+      if (!t) return;
+      setSelectedChain(t.dataset.chain);
+    });
+
+    payAmount.addEventListener("input", updateEstimates);
+    evmConnectBtn.addEventListener("click", connectEVM);
+    evmDisconnectBtn.addEventListener("click", disconnectEVM);
+    payButton.addEventListener("click", onPay);
+    claimButton.addEventListener("click", claimBSC);
+    copyRefBtn.addEventListener("click", () => copyText(refLink?.innerText || ""));
+    copyRefBtn2.addEventListener("click", () => copyText(refLink2?.innerText || ""));
+
+    initWeb3Modal();
+    renderHistory();
+    setSelectedChain("BSC");
+    setActivePage(getRouteFromHash());
+
+    refreshAll();
+    setInterval(refreshAll, 15000);
+
+    setInterval(() => {
+      updatePayButtonState();
+      if (window.solana?.publicKey) {
+        mySolWallet.innerText = safeShort(window.solana.publicKey.toString());
+      }
+      if (window.tronWeb?.ready && window.tronWeb.defaultAddress?.base58) {
+        myTronWallet.innerText = safeShort(window.tronWeb.defaultAddress.base58);
+      }
+    }, 2000);
   </script>
 </body>
 </html>
-```
